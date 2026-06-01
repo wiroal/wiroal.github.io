@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dipolos HF · 40 / 20 / 15 / 10 m · HJ3RAW</title>
+<meta name="description" content="Guía práctica de construcción de antenas dipolo para las bandas HF de 40, 20, 15 y 10 metros. Medidas, ángulos de radiación, esquemas y notas.">
+<meta name="author" content="HJ3RAW">
+<meta property="og:title" content="Dipolos HF · Guía práctica">
+<meta property="og:description" content="Medidas, ángulos de radiación y esquemas para dipolos de 40, 20, 15 y 10 m.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=JetBrains+Mono:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0b0f17;
+    --bg-elev: #131925;
+    --bg-elev-2: #1a2233;
+    --border: #2a3447;
+    --border-soft: #1f2837;
+    --text: #e8eef7;
+    --text-dim: #97a3b8;
+    --text-faint: #5d6b82;
+    --amber: #ffa84a;
+    --amber-glow: #ffb866;
+    --amber-deep: #c47a1f;
+    --cyan: #6cc4ff;
+    --cyan-dim: #3d8bbf;
+    --green: #7ee787;
+    --red: #ff7b72;
+    --grid: rgba(108, 196, 255, 0.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      radial-gradient(ellipse at top, rgba(255, 168, 74, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(108, 196, 255, 0.04) 0%, transparent 50%);
+    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+  }
+
+  /* Subtle scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 3px,
+      transparent 4px
+    );
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .topbar .indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber), 0 0 16px var(--amber-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  h1.title {
+    font-family: 'Major Mono Display', monospace;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  h1.title .accent {
+    color: var(--amber);
+    text-shadow: 0 0 30px rgba(255, 168, 74, 0.4);
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    color: var(--text-dim);
+    max-width: 720px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-strip {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+  }
+
+  .badge {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .badge.amber {
+    border-color: var(--amber-deep);
+    color: var(--amber);
+    background: rgba(255, 168, 74, 0.08);
+  }
+
+  /* ============ OVERVIEW CARDS ============ */
+  .overview {
+    padding: 48px 0;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--text);
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+  }
+
+  .band-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .band-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .band-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--amber);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+
+  .band-card:hover {
+    border-color: var(--amber-deep);
+    background: var(--bg-elev-2);
+    transform: translateY(-2px);
+  }
+
+  .band-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .band-card .band-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .band-card .band-freq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  .band-card .band-stat {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    padding: 6px 0;
+    border-top: 1px dashed var(--border-soft);
+  }
+
+  .band-card .band-stat .lbl {
+    color: var(--text-faint);
+  }
+
+  .band-card .band-stat .val {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ============ TABS ============ */
+  .tab-section {
+    padding: 32px 0 64px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 16px 24px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  .tab:hover { color: var(--text); }
+
+  .tab.active {
+    color: var(--amber);
+  }
+
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--amber);
+    box-shadow: 0 0 10px var(--amber-glow);
+  }
+
+  .tab .tab-num {
+    color: var(--text-faint);
+    margin-right: 8px;
+    font-weight: 400;
+  }
+
+  .tab.active .tab-num { color: var(--amber-deep); }
+
+  .panel { display: none; animation: fadeIn 0.4s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ BAND HEADER ============ */
+  .band-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 40px;
+  }
+
+  .band-header h2 {
+    font-family: 'Major Mono Display', monospace;
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .band-header h2 .num {
+    color: var(--amber);
+    text-shadow: 0 0 24px rgba(255, 168, 74, 0.35);
+  }
+
+  .freq-display {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+    color: var(--cyan);
+  }
+
+  .freq-display .freq-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .freq-display .freq-lbl {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ============ KEY STATS ============ */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .stat-cell {
+    background: var(--bg-elev);
+    padding: 20px 24px;
+  }
+
+  .stat-cell .stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .stat-cell .stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--amber);
+  }
+
+  .stat-cell .stat-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ============ TABLE ============ */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    margin-bottom: 48px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    min-width: 720px;
+  }
+
+  thead tr {
+    background: var(--bg-elev-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    text-align: left;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255, 168, 74, 0.04); }
+
+  td.alt-cell {
+    font-weight: 700;
+    color: var(--amber);
+  }
+
+  td .angle-bar {
+    display: inline-block;
+    height: 4px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-deep));
+    margin-left: 8px;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+
+  /* ============ SCHEMATICS ============ */
+  .schemas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 760px) {
+    .schemas { grid-template-columns: 1fr; }
+  }
+
+  .schema {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+  }
+
+  .schema-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .schema-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .schema-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .schema svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .schema .schema-notes {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .schema .schema-notes li {
+    list-style: none;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .schema .schema-notes li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+  }
+
+  /* SVG styles */
+  .wire { stroke: var(--amber); stroke-width: 2.5; fill: none; }
+  .coax { stroke: var(--cyan); stroke-width: 2; fill: none; stroke-dasharray: 4 3; }
+  .mast { stroke: var(--text-dim); stroke-width: 2.5; fill: none; }
+  .anchor { stroke: var(--text-dim); stroke-width: 1.5; fill: none; stroke-dasharray: 2 2; }
+  .ground { stroke: var(--text-faint); stroke-width: 1.5; fill: none; }
+  .insulator { fill: var(--bg-elev-2); stroke: var(--text-dim); stroke-width: 1.5; }
+  .feed { fill: var(--amber); }
+  .dim-line { stroke: var(--text-faint); stroke-width: 1; fill: none; }
+  .label { fill: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .label-dim { fill: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+  .label-amber { fill: var(--amber); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
+
+  /* ============ NOTES ============ */
+  .notes {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .notes h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .notes ul {
+    list-style: none;
+  }
+
+  .notes li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.8;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .notes li::before {
+    content: '$';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-weight: 700;
+  }
+
+  .notes code, .inline-code {
+    background: var(--bg-elev-2);
+    color: var(--amber);
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 0.85em;
+  }
+
+  /* ============ COMPARE TABLE ============ */
+  .compare {
+    padding: 64px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    margin-top: 40px;
+  }
+
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+
+  .callsign {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--amber);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-row a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--cyan-dim);
+  }
+
+  .footer-row a:hover {
+    color: var(--amber);
+    border-color: var(--amber-deep);
+  }
+
+  /* corner decorations */
+  .corner-marks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .corner-marks::before,
+  .corner-marks::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--amber-deep);
+    border-style: solid;
+  }
+  .corner-marks::before {
+    top: 0; left: 0;
+    border-width: 1px 0 0 1px;
+  }
+  .corner-marks::after {
+    bottom: 0; right: 0;
+    border-width: 0 1px 1px 0;
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    header { padding: 32px 0 24px; }
+    .band-header { grid-template-columns: 1fr; }
+    .freq-display { text-align: left; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .tab { padding: 14px 16px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="topbar">
+      <div class="indicator"><span class="led"></span><span>ON AIR</span></div>
+      <div>HF · 7–28 MHz</div>
+    </div>
+
+    <h1 class="title">D<span class="accent">i</span>polos<br>HF</h1>
+
+    <p class="subtitle">
+      Guía práctica de construcción de antenas dipolo para las bandas de radioaficionado de 40, 20, 15 y 10 metros. Medidas, ángulos de radiación, esquemas de instalación y notas de armado.
+    </p>
+
+    <div class="meta-strip">
+      <span class="badge amber">40 m · 7.1 MHz</span>
+      <span class="badge amber">20 m · 14.2 MHz</span>
+      <span class="badge amber">15 m · 21.2 MHz</span>
+      <span class="badge amber">10 m · 28.4 MHz</span>
+      <span class="badge">L = 150 / f(MHz)</span>
+    </div>
+  </div>
+</header>
+
+<section class="overview">
+  <div class="container">
+    <div class="section-label">resumen / overview</div>
+    <h2 class="section-title">Selección rápida de banda</h2>
+
+    <div class="band-grid">
+      <div class="band-card" data-jump="40">
+        <div class="band-name">40m</div>
+        <div class="band-freq">7.100 MHz · λ ≈ 40 m</div>
+        <div class="band-stat"><span class="lbl">Total</span><span class="val">21.13 m</span></div>
+        <div class="band-stat"><span class="lbl">Por brazo</span><span class="val">10.57 m</span></div>
+        <div class="band-stat"><span class="lbl">¼ λ</span><span class="val">≈ 10 m</span></div>
+      </div>
+      <div class="band-card" data-jump="20">
+        <div class="band-name">20m</div>
+        <div class="band-freq">14.200 MHz · λ ≈ 21.13 m</div>
+        <div class="band-stat"><span class="lbl">Total</span><span class="val">10.56 m</span></div>
+        <div class="band-stat"><span class="lbl">Por brazo</span><span class="val">5.28 m</span></div>
+        <div class="band-stat"><span class="lbl">¼ λ</span><span class="val">≈ 5.3 m</span></div>
+      </div>
+      <div class="band-card" data-jump="15">
+        <div class="band-name">15m</div>
+        <div class="band-freq">21.200 MHz · λ ≈ 14.15 m</div>
+        <div class="band-stat"><span class="lbl">Total</span><span class="val">7.08 m</span></div>
+        <div class="band-stat"><span class="lbl">Por brazo</span><span class="val">3.54 m</span></div>
+        <div class="band-stat"><span class="lbl">¼ λ</span><span class="val">≈ 3.5 m</span></div>
+      </div>
+      <div class="band-card" data-jump="10">
+        <div class="band-name">10m</div>
+        <div class="band-freq">28.400 MHz · λ ≈ 10.56 m</div>
+        <div class="band-stat"><span class="lbl">Total</span><span class="val">5.28 m</span></div>
+        <div class="band-stat"><span class="lbl">Por brazo</span><span class="val">2.64 m</span></div>
+        <div class="band-stat"><span class="lbl">¼ λ</span><span class="val">≈ 2.6 m</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tab-section">
+  <div class="container">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="40"><span class="tab-num">01 /</span>40 metros</button>
+      <button class="tab" data-tab="20"><span class="tab-num">02 /</span>20 metros</button>
+      <button class="tab" data-tab="15"><span class="tab-num">03 /</span>15 metros</button>
+      <button class="tab" data-tab="10"><span class="tab-num">04 /</span>10 metros</button>
+    </div>
+
+    <!-- ============ 40m PANEL ============ -->
+    <div class="panel active" data-panel="40">
+      <div class="band-header">
+        <h2><span class="num">40</span>m</h2>
+        <div class="freq-display">
+          <div class="freq-val">7.100 MHz</div>
+          <div class="freq-lbl">Frecuencia de diseño · λ ≈ 40 m</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-lbl">Longitud total</div>
+          <div class="stat-val">21.13 m</div>
+          <div class="stat-sub">L = 150 / 7.1</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Por brazo</div>
+          <div class="stat-val">10.57 m</div>
+          <div class="stat-sub">+ 5–10 cm de sobra</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Altura mín. recom.</div>
+          <div class="stat-val">10 m</div>
+          <div class="stat-sub">¼ λ aprox.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Impedancia</div>
+          <div class="stat-val">50–73 Ω</div>
+          <div class="stat-sub">Balun 1:1</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 16px;">Altura sobre el suelo vs ángulo de radiación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Altura</th>
+              <th>Relación λ</th>
+              <th>Ángulo (°)</th>
+              <th>Cobertura típica</th>
+              <th>Long. total</th>
+              <th>Por brazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="alt-cell">5 m</td><td>~0.12 λ</td><td>75–90° <span class="angle-bar" style="width:48px"></span></td><td>NVIS · local / regional (100–800 km)</td><td>21.13 m</td><td>10.57 m</td></tr>
+            <tr><td class="alt-cell">8 m</td><td>~0.20 λ</td><td>60–80° <span class="angle-bar" style="width:40px"></span></td><td>Nacional / regional</td><td>21.13 m</td><td>10.57 m</td></tr>
+            <tr><td class="alt-cell">10 m</td><td>~0.25 λ</td><td>45–60° <span class="angle-bar" style="width:32px"></span></td><td>Compromiso: regional + DX ocasional</td><td>21.13 m</td><td>10.57 m</td></tr>
+            <tr><td class="alt-cell">15 m</td><td>~0.37 λ</td><td>30–40° <span class="angle-bar" style="width:24px"></span></td><td>DX intercontinental</td><td>21.13 m</td><td>10.57 m</td></tr>
+            <tr><td class="alt-cell">20 m</td><td>~0.50 λ</td><td>20–30° <span class="angle-bar" style="width:16px"></span></td><td>Excelente para DX (requiere torre)</td><td>21.13 m</td><td>10.57 m</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="schemas">
+        <!-- FLAT TOP 40m -->
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">Dipolo horizontal (Flat-top)</div>
+            <div class="schema-tag">FIG · 01</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- ground -->
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/>
+              <line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/>
+              <line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/>
+              <line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/>
+              <line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/>
+              <line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <!-- masts -->
+            <line class="mast" x1="40" y1="200" x2="40" y2="70"/>
+            <line class="mast" x1="360" y1="200" x2="360" y2="70"/>
+            <!-- anchor lines -->
+            <line class="anchor" x1="40" y1="80" x2="15" y2="200"/>
+            <line class="anchor" x1="360" y1="80" x2="385" y2="200"/>
+            <!-- insulators -->
+            <circle class="insulator" cx="55" cy="70" r="4"/>
+            <circle class="insulator" cx="345" cy="70" r="4"/>
+            <!-- antenna wire -->
+            <line class="wire" x1="55" y1="70" x2="345" y2="70"/>
+            <!-- feed point -->
+            <circle class="feed" cx="200" cy="70" r="4"/>
+            <!-- coax -->
+            <path class="coax" d="M 200 74 L 200 110 Q 200 130 215 145 L 230 200"/>
+            <!-- dim lines arms -->
+            <line class="dim-line" x1="55" y1="50" x2="200" y2="50"/>
+            <line class="dim-line" x1="55" y1="45" x2="55" y2="55"/>
+            <line class="dim-line" x1="200" y1="45" x2="200" y2="55"/>
+            <line class="dim-line" x1="200" y1="50" x2="345" y2="50"/>
+            <line class="dim-line" x1="345" y1="45" x2="345" y2="55"/>
+            <!-- height -->
+            <line class="dim-line" x1="20" y1="70" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="70" x2="25" y2="70"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <!-- labels -->
+            <text class="label-amber" x="127" y="42" text-anchor="middle">10.57 m</text>
+            <text class="label-amber" x="272" y="42" text-anchor="middle">10.57 m</text>
+            <text class="label-dim" x="30" y="138" text-anchor="start">≥ 10 m</text>
+            <text class="label" x="240" y="160">coax 50 Ω</text>
+            <text class="label-dim" x="200" y="216" text-anchor="middle">balun 1:1 en el alimentador</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Dos puntos de anclaje requeridos</li>
+            <li>Patrón bidireccional, máx. ganancia broadside</li>
+            <li>Impedancia nominal cercana a 73 Ω</li>
+          </div>
+        </div>
+
+        <!-- INVERTED V 40m -->
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">V invertida (Inverted-V)</div>
+            <div class="schema-tag">FIG · 02</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- ground -->
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/>
+              <line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/>
+              <line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/>
+              <line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/>
+              <line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/>
+              <line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <!-- central mast -->
+            <line class="mast" x1="200" y1="200" x2="200" y2="40"/>
+            <!-- anchors at ends -->
+            <line class="anchor" x1="60" y1="155" x2="40" y2="200"/>
+            <line class="anchor" x1="340" y1="155" x2="360" y2="200"/>
+            <!-- antenna wires (V shape) -->
+            <line class="wire" x1="200" y1="50" x2="65" y2="155"/>
+            <line class="wire" x1="200" y1="50" x2="335" y2="155"/>
+            <!-- insulators at ends -->
+            <circle class="insulator" cx="65" cy="155" r="4"/>
+            <circle class="insulator" cx="335" cy="155" r="4"/>
+            <!-- feed at top -->
+            <circle class="feed" cx="200" cy="50" r="4"/>
+            <!-- coax along mast -->
+            <path class="coax" d="M 200 54 L 200 195"/>
+            <!-- vertex height -->
+            <line class="dim-line" x1="380" y1="50" x2="380" y2="200"/>
+            <line class="dim-line" x1="375" y1="50" x2="385" y2="50"/>
+            <line class="dim-line" x1="375" y1="200" x2="385" y2="200"/>
+            <!-- end height -->
+            <line class="dim-line" x1="20" y1="155" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="155" x2="25" y2="155"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <!-- arc for angle -->
+            <path class="dim-line" d="M 175 75 Q 200 90 225 75"/>
+            <!-- labels -->
+            <text class="label-amber" x="120" y="95" transform="rotate(-38 120 95)">10.57 m</text>
+            <text class="label-amber" x="280" y="95" transform="rotate(38 280 95)">10.57 m</text>
+            <text class="label-dim" x="370" y="130" text-anchor="end">8–12 m</text>
+            <text class="label-dim" x="30" y="180" text-anchor="start">2–3 m</text>
+            <text class="label" x="200" y="105" text-anchor="middle">120°–140°</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Sólo requiere un mástil central alto</li>
+            <li>Ángulo entre brazos: 120° a 140°</li>
+            <li>Impedancia más cercana a 50 Ω (mejor SWR)</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes">
+        <h3>Notas de construcción · 40 m</h3>
+        <ul>
+          <li>Fórmula: <span class="inline-code">L (m) = 150 / f (MHz)</span> → para 7.1 MHz: <span class="inline-code">21.13 m total</span></li>
+          <li>Cortar cada hilo con 5–10 cm extra y ajustar con medidor de ROE (SWR)</li>
+          <li>Bajar frecuencia → alargar antena. Subir frecuencia → acortar</li>
+          <li>Usar balun 1:1 o choke en el alimentador para evitar corrientes de retorno</li>
+          <li>NVIS (5–8 m): ideal para QSO regional dentro de Colombia</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============ 20m PANEL ============ -->
+    <div class="panel" data-panel="20">
+      <div class="band-header">
+        <h2><span class="num">20</span>m</h2>
+        <div class="freq-display">
+          <div class="freq-val">14.200 MHz</div>
+          <div class="freq-lbl">Frecuencia de diseño · λ ≈ 21.13 m</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-lbl">Longitud total</div>
+          <div class="stat-val">10.56 m</div>
+          <div class="stat-sub">L = 150 / 14.2</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Por brazo</div>
+          <div class="stat-val">5.28 m</div>
+          <div class="stat-sub">+ 5–10 cm de sobra</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Altura mín. recom.</div>
+          <div class="stat-val">5.3 m</div>
+          <div class="stat-sub">¼ λ aprox.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Banda</div>
+          <div class="stat-val">DX rey</div>
+          <div class="stat-sub">14.000–14.350 MHz</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 16px;">Altura sobre el suelo vs ángulo de radiación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Altura</th>
+              <th>Relación λ</th>
+              <th>Ángulo (°)</th>
+              <th>Cobertura típica</th>
+              <th>Long. total</th>
+              <th>Por brazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="alt-cell">3 m</td><td>~0.14 λ</td><td>75–90° <span class="angle-bar" style="width:48px"></span></td><td>NVIS / local-regional</td><td>10.56 m</td><td>5.28 m</td></tr>
+            <tr><td class="alt-cell">5 m</td><td>~0.24 λ</td><td>60–80° <span class="angle-bar" style="width:40px"></span></td><td>Regional</td><td>10.56 m</td><td>5.28 m</td></tr>
+            <tr><td class="alt-cell">7.5 m</td><td>~0.35 λ</td><td>45–60° <span class="angle-bar" style="width:32px"></span></td><td>Regional + DX ocasional</td><td>10.56 m</td><td>5.28 m</td></tr>
+            <tr><td class="alt-cell">10 m</td><td>~0.47 λ</td><td>30–40° <span class="angle-bar" style="width:24px"></span></td><td>Mejor para DX</td><td>10.56 m</td><td>5.28 m</td></tr>
+            <tr><td class="alt-cell">12–15 m</td><td>~0.57–0.71 λ</td><td>20–30° <span class="angle-bar" style="width:16px"></span></td><td>Excelente para DX</td><td>10.56 m</td><td>5.28 m</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="schemas">
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">Dipolo horizontal (Flat-top)</div>
+            <div class="schema-tag">FIG · 03</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="40" y1="200" x2="40" y2="70"/>
+            <line class="mast" x1="360" y1="200" x2="360" y2="70"/>
+            <line class="anchor" x1="40" y1="80" x2="15" y2="200"/>
+            <line class="anchor" x1="360" y1="80" x2="385" y2="200"/>
+            <circle class="insulator" cx="55" cy="70" r="4"/>
+            <circle class="insulator" cx="345" cy="70" r="4"/>
+            <line class="wire" x1="55" y1="70" x2="345" y2="70"/>
+            <circle class="feed" cx="200" cy="70" r="4"/>
+            <path class="coax" d="M 200 74 L 200 110 Q 200 130 215 145 L 230 200"/>
+            <line class="dim-line" x1="55" y1="50" x2="200" y2="50"/>
+            <line class="dim-line" x1="55" y1="45" x2="55" y2="55"/>
+            <line class="dim-line" x1="200" y1="45" x2="200" y2="55"/>
+            <line class="dim-line" x1="200" y1="50" x2="345" y2="50"/>
+            <line class="dim-line" x1="345" y1="45" x2="345" y2="55"/>
+            <line class="dim-line" x1="20" y1="70" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="70" x2="25" y2="70"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <text class="label-amber" x="127" y="42" text-anchor="middle">5.28 m</text>
+            <text class="label-amber" x="272" y="42" text-anchor="middle">5.28 m</text>
+            <text class="label-dim" x="30" y="138" text-anchor="start">≥ ¼ λ</text>
+            <text class="label" x="240" y="160">coax 50 Ω</text>
+            <text class="label-dim" x="200" y="216" text-anchor="middle">balun 1:1 en el alimentador</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Dos puntos de anclaje requeridos</li>
+            <li>Patrón bidireccional, máx. ganancia broadside</li>
+            <li>A 10 m de altura ya rinde muy bien para DX</li>
+          </div>
+        </div>
+
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">V invertida (Inverted-V)</div>
+            <div class="schema-tag">FIG · 04</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="200" y1="200" x2="200" y2="40"/>
+            <line class="anchor" x1="60" y1="155" x2="40" y2="200"/>
+            <line class="anchor" x1="340" y1="155" x2="360" y2="200"/>
+            <line class="wire" x1="200" y1="50" x2="65" y2="155"/>
+            <line class="wire" x1="200" y1="50" x2="335" y2="155"/>
+            <circle class="insulator" cx="65" cy="155" r="4"/>
+            <circle class="insulator" cx="335" cy="155" r="4"/>
+            <circle class="feed" cx="200" cy="50" r="4"/>
+            <path class="coax" d="M 200 54 L 200 195"/>
+            <line class="dim-line" x1="380" y1="50" x2="380" y2="200"/>
+            <line class="dim-line" x1="375" y1="50" x2="385" y2="50"/>
+            <line class="dim-line" x1="375" y1="200" x2="385" y2="200"/>
+            <line class="dim-line" x1="20" y1="155" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="155" x2="25" y2="155"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <path class="dim-line" d="M 175 75 Q 200 90 225 75"/>
+            <text class="label-amber" x="120" y="95" transform="rotate(-38 120 95)">5.28 m</text>
+            <text class="label-amber" x="280" y="95" transform="rotate(38 280 95)">5.28 m</text>
+            <text class="label-dim" x="370" y="130" text-anchor="end">≥ ¼ λ</text>
+            <text class="label-dim" x="30" y="180" text-anchor="start">2–3 m</text>
+            <text class="label" x="200" y="105" text-anchor="middle">120°–140°</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Un solo mástil central, dos anclas laterales</li>
+            <li>Mejor adaptación a 50 Ω por la geometría en V</li>
+            <li>Práctico en patios o terrazas pequeñas</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes">
+        <h3>Notas de construcción · 20 m</h3>
+        <ul>
+          <li>Fórmula: <span class="inline-code">L (m) = 150 / 14.2</span> → <span class="inline-code">10.56 m total</span> · <span class="inline-code">5.28 m por brazo</span></li>
+          <li>¼ λ de altura ya da resultados sólidos para DX</li>
+          <li>Banda diurna por excelencia para enlaces intercontinentales</li>
+          <li>Choke alternativo: 6–8 vueltas del coaxial en 10–12 cm de diámetro</li>
+          <li>Ajustar SWR cortando hilo simétricamente en ambos brazos</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============ 15m PANEL ============ -->
+    <div class="panel" data-panel="15">
+      <div class="band-header">
+        <h2><span class="num">15</span>m</h2>
+        <div class="freq-display">
+          <div class="freq-val">21.200 MHz</div>
+          <div class="freq-lbl">Frecuencia de diseño · λ ≈ 14.15 m</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-lbl">Longitud total</div>
+          <div class="stat-val">7.08 m</div>
+          <div class="stat-sub">L = 150 / 21.2</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Por brazo</div>
+          <div class="stat-val">3.54 m</div>
+          <div class="stat-sub">+ 5–10 cm de sobra</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Altura mín. recom.</div>
+          <div class="stat-val">3.5 m</div>
+          <div class="stat-sub">¼ λ aprox.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Banda</div>
+          <div class="stat-val">Ciclo solar</div>
+          <div class="stat-sub">21.000–21.450 MHz</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 16px;">Altura sobre el suelo vs ángulo de radiación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Altura</th><th>Relación λ</th><th>Ángulo (°)</th><th>Cobertura típica</th><th>Long. total</th><th>Por brazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="alt-cell">3 m</td><td>~0.21 λ</td><td>75–90° <span class="angle-bar" style="width:48px"></span></td><td>NVIS / local-regional</td><td>7.08 m</td><td>3.54 m</td></tr>
+            <tr><td class="alt-cell">5 m</td><td>~0.35 λ</td><td>60–80° <span class="angle-bar" style="width:40px"></span></td><td>Regional</td><td>7.08 m</td><td>3.54 m</td></tr>
+            <tr><td class="alt-cell">7.5 m</td><td>~0.53 λ</td><td>45–60° <span class="angle-bar" style="width:32px"></span></td><td>Regional + DX ocasional</td><td>7.08 m</td><td>3.54 m</td></tr>
+            <tr><td class="alt-cell">10 m</td><td>~0.71 λ</td><td>30–40° <span class="angle-bar" style="width:24px"></span></td><td>Mejor para DX</td><td>7.08 m</td><td>3.54 m</td></tr>
+            <tr><td class="alt-cell">12–15 m</td><td>~0.85–1.06 λ</td><td>20–30° <span class="angle-bar" style="width:16px"></span></td><td>Excelente para DX</td><td>7.08 m</td><td>3.54 m</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="schemas">
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">Dipolo horizontal (Flat-top)</div>
+            <div class="schema-tag">FIG · 05</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="40" y1="200" x2="40" y2="70"/>
+            <line class="mast" x1="360" y1="200" x2="360" y2="70"/>
+            <line class="anchor" x1="40" y1="80" x2="15" y2="200"/>
+            <line class="anchor" x1="360" y1="80" x2="385" y2="200"/>
+            <circle class="insulator" cx="55" cy="70" r="4"/>
+            <circle class="insulator" cx="345" cy="70" r="4"/>
+            <line class="wire" x1="55" y1="70" x2="345" y2="70"/>
+            <circle class="feed" cx="200" cy="70" r="4"/>
+            <path class="coax" d="M 200 74 L 200 110 Q 200 130 215 145 L 230 200"/>
+            <line class="dim-line" x1="55" y1="50" x2="200" y2="50"/>
+            <line class="dim-line" x1="55" y1="45" x2="55" y2="55"/>
+            <line class="dim-line" x1="200" y1="45" x2="200" y2="55"/>
+            <line class="dim-line" x1="200" y1="50" x2="345" y2="50"/>
+            <line class="dim-line" x1="345" y1="45" x2="345" y2="55"/>
+            <line class="dim-line" x1="20" y1="70" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="70" x2="25" y2="70"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <text class="label-amber" x="127" y="42" text-anchor="middle">3.54 m</text>
+            <text class="label-amber" x="272" y="42" text-anchor="middle">3.54 m</text>
+            <text class="label-dim" x="30" y="138" text-anchor="start">≥ ¼ λ</text>
+            <text class="label" x="240" y="160">coax 50 Ω</text>
+            <text class="label-dim" x="200" y="216" text-anchor="middle">balun 1:1 en el alimentador</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Dipolo compacto, fácil de levantar</li>
+            <li>Excelente para DX en condiciones solares favorables</li>
+            <li>Patrón bidireccional broadside</li>
+          </div>
+        </div>
+
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">V invertida (Inverted-V)</div>
+            <div class="schema-tag">FIG · 06</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="200" y1="200" x2="200" y2="40"/>
+            <line class="anchor" x1="60" y1="155" x2="40" y2="200"/>
+            <line class="anchor" x1="340" y1="155" x2="360" y2="200"/>
+            <line class="wire" x1="200" y1="50" x2="65" y2="155"/>
+            <line class="wire" x1="200" y1="50" x2="335" y2="155"/>
+            <circle class="insulator" cx="65" cy="155" r="4"/>
+            <circle class="insulator" cx="335" cy="155" r="4"/>
+            <circle class="feed" cx="200" cy="50" r="4"/>
+            <path class="coax" d="M 200 54 L 200 195"/>
+            <line class="dim-line" x1="380" y1="50" x2="380" y2="200"/>
+            <line class="dim-line" x1="375" y1="50" x2="385" y2="50"/>
+            <line class="dim-line" x1="375" y1="200" x2="385" y2="200"/>
+            <line class="dim-line" x1="20" y1="155" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="155" x2="25" y2="155"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <path class="dim-line" d="M 175 75 Q 200 90 225 75"/>
+            <text class="label-amber" x="120" y="95" transform="rotate(-38 120 95)">3.54 m</text>
+            <text class="label-amber" x="280" y="95" transform="rotate(38 280 95)">3.54 m</text>
+            <text class="label-dim" x="370" y="130" text-anchor="end">≥ ¼ λ</text>
+            <text class="label-dim" x="30" y="180" text-anchor="start">2–3 m</text>
+            <text class="label" x="200" y="105" text-anchor="middle">120°–140°</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Cabe en un balcón con un solo mástil corto</li>
+            <li>Buena adaptación a 50 Ω</li>
+            <li>Patrón casi omnidireccional al estilo V</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes">
+        <h3>Notas de construcción · 15 m</h3>
+        <ul>
+          <li>Fórmula: <span class="inline-code">L (m) = 150 / 21.2</span> → <span class="inline-code">7.08 m total</span> · <span class="inline-code">3.54 m por brazo</span></li>
+          <li>Banda muy dependiente del ciclo solar: brilla en máximo solar</li>
+          <li>Antena compacta, ideal para QTHs urbanos</li>
+          <li>Usar balun 1:1 o choke con 6–8 vueltas del coaxial</li>
+          <li>Ajustar SWR cortando hilo simétricamente en ambos brazos</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============ 10m PANEL ============ -->
+    <div class="panel" data-panel="10">
+      <div class="band-header">
+        <h2><span class="num">10</span>m</h2>
+        <div class="freq-display">
+          <div class="freq-val">28.400 MHz</div>
+          <div class="freq-lbl">Frecuencia de diseño · λ ≈ 10.56 m</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-lbl">Longitud total</div>
+          <div class="stat-val">5.28 m</div>
+          <div class="stat-sub">L = 150 / 28.4</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Por brazo</div>
+          <div class="stat-val">2.64 m</div>
+          <div class="stat-sub">+ 5–10 cm de sobra</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Altura mín. recom.</div>
+          <div class="stat-val">2.6 m</div>
+          <div class="stat-sub">¼ λ aprox.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-lbl">Banda</div>
+          <div class="stat-val">Sporadic-E</div>
+          <div class="stat-sub">28.000–29.700 MHz</div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 16px;">Altura sobre el suelo vs ángulo de radiación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Altura</th><th>Relación λ</th><th>Ángulo (°)</th><th>Cobertura típica</th><th>Long. total</th><th>Por brazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="alt-cell">3 m</td><td>~0.28 λ</td><td>75–90° <span class="angle-bar" style="width:48px"></span></td><td>NVIS / local-regional</td><td>5.28 m</td><td>2.64 m</td></tr>
+            <tr><td class="alt-cell">5 m</td><td>~0.47 λ</td><td>60–80° <span class="angle-bar" style="width:40px"></span></td><td>Regional</td><td>5.28 m</td><td>2.64 m</td></tr>
+            <tr><td class="alt-cell">7.5 m</td><td>~0.71 λ</td><td>45–60° <span class="angle-bar" style="width:32px"></span></td><td>Regional + DX ocasional</td><td>5.28 m</td><td>2.64 m</td></tr>
+            <tr><td class="alt-cell">10 m</td><td>~0.95 λ</td><td>30–40° <span class="angle-bar" style="width:24px"></span></td><td>Mejor para DX</td><td>5.28 m</td><td>2.64 m</td></tr>
+            <tr><td class="alt-cell">12–15 m</td><td>~1.14–1.42 λ</td><td>20–30° <span class="angle-bar" style="width:16px"></span></td><td>Excelente para DX</td><td>5.28 m</td><td>2.64 m</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="schemas">
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">Dipolo horizontal (Flat-top)</div>
+            <div class="schema-tag">FIG · 07</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="40" y1="200" x2="40" y2="70"/>
+            <line class="mast" x1="360" y1="200" x2="360" y2="70"/>
+            <line class="anchor" x1="40" y1="80" x2="15" y2="200"/>
+            <line class="anchor" x1="360" y1="80" x2="385" y2="200"/>
+            <circle class="insulator" cx="55" cy="70" r="4"/>
+            <circle class="insulator" cx="345" cy="70" r="4"/>
+            <line class="wire" x1="55" y1="70" x2="345" y2="70"/>
+            <circle class="feed" cx="200" cy="70" r="4"/>
+            <path class="coax" d="M 200 74 L 200 110 Q 200 130 215 145 L 230 200"/>
+            <line class="dim-line" x1="55" y1="50" x2="200" y2="50"/>
+            <line class="dim-line" x1="55" y1="45" x2="55" y2="55"/>
+            <line class="dim-line" x1="200" y1="45" x2="200" y2="55"/>
+            <line class="dim-line" x1="200" y1="50" x2="345" y2="50"/>
+            <line class="dim-line" x1="345" y1="45" x2="345" y2="55"/>
+            <line class="dim-line" x1="20" y1="70" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="70" x2="25" y2="70"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <text class="label-amber" x="127" y="42" text-anchor="middle">2.64 m</text>
+            <text class="label-amber" x="272" y="42" text-anchor="middle">2.64 m</text>
+            <text class="label-dim" x="30" y="138" text-anchor="start">≥ ¼ λ</text>
+            <text class="label" x="240" y="160">coax 50 Ω</text>
+            <text class="label-dim" x="200" y="216" text-anchor="middle">balun 1:1 en el alimentador</text>
+          </svg>
+          <div class="schema-notes">
+            <li>El dipolo más corto de las cuatro bandas</li>
+            <li>Cabe en azoteas, balcones, jardines pequeños</li>
+            <li>Patrón bidireccional broadside</li>
+          </div>
+        </div>
+
+        <div class="schema">
+          <div class="schema-header">
+            <div class="schema-title">V invertida (Inverted-V)</div>
+            <div class="schema-tag">FIG · 08</div>
+          </div>
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line class="ground" x1="0" y1="200" x2="400" y2="200"/>
+            <g class="ground">
+              <line x1="20" y1="200" x2="10" y2="212"/><line x1="60" y1="200" x2="50" y2="212"/>
+              <line x1="100" y1="200" x2="90" y2="212"/><line x1="140" y1="200" x2="130" y2="212"/>
+              <line x1="180" y1="200" x2="170" y2="212"/><line x1="220" y1="200" x2="210" y2="212"/>
+              <line x1="260" y1="200" x2="250" y2="212"/><line x1="300" y1="200" x2="290" y2="212"/>
+              <line x1="340" y1="200" x2="330" y2="212"/><line x1="380" y1="200" x2="370" y2="212"/>
+            </g>
+            <line class="mast" x1="200" y1="200" x2="200" y2="40"/>
+            <line class="anchor" x1="60" y1="155" x2="40" y2="200"/>
+            <line class="anchor" x1="340" y1="155" x2="360" y2="200"/>
+            <line class="wire" x1="200" y1="50" x2="65" y2="155"/>
+            <line class="wire" x1="200" y1="50" x2="335" y2="155"/>
+            <circle class="insulator" cx="65" cy="155" r="4"/>
+            <circle class="insulator" cx="335" cy="155" r="4"/>
+            <circle class="feed" cx="200" cy="50" r="4"/>
+            <path class="coax" d="M 200 54 L 200 195"/>
+            <line class="dim-line" x1="380" y1="50" x2="380" y2="200"/>
+            <line class="dim-line" x1="375" y1="50" x2="385" y2="50"/>
+            <line class="dim-line" x1="375" y1="200" x2="385" y2="200"/>
+            <line class="dim-line" x1="20" y1="155" x2="20" y2="200"/>
+            <line class="dim-line" x1="15" y1="155" x2="25" y2="155"/>
+            <line class="dim-line" x1="15" y1="200" x2="25" y2="200"/>
+            <path class="dim-line" d="M 175 75 Q 200 90 225 75"/>
+            <text class="label-amber" x="120" y="95" transform="rotate(-38 120 95)">2.64 m</text>
+            <text class="label-amber" x="280" y="95" transform="rotate(38 280 95)">2.64 m</text>
+            <text class="label-dim" x="370" y="130" text-anchor="end">≥ ¼ λ</text>
+            <text class="label-dim" x="30" y="180" text-anchor="start">2–3 m</text>
+            <text class="label" x="200" y="105" text-anchor="middle">120°–140°</text>
+          </svg>
+          <div class="schema-notes">
+            <li>Un solo mástil corto, instalación rapidísima</li>
+            <li>Adaptación cercana a 50 Ω</li>
+            <li>Apta para portable / Field Day</li>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes">
+        <h3>Notas de construcción · 10 m</h3>
+        <ul>
+          <li>Fórmula: <span class="inline-code">L (m) = 150 / 28.4</span> → <span class="inline-code">5.28 m total</span> · <span class="inline-code">2.64 m por brazo</span></li>
+          <li>Banda muy sensible a propagación E esporádica y ciclo solar alto</li>
+          <li>En buenas condiciones, DX mundial con muy poca potencia</li>
+          <li>Antena ideal para QRP / portable</li>
+          <li>Choke: 6–8 vueltas del coaxial en 10–12 cm de diámetro</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="container">
+    <div class="section-label">comparativa global</div>
+    <h2 class="section-title">Las cuatro bandas en una sola tabla</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Banda</th>
+            <th>Frec. diseño</th>
+            <th>λ</th>
+            <th>Total</th>
+            <th>Por brazo</th>
+            <th>¼ λ</th>
+            <th>Carácter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="alt-cell">40 m</td>
+            <td>7.100 MHz</td>
+            <td>40 m</td>
+            <td>21.13 m</td>
+            <td>10.57 m</td>
+            <td>≈ 10 m</td>
+            <td>Regional / nocturna · NVIS</td>
+          </tr>
+          <tr>
+            <td class="alt-cell">20 m</td>
+            <td>14.200 MHz</td>
+            <td>21.13 m</td>
+            <td>10.56 m</td>
+            <td>5.28 m</td>
+            <td>≈ 5.3 m</td>
+            <td>DX rey · banda diurna</td>
+          </tr>
+          <tr>
+            <td class="alt-cell">15 m</td>
+            <td>21.200 MHz</td>
+            <td>14.15 m</td>
+            <td>7.08 m</td>
+            <td>3.54 m</td>
+            <td>≈ 3.5 m</td>
+            <td>DX ciclo solar alto</td>
+          </tr>
+          <tr>
+            <td class="alt-cell">10 m</td>
+            <td>28.400 MHz</td>
+            <td>10.56 m</td>
+            <td>5.28 m</td>
+            <td>2.64 m</td>
+            <td>≈ 2.6 m</td>
+            <td>Sporadic-E · QRP · portable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="notes" style="margin-top: 32px;">
+      <h3>Reglas universales</h3>
+      <ul>
+        <li>Fórmula maestra: <span class="inline-code">L (m) = 150 / f (MHz)</span></li>
+        <li>Altura óptima para DX: a partir de <span class="inline-code">¼ λ</span> sobre el suelo</li>
+        <li>Altura baja (&lt;¼ λ) → NVIS: contactos locales/regionales</li>
+        <li>Ajustar SWR cortando hilo simétricamente en ambos brazos (5–10 cm cada vez)</li>
+        <li>Balun 1:1 o choke en el alimentador para eliminar corrientes de retorno</li>
+        <li>Insuladores en los extremos: pueden ser PVC, porcelana o cuerda dieléctrica</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div>
+        <span class="callsign">HJ3RAW</span> · Bogotá, Colombia
+      </div>
+      <div>
+        Documento técnico · Uso libre con atribución
+      </div>
+      <div>
+        73 · CQ CQ CQ
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+
+  function activate(tabKey) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabKey));
+    panels.forEach(p => p.classList.toggle('active', p.dataset.panel === tabKey));
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      activate(tab.dataset.tab);
+      // Scroll into view on mobile
+      document.querySelector('.tab-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Overview card jumps
+  document.querySelectorAll('.band-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.jump;
+      activate(key);
+      document.querySelector('.tab-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Keyboard: 1-4 to switch tabs
+  document.addEventListener('keydown', (e) => {
+    const map = { '1': '40', '2': '20', '3': '15', '4': '10' };
+    if (map[e.key]) activate(map[e.key]);
+  });
+</script>
+
+</body>
+</html>
