@@ -45,11 +45,9 @@ Aquí comparto proyectos, documentación, scripts, investigaciones y recursos re
 # 📊 Estadísticas GitHub
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=wiroal&show_icons=true&rank_icon=github&theme=dark" />
-</p>
+<img src="https://github-readme-stats.vercel.app/api?username=wiroal&show_icons=true&theme=transparent"/>
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=wiroal&layout=compact&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=wiroal&layout=compact&theme=transparent"/>
 </p>
 
 ---
