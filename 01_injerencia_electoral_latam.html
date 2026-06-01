@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Injerencia Electoral en América Latina — Cuadro Comparativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --rust: #8b2e10;
+    --gold: #b8860b;
+    --ash: #6b6055;
+    --rule: #c8bfb0;
+    --col-co: #1e3a5c;
+    --col-cl: #7a1a1a;
+    --col-ec: #2d5c2d;
+    --col-co-bg: #e8f0f8;
+    --col-cl-bg: #f8e8e8;
+    --col-ec-bg: #e8f2e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* MASTHEAD */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.015) 2px,
+      rgba(255,255,255,0.015) 4px
+    );
+    pointer-events: none;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .masthead h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .masthead-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ash);
+    border-top: 1px solid #333;
+    padding-top: 0.75rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  /* INTRO */
+  .intro {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ash);
+    font-style: italic;
+    border-bottom: 2px solid var(--rule);
+  }
+  .intro strong { color: var(--rust); font-style: normal; }
+
+  /* LEGEND */
+  .legend {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 2px;
+  }
+
+  /* TABS */
+  .tabs-nav {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0;
+    border-bottom: 3px solid var(--ink);
+  }
+  .tab-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--ash);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--ink);
+    font-weight: 700;
+    border-bottom-color: var(--rust);
+  }
+
+  /* CONTENT AREA */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  thead tr {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+  thead th:first-child { width: 20%; }
+
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(0,0,0,0.02); }
+
+  td {
+    padding: 0.85rem 1rem;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ash);
+    background: rgba(0,0,0,0.02);
+    border-right: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+
+  .col-co { border-left: 3px solid var(--col-co); background: var(--col-co-bg); }
+  .col-cl { border-left: 3px solid var(--col-cl); background: var(--col-cl-bg); }
+  .col-ec { border-left: 3px solid var(--col-ec); background: var(--col-ec-bg); }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+  .badge-co { background: var(--col-co); color: white; }
+  .badge-cl { background: var(--col-cl); color: white; }
+  .badge-ec { background: var(--col-ec); color: white; }
+  .badge-nd { background: #999; color: white; }
+  .badge-doc { background: var(--gold); color: var(--ink); }
+  .badge-alg { background: #666; color: white; }
+
+  /* SOURCE CARDS */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .source-card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1rem;
+    background: white;
+  }
+  .source-card .src-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ash);
+    margin-bottom: 0.3rem;
+  }
+  .source-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .source-card p {
+    font-size: 0.78rem;
+    color: var(--ash);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .source-card a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--rust);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .source-card a:hover { text-decoration: underline; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0.4rem;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+  }
+  .tl-item.documented::before { background: var(--rust); border-color: var(--rust); }
+  .tl-item.alleged::before { background: var(--ash); border-color: var(--ash); }
+  .tl-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--rust);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  .tl-title {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 0.3rem;
+  }
+  .tl-desc {
+    font-size: 0.82rem;
+    color: var(--ash);
+    line-height: 1.55;
+  }
+  .tl-source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--gold);
+    margin-top: 0.25rem;
+  }
+
+  /* SECTION HEADING */
+  .section-head {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.4rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--ink);
+  }
+  .section-head span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ash);
+    font-weight: 400;
+    margin-left: 0.75rem;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: rgba(184,134,11,0.07);
+    padding: 0.9rem 1rem;
+    margin: 1.5rem 0;
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--rust); }
+
+  /* NOTA BENE */
+  .nota {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ash);
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 2rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .masthead { padding: 1.5rem 1rem; }
+    .tabs-nav { overflow-x: auto; }
+    .tab-btn { font-size: 0.62rem; padding: 0.6rem 0.8rem; }
+    .content { padding: 1rem; }
+    thead th, td { padding: 0.6rem 0.7rem; }
+    td:first-child { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">Análisis político-comparado · Junio 2026</div>
+  <h1>Injerencia electoral en<br><em>América Latina</em></h1>
+  <p style="font-size:0.88rem; color:#aaa; max-width:600px; line-height:1.6; margin-top:0.5rem;">
+    Colombia 2026 · Chile 1964–1973 · Ecuador 1960–2025.<br>
+    Comparación de modalidades, actores, evidencia documental y fuentes primarias.
+  </p>
+  <div class="masthead-meta">
+    <span>PRIMERA VUELTA: 31 MAY 2026</span>
+    <span>RESULTADO: DE LA ESPRIELLA 43,74% · CEPEDA 2°</span>
+    <span>SEGUNDA VUELTA PENDIENTE</span>
+  </div>
+</div>
+
+<div class="intro">
+  Este cuadro distingue tres niveles de evidencia: <strong>documentado</strong> (fuentes primarias desclasificadas, actas oficiales), 
+  <strong>alegado con respaldo periodístico</strong> (denuncias con fuentes identificadas) y <strong>sin respaldo verificable</strong> (discurso político sin soporte documental). 
+  El término "sinarquía política internacional" no es una categoría analítica reconocida, pero recoge una realidad funcional: 
+  la coordinación de élites conservadoras, gobiernos afines y en algunos casos agencias de inteligencia con influencia en procesos electorales.
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rust)"></div><span>Documentado / Desclasificado</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#777"></div><span>Alegado con fuente identificada</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#bbb"></div><span>Sin respaldo verificable</span></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('comparativo')">Cuadro comparativo</button>
+  <button class="tab-btn" onclick="showTab('colombia')">Colombia 2026</button>
+  <button class="tab-btn" onclick="showTab('chile')">Chile 1964–1973</button>
+  <button class="tab-btn" onclick="showTab('ecuador')">Ecuador</button>
+  <button class="tab-btn" onclick="showTab('fuentes')">Fuentes</button>
+</div>
+
+<div class="content">
+
+  <!-- ════════════════════ TAB: COMPARATIVO ════════════════════ -->
+  <div class="tab-panel active" id="tab-comparativo">
+
+    <div class="callout">
+      <strong>Nota metodológica:</strong> La intervención electoral puede adoptar formas muy distintas: 
+      presión diplomática abierta, financiamiento encubierto de campaña, operaciones psicológicas (medios), 
+      amenazas económicas (aranceles, sanciones) y, en casos extremos, planificación de golpe de Estado. 
+      No todas son equivalentes en gravedad ni en nivel de evidencia disponible.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimensión</th>
+            <th>🇨🇴 Colombia 2026</th>
+            <th>🇨🇱 Chile 1964–1973</th>
+            <th>🇪🇨 Ecuador 1960–2025</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Actor principal externo</td>
+            <td class="col-co">
+              <span class="badge badge-alg">Alegado</span><br>
+              EE.UU. (Trump/administración), Ecuador (Noboa), redes regionales de derecha
+            </td>
+            <td class="col-cl">
+              <span class="badge badge-doc">Documentado</span><br>
+              CIA / Casa Blanca (Nixon, Kissinger). ITT Corporation. Partido Demócrata Cristiano (con fondos CIA)
+            </td>
+            <td class="col-ec">
+              <span class="badge badge-alg">Alegado</span><br>
+              CIA (años 60–70, per Agee). EE.UU. (Base Manta, 1999–2009). Redes narco-criminales (2023–2025)
+            </td>
+          </tr>
+          <tr>
+            <td>Modalidad de intervención</td>
+            <td class="col-co">
+              1. Presión diplomática / amenaza militar (Trump, ene-feb 2026)<br>
+              2. Maniobra arancelaria vinculada a candidato (Noboa + De la Espriella, 30 may 2026)<br>
+              3. Observador político extranjero (Bernie Moreno)<br>
+              4. CIA comparte inteligencia sobre amenaza a candidato
+            </td>
+            <td class="col-cl">
+              1. Financiamiento masivo de campaña (1964, 1970)<br>
+              2. Propaganda / guerra psicológica (El Mercurio)<br>
+              3. Financiamiento de huelgas patronales (1972–73)<br>
+              4. Veto a ascenso de oficiales leales (Track I)<br>
+              5. Apoyo a conspiradores militares (Track II)<br>
+              6. Coordinación con ITT para sabotear economía
+            </td>
+            <td class="col-ec">
+              1. Operaciones encubiertas años 60 (per Agee)<br>
+              2. Condicionamiento de ayuda / base militar (Manta)<br>
+              3. Influencia a través de redes criminales transnacionales (2023)<br>
+              4. Injerencia regional de Noboa en Colombia 2026 (ej. paralelo)
+            </td>
+          </tr>
+          <tr>
+            <td>Objetivo político</td>
+            <td class="col-co">
+              Desplazar gobierno de izquierda (Petro) y favorecer alineación con Washington y bloque derecha regional
+            </td>
+            <td class="col-cl">
+              Impedir acceso / permanencia de Allende (UP) y frenar modelo socialista en Latinoamérica durante Guerra Fría
+            </td>
+            <td class="col-ec">
+              Mantener alineación con EE.UU. y contener influencia soviética (años 60); controlar corredor narcotráfico (2000s); seguridad fronteriza vs. Colombia (2023–26)
+            </td>
+          </tr>
+          <tr>
+            <td>Nivel de evidencia</td>
+            <td class="col-co">
+              <span class="badge badge-alg">Parcial</span><br>
+              Declaraciones públicas y comunicados oficiales. Sin desclasificación de operaciones encubiertas actuales.
+            </td>
+            <td class="col-cl">
+              <span class="badge badge-doc">Alto</span><br>
+              Church Committee (1975); "40 Committee" minutes; cables desclasificados (Clinton, 1999–2000); Comisión Valech; archivos NSA.
+            </td>
+            <td class="col-ec">
+              <span class="badge badge-alg">Bajo–Medio</span><br>
+              Libro de Agee (1975); documentos NACLA; algunos cables desclasificados años 60. Modernamente: reportes periodísticos sin desclasificación oficial.
+            </td>
+          </tr>
+          <tr>
+            <td>Resultado electoral</td>
+            <td class="col-co">
+              1ª vuelta (31 may 2026): De la Espriella 43,74% · Cepeda 2°. Segunda vuelta pendiente.
+            </td>
+            <td class="col-cl">
+              1964: Frei Montalva gana (con apoyo CIA). 1970: Allende gana a pesar de injerencia. 1973: golpe militar (11 sep), Allende muere.
+            </td>
+            <td class="col-ec">
+              Variable. Velasco Ibarra derrocado (1961, 1972). Correa gana (2006) y expulsa base Manta (2009). Noboa gana 2023/2025 con alineación Washington.
+            </td>
+          </tr>
+          <tr>
+            <td>¿Participó la CIA directamente?</td>
+            <td class="col-co">
+              <span class="badge badge-nd">No confirmado</span><br>
+              Sólo se sabe que la CIA compartió inteligencia sobre amenaza a Cepeda (abr 2026). No hay evidencia pública de operación electoral encubierta.
+            </td>
+            <td class="col-cl">
+              <span class="badge badge-doc">Sí, documentado</span><br>
+              Director CIA Helms recibió órdenes directas de Nixon. "Make the economy scream." Track II: contactos con generales. Cable FUBELT confirmado.
+            </td>
+            <td class="col-ec">
+              <span class="badge badge-alg">Alegado (años 60–70)</span><br>
+              Philip Agee describe operaciones en Quito y Guayaquil en CIA Diary (1975). No hay confirmación posterior desclasificada equivalente a Chile.
+            </td>
+          </tr>
+          <tr>
+            <td>Reacción del Estado afectado</td>
+            <td class="col-co">
+              Petro denuncia abiertamente. Cancillería emite comunicado formal contra Noboa (30 may 2026). Petro amenaza con "tomar armas" ante amenaza militar Trump (ene 2026).
+            </td>
+            <td class="col-cl">
+              Allende denuncia ante ONU (dic 1972). General Prats resiste hasta renuncia (ago 1973). Sin respuesta institucional efectiva dado el golpe.
+            </td>
+            <td class="col-ec">
+              Correa expulsa Base Manta (2009). Denuncia del Plan Colombia como desestabilizador. Noboa (2023–26): alineación inversa, actúa como actor interviniente.
+            </td>
+          </tr>
+          <tr>
+            <td>Fuentes primarias clave</td>
+            <td class="col-co">
+              Comunicado Cancillería Colombia, 30 may 2026. CNN Español live (31 may). Infobae Colombia. El Colombiano.
+            </td>
+            <td class="col-cl">
+              Church Committee, Covert Action in Chile (1975). NSA Chile Declassification Project. 40 Committee minutes. Cable FUBELT (CIA, 1970).
+            </td>
+            <td class="col-ec">
+              Philip Agee, <em>Inside the Company: CIA Diary</em> (1975). NACLA Report on the Americas. Cables parcialmente desclasificados (FOIA).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <strong>Diferencia estructural clave:</strong> En Chile (1973) la CIA operó de forma encubierta, con financiamiento clandestino, sabotaje económico y apoyo directo a conspiradores militares — todo documentado. En Colombia 2026, la injerencia visible es <em>abierta y pública</em> (presiones diplomáticas de Trump, maniobra arancelaria de Noboa en vivo), lo cual paradójicamente la hace más fácil de denunciar pero más difícil de probar como "operación encubierta". Son morfologías distintas de un mismo problema: la intervención en la autodeterminación electoral.
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB: COLOMBIA ════════════════════ -->
+  <div class="tab-panel" id="tab-colombia">
+
+    <h2 class="section-head">Colombia 2026 <span>Injerencia documentada y alegada</span></h2>
+
+    <div class="timeline">
+
+      <div class="tl-item documented">
+        <div class="tl-date">Enero 2026 — Amenaza militar de Trump</div>
+        <div class="tl-title">Trump sugiere "operación militar" contra Colombia</div>
+        <div class="tl-desc">Tras la captura de Maduro (Venezuela), Trump llamó a Petro "líder de las drogas" y sugirió que una operación militar en Colombia "suena bien". Petro declaró que Trump le comunicó directamente que "estaba pensando hacer cosas malas en Colombia". Cancillería colombiana contacta republicanos en el Congreso buscando mediación.</div>
+        <div class="tl-source">FUENTE: NBC News (08/01/2026) · Reuters · NPR · Declaraciones Petro en El País América</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">3 Febrero 2026 — Reunión en la Casa Blanca</div>
+        <div class="tl-title">Petro-Trump en Washington: desescalada temporal</div>
+        <div class="tl-desc">Reunión de casi dos horas. Analistas indican que el resultado principal fue evitar una intervención militar unilateral inmediata. La relación se mantuvo "condicionada y vigilada" según el IEEE español (Instituto Español de Estudios Estratégicos).</div>
+        <div class="tl-source">FUENTE: Infobae (04/02/2026) · IEEE CESEDEN · Reuters</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">Abril 2026 — CIA y amenaza a Cepeda</div>
+        <div class="tl-title">Petro revela que la CIA tiene datos sobre plan para asesinar a Cepeda</div>
+        <div class="tl-desc">Petro anunció que la CIA dispone de "datos reales" sobre un posible atentado contra el candidato del Pacto Histórico Iván Cepeda. En este caso la CIA actuó como canal de inteligencia (no como actor de la amenaza). Paradójicamente, Petro —quien denuncia injerencia— recibió información de la misma agencia.</div>
+        <div class="tl-source">FUENTE: El Financiero (17/04/2026) · Presidencia de Colombia</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">30 Mayo 2026 — Noboa + De la Espriella</div>
+        <div class="tl-title">Ecuador elimina aranceles tras videollamada con candidato opositor</div>
+        <div class="tl-desc">A 24 horas de la votación, Noboa anuncia en videollamada pública con De la Espriella la eliminación del arancel del 100% a productos colombianos desde el 1 de junio, comprometiendo acuerdos bilaterales "si gana". Cancillería colombiana emite comunicado formal calificando la acción de "flagrante conculcación del principio de no intervención en asuntos internos". El gobierno colombiano argumenta que el levantamiento de aranceles obedecía en realidad a órdenes perentorias de la CAN — lo que haría el gesto de Noboa una maniobra política sobre una decisión ya tomada.</div>
+        <div class="tl-source">FUENTE: Cancillería de Colombia, comunicado 30/05/2026 · Infobae · El Colombiano · Mundiario</div>
+      </div>
+
+      <div class="tl-item alleged">
+        <div class="tl-date">31 Mayo 2026 — Jornada electoral</div>
+        <div class="tl-title">Denuncia de injerencia generalizada en jornada de votación</div>
+        <div class="tl-desc">Carolina Corcho (Pacto Histórico) rechaza "cualquier intento injerencista de cualquier gobierno extranjero, de los Estados Unidos, del Ecuador, de América Latina". Cepeda califica la acción de Noboa de "vulgar, abierta y descarada intervención". Senador republicano Bernie Moreno actúa como observador internacional. No se documentan operaciones encubiertas en la jornada misma.</div>
+        <div class="tl-source">FUENTE: Infobae · CNN Español live (31/05/2026)</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">31 Mayo 2026 — Resultado primera vuelta</div>
+        <div class="tl-title">De la Espriella 43,74% · Cepeda 2° · Segunda vuelta pendiente</div>
+        <div class="tl-desc">Resultado sorpresivo que da impulso a la nueva ultraderecha y desplaza al uribismo tradicional. Cepeda rechaza resultados preliminares y pide esperar las comisiones escrutadoras. La polarización sigue siendo el eje organizador del sistema político colombiano.</div>
+        <div class="tl-source">FUENTE: Registraduría Nacional · CNN Español · Razón Pública</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB: CHILE ════════════════════ -->
+  <div class="tab-panel" id="tab-chile">
+
+    <h2 class="section-head">Chile 1964–1973 <span>El caso documentado por excelencia</span></h2>
+
+    <div class="callout">
+      El caso chileno es la referencia global más documentada de intervención electoral e institucional de la CIA en América Latina. Los archivos desclasificados permiten reconstruir con precisión los montos, las reuniones y las cadenas de mando.
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item documented">
+        <div class="tl-date">1964 — Elecciones presidenciales</div>
+        <div class="tl-title">Financiamiento CIA a la campaña de Eduardo Frei Montalva</div>
+        <div class="tl-desc">La CIA canalizó aproximadamente $3 millones (USD de la época, equiv. ~$28M actuales) para apoyar al candidato demócrata-cristiano Frei contra Salvador Allende. El aporte representó cerca del 50% del total del gasto de campaña de Frei. El objetivo: impedir el primer triunfo electoral de una izquierda latinoamericana en la Guerra Fría. Frei gana con 56%.</div>
+        <div class="tl-source">FUENTE: Church Committee, "Covert Action in Chile 1963–1973", Senate Report 94-465 (1975), p. 15–17</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">1970 — Previo a elecciones (Track I)</div>
+        <div class="tl-title">Operación para impedir el triunfo electoral de Allende</div>
+        <div class="tl-desc">Financiamiento de partidos opositores y medios de comunicación (El Mercurio). La CIA gastó $1,5 millones en propaganda anti-Allende. "Track I": presión sobre el Congreso chileno para que no ratificara a Allende tras su victoria (4 sep 1970). Fracasó: Allende ratificado el 24 oct 1970.</div>
+        <div class="tl-source">FUENTE: Church Committee (1975) · NSA Chile Declassification Project, Doc. #1970SANTIA04239</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">1970 — Septiembre–Octubre (Track II)</div>
+        <div class="tl-title">Orden Nixon: "Make the economy scream" — Planificación de golpe</div>
+        <div class="tl-desc">Nixon ordena directamente al Director de la CIA Richard Helms impedir que Allende asuma. "Make the economy scream" y "no screaming about the law". Track II: contacto con militares golpistas. La CIA suministra armas a grupo del general Viaux para secuestrar al jefe del Ejército constitucionalista René Schneider. Schneider muere (22 oct 1970). Cable FUBELT desclasificado confirma la cadena de mando completa. Kissinger y el "40 Committee" autorizan la operación.</div>
+        <div class="tl-source">FUENTE: Cable CIA FUBELT (declasificado 1999) · NSA Chile Declassification Project · Church Committee, pp. 226–245</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">1972 — Gobierno de Allende</div>
+        <div class="tl-title">Sabotaje económico + financiamiento de huelgas patronales</div>
+        <div class="tl-desc">La CIA y la ITT Corporation financian el paro de camioneros (1972–73) y otras huelgas patronales que desestabilizaron la economía. El Mercurio recibió $1,5M adicionales para campaña de descrédito. ITT ofreció a la CIA $1M para impedir el gobierno de Allende (cable de Harold Geneen, presidente de ITT, documentado ante el Senado en 1973).</div>
+        <div class="tl-source">FUENTE: Subcommittee on Multinational Corporations, US Senate (1973) · Church Committee · Archivos Kissinger (desclasificados 2004)</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">11 Septiembre 1973</div>
+        <div class="tl-title">Golpe de Estado — Muerte de Allende</div>
+        <div class="tl-desc">Pinochet encabeza el golpe. Bombardeo de La Moneda. Allende muere (suicidio, según comisiones; asesinato según sectores). La CIA niega haber "dado la orden" del golpe, pero los documentos muestran conocimiento previo, apoyo al clima conspirativo y transferencia de armamento. La distinción entre "no ordenar" y "crear las condiciones" es central en el debate historiográfico.</div>
+        <div class="tl-source">FUENTE: Informe Rettig (1991) · Informe Valech I (2004) · NSA Chile Declassification Project · Peter Kornbluh, "The Pinochet File" (National Security Archive, 2003)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB: ECUADOR ════════════════════ -->
+  <div class="tab-panel" id="tab-ecuador">
+
+    <h2 class="section-head">Ecuador <span>De la Guerra Fría a Noboa</span></h2>
+
+    <div class="timeline">
+
+      <div class="tl-item documented">
+        <div class="tl-date">1960–1963 — Operaciones CIA (según Agee)</div>
+        <div class="tl-title">Philip Agee describe operaciones encubiertas en Quito y Guayaquil</div>
+        <div class="tl-desc">Agee, oficial de la CIA destacado en Ecuador (1960–1963), documenta en su libro "Inside the Company: CIA Diary" (1975): infiltración de partidos políticos, sindicatos y organizaciones estudiantiles; financiamiento de candidatos anticomunistas; operaciones psicológicas contra Velasco Ibarra y Arosemena. Son las operaciones "ECACTOR" y conexas. Contexto: Ecuador como nodo en la red anticomunista latinoamericana de la Guerra Fría.</div>
+        <div class="tl-source">FUENTE: Philip Agee, "Inside the Company: CIA Diary", Stonehill Publishing (1975) · NACLA Report on the Americas, vol. IX, n°3 (1975)</div>
+      </div>
+
+      <div class="tl-item alleged">
+        <div class="tl-date">1999–2009 — Base de Manta</div>
+        <div class="tl-title">Presencia militar estadounidense como instrumento de presión política</div>
+        <div class="tl-desc">El convenio de la base aérea de Manta (FOL, Forward Operating Location) otorgó a EE.UU. acceso operacional al territorio ecuatoriano por 10 años. Correa lo interpretó como instrumento de subordinación política y lo no renovó en 2009. La base fue usada formalmente para operaciones anti-narcóticos, pero Correa denunció su uso para vigilancia e influencia política regional. No existe documentación desclasificada equivalente al caso chileno.</div>
+        <div class="tl-source">FUENTE: Acuerdo de cooperación EEUU-Ecuador (1999) · Declaraciones Correa (2007–2009) · NACLA</div>
+      </div>
+
+      <div class="tl-item alleged">
+        <div class="tl-date">2023 — Asesinato de Fernando Villavicencio</div>
+        <div class="tl-title">Crimen organizado transnacional como actor de desestabilización electoral</div>
+        <div class="tl-desc">El candidato presidencial Fernando Villavicencio fue asesinado a pocos días de las elecciones (9 ago 2023). El crimen fue atribuido a sicarios del cartel Los Lobos, con vínculos al Cartel de Sinaloa. La injerencia aquí no es de un Estado sino de redes criminales transnacionales que operan como actores políticos. Este es un patrón distinto: no CIA sino narco-política.</div>
+        <div class="tl-source">FUENTE: Fiscalía General del Estado Ecuador (2023) · InSight Crime · Reuters</div>
+      </div>
+
+      <div class="tl-item documented">
+        <div class="tl-date">Mayo–Junio 2026 — Caso Colombia</div>
+        <div class="tl-title">Noboa como actor de injerencia regional — El rol se invierte</div>
+        <div class="tl-desc">Ecuador, históricamente receptor de injerencia externa, se convierte en actor interviniente: Noboa usa la política arancelaria como palanca electoral en Colombia, anunciando su levantamiento tras videollamada pública con De la Espriella a 24 horas de la primera vuelta. Cancillería colombiana lo denuncia como "flagrante conculcación del principio de no intervención". El patrón es inédito: un presidente latinoamericano utilizando herramientas económicas bilaterales como señal electoral hacia un país vecino.</div>
+        <div class="tl-source">FUENTE: Cancillería de Colombia (30/05/2026) · Infobae · El Colombiano · Mundiario</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB: FUENTES ════════════════════ -->
+  <div class="tab-panel" id="tab-fuentes">
+
+    <h2 class="section-head">Fuentes primarias y documentación <span>Archivos, informes, fuentes periodísticas</span></h2>
+
+    <h3 style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--ash); margin-bottom:0.75rem; font-family:'IBM Plex Mono',monospace;">Chile — Documentos desclasificados</h3>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="src-type">Congreso EE.UU. · 1975</div>
+        <h4>Church Committee — "Covert Action in Chile 1963–1973"</h4>
+        <p>Informe definitivo del Subcomité de Inteligencia del Senado. Documenta montos, actores, cadena de mando. Senate Report 94-465. Fundamento de toda la historiografía posterior.</p>
+        <a href="https://www.intelligence.senate.gov/sites/default/files/94chile.pdf" target="_blank">intelligence.senate.gov/sites/default/files/94chile.pdf</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">National Security Archive · 1999–2004</div>
+        <h4>Chile Declassification Project (NSA/GWU)</h4>
+        <p>Más de 24.000 documentos desclasificados bajo orden ejecutiva Clinton (1999) y sucesivas. Incluye cable FUBELT, minutos del "40 Committee" y comunicaciones Kissinger-Nixon.</p>
+        <a href="https://nsarchive.gwu.edu/project/chile-documentation-project" target="_blank">nsarchive.gwu.edu/project/chile-documentation-project</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">National Security Archive · 2003</div>
+        <h4>Peter Kornbluh, "The Pinochet File"</h4>
+        <p>Síntesis analítica de los documentos desclasificados. Reconstructión del rol de Kissinger, Nixon, Helms y las corporaciones. Referencia académica estándar.</p>
+        <a href="https://nsarchive.gwu.edu/book/pinochet-file" target="_blank">nsarchive.gwu.edu/book/pinochet-file</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">Informe oficial · Chile · 1991</div>
+        <h4>Informe Rettig (Comisión Nacional de Verdad y Reconciliación)</h4>
+        <p>Documenta violaciones a los DD.HH. durante la dictadura. Contexto institucional del golpe y sus consecuencias.</p>
+        <a href="https://www.bcn.cl/bibliodigital/dhisto/lfs/Informe-Retting.pdf" target="_blank">bcn.cl — Informe Rettig completo</a>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--ash); margin:1.5rem 0 0.75rem; font-family:'IBM Plex Mono',monospace;">Ecuador — Fuentes primarias</h3>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="src-type">Libro · 1975</div>
+        <h4>Philip Agee — "Inside the Company: CIA Diary"</h4>
+        <p>Memoria de un ex oficial de la CIA sobre operaciones en Ecuador (1960–63), Uruguay y México. Primera fuente primaria sobre operaciones CIA en Ecuador. Libro prohibido en varios países al publicarse.</p>
+        <a href="https://www.thriftbooks.com/w/inside-the-company-cia-diary_philip-agee/265178/" target="_blank">Stonehill Publishing (1975) — disponible en archivos</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">Cancillería Colombia · 2026</div>
+        <h4>Comunicado oficial sobre injerencia ecuatoriana (30 may 2026)</h4>
+        <p>Rechaza "deliberada injerencia en el proceso electoral" por el anuncio arancelario de Noboa vinculado a De la Espriella. Fuente primaria directa del gobierno colombiano.</p>
+        <a href="https://www.cancilleria.gov.co" target="_blank">cancilleria.gov.co</a>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.82rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--ash); margin:1.5rem 0 0.75rem; font-family:'IBM Plex Mono',monospace;">Colombia 2026 — Fuentes periodísticas verificables</h3>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="src-type">Periodístico · 2026</div>
+        <h4>CNN Español — Cobertura en vivo primera vuelta</h4>
+        <p>Resultados oficiales Registraduría. Declaraciones de candidatos. Denuncias de injerencia en jornada.</p>
+        <a href="https://cnnespanol.cnn.com/2026/05/31/colombia/live-news/elecciones-presidenciales-cepeda-abelardo-paloma-resultados-orix" target="_blank">cnnespanol.cnn.com — Live 31/05/2026</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">Análisis · Instituto Español · 2025</div>
+        <h4>IEEE CESEDEN — "Trump, Colombia y Venezuela: ¿el retorno de la Doctrina Monroe?"</h4>
+        <p>Análisis de la reconfiguración de la relación EE.UU.-Colombia bajo Trump. Evaluación de riesgo de intervención unilateral.</p>
+        <a href="https://www.defensa.gob.es/ceseden/-/ieee/trump-colombia-y-venezuela" target="_blank">defensa.gob.es/ceseden — IEEE</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">Periodístico · 2026</div>
+        <h4>El Colombiano — Gobierno rechaza acuerdo Noboa/De la Espriella</h4>
+        <p>Cubre la posición oficial del gobierno colombiano y la doble lectura del levantamiento arancelario (CAN vs. maniobra política).</p>
+        <a href="https://www.elcolombiano.com/colombia/petro-arremete-contra-daniel-noboa-bernie-moreno-aranceles-elecciones-PG37137769" target="_blank">elcolombiano.com — 30/05/2026</a>
+      </div>
+      <div class="source-card">
+        <div class="src-type">Investigativo · 2026</div>
+        <h4>NBC News — "Frantic diplomacy" around Trump-Petro phone call</h4>
+        <p>Reconstrucción de las gestiones diplomáticas de emergencia por parte de Colombia ante amenaza de Trump en enero 2026.</p>
+        <a href="https://www.nbcnews.com/world/south-america/frantic-diplomacy-set-call-trump-colombias-petro-rcna253142" target="_blank">nbcnews.com — 08/01/2026</a>
+      </div>
+    </div>
+
+    <div class="nota">
+      NB: Este cuadro fue elaborado con fuentes disponibles al 1 de junio de 2026. Los procesos electorales en Colombia aún no han concluido (segunda vuelta pendiente). Las fuentes sobre Chile y Ecuador están basadas en archivos históricos desclasificados y literatura académica de referencia. Este documento no afirma la existencia de operaciones encubiertas no documentadas. La distinción entre presión política pública e intervención encubierta es metodológicamente esencial.
+    </div>
+
+  </div>
+
+</div><!-- /content -->
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
