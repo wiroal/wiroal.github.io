@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De la Espriella vs Cepeda · Comparativa por sector social</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* === ABELARDO DE LA ESPRIELLA (El Tigre) === */
+  /* Inspirado en su identidad: bandera + dorado militar */
+  --tigre-deep: #0A2540;     /* azul marino profundo */
+  --tigre-mid:  #143A66;
+  --tigre-gold: #D4A537;     /* dorado militar */
+  --tigre-red:  #B82431;     /* rojo bandera */
+  --tigre-tint: #F2E8CE;
+  --tigre-grad: linear-gradient(135deg, #0A2540 0%, #143A66 60%, #1F4A85 100%);
+
+  /* === IVÁN CEPEDA (Pacto Histórico) === */
+  /* Inspirado en la portada: morado profundo + naranja popular */
+  --pacto-deep: #4A1A5C;     /* morado profundo */
+  --pacto-mid:  #6B2483;
+  --pacto-orange: #E87722;   /* naranja Pacto */
+  --pacto-yellow: #F4B71F;   /* amarillo popular */
+  --pacto-tint: #FBE4D0;
+  --pacto-grad: linear-gradient(135deg, #4A1A5C 0%, #6B2483 50%, #9C3DAF 100%);
+
+  /* Paleta neutra */
+  --paper: #F6EFE2;
+  --paper-2: #ECE3D0;
+  --ink: #1A1612;
+  --ink-soft: #4A413A;
+  --rule: #2A2218;
+
+  /* Veredictos */
+  --very-favorable: #2D7A3D;
+  --favorable: #6BAA4F;
+  --mixed: #C9921E;
+  --unfavorable: #C25A2A;
+  --very-unfavorable: #A1281F;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Source Serif 4', Georgia, serif;
+  font-size:17px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 8% 15%, rgba(74,26,92,.06) 0%, transparent 35%),
+    radial-gradient(circle at 92% 70%, rgba(10,37,64,.06) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  overflow-x:hidden;
+}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* ─────────────── HERO ─────────────── */
+.hero{
+  position:relative;
+  padding:56px 0 32px;
+}
+.hero-eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:28px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--rule);
+  opacity:.3;
+}
+.hero h1{
+  font-family:'Fraunces', serif;
+  font-weight:300;
+  font-size:clamp(40px, 6.5vw, 88px);
+  line-height:.96;
+  letter-spacing:-.025em;
+  margin-bottom:24px;
+  text-align:center;
+}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero-sub{
+  font-size:18px;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--ink-soft);
+  line-height:1.5;
+  text-align:center;
+}
+
+/* ─────────────── CANDIDATOS ─────────────── */
+.candidates{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  margin:48px 0 0;
+  border:1px solid var(--rule);
+}
+.cand{
+  padding:36px 32px;
+  position:relative;
+  min-height:280px;
+}
+.cand.tigre{
+  background:var(--tigre-grad);
+  color:var(--tigre-tint);
+}
+.cand.pacto{
+  background:var(--pacto-grad);
+  color:var(--pacto-tint);
+  border-left:1px solid var(--rule);
+}
+.cand-flag{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  opacity:.75;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cand-flag .dot{
+  width:12px;height:12px;border-radius:50%;
+}
+.tigre .cand-flag .dot{background:var(--tigre-gold)}
+.pacto .cand-flag .dot{background:var(--pacto-orange)}
+.cand h2{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:42px;
+  letter-spacing:-.02em;
+  line-height:1;
+  margin-bottom:8px;
+}
+.cand .alias{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:20px;
+  opacity:.85;
+  margin-bottom:18px;
+}
+.tigre .alias{color:var(--tigre-gold)}
+.pacto .alias{color:var(--pacto-yellow)}
+.cand .lema{
+  font-size:15px;
+  line-height:1.45;
+  opacity:.85;
+  margin-bottom:20px;
+  font-style:italic;
+}
+.cand ul{
+  list-style:none;
+  font-size:13px;
+  line-height:1.45;
+  opacity:.85;
+}
+.cand ul li{padding:3px 0;display:flex;gap:10px}
+.cand ul li::before{
+  content:'→';
+  flex-shrink:0;
+}
+.tigre ul li::before{color:var(--tigre-gold)}
+.pacto ul li::before{color:var(--pacto-orange)}
+
+/* ─────────────── ESCALA ─────────────── */
+.scale{
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  border-top:none;
+  padding:18px 32px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:28px;
+  flex-wrap:wrap;
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.scale-item{display:flex;align-items:center;gap:8px}
+.scale-mark{
+  font-size:14px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;height:24px;
+  border-radius:3px;
+  color:white;
+}
+.m-vfav{background:var(--very-favorable)}
+.m-fav{background:var(--favorable)}
+.m-mix{background:var(--mixed)}
+.m-unf{background:var(--unfavorable)}
+.m-vunf{background:var(--very-unfavorable)}
+
+/* ─────────────── SECTORES ─────────────── */
+.sector{
+  margin:64px 0;
+  border:1px solid var(--rule);
+  background:var(--paper);
+  overflow:hidden;
+}
+.sector-header{
+  background:var(--ink);
+  color:var(--paper);
+  padding:24px 32px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:24px;
+  align-items:center;
+}
+.sector-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:36px;
+  font-weight:300;
+  letter-spacing:-.02em;
+  opacity:.5;
+}
+.sector-title{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:32px;
+  letter-spacing:-.01em;
+  line-height:1.05;
+}
+.sector-title em{font-style:italic;font-weight:300}
+.sector-axis{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  opacity:.6;
+  text-align:right;
+}
+
+/* Cuerpo del sector: dos columnas + veredicto */
+.sector-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border-bottom:1px solid var(--rule);
+}
+.prog{
+  padding:32px;
+  position:relative;
+  border-right:1px solid rgba(42,34,24,.15);
+}
+.prog:last-child{border-right:none}
+.prog.tigre-prog{
+  background:linear-gradient(180deg, rgba(10,37,64,.04) 0%, rgba(10,37,64,.08) 100%);
+  border-top:3px solid var(--tigre-deep);
+}
+.prog.pacto-prog{
+  background:linear-gradient(180deg, rgba(74,26,92,.04) 0%, rgba(74,26,92,.08) 100%);
+  border-top:3px solid var(--pacto-deep);
+}
+.prog-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid rgba(42,34,24,.2);
+}
+.prog-name{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.tigre-prog .prog-name{color:var(--tigre-deep)}
+.pacto-prog .prog-name{color:var(--pacto-deep)}
+.verdict-mark{
+  font-family:'JetBrains Mono', monospace;
+  font-size:16px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 12px;
+  border-radius:3px;
+  color:white;
+  letter-spacing:.05em;
+}
+.prog h4{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:20px;
+  line-height:1.2;
+  letter-spacing:-.01em;
+  margin-bottom:14px;
+}
+.tigre-prog h4{color:var(--tigre-deep)}
+.pacto-prog h4{color:var(--pacto-deep)}
+.prog p{
+  font-size:15px;
+  line-height:1.55;
+  margin-bottom:12px;
+}
+.prog p:last-child{margin-bottom:0}
+.prog .quote{
+  border-left:3px solid;
+  padding:10px 14px;
+  margin:14px 0;
+  font-style:italic;
+  font-size:14px;
+  line-height:1.5;
+  background:rgba(255,255,255,.5);
+}
+.tigre-prog .quote{border-left-color:var(--tigre-gold)}
+.pacto-prog .quote{border-left-color:var(--pacto-orange)}
+
+/* Veredicto del sector */
+.verdict{
+  padding:28px 32px;
+  background:var(--paper-2);
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:24px;
+  align-items:center;
+}
+.verdict-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+.verdict-winner{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:24px;
+  line-height:1.15;
+  letter-spacing:-.01em;
+}
+.verdict-winner .swatch{
+  display:inline-block;
+  width:14px;height:14px;
+  border-radius:50%;
+  margin-right:8px;
+  vertical-align:middle;
+}
+.verdict-winner .tswatch{background:var(--tigre-deep);border:2px solid var(--tigre-gold)}
+.verdict-winner .pswatch{background:var(--pacto-deep);border:2px solid var(--pacto-orange)}
+.verdict-arrow{
+  font-family:'Fraunces', serif;
+  font-size:48px;
+  font-weight:300;
+  line-height:1;
+  color:var(--ink-soft);
+}
+.verdict-detail{
+  font-size:14px;
+  line-height:1.5;
+  color:var(--ink-soft);
+  margin-top:6px;
+  max-width:680px;
+}
+
+/* ─────────────── RESUMEN MATRIZ ─────────────── */
+.matrix-section{
+  padding:80px 0 40px;
+  border-top:1px solid var(--rule);
+  margin-top:80px;
+}
+.matrix-section h2{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:clamp(34px, 5vw, 54px);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  margin-bottom:18px;
+  text-align:center;
+}
+.matrix-section h2 em{font-style:italic;font-weight:300}
+.matrix-section .matrix-sub{
+  text-align:center;
+  font-size:17px;
+  color:var(--ink-soft);
+  max-width:660px;
+  margin:0 auto 48px;
+}
+
+.matrix{
+  border:1px solid var(--rule);
+  background:var(--paper);
+}
+.matrix-row{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  border-bottom:1px solid rgba(42,34,24,.15);
+}
+.matrix-row:last-child{border-bottom:none}
+.matrix-row.head{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.matrix-row.head > div{padding:18px 22px}
+.matrix-row.head .htigre{background:var(--tigre-deep);position:relative;padding-left:42px}
+.matrix-row.head .hpacto{background:var(--pacto-deep);position:relative;padding-left:42px}
+.matrix-row.head .htigre::before,
+.matrix-row.head .hpacto::before{
+  content:'';
+  position:absolute;
+  left:22px;top:50%;
+  transform:translateY(-50%);
+  width:10px;height:10px;border-radius:50%;
+}
+.matrix-row.head .htigre::before{background:var(--tigre-gold)}
+.matrix-row.head .hpacto::before{background:var(--pacto-orange)}
+.matrix-row .mlabel{
+  padding:18px 22px;
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:17px;
+  letter-spacing:-.01em;
+  border-right:1px solid rgba(42,34,24,.15);
+  display:flex;
+  align-items:center;
+}
+.matrix-row .mcell{
+  padding:18px 22px;
+  font-size:14px;
+  line-height:1.45;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border-right:1px solid rgba(42,34,24,.15);
+}
+.matrix-row .mcell:last-child{border-right:none}
+.matrix-row .mcell .vm{
+  font-family:'JetBrains Mono', monospace;
+  font-weight:700;
+  font-size:14px;
+  flex-shrink:0;
+  width:36px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:3px;
+  color:white;
+  letter-spacing:.04em;
+}
+
+/* ─────────────── SÍNTESIS FINAL ─────────────── */
+.synthesis{
+  background:var(--ink);
+  color:var(--paper);
+  padding:80px 0;
+  margin-top:80px;
+  position:relative;
+  overflow:hidden;
+}
+.synthesis::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:50%;height:6px;
+  background:linear-gradient(90deg, var(--tigre-gold), var(--tigre-red));
+}
+.synthesis::after{
+  content:'';
+  position:absolute;
+  top:0;right:0;
+  width:50%;height:6px;
+  background:linear-gradient(90deg, var(--pacto-orange), var(--pacto-yellow));
+}
+.synthesis-eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(246,239,226,.5);
+  margin-bottom:20px;
+}
+.synthesis h2{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:clamp(32px, 5vw, 48px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:36px;
+}
+.synthesis h2 em{font-style:italic;font-weight:300}
+.synth-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  margin-top:40px;
+}
+.synth-block h3{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  font-size:22px;
+  margin-bottom:14px;
+  letter-spacing:-.01em;
+}
+.synth-block.t-block h3{color:var(--tigre-gold)}
+.synth-block.p-block h3{color:var(--pacto-orange)}
+.synth-block p{
+  font-size:16px;
+  line-height:1.55;
+  color:rgba(246,239,226,.85);
+}
+.final-question{
+  margin-top:56px;
+  padding:32px 36px;
+  border-left:4px solid var(--tigre-gold);
+  border-right:4px solid var(--pacto-orange);
+  background:rgba(255,255,255,.04);
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:22px;
+  line-height:1.4;
+}
+
+/* ─────────────── FOOTER ─────────────── */
+footer{
+  padding:40px 0 60px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  text-align:center;
+  background:var(--paper);
+}
+
+/* ─────────────── MOBILE ─────────────── */
+@media (max-width: 860px){
+  .wrap{padding:0 18px}
+  .candidates{grid-template-columns:1fr}
+  .cand.pacto{border-left:none;border-top:1px solid var(--rule)}
+  .scale{gap:14px;padding:14px 18px;font-size:9px}
+  .sector-header{grid-template-columns:auto 1fr;gap:14px;padding:18px 20px}
+  .sector-axis{display:none}
+  .sector-title{font-size:22px}
+  .sector-num{font-size:28px}
+  .sector-body{grid-template-columns:1fr}
+  .prog{border-right:none;border-bottom:1px solid rgba(42,34,24,.15);padding:24px 20px}
+  .prog:last-child{border-bottom:none}
+  .verdict{grid-template-columns:1fr;gap:12px;padding:22px 20px}
+  .verdict-arrow{display:none}
+  .matrix-row{grid-template-columns:1fr}
+  .matrix-row > div{border-right:none !important}
+  .matrix-row .mlabel{
+    background:var(--ink);
+    color:var(--paper);
+    font-size:14px;
+    padding:12px 18px;
+  }
+  .matrix-row .mcell{padding:14px 18px;border-bottom:1px solid rgba(42,34,24,.15)}
+  .matrix-row .mcell::before{
+    content:attr(data-cand);
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-right:6px;
+    font-weight:600;
+  }
+  .matrix-row.head{display:none}
+  .synth-grid{grid-template-columns:1fr;gap:32px}
+  .final-question{font-size:18px;padding:24px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">
+      <span>Análisis comparativo · Programas de gobierno 2026–2030</span>
+    </div>
+    <h1>
+      <span style="color:var(--tigre-deep)">De la Espriella</span>
+      <em>vs</em>
+      <span style="color:var(--pacto-deep)">Cepeda</span>
+    </h1>
+    <p class="hero-sub">
+      Dos proyectos en extremos opuestos del espectro. La pregunta no es "cuál es bueno", sino <em>para quién</em>. Sector por sector, qué ofrece cada programa al empresario, al banquero, al campesino, al asalariado y al desempleado.
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="candidates">
+    <div class="cand tigre">
+      <div class="cand-flag"><span class="dot"></span>Derecha · Defensores de la Patria</div>
+      <h2>Abelardo de la Espriella</h2>
+      <div class="alias">"El Milagro de los Nunca"</div>
+      <p class="lema">Salvar la patria de cuatro amenazas: autoritarismo, violencia criminal, corrupción y narcotráfico. Pasar de administrar escasez a desatar abundancia.</p>
+      <ul>
+        <li>Crecimiento 7% al estilo Corea–Singapur</li>
+        <li>Reducir el Estado en 25%</li>
+        <li>Desregulación: "Una entra y dos salen"</li>
+        <li>Fumigación, extradición y mano dura</li>
+      </ul>
+    </div>
+    <div class="cand pacto">
+      <div class="cand-flag"><span class="dot"></span>Izquierda · Pacto Histórico</div>
+      <h2>Iván Cepeda</h2>
+      <div class="alias">"El Poder de la Verdad"</div>
+      <p class="lema">Profundizar el cambio iniciado por Petro. Tres revoluciones: ética (anticorrupción), agraria y urbana. Potencia mundial de la vida y de los alimentos.</p>
+      <ul>
+        <li>Defender salario vital y reforma laboral</li>
+        <li>Revolución Agraria: tierra para el campesino</li>
+        <li>Reforma a la salud: fin del modelo Ley 100</li>
+        <li>Transición energética, prohibición de fracking</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="scale">
+    <span style="font-weight:600;color:var(--ink)">Escala de favorabilidad:</span>
+    <div class="scale-item"><span class="scale-mark m-vfav">++</span><span>Muy favorable</span></div>
+    <div class="scale-item"><span class="scale-mark m-fav">+</span><span>Favorable</span></div>
+    <div class="scale-item"><span class="scale-mark m-mix">±</span><span>Mixto</span></div>
+    <div class="scale-item"><span class="scale-mark m-unf">−</span><span>Desfavorable</span></div>
+    <div class="scale-item"><span class="scale-mark m-vunf">−−</span><span>Muy desfavorable</span></div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 1: EMPRESARIOS ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">01</div>
+      <div class="sector-title">Empresarios <em>(gran capital)</em></div>
+      <div class="sector-axis">Tributos · Regulación · Inversión</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-vfav">++</span>
+        </div>
+        <h4>Programa diseñado para el inversionista</h4>
+        <p>Reducción explícita de carga tributaria. "Una entra y dos salen": desregulación radical de Invima, ICA, licencias ambientales, consulta previa, MinComercio. Seguridad jurídica para minería e hidrocarburos. Ajuste fiscal de $70 bn que mejora la calificación de riesgo y abarata el costo de fondeo.</p>
+        <div class="quote">"Revisión en detalle de ineficiencias en Invima, ICA, superintendencias, cámaras de comercio, notariado y registro, licencias ambientales."</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-unf">−</span>
+        </div>
+        <h4>Convivencia tensa con condiciones</h4>
+        <p>Diálogo explícito con el empresariado pero subordinado a tres líneas rojas: impuestos progresivos para grandes capitales, recuperación de cadenas productivas perdidas con TLCs, y participación obligatoria de la economía popular en la contratación pública. Crítica directa al "capital extranjero" y a la "doctrina de sometimiento" de la apertura económica.</p>
+        <div class="quote">"A los pequeños, medianos y grandes empresarios los invito a que construyamos juntos… pero con el respeto a la justicia social."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el gran empresario</div>
+        <div class="verdict-winner"><span class="swatch tswatch"></span>De la Espriella, sin ambigüedad</div>
+        <div class="verdict-detail">Es el bloque ganador más claro del programa de De la Espriella. En el de Cepeda, el gran capital convive con un Estado que regula precios, redistribuye contratos y eleva la carga sobre los más ricos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 2: BANQUEROS ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">02</div>
+      <div class="sector-title">Banqueros y <em>sector financiero</em></div>
+      <div class="sector-axis">Deuda · Regla fiscal · Crédito</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-vfav">++</span>
+        </div>
+        <h4>Disciplina fiscal y vivienda como negocio</h4>
+        <p>Cumplir Regla Fiscal estrictamente, anclar Deuda/PIB bajo 55% en 2030, gestión activa de pasivos. Mejora primas de riesgo y rentabilidad de tenedores de deuda. El programa "País de propietarios" (crédito al 2% a 30 años) probablemente se canaliza vía banca con garantía estatal: negocio de volumen garantizado.</p>
+        <div class="quote">"Estabilizar y refinanciar la deuda pública mediante una gestión activa de pasivos."</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-unf">−</span>
+        </div>
+        <h4>Crédito popular y banca pública</h4>
+        <p>Sin mención explícita a banca privada pero el modelo presiona: economía popular como sujeto de contratación, fortalecimiento de la UIAF, persecución de lavado, posible expansión de banca pública para reforma agraria. La "Austeridad republicana" implica más gasto social y menos espacio para reducciones de gasto que beneficien tenedores de bonos.</p>
+        <div class="quote">"Pasaremos de reaccionar a anticiparnos. La transparencia y la información en tiempo real serán nuestra primera línea de defensa."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el sector financiero</div>
+        <div class="verdict-winner"><span class="swatch tswatch"></span>De la Espriella, ampliamente</div>
+        <div class="verdict-detail">La banca prefiere previsibilidad fiscal, regla estricta y crédito garantizado por el Estado. El programa de Cepeda no es hostil al sector pero subordina su lógica a objetivos sociales.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 3: CAMPESINOS ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">03</div>
+      <div class="sector-title">Campesinos <em>(economía familiar)</em></div>
+      <div class="sector-axis">Tierra · Crédito · Vías terciarias</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-mix">±</span>
+        </div>
+        <h4>Campesino-empresario, no campesino sin tierra</h4>
+        <p>Promete titulación, crédito, 600.000 empleos rurales, expansión de 1,5–2 millones de hectáreas. Plan Cosecha Solidaria contra el hambre. Pero el modelo es agroindustrial exportador ("Matto Grosso colombiano") y "acaba con la falsa reforma agraria" —desmonta la redistribución estatal de tierras. Beneficio claro para el campesino con vocación empresarial; no para el de subsistencia.</p>
+        <div class="quote">"Acabar la falsa reforma agraria y volver propietario al campesino… ampliar la frontera agrícola en 1,5 millones de hectáreas."</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-vfav">++</span>
+        </div>
+        <h4>Revolución Agraria como eje central</h4>
+        <p>Profundizar el proceso de Petro: 700.000 hectáreas ya en el Fondo de Tierras, 270.000 entregadas a 72.000 familias, 1'800.000 formalizadas. 17 zonas de reserva campesina. Compra estatal de producción a precios justos para luchar contra el hambre. Vías terciarias, agua potable, energía limpia rural. Reconocimiento constitucional del campesinado como sujeto de derechos.</p>
+        <div class="quote">"La reforma agraria vamos a transformarla en Revolución Agraria… compra por parte del Estado de producción agropecuaria a precios justos."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el campesino</div>
+        <div class="verdict-winner"><span class="swatch pswatch"></span>Cepeda, claramente</div>
+        <div class="verdict-detail">El programa de Cepeda construye al campesino como sujeto de derechos con redistribución activa. El de De la Espriella lo trata como pequeño empresario en una cadena agroindustrial; útil para algunos, irrelevante para los 89% sin acceso a crédito.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 4: ASALARIADOS FORMALES ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">04</div>
+      <div class="sector-title">Asalariados <em>formales</em></div>
+      <div class="sector-axis">Salario · Reforma laboral · Pensiones</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-unf">−</span>
+        </div>
+        <h4>El gran ausente del programa</h4>
+        <p>El asalariado formal no aparece como sujeto de política pública. No hay reforma laboral propia, no hay política salarial, no hay alivio tributario para personas naturales. La crítica implícita al modelo Petro sugiere que el rumbo es reversar la reforma laboral (recargos nocturnos, dominicales). Su única ganancia depende del derrame: crecer al 7% generaría empleo, pero sin reforma laboral activa.</p>
+        <div class="quote">El programa <em>no contiene</em> propuestas específicas para el trabajador asalariado.</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-vfav">++</span>
+        </div>
+        <h4>"Salario vital" como bandera</h4>
+        <p>Defender y profundizar lo conseguido en el gobierno Petro: aumento del salario mínimo del 37% en tres años y medio ("salario vital"), 2,5 millones de empleos creados, reforma laboral que devuelve recargos por trabajo nocturno y dominical, reforma pensional. Todo el programa está construido alrededor del trabajador como sujeto político central.</p>
+        <div class="quote">"La reforma laboral y la política de salario vital han devuelto recargos a millones de trabajadoras y trabajadores."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el asalariado</div>
+        <div class="verdict-winner"><span class="swatch pswatch"></span>Cepeda, decisivamente</div>
+        <div class="verdict-detail">Asimetría tan marcada como en empresarios pero invertida. El programa de De la Espriella simplemente no habla a este sector; el de Cepeda lo pone en el centro.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 5: INFORMALES Y DESEMPLEADOS ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">05</div>
+      <div class="sector-title">Informales y <em>desempleados</em></div>
+      <div class="sector-axis">Empleo · Seguridad social · Formalización</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-mix">±</span>
+        </div>
+        <h4>Formalización vía desregulación</h4>
+        <p>Apuesta al crecimiento del 7% como motor de empleo formal. Programas de capacitación: ciclos cortos en IA, robótica, bilingüismo, economía del cuidado, STEM para mujeres. Pero la hipótesis es la misma de siempre: reducir cargas al empleador formaliza al informal. Históricamente esa ecuación no se ha cumplido en Colombia.</p>
+        <div class="quote">"Crear programas de ciclos cortos en tecnologías de cuarta revolución industrial… para formar a jóvenes productivos."</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-fav">+</span>
+        </div>
+        <h4>Economía popular como sujeto de derechos</h4>
+        <p>Las juntas de acción comunal, asociaciones campesinas, madres comunitarias y mujeres cuidadoras se convierten en sujetos de contratación pública. Subsidios sociales ampliados (Colombia Mayor duplicado). Reforma a la salud con cobertura universal. El informal gana al ser reconocido como economía popular, no por desregulación.</p>
+        <div class="quote">"Convertir a las comunidades y sus organizaciones en sujetos de contratación pública."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el informal y desempleado</div>
+        <div class="verdict-winner"><span class="swatch pswatch"></span>Cepeda, con matices</div>
+        <div class="verdict-detail">Cepeda ofrece reconocimiento e ingresos directos a través de contratación pública y subsidios. De la Espriella ofrece capacitación y una apuesta de crecimiento agregado. Lo primero es más tangible; lo segundo, más incierto.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTOR 6: SALUD Y PENSIONES ═══════════════ -->
+  <div class="sector">
+    <div class="sector-header">
+      <div class="sector-num">06</div>
+      <div class="sector-title">Salud y <em>protección social</em></div>
+      <div class="sector-axis">EPS · UPC · Reforma a la salud</div>
+    </div>
+    <div class="sector-body">
+      <div class="prog tigre-prog">
+        <div class="prog-head">
+          <span class="prog-name">De la Espriella</span>
+          <span class="verdict-mark m-mix">±</span>
+        </div>
+        <h4>Estabilizar el modelo de aseguramiento</h4>
+        <p>Plan de choque de $10 bn, revisión trimestral de UPC, topes a costos administrativos de EPS, arbitraje de ADRES. Preserva el modelo de la Ley 100 con correcciones técnicas. Ganancia inmediata en flujo: paga deudas hospitalarias, libera medicamentos. Pero mantiene la estructura que produjo 2.436 muertes evitables y 25 millones de afiliados en EPS intervenidas.</p>
+        <div class="quote">"Hacer una transición responsable que preserve lo que funciona y corrija lo que colapsó."</div>
+      </div>
+      <div class="prog pacto-prog">
+        <div class="prog-head">
+          <span class="prog-name">Cepeda</span>
+          <span class="verdict-mark m-fav">+</span>
+        </div>
+        <h4>Acabar el "negocio" Ley 100</h4>
+        <p>Continuar la reforma a la salud: "que deje de convertir la atención médica en un negocio como la convirtió Álvaro Uribe con la Ley 100". Atención primaria masiva: 10.000 equipos básicos, 7,5 millones de hogares, más de 1.300 proyectos de infraestructura hospitalaria. Para el usuario, transformación estructural; para EPS y operadores privados, fin de modelo.</p>
+        <div class="quote">"Requerimos una reforma a la salud que deje de convertir la atención médica en un negocio."</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <div class="verdict-arrow">↑</div>
+      <div>
+        <div class="verdict-label">Más favorable para el paciente</div>
+        <div class="verdict-winner"><span class="swatch pswatch"></span>Cepeda en estructura · <span class="swatch tswatch" style="margin-left:8px"></span>De la Espriella en plazo corto</div>
+        <div class="verdict-detail">El plan de choque de De la Espriella libera presión inmediata; la apuesta estructural de Cepeda apunta a la causa del colapso. Para EPS, IPS privadas y operadores: De la Espriella es supervivencia, Cepeda es transición forzada.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MATRIZ RESUMEN ═══════════════ -->
+  <section class="matrix-section">
+    <h2>La matriz <em>en un vistazo</em></h2>
+    <p class="matrix-sub">Seis sectores, dos programas, treinta segundos.</p>
+
+    <div class="matrix">
+      <div class="matrix-row head">
+        <div>SECTOR SOCIAL</div>
+        <div class="htigre">De la Espriella</div>
+        <div class="hpacto">Cepeda</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Gran empresariado</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-vfav">++</span>Programa diseñado para el inversionista</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-unf">−</span>Convivencia con condiciones progresivas</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Banca y sector financiero</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-vfav">++</span>Disciplina fiscal y crédito hipotecario</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-unf">−</span>Subordinado a objetivos sociales</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Campesino familiar</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-mix">±</span>Pequeño empresario, no sujeto sin tierra</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-vfav">++</span>Revolución Agraria como eje central</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Asalariado formal</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-unf">−</span>El gran ausente del programa</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-vfav">++</span>"Salario vital" como bandera</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Informal y desempleado</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-mix">±</span>Formalización vía desregulación</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-fav">+</span>Economía popular como contratista</div>
+      </div>
+      <div class="matrix-row">
+        <div class="mlabel">Paciente del sistema de salud</div>
+        <div class="mcell" data-cand="De la Espriella"><span class="vm m-mix">±</span>Alivio inmediato, estructura intacta</div>
+        <div class="mcell" data-cand="Cepeda"><span class="vm m-fav">+</span>Cambio estructural, transición incierta</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ SÍNTESIS ═══════════════ -->
+<section class="synthesis">
+  <div class="wrap">
+    <div class="synthesis-eyebrow">Síntesis</div>
+    <h2>Dos coaliciones <em>perfectamente espejadas</em></h2>
+
+    <p style="font-size:18px;line-height:1.6;color:rgba(246,239,226,.88);max-width:820px">
+      Lo notable no es que los programas difieran —era previsible— sino la <em>simetría</em> con que se distribuyen los apoyos. Quien gana con uno, pierde con el otro, casi sin zonas grises.
+    </p>
+
+    <div class="synth-grid">
+      <div class="synth-block t-block">
+        <h3>De la Espriella tiene cuatro ganadores</h3>
+        <p>Gran capital productivo, sector financiero, exportadores de hidrocarburos y minería formal, y campesino-empresario de la altillanura. Su programa es internamente consistente con un proyecto de acumulación liderada por inversión privada, Estado pequeño y desregulación.</p>
+      </div>
+      <div class="synth-block p-block">
+        <h3>Cepeda tiene cuatro ganadores</h3>
+        <p>Campesino sin tierra y de economía familiar, asalariado formal, informal urbano organizado, y paciente del sistema público. Su programa es internamente consistente con un proyecto de redistribución activa, Estado garante de derechos y economía popular reconocida.</p>
+      </div>
+    </div>
+
+    <div class="final-question">
+      No hay tercera vía implícita en estos dos textos. La decisión electoral no es entre matices del mismo modelo: es entre dos teorías opuestas de cómo se sale de la pobreza, quién paga el ajuste y qué papel debe jugar el Estado.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Análisis comparativo · Programas 2026–2030 · Junio 2026
+  </div>
+</footer>
+
+</body>
+</html>

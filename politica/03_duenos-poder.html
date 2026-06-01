@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El mapa del poder · Dueños de medios, banca y grandes empresas en Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper: #F6EFE2;
+  --paper-2: #ECE3D0;
+  --paper-3: #E2D8C0;
+  --ink: #14110D;
+  --ink-2: #2A2218;
+  --ink-soft: #4A413A;
+  --rule: #2A2218;
+
+  /* Identidades cromáticas por grupo */
+  --aval: #1B3A5C;        /* azul Aval */
+  --aval-soft: #C5D2E0;
+  --gilinski: #5C1F3F;    /* vino Gilinski */
+  --gilinski-soft: #E0C8D2;
+  --gea: #6B4423;         /* tabaco GEA Antioqueño */
+  --gea-soft: #DCC9AE;
+  --ardila: #B82431;      /* rojo RCN/Ardila */
+  --ardila-soft: #E8C8CB;
+  --santodomingo: #3F4F2E; /* verde oliva Santo Domingo */
+  --santodomingo-soft: #D2D8C5;
+  --prisa: #6B6B6B;       /* gris neutro */
+  --prisa-soft: #D5D5D5;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Source Serif 4', Georgia, serif;
+  font-size:16px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(107,68,35,.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(27,58,92,.06) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  overflow-x:hidden;
+}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+/* ─────────────── HERO ─────────────── */
+.hero{padding:56px 0 28px}
+.eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:28px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.eyebrow::before,
+.eyebrow::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--rule);
+  opacity:.3;
+}
+.hero h1{
+  font-family:'Fraunces', serif;
+  font-weight:300;
+  font-size:clamp(46px, 7vw, 92px);
+  line-height:.95;
+  letter-spacing:-.025em;
+  margin-bottom:24px;
+}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--gea)}
+.hero-sub{
+  font-size:19px;
+  max-width:780px;
+  color:var(--ink-soft);
+  line-height:1.5;
+}
+.hero-sub strong{color:var(--ink);font-weight:600}
+
+/* ─────────────── INDICADORES ─────────────── */
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin:40px 0 56px;
+}
+.kpi{
+  padding:24px 22px;
+  background:var(--paper);
+}
+.kpi-num{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:48px;
+  line-height:1;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.kpi-num em{font-style:italic;font-weight:300}
+.kpi-num sup{
+  font-size:.4em;
+  font-weight:600;
+  vertical-align:super;
+  color:var(--ink-soft);
+}
+.kpi-lbl{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  line-height:1.4;
+}
+
+/* ─────────────── TABLA PRINCIPAL ─────────────── */
+.section-title{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:clamp(32px, 4.5vw, 48px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+}
+.section-title em{font-style:italic;font-weight:300}
+.section-sub{
+  font-size:16px;
+  color:var(--ink-soft);
+  max-width:680px;
+  margin-bottom:40px;
+}
+
+.groups{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border:1px solid var(--rule);
+  background:var(--paper);
+}
+.group{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  border-bottom:1px solid var(--rule);
+}
+.group:last-child{border-bottom:none}
+
+.group-head{
+  padding:32px 28px;
+  color:white;
+  position:relative;
+}
+.group-head .gtag{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.75;
+  margin-bottom:14px;
+}
+.group-head h3{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:26px;
+  line-height:1.05;
+  letter-spacing:-.015em;
+  margin-bottom:14px;
+}
+.group-head .head{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:15px;
+  font-weight:300;
+  line-height:1.35;
+  opacity:.92;
+  margin-bottom:14px;
+}
+.group-head .wealth{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  opacity:.8;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.2);
+}
+.group-head .wealth strong{font-weight:700}
+
+.group.aval .group-head{background:linear-gradient(160deg, #102740 0%, var(--aval) 100%)}
+.group.gilinski .group-head{background:linear-gradient(160deg, #3F1029 0%, var(--gilinski) 100%)}
+.group.gea .group-head{background:linear-gradient(160deg, #4A2D14 0%, var(--gea) 100%)}
+.group.ardila .group-head{background:linear-gradient(160deg, #841621 0%, var(--ardila) 100%)}
+.group.santodomingo .group-head{background:linear-gradient(160deg, #2A371F 0%, var(--santodomingo) 100%)}
+.group.prisa .group-head{background:linear-gradient(160deg, #4A4A4A 0%, var(--prisa) 100%)}
+
+/* Cuerpo del grupo */
+.group-body{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:0;
+}
+.cell{
+  padding:24px 22px;
+  border-right:1px solid rgba(42,34,24,.15);
+  position:relative;
+}
+.cell:last-child{border-right:none}
+.cell-tag{
+  font-family:'JetBrains Mono', monospace;
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  padding-bottom:8px;
+  border-bottom:2px solid;
+  display:inline-block;
+}
+.group.aval .cell-tag{color:var(--aval);border-color:var(--aval)}
+.group.gilinski .cell-tag{color:var(--gilinski);border-color:var(--gilinski)}
+.group.gea .cell-tag{color:var(--gea);border-color:var(--gea)}
+.group.ardila .cell-tag{color:var(--ardila);border-color:var(--ardila)}
+.group.santodomingo .cell-tag{color:var(--santodomingo);border-color:var(--santodomingo)}
+.group.prisa .cell-tag{color:var(--prisa);border-color:var(--prisa)}
+
+.cell ul{list-style:none;font-size:14px;line-height:1.45}
+.cell ul li{padding:3px 0;display:flex;gap:8px}
+.cell ul li::before{
+  content:'';
+  flex-shrink:0;
+  width:5px;height:5px;border-radius:50%;
+  margin-top:8px;
+}
+.group.aval .cell ul li::before{background:var(--aval)}
+.group.gilinski .cell ul li::before{background:var(--gilinski)}
+.group.gea .cell ul li::before{background:var(--gea)}
+.group.ardila .cell ul li::before{background:var(--ardila)}
+.group.santodomingo .cell ul li::before{background:var(--santodomingo)}
+.group.prisa .cell ul li::before{background:var(--prisa)}
+
+.cell .empty{
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-soft);
+  opacity:.7;
+}
+.cell strong{font-weight:600;color:var(--ink)}
+
+/* ─────────────── MAPA DE MEDIOS ─────────────── */
+.media-map{
+  margin:72px 0 40px;
+  padding:48px 0;
+  border-top:1px solid var(--rule);
+}
+.media-grid{
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin-top:32px;
+}
+.media-col{
+  background:var(--paper);
+  padding:22px 18px;
+  min-height:280px;
+  position:relative;
+}
+.media-col.aval-col{background:linear-gradient(180deg, var(--aval) 0%, var(--aval) 50px, var(--aval-soft) 50px, var(--paper) 100%)}
+.media-col.gilinski-col{background:linear-gradient(180deg, var(--gilinski) 0%, var(--gilinski) 50px, var(--gilinski-soft) 50px, var(--paper) 100%)}
+.media-col.ardila-col{background:linear-gradient(180deg, var(--ardila) 0%, var(--ardila) 50px, var(--ardila-soft) 50px, var(--paper) 100%)}
+.media-col.sd-col{background:linear-gradient(180deg, var(--santodomingo) 0%, var(--santodomingo) 50px, var(--santodomingo-soft) 50px, var(--paper) 100%)}
+.media-col.prisa-col{background:linear-gradient(180deg, var(--prisa) 0%, var(--prisa) 50px, var(--prisa-soft) 50px, var(--paper) 100%)}
+.media-col.other-col{background:linear-gradient(180deg, var(--ink-2) 0%, var(--ink-2) 50px, var(--paper-3) 50px, var(--paper) 100%)}
+
+.media-owner{
+  color:white;
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding-bottom:12px;
+  height:50px;
+  display:flex;
+  align-items:center;
+}
+.media-list{
+  font-size:13px;
+  line-height:1.5;
+  padding-top:18px;
+}
+.media-list .m{
+  padding:5px 0;
+  font-weight:500;
+  border-bottom:1px dotted rgba(42,34,24,.2);
+}
+.media-list .m:last-child{border-bottom:none}
+.media-list .m-type{
+  font-family:'JetBrains Mono', monospace;
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  display:block;
+  margin-top:1px;
+}
+
+/* ─────────────── CIERRE ─────────────── */
+.close{
+  background:var(--ink);
+  color:var(--paper);
+  padding:72px 0;
+  margin-top:80px;
+  position:relative;
+  overflow:hidden;
+}
+.close::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:5px;
+  background:linear-gradient(90deg,
+    var(--aval) 0% 16.6%,
+    var(--gilinski) 16.6% 33.3%,
+    var(--gea) 33.3% 50%,
+    var(--ardila) 50% 66.6%,
+    var(--santodomingo) 66.6% 83.3%,
+    var(--prisa) 83.3% 100%);
+}
+.close .eyebrow{color:rgba(246,239,226,.5)}
+.close .eyebrow::before,
+.close .eyebrow::after{background:rgba(246,239,226,.2)}
+.close h2{
+  font-family:'Fraunces', serif;
+  font-weight:400;
+  font-size:clamp(32px, 4.5vw, 46px);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  margin-bottom:28px;
+  color:var(--paper);
+}
+.close h2 em{font-style:italic;font-weight:300;color:#D4A537}
+.close p{
+  font-size:17px;
+  line-height:1.6;
+  max-width:780px;
+  margin-bottom:18px;
+  color:rgba(246,239,226,.85);
+}
+.close p strong{color:#D4A537;font-weight:500}
+
+.fuente{
+  padding:32px 0 60px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  text-align:center;
+  background:var(--paper);
+  line-height:1.7;
+}
+
+/* ─────────────── MOBILE ─────────────── */
+@media (max-width: 980px){
+  .wrap{padding:0 18px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi-num{font-size:36px}
+  .group{grid-template-columns:1fr}
+  .group-head{padding:24px 20px}
+  .group-body{grid-template-columns:1fr}
+  .cell{border-right:none;border-bottom:1px solid rgba(42,34,24,.15);padding:20px}
+  .cell:last-child{border-bottom:none}
+  .media-grid{grid-template-columns:1fr 1fr}
+  .media-col{min-height:auto}
+  .section-title{font-size:28px}
+  .hero h1{font-size:42px}
+  .close{padding:48px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span>Mapa del poder económico de Colombia · Junio 2026</span>
+    </div>
+    <h1>Quién es <em>dueño</em> de qué</h1>
+    <p class="hero-sub">
+      Los actores concretos detrás de "el gran capital", "la banca" y "los medios". Cinco grupos económicos colombianos y un fondo extranjero concentran <strong>la banca, la prensa, la radio, la televisión privada nacional, los seguros y buena parte del consumo masivo</strong>. Son los mismos que aparecen como ganadores o perdedores en cada uno de los dos programas analizados.
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ─────────────── INDICADORES ─────────────── -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-num">5<sup>+1</sup></div>
+      <div class="kpi-lbl">Grupos que controlan<br>la mayoría del poder<br>económico-mediático</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">2</div>
+      <div class="kpi-lbl">Banqueros<br>en el top global<br>de Forbes</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">~<em>US$35</em></div>
+      <div class="kpi-lbl">Mil millones de patrimonio<br>combinado estimado<br>de las cinco familias</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">1991</div>
+      <div class="kpi-lbl">Año desde el cual se discute<br>prohibir que grupos económicos<br>controlen medios. Nunca aprobada.</div>
+    </div>
+  </div>
+
+  <!-- ─────────────── TABLA DE GRUPOS ─────────────── -->
+  <h2 class="section-title">Los <em>seis</em> dueños del país</h2>
+  <p class="section-sub">Cada fila lleva su color identificativo, que se mantiene también en el mapa de medios al final.</p>
+
+  <div class="groups">
+
+    <!-- ═══════════ AVAL / SARMIENTO ANGULO ═══════════ -->
+    <div class="group aval">
+      <div class="group-head">
+        <div class="gtag">Grupo 01 · Bogotá</div>
+        <h3>Organización Luis Carlos Sarmiento Angulo · Grupo Aval</h3>
+        <p class="head">Luis Carlos Sarmiento Angulo (n. 1933) y familia. Hijos: Luis Carlos Sarmiento Gutiérrez (presidente Aval).</p>
+        <div class="wealth"><strong>~US$15 mil M</strong> · #1 Forbes Colombia</div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li>Banco de Bogotá</li>
+            <li>Banco de Occidente</li>
+            <li>Banco Popular</li>
+            <li>Banco AV Villas</li>
+            <li>AFP Porvenir</li>
+            <li>Corficolombiana</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li><strong>Casa Editorial El Tiempo</strong></li>
+            <li>El Tiempo (diario)</li>
+            <li>Portafolio (económico)</li>
+            <li>CityTV (Bogotá)</li>
+            <li>~20 portales digitales</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li>Construcción: Episol, Coviandes</li>
+            <li>Concesión Ruta del Sol II</li>
+            <li>Promigas (gas natural)</li>
+            <li>Terpel (combustibles)</li>
+            <li>Hoteles Estelar</li>
+            <li>Pacífico 1 y 3 (vías 4G)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ GILINSKI ═══════════ -->
+    <div class="group gilinski">
+      <div class="group-head">
+        <div class="gtag">Grupo 02 · Cali</div>
+        <h3>Grupo Gilinski</h3>
+        <p class="head">Jaime Gilinski Bacal (n. 1957) y su hijo Gabriel Gilinski. Socios árabes vía IHC (Abu Dabi) hasta 2025.</p>
+        <div class="wealth"><strong>~US$8 mil M</strong> · #2 Forbes Colombia</div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li>Banco GNB Sudameris (Col, Perú, Paraguay)</li>
+            <li>Servitrust GNB</li>
+            <li>Comisionista de bolsa</li>
+            <li>Fiduciaria GNB</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li><strong>Publicaciones Semana</strong> (100% desde 2020)</li>
+            <li>Revista Semana</li>
+            <li>Revista Dinero</li>
+            <li>Soho · Fucsia · Jet Set</li>
+            <li>El País (Cali)</li>
+            <li>El Heraldo (Barranquilla)</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li><strong>Grupo Nutresa</strong> (84,5%, 2025)</li>
+            <li>Plásticos Rimax</li>
+            <li>Productos Yupi</li>
+            <li>Inversiones inmobiliarias en EEUU, UK y Panamá</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ GEA ═══════════ -->
+    <div class="group gea">
+      <div class="group-head">
+        <div class="gtag">Grupo 03 · Medellín</div>
+        <h3>Grupo Empresarial Antioqueño · GEA</h3>
+        <p class="head">Sin dueño único. Históricamente, control cruzado entre Sura, Argos y (hasta 2025) Nutresa. Conjunto de familias antioqueñas y fondos institucionales.</p>
+        <div class="wealth">Activos consolidados <strong>>US$60 mil M</strong></div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li><strong>Bancolombia</strong> (el más grande del país)</li>
+            <li>Banca de Inversión Bancolombia</li>
+            <li><strong>Suramericana / Grupo Sura</strong></li>
+            <li>EPS Sura</li>
+            <li>Pensiones Sura</li>
+            <li>Seguros Sura</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li class="empty">Sin medios directos.</li>
+          </ul>
+          <p class="empty" style="margin-top:14px;font-size:13px;line-height:1.45">Gran poder de pauta publicitaria y de influencia institucional. Patrocinador editorial en El Colombiano (Medellín, fuera de su control directo).</p>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li>Grupo Argos (cementos, infraestructura)</li>
+            <li>Cementos Argos</li>
+            <li>Celsia (energía)</li>
+            <li>Odinsa (concesiones, aeropuertos)</li>
+            <li>Sigue con participación residual en Nutresa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ ARDILA LÜLLE ═══════════ -->
+    <div class="group ardila">
+      <div class="group-head">
+        <div class="gtag">Grupo 04 · Bogotá / Cali</div>
+        <h3>Organización Ardila Lülle</h3>
+        <p class="head">Carlos Ardila Lülle (1930–2021). Hoy lo dirige su familia: Carlos Julio, Antonio José y Camilo Ardila Macaki.</p>
+        <div class="wealth"><strong>~US$1,5 mil M</strong> estimado tras venta de Postobón parcial</div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li class="empty">No tiene banca propia.</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li><strong>Canal RCN</strong> (televisión nacional)</li>
+            <li><strong>RCN Radio</strong> (cadena básica)</li>
+            <li>La FM · La Mega · Radio Uno</li>
+            <li>NTN24 (internacional)</li>
+            <li>WIN Sports (fútbol)</li>
+            <li><strong>Diario La República</strong> (económico)</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li>Postobón (bebidas)</li>
+            <li>Heineken Colombia</li>
+            <li>Iberplast (envases)</li>
+            <li>Incauca · Ingenio Providencia (azúcar)</li>
+            <li>Sucroal (química)</li>
+            <li>Los Coches / Los Autos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ SANTO DOMINGO / VALOREM ═══════════ -->
+    <div class="group santodomingo">
+      <div class="group-head">
+        <div class="gtag">Grupo 05 · Bogotá / Nueva York</div>
+        <h3>Grupo Santo Domingo · Valorem</h3>
+        <p class="head">Familia Santo Domingo. Lideran Alejandro y Andrés Santo Domingo, hijos de Julio Mario (1923–2011).</p>
+        <div class="wealth"><strong>~US$11 mil M</strong> · Andrés Santo Domingo en Forbes</div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li>~10% de AB-InBev (mayor cervecera del mundo, vía la venta de Bavaria)</li>
+            <li>Participaciones financieras en EEUU y Europa</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li><strong>Caracol Televisión</strong></li>
+            <li><strong>Blu Radio</strong></li>
+            <li><strong>El Espectador</strong> (Comunican S.A.)</li>
+            <li>Cromos (revista)</li>
+            <li>La Kalle · Radioacktiva</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li><strong>Tiendas D1</strong> (Koba Colombia, +2.500 tiendas)</li>
+            <li>Cine Colombia</li>
+            <li>Refocosta (forestal)</li>
+            <li>Ditransa (transporte)</li>
+            <li>Inversiones globales vía Valorem</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PRISA / AMBER ═══════════ -->
+    <div class="group prisa">
+      <div class="group-head">
+        <div class="gtag">Grupo 06 · Madrid · Capital extranjero</div>
+        <h3>Grupo PRISA · Amber Capital</h3>
+        <p class="head">Joseph Oughourlian (francés, n. 1972), fundador de Amber Capital y accionista mayoritario de PRISA (Madrid).</p>
+        <div class="wealth">PRISA con presencia en España y América Latina</div>
+      </div>
+      <div class="group-body">
+        <div class="cell">
+          <div class="cell-tag">Banca y finanzas</div>
+          <ul>
+            <li>Fondo de inversión Amber Capital (Londres)</li>
+            <li>Sin banca local en Colombia</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Medios</div>
+          <ul>
+            <li><strong>Caracol Radio</strong> (cadena básica)</li>
+            <li><strong>W Radio</strong></li>
+            <li>Tropicana · Bésame · Oxígeno</li>
+            <li>Los 40 Principales</li>
+            <li>Radio Santa Fe · Q'Hubo Radio</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <div class="cell-tag">Otros sectores</div>
+          <ul>
+            <li>No tiene inversiones industriales en Colombia.</li>
+            <li>Operación restringida al sector de radio y digital.</li>
+            <li>Reportó pérdidas mayores a $13.000 millones en 2025.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─────────────── MAPA DE MEDIOS ─────────────── -->
+  <section class="media-map">
+    <h2 class="section-title">El paisaje <em>mediático</em> de un vistazo</h2>
+    <p class="section-sub">Quién controla cada uno de los medios de mayor audiencia, ordenados por grupo.</p>
+
+    <div class="media-grid">
+      <div class="media-col aval-col">
+        <div class="media-owner">Sarmiento</div>
+        <div class="media-list">
+          <div class="m">El Tiempo<span class="m-type">Diario</span></div>
+          <div class="m">Portafolio<span class="m-type">Económico</span></div>
+          <div class="m">CityTV<span class="m-type">TV regional</span></div>
+        </div>
+      </div>
+      <div class="media-col gilinski-col">
+        <div class="media-owner">Gilinski</div>
+        <div class="media-list">
+          <div class="m">Semana<span class="m-type">Revista</span></div>
+          <div class="m">Dinero<span class="m-type">Económica</span></div>
+          <div class="m">Soho · Fucsia<span class="m-type">Revistas</span></div>
+          <div class="m">El País Cali<span class="m-type">Diario</span></div>
+          <div class="m">El Heraldo<span class="m-type">Diario</span></div>
+        </div>
+      </div>
+      <div class="media-col ardila-col">
+        <div class="media-owner">Ardila</div>
+        <div class="media-list">
+          <div class="m">Canal RCN<span class="m-type">TV nacional</span></div>
+          <div class="m">RCN Radio · La FM<span class="m-type">Radio</span></div>
+          <div class="m">NTN24<span class="m-type">Internacional</span></div>
+          <div class="m">WIN Sports<span class="m-type">Deportes</span></div>
+          <div class="m">La República<span class="m-type">Económico</span></div>
+        </div>
+      </div>
+      <div class="media-col sd-col">
+        <div class="media-owner">Santo Domingo</div>
+        <div class="media-list">
+          <div class="m">Caracol TV<span class="m-type">TV nacional</span></div>
+          <div class="m">Blu Radio<span class="m-type">Radio</span></div>
+          <div class="m">El Espectador<span class="m-type">Diario</span></div>
+          <div class="m">Cromos<span class="m-type">Revista</span></div>
+        </div>
+      </div>
+      <div class="media-col prisa-col">
+        <div class="media-owner">PRISA · Amber</div>
+        <div class="media-list">
+          <div class="m">Caracol Radio<span class="m-type">Radio</span></div>
+          <div class="m">W Radio<span class="m-type">Radio</span></div>
+          <div class="m">Los 40 · Tropicana<span class="m-type">Radio</span></div>
+        </div>
+      </div>
+      <div class="media-col other-col">
+        <div class="media-owner">Otros</div>
+        <div class="media-list">
+          <div class="m">Canal 1<span class="m-type">Plural Comunicaciones</span></div>
+          <div class="m">Red+<span class="m-type">Claro · Carlos Slim</span></div>
+          <div class="m">El Colombiano<span class="m-type">Familia Gómez M.</span></div>
+          <div class="m">Vanguardia<span class="m-type">Galvis Ramírez</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ─────────────── CIERRE ─────────────── -->
+<section class="close">
+  <div class="wrap">
+    <div class="eyebrow">Conexión con el análisis anterior</div>
+    <h2>Estos son los <em>nombres</em> de los ganadores</h2>
+
+    <p>El análisis abstracto de "banca y gran empresariado" tiene cara y apellido. Cuando se dice que el programa de De la Espriella es ++ para el gran capital, se está hablando concretamente del <strong>Grupo Aval (Sarmiento)</strong>, del <strong>Grupo Gilinski</strong>, del <strong>GEA (Bancolombia–Sura–Argos)</strong>, de <strong>Valorem (Santo Domingo)</strong> y de <strong>Ardila Lülle</strong>.</p>
+
+    <p>Cinco de esos seis grupos controlan también el paisaje mediático nacional: <strong>El Tiempo, Semana, RCN, Caracol TV, El Espectador, Caracol Radio, W Radio</strong>, los principales noticieros, las revistas de mayor circulación y los diarios económicos. La pregunta del 1991, sobre si los conglomerados deberían poder ser dueños de medios, sigue sin respuesta institucional.</p>
+
+    <p>El programa de Cepeda no menciona a estos grupos por su nombre, pero su lógica —impuestos progresivos a grandes capitales, reforma a la salud que afecta a Sura, "rebelión ciudadana contra la macrocorrupción", contratación pública para economía popular— apunta directamente al perímetro de su poder. El de De la Espriella, en sentido inverso, despeja el camino para que sigan operando con menos fricción regulatoria, fiscal y mediática.</p>
+  </div>
+</section>
+
+<footer class="fuente">
+  <div class="wrap">
+    Fuentes: Forbes · Bloomberg Línea · Superintendencia de Sociedades · Canal 1 · Las2Orillas · Wikipedia<br>
+    Datos al cierre de mayo de 2026 · Junio 2026
+  </div>
+</footer>
+
+</body>
+</html>
