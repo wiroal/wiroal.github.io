@@ -1,67 +1,128 @@
-<div align="center">
+<p align="center">
+  <img src="banner-github.png" alt="WIROAL" width="100%">
+</p>
 
-# 👨‍💻 WIROAL
+<h1 align="center">👨‍💻 WIROAL</h1>
 
-### Investigador • Desarrollador • Automatización • Linux • Python
-
-[![Sitio Web](https://img.shields.io/badge/Sitio-WIROAL.COM-blue?style=for-the-badge&logo=google-chrome)](https://www.wiroal.com)
-[![GitHub](https://img.shields.io/badge/GitHub-HJ3RAW-black?style=for-the-badge&logo=github)](https://github.com/hj3raw)
-[![Licencia](https://img.shields.io/github/license/hj3raw/wiroal.github.io?style=for-the-badge)](LICENSE)
-
-</div>
-
----
-
-## 🌎 Bienvenido
-
-Este repositorio contiene el código fuente de mi sitio personal:
-
-### 🔗 https://wiroal.github.io
-
-En este espacio comparto:
-
-- 🐧 Linux y Software Libre
-- 🐍 Python y Automatización
-- 📄 OCR y Procesamiento Documental
-- 🔍 Investigación y análisis de información
-- 🏛️ Opinión y actualidad
-
----
-
-## 📊 Estadísticas
-
-<div align="center">
-
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=hj3raw&show_icons=true&theme=github_dark&hide_border=true" />
-
-<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=hj3raw&layout=compact&theme=github_dark&hide_border=true" />
-
-</div>
-
----
-
-## 🚀 Acceso rápido
-
-| Sección | Descripción |
-|----------|-------------|
-| 🧑‍💻 **HJ3RAW** | Herramientas, scripts y proyectos personales |
-| 🐧 **Linux** | Tutoriales, automatización y administración de sistemas |
-| 🐍 **Python** | OCR, análisis de datos y desarrollo |
-| 🏛️ **Política** | Opinión, análisis y documentos de actualidad |
-
----
-
-## 🛠️ Tecnologías
+<h3 align="center">
+Investigador • Python • Linux • Automatización • OCR
+</h3>
 
 <p align="center">
 
-<img src="https://skillicons.dev/icons?i=python,linux,bash,git,github,vscode,html,css,javascript" />
+<a href="https://www.wiroal.com">
+<img src="https://img.shields.io/badge/Blog-WIROAL.COM-blue?style=for-the-badge">
+</a>
+
+<a href="https://github.com/wiroal">
+<img src="https://img.shields.io/badge/GitHub-WIROAL-black?style=for-the-badge&logo=github">
+</a>
+
+<img src="https://komarev.com/ghpvc/?username=wiroal&style=for-the-badge&color=blue">
 
 </p>
 
 ---
 
-## 📁 Estructura del sitio
+# 🌎 Bienvenido
+
+Este repositorio contiene el código fuente de mi sitio web personal:
+
+## 🔗 https://wiroal.github.io
+
+Aquí comparto proyectos, documentación, scripts, investigaciones y recursos relacionados con:
+
+- 🐧 GNU/Linux
+- 🐍 Python
+- 🤖 Automatización
+- 📄 OCR y procesamiento documental
+- 🔍 Investigación y análisis de información
+- 🌐 Desarrollo web
+- 🏛️ Opinión y actualidad
+
+---
+
+# 📊 Estadísticas GitHub
+
+<p align="center">
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api?username=wiroal&show_icons=true&theme=github_dark&hide_border=true"/>
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=wiroal&layout=compact&theme=github_dark&hide_border=true"/>
+
+</p>
+
+---
+
+# 🔥 Actividad
+
+<p align="center">
+
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=wiroal&theme=github-dark&hide_border=true"/>
+
+</p>
+
+---
+
+# 🚀 Acceso rápido
+
+<table>
+<tr>
+<td width="25%" align="center">
+
+## 🧑‍💻 HJ3RAW
+
+Herramientas y proyectos personales.
+
+📂 `/hj3raw`
+
+</td>
+
+<td width="25%" align="center">
+
+## 🐧 Linux
+
+Scripts, administración y automatización.
+
+📂 `/linux`
+
+</td>
+
+<td width="25%" align="center">
+
+## 🐍 Python
+
+OCR, desarrollo y análisis de datos.
+
+📂 `/python`
+
+</td>
+
+<td width="25%" align="center">
+
+## 🏛️ Política
+
+Análisis y documentación.
+
+📂 `/politica`
+
+</td>
+</tr>
+</table>
+
+---
+
+# 🛠️ Tecnologías
+
+<p align="center">
+
+<img src="https://skillicons.dev/icons?i=python,linux,bash,git,github,html,css,javascript,vscode">
+
+</p>
+
+---
+
+# 📂 Estructura del sitio
 
 ```text
 wiroal.github.io
@@ -78,39 +139,45 @@ wiroal.github.io
 
 ---
 
-## 🌐 Enlaces
+# 🌐 Sitios y enlaces
 
-### Sitio Web
-👉 https://wiroal.github.io
+### Blog personal
 
-### Blog
-👉 https://www.wiroal.com
+🔗 https://www.wiroal.com
 
 ### GitHub
-👉 https://github.com/hj3raw
+
+🔗 https://github.com/wiroal
+
+### GitHub Pages
+
+🔗 https://wiroal.github.io
 
 ---
 
-## 📈 Actividad
+# 💡 Áreas de interés
 
-<div align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=hj3raw&theme=github-dark&hide_border=true" />
-
-</div>
-
----
-
-## 💡 Filosofía
-
-> "La información tiene valor cuando se transforma en conocimiento."
+- Automatización de procesos
+- OCR y digitalización documental
+- GNU/Linux
+- Python
+- Ciencia de datos
+- Investigación digital
+- Inteligencia artificial aplicada
+- Desarrollo web
 
 ---
 
-<div align="center">
+# 📜 Licencia
 
-### Gracias por visitar mi repositorio
+Este proyecto se distribuye bajo los términos de la licencia incluida en este repositorio.
 
-⭐ Si encuentras algo útil, considera marcar el proyecto.
+---
 
-</div>
+<p align="center">
+
+### "La información tiene valor cuando se transforma en conocimiento"
+
+⭐ Gracias por visitar este repositorio.
+
+</p>
