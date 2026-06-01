@@ -61,7 +61,7 @@ body::before {
   pointer-events: none;
   z-index: 1;
   opacity: 0.4;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
 }
 
@@ -302,6 +302,9 @@ body::before {
 
 <main class="container">
 
+  <!-- ============================================================
+       § I  SERVICIO  (enlaces externos: aabogota / racsg)
+       ============================================================ -->
   <div class="divider">
     <span class="divider-num">§ I</span>
     <span class="divider-title">Servicio</span>
@@ -336,6 +339,9 @@ body::before {
     </a>
   </div>
 
+  <!-- ============================================================
+       § II  RADIO  (artículo interno: /hj3raw/)
+       ============================================================ -->
   <div class="divider">
     <span class="divider-num">§ II</span>
     <span class="divider-title">Radio · HJ3RAW</span>
@@ -347,23 +353,69 @@ body::before {
   </p>
 
   <div class="cards">
+    <a href="hj3raw/dipolos-hf.html" class="card card-link">
+      <span class="card-num">001 / RF</span>
+      <h3>Dipolos para HF</h3>
+      <p>Cálculo, construcción y ajuste de antenas dipolo de media onda para las bandas de HF.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
     <article class="card">
-      <span class="card-num">001 / RX</span>
+      <span class="card-num">002 / RF</span>
       <h3>Configuración Baofeng DM-32UV</h3>
       <p>Codeplug para repetidores de la Liga de Radio de Medellín y memorias locales de Bogotá.</p>
       <div class="card-status">Pendiente publicar</div>
     </article>
 
     <article class="card">
-      <span class="card-num">002 / RX</span>
+      <span class="card-num">003 / RF</span>
       <h3>Yaesu FT-891 · Bitácora</h3>
       <p>Notas de operación HF, antenas probadas y diario de contactos relevantes.</p>
       <div class="card-status">Pendiente publicar</div>
     </article>
   </div>
 
+  <!-- ============================================================
+       § III  ANÁLISIS  (artículos internos: /politica/)
+       ============================================================ -->
   <div class="divider">
     <span class="divider-num">§ III</span>
+    <span class="divider-title">Análisis</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <p class="section-intro">
+    Lecturas sobre poder, política y el orden de las cosas en Latinoamérica.
+  </p>
+
+  <div class="cards">
+    <a href="politica/01_injerencia_electoral_latam.html" class="card card-link">
+      <span class="card-num">001 / PL</span>
+      <h3>Injerencia electoral en Latinoamérica</h3>
+      <p>Recuento de episodios de intervención externa en procesos electorales de la región.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
+    <a href="politica/02_comparativo-candidatos.html" class="card card-link">
+      <span class="card-num">002 / PL</span>
+      <h3>Comparativo de candidatos</h3>
+      <p>Lectura comparada de propuestas, trayectorias y posiciones políticas.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
+    <a href="politica/03_duenos-poder.html" class="card card-link">
+      <span class="card-num">003 / PL</span>
+      <h3>Los dueños del poder</h3>
+      <p>Notas sobre quién decide, quién financia y quién permanece detrás de las decisiones públicas.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+  </div>
+
+  <!-- ============================================================
+       § IV  NOTAS  (carpetas /linux y /python · pendientes)
+       ============================================================ -->
+  <div class="divider">
+    <span class="divider-num">§ IV</span>
     <span class="divider-title">Notas</span>
     <span class="divider-line"></span>
   </div>
@@ -388,8 +440,11 @@ body::before {
     </article>
   </div>
 
+  <!-- ============================================================
+       § V  EN OTROS LUGARES
+       ============================================================ -->
   <div class="divider">
-    <span class="divider-num">§ IV</span>
+    <span class="divider-num">§ V</span>
     <span class="divider-title">En otros lugares</span>
     <span class="divider-line"></span>
   </div>
