@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="banner-github.png" alt="WIROAL" width="100%">
+  <img src="https://raw.githubusercontent.com/wiroal/wiroal.github.io/main/image/github_03.png" alt="WIROAL" width="100%">
 </p>
 
 <h1 align="center">👨‍💻 WIROAL</h1>
