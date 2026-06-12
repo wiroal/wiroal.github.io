@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="35° Congreso Regional de Alcohólicos Anónimos – Región C. Ubaté, Cundinamarca. 15, 16 y 17 de agosto de 2026.">
+<title>35° Congreso Regional · Región C · AA Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root{
+  --ink:  #04090f;
+  --n900: #060f1c;
+  --n800: #0c1a2b;
+  --n700: #112237;
+  --n600: #192f48;
+  --n500: #24415d;
+  --g400: #c9a346;
+  --g300: #dbb76a;
+  --g200: #edce8c;
+  --g100: #f6e8c0;
+  --w100: #ede4d2;
+  --w200: #c4b89e;
+  --w300: #8a9db6;
+  --r0:   1px solid rgba(201,163,70,.18);
+  --r1:   1px solid rgba(201,163,70,.32);
+  --radius: 6px;
+  --max:  960px;
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+/* ── RESET ───────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  background:var(--n900);
+  color:var(--w100);
+  font-family:'Spectral',Georgia,serif;
+  font-weight:300;
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.8;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* ── UTILITY ─────────────────────────────── */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.eyebrow{
+  display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--g400);font-family:'Spectral',serif;font-weight:600;margin-bottom:10px;
+}
+.gold{color:var(--g400)}
+.w{max-width:var(--max);margin:0 auto;padding:0 24px}
+.hr{border:none;border-top:var(--r0);margin:40px 0}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .35s var(--ease),backdrop-filter .35s,border-color .35s;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(6,15,28,.92);
+  backdrop-filter:blur(18px);
+  border-color:rgba(201,163,70,.2);
+}
+.nav-brand{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Playfair Display',serif;
+  font-size:15px;font-weight:700;letter-spacing:.04em;
+  color:var(--g200);
+}
+.nav-badge{
+  width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--g400);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;color:var(--g400);
+  letter-spacing:.04em;flex-shrink:0;
+}
+.nav-logo{
+  height:38px;width:auto;
+  object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 6px rgba(201,163,70,.35));
+}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{
+  padding:6px 12px;border-radius:4px;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--w200);
+  transition:color .2s,background .2s;
+}
+.nav-links a:hover{color:var(--g300);background:rgba(201,163,70,.08)}
+.nav-links .cta{
+  background:var(--g400);color:var(--ink);font-weight:700;
+  padding:7px 16px;border-radius:4px;margin-left:6px;
+  transition:background .2s,transform .15s;
+}
+.nav-links .cta:hover{background:var(--g300);transform:translateY(-1px)}
+/* hamburger */
+.nav-toggle{
+  display:none;flex-direction:column;gap:5px;background:none;border:none;
+  padding:4px;
+}
+.nav-toggle span{
+  display:block;width:22px;height:2px;border-radius:1px;
+  background:var(--w200);transition:all .3s;
+}
+.nav-open .nav-links{
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--n900);z-index:199;padding:100px 40px 40px;gap:14px;
+}
+.nav-open .nav-links a{font-size:20px;padding:10px 0;border-bottom:var(--r0)}
+
+/* ════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100svh;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--ink);
+  overflow:hidden;
+  padding:100px 24px 80px;
+}
+/* ── lighthouse beam (signature element) ── */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    conic-gradient(from -14deg at 50% -4%,
+      transparent 0deg,
+      rgba(201,163,70,.0)  6deg,
+      rgba(201,163,70,.07) 11deg,
+      rgba(201,163,70,.14) 14deg,
+      rgba(201,163,70,.07) 17deg,
+      rgba(201,163,70,.0)  22deg,
+      transparent 28deg
+    );
+  pointer-events:none;
+}
+/* ── horizon glow ── */
+.hero::after{
+  content:'';
+  position:absolute;
+  top:-10%;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(201,163,70,.22),transparent);
+  pointer-events:none;
+}
+/* ── lantern dot ── */
+.hero-lantern{
+  position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+  width:14px;height:14px;border-radius:50%;
+  background:var(--g200);
+  box-shadow:0 0 24px 10px rgba(201,163,70,.65),
+             0 0 60px 30px rgba(201,163,70,.3),
+             0 0 140px 70px rgba(201,163,70,.1);
+  z-index:2;
+}
+.hero-content{
+  position:relative;z-index:3;
+  text-align:center;max-width:680px;
+}
+.hero-kicker{
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--g400);margin-bottom:28px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.hero-kicker::before,.hero-kicker::after{
+  content:'';display:block;height:1px;width:32px;background:var(--g400);
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  line-height:1.0;
+  margin-bottom:16px;
+}
+.hero-title .num{
+  display:block;font-size:clamp(80px,14vw,128px);font-weight:900;
+  color:var(--g200);letter-spacing:-.02em;line-height:1;
+}
+.hero-title .word{
+  display:block;font-size:clamp(28px,6vw,52px);font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--w100);
+}
+.hero-title .italic{
+  display:block;font-size:clamp(22px,4vw,38px);font-style:italic;
+  font-weight:400;color:var(--w200);letter-spacing:.04em;
+}
+.hero-lema{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(15px,2.5vw,19px);color:var(--w200);
+  margin:28px auto 20px;max-width:520px;line-height:1.5;
+  padding:0 8px;
+}
+.hero-lema::before,.hero-lema::after{color:var(--g300)}
+.hero-lema::before{content:'«'}
+.hero-lema::after{content:'»'}
+.hero-date{
+  font-size:14px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--g300);margin-bottom:6px;
+}
+.hero-place{
+  font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--w300);margin-bottom:36px;
+}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;border-radius:4px;font-size:13px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  border:none;transition:all .2s var(--ease);
+}
+.btn-gold{background:var(--g400);color:var(--ink)}
+.btn-gold:hover{background:var(--g300);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,163,70,.3)}
+.btn-ghost{
+  background:transparent;color:var(--w100);
+  border:1px solid rgba(255,255,255,.25);
+}
+.btn-ghost:hover{border-color:var(--g400);color:var(--g300);background:rgba(201,163,70,.07)}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--w300);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  animation:float 2.4s ease-in-out infinite;
+}
+.hero-scroll svg{width:20px;height:20px;stroke:var(--g400);fill:none}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ════════════════════════════════════════════
+   STATS BAR
+════════════════════════════════════════════ */
+.stats{
+  background:var(--n800);border-top:var(--r1);border-bottom:var(--r1);
+  padding:0 24px;
+}
+.stats-inner{
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.stat{
+  padding:22px 20px;text-align:center;
+  border-right:var(--r0);
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,4vw,40px);font-weight:700;
+  color:var(--g200);line-height:1;margin-bottom:4px;
+}
+.stat-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--w300)}
+
+/* ════════════════════════════════════════════
+   SHARED SECTION
+════════════════════════════════════════════ */
+.section{padding:80px 24px}
+.section.alt{background:var(--n800)}
+.section-head{margin-bottom:48px}
+.section-head h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,4vw,38px);font-weight:700;
+  color:var(--g200);line-height:1.15;
+  margin-bottom:12px;
+}
+.section-head p{color:var(--w200);font-size:16px;max-width:560px;line-height:1.7}
+
+/* ════════════════════════════════════════════
+   #CONGRESO — Why attend
+════════════════════════════════════════════ */
+.congreso-grid{
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+}
+.congreso-text p{margin-bottom:16px;color:var(--w100);line-height:1.8}
+.congreso-text p:first-of-type::first-letter{
+  float:left;font-family:'Playfair Display',serif;font-size:clamp(44px,7vw,60px);
+  font-weight:700;line-height:.88;padding-right:10px;padding-top:6px;
+  color:var(--g400);
+}
+.blockquote{
+  border-left:3px solid var(--g400);
+  padding:14px 20px;margin:24px 0;
+  background:rgba(201,163,70,.06);border-radius:0 4px 4px 0;
+  font-style:italic;color:var(--w200);font-size:15.5px;line-height:1.65;
+}
+.lemas-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:32px 28px;
+}
+.lema-item{padding:16px 0;border-bottom:var(--r0)}
+.lema-item:last-child{border-bottom:none;padding-bottom:0}
+.lema-item .tag{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--g400);font-weight:600;margin-bottom:8px;display:block;
+}
+.lema-item p{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(15px,2.2vw,18px);color:var(--g100);line-height:1.4;
+}
+.attrib{
+  margin-top:20px;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--w300);text-align:right;
+}
+
+/* ════════════════════════════════════════════
+   #EVENTO — Venue + date
+════════════════════════════════════════════ */
+.evento-inner{max-width:var(--max);margin:0 auto}
+.evento-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px}
+.evento-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:26px 24px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.evento-card .ec-icon{font-size:26px;margin-bottom:8px}
+.evento-card .ec-label{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--g400);font-weight:600;
+}
+.evento-card .ec-main{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  color:var(--g100);line-height:1.2;
+}
+.evento-card .ec-sub{font-size:14px;color:var(--w200);line-height:1.5}
+
+/* ════════════════════════════════════════════
+   #INSCRIPCIONES
+════════════════════════════════════════════ */
+.ins-inner{max-width:var(--max);margin:0 auto}
+.ins-prices{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.price-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:28px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.price-card.featured{border-color:var(--g400)}
+.price-card.featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--g400),var(--g200));
+}
+.price-card .pc-label{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--g400);margin-bottom:12px;display:block;
+}
+.price-card .pc-amount{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,5vw,44px);font-weight:700;
+  color:var(--g100);line-height:1;margin-bottom:8px;
+}
+.price-card .pc-desc{font-size:13px;color:var(--w300);line-height:1.5}
+.pago-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:28px 24px;
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;
+}
+.pago-item .pl{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--g400);margin-bottom:6px;display:block;
+}
+.pago-item .pv{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,3vw,24px);letter-spacing:.06em;color:var(--g100);
+}
+.pago-item .pv-sub{font-size:12px;color:var(--w300);margin-top:3px}
+
+/* ════════════════════════════════════════════
+   #ALOJAMIENTO — hotel toggle
+════════════════════════════════════════════ */
+.aloj-inner{max-width:var(--max);margin:0 auto}
+.hotel-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  background:var(--n700);border:var(--r1);border-radius:var(--radius);
+  padding:18px 24px;cursor:pointer;
+  font-family:'Playfair Display',serif;font-size:clamp(15px,2.5vw,18px);
+  color:var(--g100);text-align:left;
+  transition:background .2s,box-shadow .2s,border-color .2s;
+}
+.hotel-toggle:hover{background:var(--n600);box-shadow:0 6px 28px rgba(201,163,70,.14)}
+.hotel-toggle:hover,.hotel-toggle.open{border-color:var(--g400)}
+.hotel-toggle .arr{
+  font-size:13px;flex-shrink:0;color:var(--g400);margin-left:16px;
+  transition:transform .35s var(--ease);
+}
+.hotel-toggle.open .arr{transform:rotate(180deg)}
+.hotel-panel{overflow:hidden;max-height:0;transition:max-height .55s var(--ease)}
+.hotel-panel.open{max-height:5200px}
+.hotel-inner{padding:28px 0 8px}
+.hotel-controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+.hotel-search{
+  flex:1;min-width:180px;
+  background:var(--n700);border:var(--r0);border-radius:4px;
+  padding:10px 16px;color:var(--w100);font-family:'Spectral',serif;font-size:14px;
+  outline:none;transition:border-color .2s;
+}
+.hotel-search::placeholder{color:var(--w300)}
+.hotel-search:focus{border-color:var(--g400)}
+.ftabs{display:flex;gap:6px;flex-wrap:wrap}
+.ftab{
+  padding:8px 14px;border-radius:4px;border:var(--r0);background:transparent;
+  color:var(--w200);font-family:'Spectral',serif;font-size:12px;
+  letter-spacing:.06em;cursor:pointer;transition:all .2s;
+}
+.ftab:hover,.ftab.on{background:var(--g400);border-color:var(--g400);color:var(--ink);font-weight:600}
+.hotel-count{font-size:12px;color:var(--w300);margin-bottom:16px;letter-spacing:.06em}
+.hotel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+.hcard{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:20px;transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.hcard:hover{
+  border-color:var(--g400);transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(0,0,0,.4);
+}
+.hcard-name{
+  font-family:'Playfair Display',serif;font-size:15.5px;font-weight:600;
+  color:var(--g100);margin-bottom:4px;line-height:1.3;
+}
+.hcard-addr{font-size:12px;color:var(--w300);margin-bottom:10px}
+.hbadge{
+  display:inline-block;font-size:10px;text-transform:uppercase;
+  letter-spacing:.1em;padding:3px 10px;border-radius:20px;
+  margin-bottom:12px;font-weight:700;
+}
+.hbadge.u{background:rgba(58,124,165,.2);color:#7ec8e3;border:1px solid rgba(58,124,165,.4)}
+.hbadge.r{background:rgba(46,125,91,.2);color:#7ecfab;border:1px solid rgba(46,125,91,.4)}
+.hrow{display:flex;gap:7px;margin-bottom:4px;font-size:13px;color:var(--w200);line-height:1.4}
+.hrow .ic{flex-shrink:0;width:18px;color:var(--g400)}
+.hprice{font-size:15px;font-weight:600;color:var(--g100);margin:10px 0 6px;font-family:'Playfair Display',serif}
+.htel a{color:var(--g300);text-decoration:none;font-size:13px}
+.htel a:hover{text-decoration:underline}
+.hlink{
+  display:inline-block;margin-top:10px;font-size:12px;color:var(--g400);
+  text-decoration:none;border-bottom:1px dashed rgba(201,163,70,.3);
+  transition:color .2s;
+}
+.hlink:hover{color:var(--g300);border-bottom-color:var(--g300)}
+.hotel-nores{text-align:center;color:var(--w300);padding:40px 20px;font-style:italic;display:none}
+.hotel-note{
+  margin-top:18px;font-size:11.5px;color:var(--w300);
+  border-top:var(--r0);padding-top:14px;line-height:1.6;
+}
+
+/* ════════════════════════════════════════════
+   #LLEGAR — map
+════════════════════════════════════════════ */
+.llegar-inner{max-width:var(--max);margin:0 auto}
+.map-wrap{
+  position:relative;width:100%;padding-bottom:50%;min-height:280px;
+  border:var(--r1);border-radius:var(--radius);overflow:hidden;margin-top:24px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.map-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.map-meta{
+  display:flex;gap:24px;flex-wrap:wrap;margin-top:14px;
+  font-size:13px;color:var(--w300);letter-spacing:.04em;
+}
+.map-meta span::before{content:'• ';color:var(--g400)}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+.footer{
+  background:var(--ink);border-top:var(--r1);
+  padding:40px 24px 32px;
+  text-align:center;
+}
+.footer-inner{max-width:var(--max);margin:0 auto}
+.footer-brand{
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  color:var(--g200);letter-spacing:.04em;margin-bottom:6px;
+}
+.footer-sub{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--w300);margin-bottom:20px}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.footer-links a{font-size:12px;color:var(--w300);letter-spacing:.08em;transition:color .2s}
+.footer-links a:hover{color:var(--g300)}
+.footer-copy{font-size:11px;color:var(--n500)}
+.footer-copy a{color:var(--g400)}
+
+/* ════════════════════════════════════════════
+   #CONTACTO — committee contacts
+════════════════════════════════════════════ */
+.contacto-inner{max-width:var(--max);margin:0 auto}
+.contacto-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-top:8px;
+}
+.contact-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:22px 20px;
+  display:flex;flex-direction:column;gap:5px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.contact-card:hover{
+  border-color:var(--g400);transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+}
+.contact-role{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--g400);font-weight:600;margin-bottom:4px;
+}
+.contact-name{
+  font-family:'Playfair Display',serif;font-size:16px;font-weight:600;
+  color:var(--g100);line-height:1.25;
+}
+.contact-name.unknown{
+  font-family:'Spectral',serif;font-size:14px;font-weight:300;
+  font-style:italic;color:var(--w300);
+}
+.contact-tel{
+  margin-top:8px;
+}
+.contact-tel a{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:14.5px;color:var(--g300);text-decoration:none;
+  font-family:'Spectral',serif;letter-spacing:.03em;
+  transition:color .2s;
+}
+.contact-tel a:hover{color:var(--g200)}
+.contact-tel a::before{
+  content:'';display:inline-block;width:14px;height:14px;
+  background:var(--g400);border-radius:50%;flex-shrink:0;opacity:.7;
+}
+.contact-wa{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:7px;font-size:11.5px;color:var(--w300);
+  text-decoration:none;letter-spacing:.04em;
+  transition:color .2s;
+}
+.contact-wa:hover{color:var(--g300)}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:720px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .congreso-grid{grid-template-columns:1fr}
+  .ins-prices{grid-template-columns:1fr}
+  .pago-card{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:var(--r0)}
+  .stat:last-child{border-bottom:none}
+  .section{padding:56px 20px}
+}
+@media(max-width:480px){
+  .nav{padding:12px 16px}
+  .hero-title .num{font-size:clamp(64px,18vw,100px)}
+  .hotel-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ════════════════════════════════ -->
+<nav class="nav" id="nav" role="navigation" aria-label="Navegación principal">
+  <a class="nav-brand" href="#inicio" aria-label="Inicio">
+    <img src="image/logoaa.png" alt="Alcohólicos Anónimos" class="nav-logo">
+    <span>Región C</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#congreso">El Congreso</a>
+    <a href="#evento">Evento</a>
+    <a href="#inscripciones">Inscripciones</a>
+    <a href="#alojamiento">Alojamiento</a>
+    <a href="#llegar">Cómo llegar</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#inscripciones" class="cta">Inscribirme</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ════ HERO ════════════════════════════════ -->
+<section class="hero" id="inicio" aria-label="Encabezado del congreso">
+  <div class="hero-lantern" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">Alcohólicos Anónimos · Colombia</div>
+    <h1 class="hero-title">
+      <span class="num">35°</span>
+      <span class="word">Congreso</span>
+      <span class="italic">Regional</span>
+    </h1>
+    <p class="hero-lema">Nuestra recuperación, el faro que guía al que sufre</p>
+    <p class="hero-date">15 · 16 · 17 de Agosto de 2026</p>
+    <p class="hero-place">Ubaté &nbsp;·&nbsp; Cundinamarca &nbsp;·&nbsp; Región C</p>
+    <div class="hero-ctas">
+      <a href="#congreso" class="btn btn-ghost">¿Qué es un Congreso?</a>
+      <a href="#inscripciones" class="btn btn-gold">Inscribirme</a>
+    </div>
+  </div>
+  <a class="hero-scroll" href="#stats" aria-label="Ir a estadísticas">
+    <span>Más info</span>
+    <svg viewBox="0 0 24 24" stroke-width="1.8" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </a>
+</section>
+
+<!-- ════ STATS BAR ════════════════════════════ -->
+<div class="stats" id="stats" aria-label="Datos clave del evento">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">35ª</div>
+      <div class="stat-label">Edición · Región C</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">15–17</div>
+      <div class="stat-label">Agosto · 2026</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Ubaté</div>
+      <div class="stat-label">Cundinamarca · Colombia</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ #CONGRESO — Why attend ════════════ -->
+<section class="section" id="congreso" aria-labelledby="congreso-h">
+  <div class="w">
+    <div class="section-head">
+      <span class="eyebrow">Una invitación fraterna</span>
+      <h2 id="congreso-h">La importancia de asistir</h2>
+    </div>
+    <div class="congreso-grid">
+      <div class="congreso-text">
+        <p>Los congresos regionales no son eventos sociales más en el calendario de la comunidad: son la expresión viva de nuestra Tercera Legado, el servicio. Cada vez que un compañero atraviesa montañas y caminos para sentarse junto a otros miembros, está reafirmando aquello que nos sostiene desde hace nueve décadas.</p>
+        <p>Asistir al 35° Congreso de la Región C es renovar nuestro compromiso con el alcohólico que aún sufre. Es escuchar experiencias que nos recuerdan de dónde venimos, descubrir herramientas nuevas para los grupos base, fortalecer los vínculos con servidores de toda la región y unificar criterios sobre los temas que la comunidad nacional discute hoy.</p>
+        <div class="blockquote">
+          «Cuando todo lo demás falla, los principios fundamentales nos sostienen. Los congresos son el espacio donde esos principios dejan de ser abstractos y se vuelven rostros, voces y abrazos.»
+        </div>
+        <p>La sobriedad se fortalece en la presencia del otro. El faro no es metáfora vacía: cada miembro que llega es luz para quien todavía navega en la tormenta.</p>
+        <p class="attrib">— ELP / AA / RC / 2018</p>
+      </div>
+      <div>
+        <div class="lemas-card">
+          <span class="eyebrow" style="margin-bottom:20px">Lemas del congreso</span>
+          <div class="lema-item">
+            <span class="tag">Lema principal</span>
+            <p>Nuestra recuperación, el faro que guía al que sufre</p>
+          </div>
+          <div class="lema-item">
+            <span class="tag">Lema secundario</span>
+            <p>Nuestros pasos, camino a la sobriedad</p>
+          </div>
+          <div class="lema-item" style="border-bottom:none">
+            <span class="tag">Encuentro de</span>
+            <p style="font-style:normal;font-family:'Spectral',serif;font-size:14px;line-height:1.7;color:var(--w200)">
+              Delegados · MCDs · RSGs · Miembros de la Región C<br>
+              Alcohólicos Anónimos Colombia
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #EVENTO ════════════════════════════ -->
+<section class="section alt" id="evento" aria-labelledby="evento-h">
+  <div class="evento-inner">
+    <div class="section-head">
+      <span class="eyebrow">Detalles del evento</span>
+      <h2 id="evento-h">Lugar y fecha</h2>
+    </div>
+    <div class="evento-cards">
+      <div class="evento-card">
+        <div class="ec-icon" aria-hidden="true">📍</div>
+        <span class="ec-label">Sede</span>
+        <div class="ec-main">Salón de Eventos La Mansión</div>
+        <div class="ec-sub">Vía Altamira, km 0,7<br>Villa de San Diego de Ubaté<br>Cundinamarca, Colombia</div>
+      </div>
+      <div class="evento-card">
+        <div class="ec-icon" aria-hidden="true">📅</div>
+        <span class="ec-label">Fechas</span>
+        <div class="ec-main">15 · 16 · 17</div>
+        <div class="ec-sub">Sábado, domingo y lunes<br>Agosto de 2026<br>Programación por confirmar</div>
+      </div>
+      <div class="evento-card">
+        <div class="ec-icon" aria-hidden="true">🗺️</div>
+        <span class="ec-label">Cómo llegar</span>
+        <div class="ec-main">~105 km desde Bogotá</div>
+        <div class="ec-sub">2 h 15 min en automóvil<br>Vía Zipaquirá o Sopó<br><a href="#llegar" style="color:var(--g300)">Ver mapa y ruta →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #INSCRIPCIONES ════════════════════ -->
+<section class="section" id="inscripciones" aria-labelledby="ins-h">
+  <div class="ins-inner">
+    <div class="section-head">
+      <span class="eyebrow">Participar</span>
+      <h2 id="ins-h">Aportes e inscripción</h2>
+      <p>Todos los miembros de AA y servidores de la Región C están invitados. No se requiere más que disposición y compromiso.</p>
+    </div>
+    <div class="ins-prices">
+      <div class="price-card featured">
+        <span class="pc-label">Inscripción individual</span>
+        <div class="pc-amount">$130.000</div>
+        <p class="pc-desc">Por persona · incluye acceso a todas las sesiones del congreso</p>
+      </div>
+      <div class="price-card">
+        <span class="pc-label">Aporte por grupo</span>
+        <div class="pc-amount">$70.000</div>
+        <p class="pc-desc">Contribución del grupo base · independiente de la inscripción individual</p>
+      </div>
+    </div>
+    <div class="pago-card">
+      <div class="pago-item">
+        <span class="pl">Cuenta de Ahorros Davivienda</span>
+        <div class="pv">006101050240</div>
+        <div class="pv-sub">Enviar comprobante por WhatsApp al organizador</div>
+      </div>
+      <div class="pago-item">
+        <span class="pl">Llave Bre-B</span>
+        <div class="pv">311 242 0531</div>
+        <div class="pv-sub">Transferencias Bancolombia / Daviplata / Nequi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #ALOJAMIENTO ════════════════════════ -->
+<section class="section alt" id="alojamiento" aria-labelledby="aloj-h">
+  <div class="aloj-inner">
+    <div class="section-head">
+      <span class="eyebrow">Hospedaje en Ubaté</span>
+      <h2 id="aloj-h">Alojamiento disponible</h2>
+      <p>Caracterización de la oferta hotelera del municipio. Precios de referencia — confirmar disponibilidad directamente con cada establecimiento.</p>
+    </div>
+    <button class="hotel-toggle" id="hotelBtn" onclick="toggleHoteles()" aria-expanded="false" aria-controls="hotelPanel">
+      <span>Ver listado completo — 20 establecimientos registrados</span>
+      <span class="arr" aria-hidden="true">&#9660;</span>
+    </button>
+    <div class="hotel-panel" id="hotelPanel" role="region" aria-label="Directorio de hoteles">
+      <div class="hotel-inner">
+        <div class="hotel-controls">
+          <input class="hotel-search" type="search" id="srch"
+                 placeholder="Buscar por nombre, dirección o servicio…"
+                 oninput="render()" aria-label="Buscar hotel">
+          <div class="ftabs" role="group" aria-label="Filtrar por tipo">
+            <button class="ftab on" onclick="setF('todos',this)">Todos</button>
+            <button class="ftab"    onclick="setF('urbano',this)">🏙 Urbano</button>
+            <button class="ftab"    onclick="setF('rural',this)">🌿 Rural</button>
+          </div>
+        </div>
+        <div class="hotel-count" id="hcount" aria-live="polite">Mostrando 20 establecimientos</div>
+        <div class="hotel-grid" id="hgrid"></div>
+        <div class="hotel-nores" id="nores" role="status">No se encontraron establecimientos con ese criterio.</div>
+        <p class="hotel-note">ℹ️ Datos tomados del registro municipal de oferta hotelera de Ubaté, Cundinamarca. Precios orientativos; verifique disponibilidad y tarifas actualizadas antes de reservar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #LLEGAR ════════════════════════════ -->
+<section class="section" id="llegar" aria-labelledby="llegar-h">
+  <div class="llegar-inner">
+    <div class="section-head">
+      <span class="eyebrow">Orientación</span>
+      <h2 id="llegar-h">Cómo llegar</h2>
+      <p>Trazado sugerido desde el <strong>Comité de Área (Calle 57 # 13-65, Bogotá)</strong> hasta la sede del congreso en Ubaté.</p>
+    </div>
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d508112.0!2d-74.05!3d4.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x8e3f9b292d24ae85%3A0xf9e2e68db12caf81!2sCalle%2057%20%2313-65%2C%20Bogot%C3%A1!3m2!1d4.643666!2d-74.0652157!4m5!1s0x8e40395c0c34e0c1%3A0x9831456a4e30143a!2sLa%20Mansi%C3%B3n%20Eventos%20Ubat%C3%A9%2C%20V%C3%ADa%20a%20Altamira%2C%20Ubat%C3%A9%2C%20Cundinamarca!3m2!1d5.297684!2d-73.805342!5e0!3m2!1ses!2sco!4v1714900000000"
+              allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Ruta desde el Comité de Área en Bogotá hasta La Mansión en Ubaté"></iframe>
+    </div>
+    <div class="map-meta">
+      <span>Salida: Comité de Área · Bogotá</span>
+      <span>Llegada: Salón La Mansión · Ubaté</span>
+      <span>~105 km · 2 h 15 min</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #CONTACTO ═══════════════════════════ -->
+<section class="section alt" id="contacto" aria-labelledby="contacto-h">
+  <div class="contacto-inner">
+    <div class="section-head">
+      <span class="eyebrow">Comité organizador</span>
+      <h2 id="contacto-h">Contacto</h2>
+      <p>Para inscripciones, consultas sobre alojamiento o información del programa, comunícate directamente con el comité organizador del 35° Congreso.</p>
+    </div>
+    <div class="contacto-grid">
+
+      <div class="contact-card">
+        <span class="contact-role">Coordinadora</span>
+        <div class="contact-name">Nancy Antonia C.</div>
+        <div class="contact-tel">
+          <a href="tel:+573143127739">+57 314 3127739</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573143127739" target="_blank" rel="noopener">
+          WhatsApp →
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-role">Secretaria</span>
+        <div class="contact-name">Martha Cecilia B.</div>
+        <div class="contact-tel">
+          <a href="tel:+573114859778">+57 311 4859778</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573114859778" target="_blank" rel="noopener">
+          WhatsApp →
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-role">Tesorero</span>
+        <div class="contact-name unknown">Información de contacto</div>
+        <div class="contact-tel">
+          <a href="tel:+573112420531">+57 311 2420531</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573112420531" target="_blank" rel="noopener">
+          WhatsApp · Pagos y comprobantes →
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-role">Coordinador de Eventos</span>
+        <div class="contact-name">Guillermo H.</div>
+        <div class="contact-tel">
+          <a href="tel:+573124494396">+57 312 4494396</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573124494396" target="_blank" rel="noopener">
+          WhatsApp →
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-role">Coordinador de Finanzas</span>
+        <div class="contact-name unknown">Información de contacto</div>
+        <div class="contact-tel">
+          <a href="tel:+573005305174">+57 300 5305174</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573005305174" target="_blank" rel="noopener">
+          WhatsApp →
+        </a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-role">Coordinador · Comité de Recursos Varios</span>
+        <div class="contact-name">Diego José</div>
+        <div class="contact-tel">
+          <a href="tel:+573186305782">+57 318 6305782</a>
+        </div>
+        <a class="contact-wa" href="https://wa.me/573186305782" target="_blank" rel="noopener">
+          WhatsApp →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════════════════════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">Alcohólicos Anónimos · Región C</div>
+    <div class="footer-sub">35° Congreso Regional · Colombia · 2026</div>
+    <nav class="footer-links" aria-label="Navegación del pie de página">
+      <a href="#inicio">Inicio</a>
+      <a href="#congreso">El Congreso</a>
+      <a href="#inscripciones">Inscripciones</a>
+      <a href="#alojamiento">Alojamiento</a>
+      <a href="#llegar">Cómo llegar</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://www.aabogota.com" target="_blank" rel="noopener">aabogota.com</a>
+    </nav>
+    <p class="footer-copy">
+      «El faro no busca a los barcos: simplemente brilla.»<br>
+      Sitio elaborado por <a href="https://wiroal.github.io" target="_blank" rel="noopener">wiroal.github.io</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ─── DATOS HOTELES ───────────────────────────────── */
+const H=[
+  {n:"Hotel La Casona del Parque",a:"Calle 7 #6-28",t:"urbano",cap:"17 habitaciones",sv:"Hospedaje",p:"$80.000 sencilla",adm:"Martha Luz Rendón",tel:"3102496542",link:"https://www.facebook.com/share/14Y9E7kpG7S/?mibextid=wwXIfr",ll:"Facebook"},
+  {n:"Hotel San Francisco",a:"Calle 9 #8-08",t:"urbano",cap:"24 hab · 12 apartaestudios",sv:"WiFi, parqueadero (26 carros), salones de eventos",p:"$100.000 por persona",adm:"Claudia Gómez",tel:"3187820851",link:"https://san-francisco-250430.todos-los-hoteles-cundinamarca.com/es/",ll:"Sitio web"},
+  {n:"Hotel Villa del Sol",a:"Calle 10 #4-92",t:"urbano",cap:"15 habitaciones",sv:"Hospedaje, parqueadero",p:"$30.000",adm:"Julián Villamil",tel:"3142263318",link:null},
+  {n:"Hotel Alcalá",a:"Calle 10 #4-54",t:"urbano",cap:"12 habitaciones",sv:"Hospedaje, WiFi",p:"$40.000",adm:"Jenny A. Delgadillo",tel:"3208744263",link:"https://share.google/1lYp5rOrYBC3VDXPs",ll:"Ver más"},
+  {n:"Hotel Villa Anyela",a:"Cl. 11 #7-15",t:"urbano",cap:"",sv:"Baño privado, TV cable",p:"Consultar",adm:"Flor Ángela Niño",tel:"3105506130",link:null},
+  {n:"Hotel El Valle de Ubaté",a:"Calle 11 #3c-18",t:"urbano",cap:"18 habitaciones",sv:"Alojamiento, parqueadero",p:"$35.000",adm:"Óscar Iván González",tel:"3114844402",link:null},
+  {n:"Hotel Ángel San Gabriel",a:"Calle 15 #10-48",t:"urbano",cap:"12 habitaciones",sv:"Alojamiento",p:"$40.000",adm:"Angy Lucía López Correa",tel:"3223053772",link:"https://share.google/X9xfuqdzb4fUN0xPS",ll:"Ver más"},
+  {n:"Hotel Finca La Esperanza",a:"Vía Carmen de Carupa Km 1, Vda. Sucunchoque",t:"rural",cap:"40 pers. · eventos 400",sv:"Sauna, cabañas, cabalgatas, zonas comunes, canchas",p:"Consultar",adm:"Paula Barrantes",tel:"3202585776",link:"https://www.instagram.com/fincalaesperanzaubate?igsh=azgxdWV5d2F4ZGJo",ll:"Instagram"},
+  {n:"Hotel Nazaret",a:"Cra 7 #19-90, Romboy (salida Chiquinquirá)",t:"urbano",cap:"",sv:"Hospedaje, WiFi, televisión",p:"Consultar",adm:"",tel:"3108701942",link:null},
+  {n:"Hotel Mursua",a:"Cra 7 #15a-55",t:"urbano",cap:"23 personas",sv:"Hospedaje",p:"$60.000 ind. / $90.000 par.",adm:"Clara Suárez",tel:"3124651231",link:null},
+  {n:"Hotel La Avenida",a:"Cra 7 #12-87",t:"urbano",cap:"15 personas",sv:"Hospedaje",p:"$35.000 ind. / $60.000 par.",adm:"Dora Alarcón",tel:"3142959042",link:null},
+  {n:"Hotel Baccarat",a:"Cra 7 #11-74",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$35.000 ind. / $60.000 par.",adm:"María Teresa León",tel:"3144510003",link:"https://share.google/Ig3M31eYx59PpscLU",ll:"Ver más"},
+  {n:"Hotel La Provincia",a:"Cra 7 #11-67",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$65.000 ind. / $110.000 par.",adm:"Héctor Gómez",tel:"3227241524",link:"https://share.google/Ig3M31eYx59PpscLU",ll:"Ver más"},
+  {n:"Hotel San Lorenzo",a:"Cra 8 #8-61",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$50.000 por persona",adm:"Lizeth Herrera",tel:"3213795575",link:"https://share.google/uNznhU9OTHM57fM5y",ll:"Ver más"},
+  {n:"Hotel Zaclordy",a:"Cra 8 #9-45",t:"urbano",cap:"30 personas",sv:"Hospedaje",p:"$50.000 por persona",adm:"Yolanda Murcia",tel:"3143314097",link:"https://share.google/5ur0NVUiy4dYBlHII",ll:"Ver más"},
+  {n:"Hotel Primavera",a:"Km 1 vía Ubaté–Bogotá",t:"rural",cap:"30 pers. (15 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Betulia Poveda",tel:"3115621513",link:"https://share.google/SsaSbVGjTPJuUHg1M",ll:"Ver más"},
+  {n:"Hotel Ángel San Gabriel (Rural)",a:"Km 1 vía Ubaté–Bogotá, Vda. Apartadero",t:"rural",cap:"20 pers. (13 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Angie Lucía López",tel:"3202308865",link:"https://share.google/W9DnuQVU2eBl0aXie",ll:"Ver más"},
+  {n:"Hotel San Antonio",a:"Vereda Palogordo, Ubaté",t:"rural",cap:"4 habitaciones",sv:"Hospedaje",p:"$95.000 – $120.000",adm:"María Pachón",tel:"3123869021",link:"https://share.google/ZI3QK3ZaTXjdPdroY",ll:"Ver más"},
+  {n:"Hotel Sadima",a:"Ubaté",t:"urbano",cap:"",sv:"",p:"Consultar",adm:"",tel:"",link:"https://share.google/ojloELbv4y72GT577",ll:"Ver más"},
+  {n:"Hotel Paraíso Ubaté",a:"Cl. 12 No. 7-31",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Blanca Lilia Peña",tel:"3215097347",link:null}
+];
+
+/* ─── STATE ────────────────────────────────────── */
+let filt='todos', rendered=false;
+
+/* ─── TOGGLE ────────────────────────────────────── */
+function toggleHoteles(){
+  const p=document.getElementById('hotelPanel');
+  const b=document.getElementById('hotelBtn');
+  const open=p.classList.toggle('open');
+  b.classList.toggle('open',open);
+  b.setAttribute('aria-expanded',open);
+  if(open && !rendered){render();rendered=true;}
+}
+function setF(t,el){
+  filt=t;
+  document.querySelectorAll('.ftab').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');render();
+}
+function render(){
+  const q=document.getElementById('srch').value.toLowerCase();
+  const g=document.getElementById('hgrid');
+  const nr=document.getElementById('nores');
+  const ct=document.getElementById('hcount');
+  g.innerHTML='';let vis=0;
+  H.forEach(h=>{
+    const bT=filt==='todos'||h.t===filt;
+    const bQ=!q||h.n.toLowerCase().includes(q)||h.a.toLowerCase().includes(q)||h.sv.toLowerCase().includes(q)||h.adm.toLowerCase().includes(q);
+    if(!bT||!bQ)return;vis++;
+    const c=document.createElement('div');c.className='hcard';
+    c.innerHTML=`
+      <div class="hcard-name">${h.n}</div>
+      <div class="hcard-addr">📍 ${h.a}</div>
+      <span class="hbadge ${h.t==='urbano'?'u':'r'}">${h.t==='urbano'?'🏙 Urbano':'🌿 Rural'}</span>
+      ${h.cap?`<div class="hrow"><span class="ic">👥</span><span>${h.cap}</span></div>`:''}
+      ${h.sv?`<div class="hrow"><span class="ic">✔</span><span>${h.sv}</span></div>`:''}
+      <div class="hprice">💲 ${h.p}</div>
+      ${h.adm?`<div class="hrow" style="font-size:12px;color:var(--w300)"><span class="ic">👤</span><span>${h.adm}</span></div>`:''}
+      ${h.tel?`<div class="htel" style="margin-top:8px"><a href="tel:+57${h.tel.replace(/\s/g,'')}">📞 ${h.tel}</a></div>`:''}
+      ${h.link?`<a href="${h.link}" target="_blank" rel="noopener noreferrer" class="hlink">🔗 ${h.ll||'Ver más'}</a>`:''}
+    `;g.appendChild(c);
+  });
+  nr.style.display=vis===0?'block':'none';
+  ct.textContent=`Mostrando ${vis} establecimiento${vis!==1?'s':''}`;
+}
+
+/* ─── NAV SCROLL ────────────────────────────────── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+/* ─── HAMBURGER ─────────────────────────────────── */
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+let navOpen=false;
+toggle.addEventListener('click',()=>{
+  navOpen=!navOpen;
+  document.body.classList.toggle('nav-open',navOpen);
+  toggle.setAttribute('aria-expanded',navOpen);
+  links.style.display=navOpen?'flex':'';
+});
+links.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    navOpen=false;
+    document.body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded','false');
+    links.style.display='';
+  });
+});
+</script>
+</body>
+</html>
