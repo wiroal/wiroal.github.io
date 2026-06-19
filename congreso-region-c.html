@@ -554,6 +554,33 @@ button{font-family:inherit;cursor:pointer}
 .footer-copy a{color:var(--g400)}
 
 /* ════════════════════════════════════════════
+   #CLIMA — weather & elevation
+════════════════════════════════════════════ */
+.clima-inner{max-width:var(--max);margin:0 auto}
+.clima-live{margin-top:28px}
+.clima-live-loading{color:var(--w300);font-size:13px;font-style:italic}
+.clima-live-title{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--g400);font-weight:600;margin-bottom:14px;
+}
+.clima-now{display:flex;align-items:center;gap:10px;font-size:18px;color:var(--w100);margin-bottom:8px}
+.clima-now span:first-child{font-size:26px}
+.clima-days{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.clima-day{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:18px;text-align:center;
+}
+.clima-day .cd-date{
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--g400);margin-bottom:8px;
+}
+.clima-day .cd-icon{font-size:26px;margin-bottom:6px}
+.clima-day .cd-temp{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--g100)}
+.clima-day .cd-temp .lo{color:var(--w300);font-weight:400;font-size:14px}
+.clima-day .cd-rain{font-size:11.5px;color:var(--w200);margin-top:6px}
+.clima-note{margin-top:18px;font-size:11.5px;color:var(--w300);line-height:1.6}
+
+/* ════════════════════════════════════════════
    #CONTACTO — committee contacts
 ════════════════════════════════════════════ */
 .contacto-inner{max-width:var(--max);margin:0 auto}
@@ -662,6 +689,7 @@ button{font-family:inherit;cursor:pointer}
     <a href="#inscripciones">Inscripciones</a>
     <a href="#alojamiento">Alojamiento</a>
     <a href="#llegar">Cómo llegar</a>
+    <a href="#clima">Clima</a>
     <a href="#contacto">Contacto</a>
     <a href="#inscripciones" class="cta">Inscribirme</a>
   </div>
@@ -903,8 +931,56 @@ button{font-family:inherit;cursor:pointer}
   </div>
 </section>
 
+<!-- ════ #CLIMA ════════════════════════════ -->
+<section class="section alt" id="clima" aria-labelledby="clima-h">
+  <div class="clima-inner">
+    <div class="section-head">
+      <span class="eyebrow">Antes de empacar</span>
+      <h2 id="clima-h">Clima en Ubaté</h2>
+      <p>Ubaté está a 2.556 m s.n.m., en el altiplano cundiboyacense: clima frío de montaña. Si vienes de tierra caliente, ten esto en cuenta al empacar.</p>
+    </div>
+
+    <div class="evento-cards">
+      <div class="evento-card">
+        <div class="ec-icon">⛰️</div>
+        <span class="ec-label">Altitud</span>
+        <div class="ec-main">2.556 m s.n.m.</div>
+        <div class="ec-sub">Piso térmico frío del altiplano</div>
+      </div>
+      <div class="evento-card">
+        <div class="ec-icon">☀️</div>
+        <span class="ec-label">De día</span>
+        <div class="ec-main">15° – 23°C</div>
+        <div class="ec-sub">Agosto suele ser soleado en Ubaté</div>
+      </div>
+      <div class="evento-card">
+        <div class="ec-icon">🌙</div>
+        <span class="ec-label">Mañanas y noches</span>
+        <div class="ec-main">7° – 11°C</div>
+        <div class="ec-sub">Frío marcado al amanecer y tras el atardecer</div>
+      </div>
+      <div class="evento-card">
+        <div class="ec-icon">🌦️</div>
+        <span class="ec-label">Lluvia</span>
+        <div class="ec-main">Probabilidad baja</div>
+        <div class="ec-sub">Agosto es estadísticamente el mes más seco del año</div>
+      </div>
+    </div>
+
+    <div class="blockquote" style="margin-top:28px">
+      🧥 <strong>Qué empacar:</strong> chaqueta o saco abrigado, una prenda de manga larga para la noche, zapato cerrado y algo liviano para el sol del mediodía. Las salas de reunión también pueden estar frías — vístete por capas.
+    </div>
+
+    <div id="climaLive" class="clima-live" aria-live="polite">
+      <p class="clima-live-loading">Consultando pronóstico…</p>
+    </div>
+
+    <p class="clima-note">ℹ️ Datos de referencia según promedios históricos de Ubaté, Cundinamarca. El pronóstico puntual para el 15–17 de agosto aparecerá automáticamente arriba cuando la fecha entre en el rango de 16 días.</p>
+  </div>
+</section>
+
 <!-- ════ #CONTACTO ═══════════════════════════ -->
-<section class="section alt" id="contacto" aria-labelledby="contacto-h">
+<section class="section" id="contacto" aria-labelledby="contacto-h">
   <div class="contacto-inner">
     <div class="section-head">
       <span class="eyebrow">Comité organizador</span>
@@ -1005,6 +1081,7 @@ button{font-family:inherit;cursor:pointer}
       <a href="#inscripciones">Inscripciones</a>
       <a href="#alojamiento">Alojamiento</a>
       <a href="#llegar">Cómo llegar</a>
+      <a href="#clima">Clima</a>
       <a href="#contacto">Contacto</a>
       <a href="https://aacolombia.org" target="_blank" rel="noopener">aacolombia.org</a>
     </nav>
@@ -1130,6 +1207,59 @@ function render(){
 
   tick();
   setInterval(tick, 1000);
+})();
+
+/* ─── CLIMA EN VIVO (Ubaté) ─────────────────────── */
+(function(){
+  const TARGET_DATES = ['2026-08-15','2026-08-16','2026-08-17'];
+  const ICONS = {
+    0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
+    51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',
+    71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'⛈️',
+    95:'⛈️',96:'⛈️',99:'⛈️'
+  };
+  function icon(code){ return ICONS[code] || '🌥️'; }
+  function fmtDate(s){
+    const d = new Date(s+'T12:00:00-05:00');
+    const txt = d.toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'});
+    return txt.charAt(0).toUpperCase()+txt.slice(1);
+  }
+
+  const url = 'https://api.open-meteo.com/v1/forecast?latitude=5.31&longitude=-73.82'
+    + '&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+    + '&current_weather=true&timezone=America%2FBogota&forecast_days=16';
+
+  fetch(url).then(r=>r.json()).then(data=>{
+    const box = document.getElementById('climaLive');
+    if(!box || !data.daily || !data.daily.time) return;
+
+    const idxs = TARGET_DATES
+      .map(d=>data.daily.time.indexOf(d))
+      .filter(i=>i!==-1);
+
+    if(idxs.length){
+      let html = '<p class="clima-live-title">📡 Pronóstico actualizado para el congreso</p><div class="clima-days">';
+      idxs.forEach(i=>{
+        html += '<div class="clima-day">'
+          + '<div class="cd-date">'+fmtDate(data.daily.time[i])+'</div>'
+          + '<div class="cd-icon">'+icon(data.daily.weathercode[i])+'</div>'
+          + '<div class="cd-temp">'+Math.round(data.daily.temperature_2m_max[i])+'° <span class="lo">/ '+Math.round(data.daily.temperature_2m_min[i])+'°</span></div>'
+          + '<div class="cd-rain">☔ '+data.daily.precipitation_probability_max[i]+'% de probabilidad</div>'
+          + '</div>';
+      });
+      html += '</div>';
+      box.innerHTML = html;
+    } else if(data.current_weather){
+      box.innerHTML = '<p class="clima-live-title">📡 Así está el clima en Ubaté ahora (referencia)</p>'
+        + '<div class="clima-now"><span>'+icon(data.current_weather.weathercode)+'</span><span>'+Math.round(data.current_weather.temperature)+'°C en este momento</span></div>'
+        + '<p class="clima-live-loading">El pronóstico específico del 15 al 17 de agosto aparecerá aquí automáticamente cuando falten 16 días o menos para el congreso.</p>';
+    } else {
+      box.innerHTML = '';
+    }
+  }).catch(()=>{
+    const box = document.getElementById('climaLive');
+    if(box) box.innerHTML = '';
+  });
 })();
 
 /* ─── NAV SCROLL ────────────────────────────────── */
