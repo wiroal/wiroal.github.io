@@ -125,6 +125,15 @@ button{font-family:inherit;cursor:pointer}
   transition:background .2s,transform .15s,box-shadow .2s;
 }
 .nav-links .cta:hover{background:var(--royal);transform:translateY(-1px);box-shadow:0 6px 18px rgba(43,87,174,.28)}
+.nav-links .theme-toggle{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:20px;
+  border:1px solid var(--line-2);
+  color:var(--royal);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;margin-left:8px;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.nav-links .theme-toggle:hover{background:var(--paper-3);border-color:var(--royal);color:var(--royal-600)}
 /* hamburger */
 .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px;position:relative;z-index:210}
 .nav-toggle span{display:block;width:24px;height:2px;border-radius:2px;background:var(--navy);transition:transform .3s var(--ease),opacity .25s}
@@ -558,6 +567,7 @@ button{font-family:inherit;cursor:pointer}
     <a href="#llegar">Cómo llegar</a>
     <a href="#clima">Clima</a>
     <a href="#contacto">Contacto</a>
+    <a href="congreso-region-c.html" class="theme-toggle">🌙 Ver oscuro</a>
     <a href="#inscripciones" class="cta">Inscribirme</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
