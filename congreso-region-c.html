@@ -108,6 +108,15 @@ button{font-family:inherit;cursor:pointer}
   transition:background .2s,transform .15s;
 }
 .nav-links .cta:hover{background:var(--g300);transform:translateY(-1px)}
+.nav-links .theme-toggle{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:20px;
+  border:1px solid rgba(201,163,70,.4);
+  color:var(--g300);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;margin-left:8px;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.nav-links .theme-toggle:hover{background:rgba(201,163,70,.1);border-color:var(--g300);color:var(--g200)}
 /* hamburger */
 .nav-toggle{
   display:none;flex-direction:column;gap:5px;background:none;border:none;
@@ -691,6 +700,7 @@ button{font-family:inherit;cursor:pointer}
     <a href="#llegar">Cómo llegar</a>
     <a href="#clima">Clima</a>
     <a href="#contacto">Contacto</a>
+    <a href="congreso-region-c-claro.html" class="theme-toggle">☀️ Ver claro</a>
     <a href="#inscripciones" class="cta">Inscribirme</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
