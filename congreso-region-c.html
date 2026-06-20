@@ -527,6 +527,48 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ════════════════════════════════════════════
+   #PROGRAMACIÓN — schedule accordion
+════════════════════════════════════════════ */
+.prog-inner{max-width:var(--max);margin:0 auto}
+.prog-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:28px;
+}
+.prog-day-title{
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  color:var(--g200);margin-bottom:18px;padding-bottom:10px;
+  border-bottom:1px solid rgba(201,163,70,.3);
+  display:flex;align-items:baseline;gap:8px;
+}
+.prog-day-title span{
+  font-family:'Spectral',serif;font-size:11px;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--w300);
+}
+.prog-block{margin-bottom:20px}
+.prog-block:last-child{margin-bottom:0}
+.pbadge{
+  display:inline-block;font-size:10px;text-transform:uppercase;
+  letter-spacing:.1em;padding:3px 10px;border-radius:20px;
+  margin-bottom:7px;font-weight:700;
+}
+.pbadge.reunion{background:rgba(58,124,165,.2);color:#7ec8e3;border:1px solid rgba(58,124,165,.4)}
+.pbadge.acto{background:rgba(201,163,70,.18);color:var(--g300);border:1px solid rgba(201,163,70,.4)}
+.pbadge.libre{background:rgba(46,125,91,.2);color:#7ecfab;border:1px solid rgba(46,125,91,.4)}
+.prog-time{font-size:12.5px;color:var(--w300);letter-spacing:.03em;margin-bottom:8px}
+.prog-time em{color:var(--w300);font-style:italic}
+.prog-desc{font-size:13.5px;color:var(--w200)}
+.prog-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.prog-list li{
+  font-size:13.5px;color:var(--w200);line-height:1.5;
+  padding-left:18px;position:relative;
+}
+.prog-list li::before{
+  content:'⚡';position:absolute;left:0;top:0;
+  font-size:11px;color:var(--g400);
+}
+.prog-list li strong{color:var(--g100)}
+
+/* ════════════════════════════════════════════
    #LLEGAR — map
 ════════════════════════════════════════════ */
 .llegar-inner{max-width:var(--max);margin:0 auto}
@@ -695,6 +737,7 @@ button{font-family:inherit;cursor:pointer}
   <div class="nav-links" id="navLinks">
     <a href="#congreso">El Congreso</a>
     <a href="#evento">Evento</a>
+    <a href="#programacion">Programación</a>
     <a href="#inscripciones">Inscripciones</a>
     <a href="#alojamiento">Alojamiento</a>
     <a href="#llegar">Cómo llegar</a>
@@ -788,7 +831,7 @@ button{font-family:inherit;cursor:pointer}
     </div>
     <div class="congreso-grid">
       <div class="congreso-text">
-        <p>Los congresos regionales no son eventos sociales más en el calendario de la comunidad: son la expresión viva de nuestro Tercer Legado, el servicio. Cada vez que un compañero atraviesa montañas y caminos para sentarse junto a otros miembros, está reafirmando aquello que nos sostiene desde hace nueve décadas.</p>
+        <p>Los congresos regionales no son eventos sociales más en el calendario de la comunidad: son la expresión viva de nuestra Tercera Legado, el servicio. Cada vez que un compañero atraviesa montañas y caminos para sentarse junto a otros miembros, está reafirmando aquello que nos sostiene desde hace nueve décadas.</p>
         <p>Asistir al 35° Congreso de la Región C es renovar nuestro compromiso con el alcohólico que aún sufre. Es escuchar experiencias que nos recuerdan de dónde venimos, descubrir herramientas nuevas para los grupos base, fortalecer los vínculos con servidores de toda la región y unificar criterios sobre los temas que la comunidad nacional discute hoy.</p>
         <div class="blockquote">
           «Cuando todo lo demás falla, los principios fundamentales nos sostienen. Los congresos son el espacio donde esos principios dejan de ser abstractos y se vuelven rostros, voces y abrazos.»
@@ -850,8 +893,132 @@ button{font-family:inherit;cursor:pointer}
   </div>
 </section>
 
+<!-- ════ #PROGRAMACIÓN ═══════════════════════ -->
+<section class="section" id="programacion" aria-labelledby="prog-h">
+  <div class="prog-inner">
+    <div class="section-head">
+      <span class="eyebrow">Orden del congreso</span>
+      <h2 id="prog-h">Programación</h2>
+      <p>Itinerario de reuniones y actos del 35° Congreso — sábado 15, domingo 16 y lunes 17 de agosto.</p>
+    </div>
+
+    <button class="hotel-toggle" id="progBtn" onclick="toggleProg()" aria-expanded="false" aria-controls="progPanel">
+      <span>Ver programación completa</span>
+      <span class="arr" aria-hidden="true">&#9660;</span>
+    </button>
+
+    <div class="hotel-panel" id="progPanel" role="region" aria-label="Programación del congreso">
+      <div class="hotel-inner">
+        <div class="prog-grid">
+
+          <!-- SÁBADO -->
+          <div class="prog-day">
+            <h3 class="prog-day-title">Sábado <span>15 ago</span></h3>
+
+            <div class="prog-block">
+              <span class="pbadge reunion">Reunión</span>
+              <div class="prog-time">9:00 PM</div>
+              <p class="prog-desc">Inscripciones</p>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge acto">Reunión inaugural</span>
+              <div class="prog-time">10:00 AM – 12:00 M</div>
+              <ul class="prog-list">
+                <li>Himnos (Colombia – Ubaté)</li>
+                <li>Saludo de bienvenida</li>
+                <li>Instalación del congreso</li>
+                <li>Invitados especiales nos saludan</li>
+                <li>Desfile de banderas</li>
+                <li>Lema “Nuestra recuperación, el faro que guía al que sufre”</li>
+              </ul>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge reunion">Reunión</span>
+              <div class="prog-time">2:00 PM – 4:00 PM</div>
+              <ul class="prog-list">
+                <li>Rendición e ingobernabilidad</li>
+                <li>Recuperando el sano juicio</li>
+                <li>Poner la voluntad en Sus manos</li>
+              </ul>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge acto">Acto cultural</span>
+              <div class="prog-time">8:00 PM</div>
+            </div>
+          </div>
+
+          <!-- DOMINGO -->
+          <div class="prog-day">
+            <h3 class="prog-day-title">Domingo <span>16 ago</span></h3>
+
+            <div class="prog-block">
+              <span class="pbadge reunion">Reunión</span>
+              <div class="prog-time">8:00 AM – 9:40 AM <em>· con coordinadores</em></div>
+              <ul class="prog-list">
+                <li>Inventario moral sin miedo</li>
+                <li>La liberación de contar la verdad</li>
+                <li>Disposición al cambio total</li>
+              </ul>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge reunion">Reunión</span>
+              <div class="prog-time">10:10 AM – 12:00 M</div>
+              <ul class="prog-list">
+                <li>Humildad para ser liberados</li>
+                <li>Corazones dispuestos a reparar</li>
+                <li>Resarcir daños directamente</li>
+              </ul>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge libre">Tarde libre</span>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge acto">Acto social</span>
+              <div class="prog-time">8:00 PM</div>
+            </div>
+          </div>
+
+          <!-- LUNES -->
+          <div class="prog-day">
+            <h3 class="prog-day-title">Lunes <span>17 ago</span></h3>
+
+            <div class="prog-block">
+              <span class="pbadge reunion">Reunión</span>
+              <div class="prog-time">8:00 AM – 9:40 AM</div>
+              <ul class="prog-list">
+                <li>El mantenimiento de la sobriedad</li>
+                <li>La voluntad de Dios y la oración</li>
+                <li>Despertar para dar el mensaje</li>
+              </ul>
+            </div>
+
+            <div class="prog-block">
+              <span class="pbadge acto">Reunión de clausura</span>
+              <div class="prog-time">10:10 AM – 12:00 M</div>
+              <ul class="prog-list">
+                <li>Nuestra OSG comparte</li>
+                <li>Entrega de responsabilidad del congreso</li>
+                <li>Informe de tesorería</li>
+                <li>Tema: “Nuestros pasos, camino a la sobriedad”</li>
+                <li><strong>Palabras de agradecimiento y clausura</strong></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════ #INSCRIPCIONES ════════════════════ -->
-<section class="section" id="inscripciones" aria-labelledby="ins-h">
+<section class="section alt" id="inscripciones" aria-labelledby="ins-h">
   <div class="ins-inner">
     <div class="section-head">
       <span class="eyebrow">Participar</span>
@@ -888,7 +1055,7 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ════ #ALOJAMIENTO ════════════════════════ -->
-<section class="section alt" id="alojamiento" aria-labelledby="aloj-h">
+<section class="section" id="alojamiento" aria-labelledby="aloj-h">
   <div class="aloj-inner">
     <div class="section-head">
       <span class="eyebrow">Hospedaje en Ubaté</span>
@@ -921,7 +1088,7 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ════ #LLEGAR ════════════════════════════ -->
-<section class="section" id="llegar" aria-labelledby="llegar-h">
+<section class="section alt" id="llegar" aria-labelledby="llegar-h">
   <div class="llegar-inner">
     <div class="section-head">
       <span class="eyebrow">Orientación</span>
@@ -942,7 +1109,7 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ════ #CLIMA ════════════════════════════ -->
-<section class="section alt" id="clima" aria-labelledby="clima-h">
+<section class="section" id="clima" aria-labelledby="clima-h">
   <div class="clima-inner">
     <div class="section-head">
       <span class="eyebrow">Antes de empacar</span>
@@ -990,7 +1157,7 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ════ #CONTACTO ═══════════════════════════ -->
-<section class="section" id="contacto" aria-labelledby="contacto-h">
+<section class="section alt" id="contacto" aria-labelledby="contacto-h">
   <div class="contacto-inner">
     <div class="section-head">
       <span class="eyebrow">Comité organizador</span>
@@ -1088,6 +1255,7 @@ button{font-family:inherit;cursor:pointer}
     <nav class="footer-links" aria-label="Navegación del pie de página">
       <a href="#inicio">Inicio</a>
       <a href="#congreso">El Congreso</a>
+      <a href="#programacion">Programación</a>
       <a href="#inscripciones">Inscripciones</a>
       <a href="#alojamiento">Alojamiento</a>
       <a href="#llegar">Cómo llegar</a>
@@ -1138,6 +1306,13 @@ function toggleHoteles(){
   b.classList.toggle('open',open);
   b.setAttribute('aria-expanded',open);
   if(open && !rendered){render();rendered=true;}
+}
+function toggleProg(){
+  const p=document.getElementById('progPanel');
+  const b=document.getElementById('progBtn');
+  const open=p.classList.toggle('open');
+  b.classList.toggle('open',open);
+  b.setAttribute('aria-expanded',open);
 }
 function setF(t,el){
   filt=t;
