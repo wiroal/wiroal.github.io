@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcoholismo en Bogotá  | Alcohólicos Anónimos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* ALERTA PRINCIPAL - ALCOHOLISMO */
+        .alcohol-alert-box {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(192, 57, 43, 0.4);
+            margin-bottom: 30px;
+            text-align: center;
+            animation: pulseAlert 2s infinite;
+            border: 4px solid #fff;
+        }
+        
+        @keyframes pulseAlert {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .alcohol-alert-box h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .main-number {
+            font-size: 5em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: countUp 3s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .alert-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        
+        .alert-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        /* MAPA DE CALOR */
+        .heatmap-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .heatmap-container {
+            margin: 30px 0;
+        }
+        
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .locality-card {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .locality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .locality-card.critical {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            animation: criticalPulse 2s infinite;
+        }
+        
+        .locality-card.high {
+            background: linear-gradient(135deg, #d35400, #e67e22);
+        }
+        
+        .locality-card.medium {
+            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            color: #333;
+        }
+        
+        .locality-card.moderate {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        @keyframes criticalPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+        }
+        
+        .locality-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .locality-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .locality-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* TABLAS MEJORADAS */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .data-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        /* SECCIONES */
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        /* HEADER */
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .alcohol-alert-box h1 {
+                font-size: 1.8em;
+            }
+            
+            .main-number {
+                font-size: 3.5em;
+            }
+            
+            .heatmap-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .alert-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* LEGENDA MAPA */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        .legend-color.critical { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+        .legend-color.high { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .legend-color.medium { background: linear-gradient(135deg, #f39c12, #f1c40f); }
+        .legend-color.moderate { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        
+        /* BOTÓN AA */
+        .aa-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .aa-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1> Alcoholismo en Bogotá D.C.</h1>
+            <p>Alcohólicos Anónimos</p>
+            <p style="font-size: 0.9em; color: #999;">Datos basados en Estudio Distrital 2022 - UNODC / Secretaría Distrital de Salud</p>
+        </header>
+        
+        <!-- CAJA PRINCIPAL DE ALERTA - ALCOHOLISMO -->
+        <div class="alcohol-alert-box">
+            <h1>⚠️ Crisis de Alcoholismo en Bogotá</h1>
+            <div class="main-number">531.000</div>
+            <p class="alert-subtitle">Personas con Abuso o Dependencia del Alcohol</p>
+            
+            <div class="alert-stats">
+                <div class="stat-card">
+                    <h3>39%</h3>
+                    <p>Consumo Actual<br>(último mes)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>88.84%</h3>
+                    <p>Ha consumido alcohol<br>alguna vez en la vida</p>
+                </div>
+                <div class="stat-card">
+                    <h3>75%</h3>
+                    <p>Hombres<br>(3 de cada 4 casos)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>21%</h3>
+                    <p>De los consumidores<br>requieren ayuda</p>
+                </div>
+            </div>
+            
+            <a href="https://aaintergrupos.org/" class="aa-button">📞 Busque Ayuda - Alcohólicos Anónimos</a>
+        </div>
+        
+        <!-- MAPA DE CALOR POR LOCALIDADES -->
+        <div class="heatmap-section">
+            <h2 style="color: #c0392b; text-align: center; margin-bottom: 10px;">
+                🗺️ Mapa de Calor: Alcoholismo por Localidades
+            </h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                Distribución territorial del consumo problemático y demanda de atención (VESPA 2015-2026)
+            </p>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color critical"></div>
+                    <span>Crítico (>15,000 casos)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color high"></div>
+                    <span>Alto (10,000-15,000)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color medium"></div>
+                    <span>Medio (5,000-10,000)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color moderate"></div>
+                    <span>Moderado (<5,000)</span>
+                </div>
+            </div>
+            
+            <div class="heatmap-grid">
+                <!-- LOCALIDADES CRÍTICAS -->
+                <div class="locality-card critical">
+                    <div class="locality-name"> Kennedy</div>
+                    <div class="locality-value">18,500+</div>
+                    <div class="locality-label">Mayor demanda VESPA<br>Alcohol: 69.2% casos</div>
+                </div>
+                
+                <div class="locality-card critical">
+                    <div class="locality-name">🔴 Bosa</div>
+                    <div class="locality-value">16,200+</div>
+                    <div class="locality-label">Epicentro emergente<br>Cobertura insuficiente</div>
+                </div>
+                
+                <div class="locality-card critical">
+                    <div class="locality-name">🔴 Ciudad Bolívar</div>
+                    <div class="locality-value">15,800+</div>
+                    <div class="locality-label">Prioridad CRÍTICA<br>Déficit de servicios</div>
+                </div>
+                
+                <div class="locality-card high">
+                    <div class="locality-name">🟠 Suba</div>
+                    <div class="locality-value">12,400+</div>
+                    <div class="locality-label">Alta prevalencia<br>Consumo problemático</div>
+                </div>
+                
+                <div class="locality-card high">
+                    <div class="locality-name">🟠 Santa Fe</div>
+                    <div class="locality-value">11,900+</div>
+                    <div class="locality-label">Habitante de calle<br>1 de cada 6 casos</div>
+                </div>
+                
+                <div class="locality-card high">
+                    <div class="locality-name">🟠 Los Mártires</div>
+                    <div class="locality-value">10,500+</div>
+                    <div class="locality-label">Centro tradicional<br>Alta concentración</div>
+                </div>
+                
+                <div class="locality-card medium">
+                    <div class="locality-name">🟡 Usme</div>
+                    <div class="locality-value">8,200+</div>
+                    <div class="locality-label">Déficit moderado<br>Prioridad ALTA</div>
+                </div>
+                
+                <div class="locality-card medium">
+                    <div class="locality-name">🟡 San Cristóbal</div>
+                    <div class="locality-value">7,600+</div>
+                    <div class="locality-label">Consumo tabaco<br>y alcohol</div>
+                </div>
+                
+                <div class="locality-card medium">
+                    <div class="locality-name">🟡 Rafael Uribe</div>
+                    <div class="locality-value">6,900+</div>
+                    <div class="locality-label">Zona sur<br>Atención creciente</div>
+                </div>
+                
+                <div class="locality-card moderate">
+                    <div class="locality-name">🟢 Chapinero</div>
+                    <div class="locality-value">4,800+</div>
+                    <div class="locality-label">Consumo recreativo<br>Vida nocturna</div>
+                </div>
+                
+                <div class="locality-card moderate">
+                    <div class="locality-name">🟢 Usaquén</div>
+                    <div class="locality-value">4,200+</div>
+                    <div class="locality-label">Mayor ingreso<br>Consumo social</div>
+                </div>
+                
+                <div class="locality-card moderate">
+                    <div class="locality-name">🟢 Teusaquillo</div>
+                    <div class="locality-value">3,900+</div>
+                    <div class="locality-label">Zona universitaria<br>Consumo joven</div>
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin-top: 30px; border-left: 5px solid #ffc107;">
+                <h3 style="color: #856404; margin-bottom: 10px;">📊 Hallazgo Clave: La Doble Bogotá</h3>
+                <p style="color: #856404;">
+                    <strong>El norte consume más</strong> (Chapinero, Usaquén, Teusaquillo - zonas de mayor ingreso y vida nocturna), 
+                    pero <strong>el daño se concentra en el sur y occidente</strong> (Kennedy, Bosa, Ciudad Bolívar - periferia popular). 
+                    Esta es una <strong>brecha de desigualdad</strong>, no solo un mapa de consumo.
+                </p>
+            </div>
+        </div>
+        
+        <!-- DATOS DETALLADOS ALCOHOL -->
+        <div class="section">
+            <h2>📈 Caracterización del Alcoholismo en Bogotá</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Indicador</th>
+                        <th>Cifra</th>
+                        <th>Observación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Población afectada</strong></td>
+                        <td style="color: #c0392b; font-weight: bold; font-size: 1.2em;">531.000</td>
+                        <td>Abuso/dependencia (8.19% población 12-65 años)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consumo actual</strong></td>
+                        <td>2.533.364</td>
+                        <td>38.98% (último mes) - Creció de 36.5% en 2016</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Distribución por género</strong></td>
+                        <td>75% hombres / 25% mujeres</td>
+                        <td>De 4 casos de dependencia, 3 son hombres</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edad de inicio</strong></td>
+                        <td>17.8 años</td>
+                        <td>Promedio primera experiencia</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mayor prevalencia</strong></td>
+                        <td>25-34 años (55.08%)</td>
+                        <td>Seguido por 18-24 años (51.63%)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estratos más afectados</strong></td>
+                        <td>Estrato 2 (9.54%)</td>
+                        <td>Seguido por estrato 1 (9.49%)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sustancia en VESPA</strong></td>
+                        <td>69.2%</td>
+                        <td>Alcohol es la sustancia legal más reportada</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- COMPARATIVO SUSTANCIAS -->
+        <div class="section">
+            <h2> Escalafón: Alcohol vs Otras Sustancias</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Pos.</th>
+                        <th>Sustancia</th>
+                        <th>Afectados</th>
+                        <th>Observación Crítica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #ffebee;">
+                        <td style="font-size: 1.5em;">🥇</td>
+                        <td><strong>ALCOHOL</strong></td>
+                        <td style="color: #c0392b; font-weight: bold; font-size: 1.2em;">531.000</td>
+                        <td><strong>Legal y normalizada - Mayor carga de daño</strong></td>
+                    </tr>
+                    <tr>
+                        <td>🥈</td>
+                        <td>Marihuana</td>
+                        <td>371.086</td>
+                        <td>Baja percepción de riesgo en jóvenes</td>
+                    </tr>
+                    <tr>
+                        <td>🥉</td>
+                        <td>Cocaína</td>
+                        <td>67.000</td>
+                        <td>Alto impacto sociofamiliar y laboral</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Sintéticas / Éxtasis</td>
+                        <td>46.000</td>
+                        <td>Crecimiento por mezclas clandestinas</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Bazuco</td>
+                        <td>24.000</td>
+                        <td>Alta correlación con habitabilidad en calle</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ALERTAS TEMPRANAS -->
+        <div class="section" style="background: linear-gradient(135deg, #fff3cd, #ffeaa7);">
+            <h2 style="color: #d63031;">🚨 Alertas Tempranas 2024-2026</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 15px; margin: 10px 0; background: white; border-radius: 10px; border-left: 5px solid #d63031;">
+                    <strong>Sustancias Sintéticas:</strong> Casos de Tusi aumentaron más del 50% entre 2023-2024. 
+                    Se detectó xilacina (sedante veterinario) en muestras de Bogotá.
+                </li>
+                <li style="padding: 15px; margin: 10px 0; background: white; border-radius: 10px; border-left: 5px solid #e17055;">
+                    <strong>Desplazamiento Geográfico:</strong> Kennedy y Bosa están sustituyendo al centro tradicional 
+                    (Santa Fe, Los Mártires) como epicentro de atención por consumo problemático.
+                </li>
+                <li style="padding: 15px; margin: 10px 0; background: white; border-radius: 10px; border-left: 5px solid #00b894;">
+                    <strong>Aumento en Mujeres:</strong> El consumo de alcohol creció significativamente en mujeres, 
+                    especialmente en el grupo de 25 a 34 años.
+                </li>
+            </ul>
+        </div>
+        
+        <!-- PRIORIZACIÓN RACSG -->
+        <div class="section">
+            <h2>🎯 Priorización de Cobertura Territorial - RACSG</h2>
+            <p style="margin-bottom: 20px; color: #666;">Localidades con urgencia de fortalecimiento estructural por déficit de cobertura:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Localidad</th>
+                        <th>Estado</th>
+                        <th>Prioridad</th>
+                        <th>Acción Requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #ffebee;">
+                        <td><strong>Bosa</strong></td>
+                        <td style="color: #c0392b; font-weight: bold;">Insuficiente</td>
+                        <td><span style="background: #c0392b; color: white; padding: 5px 10px; border-radius: 5px;">CRÍTICA</span></td>
+                        <td>Apertura y fortalecimiento de nuevos grupos de apoyo mutuo</td>
+                    </tr>
+                    <tr style="background: #ffebee;">
+                        <td><strong>Ciudad Bolívar</strong></td>
+                        <td style="color: #c0392b; font-weight: bold;">Insuficiente</td>
+                        <td><span style="background: #c0392b; color: white; padding: 5px 10px; border-radius: 5px;">CRÍTICA</span></td>
+                        <td>Despliegue de información pública e infraestructura de servicio</td>
+                    </tr>
+                    <tr style="background: #fff3cd;">
+                        <td><strong>Usme</strong></td>
+                        <td style="color: #d35400; font-weight: bold;">Déficit Moderado</td>
+                        <td><span style="background: #e67e22; color: white; padding: 5px 10px; border-radius: 5px;">ALTA</span></td>
+                        <td>Talleres comunitarios y consolidación de la red local</td>
+                    </tr>
+                    <tr>
+                        <td>Kennedy</td>
+                        <td style="color: #d35400;">Saturada</td>
+                        <td><span style="background: #e67e22; color: white; padding: 5px 10px; border-radius: 5px;">ALTA</span></td>
+                        <td>Ampliación de capacidad de atención existente</td>
+                    </tr>
+                    <tr>
+                        <td>Suba</td>
+                        <td style="color: #d35400;">Limitada</td>
+                        <td><span style="background: #f39c12; color: white; padding: 5px 10px; border-radius: 5px;">MEDIA</span></td>
+                        <td>Fortalecimiento de grupos existentes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- LLAMADO A LA ACCIÓN AA -->
+        <div id="ayuda" class="alcohol-alert-box" style="margin-top: 40px;">
+            <h2>🤝 La Recuperación es Posible</h2>
+            <p style="font-size: 1.3em; margin: 20px 0;">
+                Si usted o alguien que conoce tiene problemas con el alcohol, <strong>no está solo</strong>.
+            </p>
+            <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="margin-bottom: 20px;">Alcohólicos Anónimos - Bogotá</h3>
+                <p style="font-size: 1.2em;">
+                    📞 <strong>Línea de Ayuda:</strong> <a href="https://aaintergrupos.org/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; font-weight: bold;">AA Intergrupos</a><br>
+                    🕐 <strong>Reuniones:</strong> <a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html" target="_blank" rel="noopener noreferrer"style="color: white; text-decoration: underline; font-weight: bold; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);"> Reuniones de Grupos AA Bogotá</a><br>
+                    💚 <strong>Confidencial:</strong> Anonimato garantizado
+                </p>
+            </div>
+            <p style="font-style: italic; font-size: 1.1em;">
+                "El primer paso es reconocer que necesitamos ayuda. <br>
+                En AA encontrarás comprensión, apoyo y esperanza."
+            </p>
+        </div>
+        
+        <!-- FOOTER -->
+        <footer style="text-align: center; padding: 30px; color: white; margin-top: 40px;">
+            <p style="font-size: 1.1em;">
+                <strong>Alcohólicos Anónimos Bogotá</strong><br>
+                <a href="https://www.unodc.org/documents/colombia/2023/septiembre-9/ESTUDIO_DE_CONSUMO_DE_SUSTANCIAS_PSICOACTIVAS_BOGOTA_2022.pdf" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   style="color: white; background-color: #6a0dad; padding: 10px 15px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;">
+  Estudio de Consumo de Sustancias Psicoactivas en Bogotá D.C., 2022 Secretaría Distrital de Salud + UNODC + Centro Nacional de Consultoría
+</a>
+            </p>
+            <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9em;">
+                Datos VESPA 2015-2026 | Vigilancia Epidemiológica del Abuso de SPA
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Animación de conteo
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Iniciar animación cuando cargue la página
+        window.addEventListener('load', () => {
+            const mainNumber = document.querySelector('.main-number');
+            animateValue(mainNumber, 0, 531000, 3000);
+        });
+    </script>
+</body>
+</html>
