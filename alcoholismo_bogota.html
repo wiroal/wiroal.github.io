@@ -388,6 +388,225 @@
             .location-name { font-size: 0.95rem; }
             th, td { padding: 8px 6px; font-size: 0.82rem; }
         }
+		
+		/* ===== SECCIÓN BRECHA DE COBERTURA ===== */
+.reality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+.reality-card {
+    padding: 18px 12px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--aa-white);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+.reality-card.blue {
+    background: linear-gradient(135deg, var(--aa-blue) 0%, var(--aa-blue-dark) 100%);
+}
+.reality-card.red {
+    background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+    box-shadow: 0 3px 12px rgba(204,0,0,0.35);
+}
+.reality-number {
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.reality-label {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+.reality-detail {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* ===== CAJA DE BRECHA ===== */
+.gap-box {
+    background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+    color: var(--aa-white);
+    padding: 22px 16px;
+    border-radius: 12px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(204,0,0,0.35);
+}
+.gap-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+.gap-comparison {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.gap-side {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px;
+}
+.gap-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    margin-bottom: 6px;
+}
+.gap-percent {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.gap-detail {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    line-height: 1.3;
+}
+.gap-arrow {
+    font-size: 2rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+.gap-text {
+    color: var(--aa-red);
+    font-weight: bold;
+}
+
+/* ===== PROYECCIÓN ===== */
+.projection-box {
+    background: var(--aa-gray);
+    border: 2px solid var(--aa-blue);
+    border-left: 6px solid var(--aa-blue);
+    padding: 20px 16px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+.projection-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--aa-blue);
+    text-align: center;
+    margin-bottom: 15px;
+}
+.projection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.projection-item {
+    background: var(--aa-white);
+    padding: 14px 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid var(--aa-blue);
+}
+.projection-item.red {
+    background: var(--aa-red);
+    color: var(--aa-white);
+    border-color: var(--aa-red-dark);
+}
+.projection-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--aa-blue);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.projection-item.red .projection-value {
+    color: var(--aa-white);
+}
+.projection-desc {
+    font-size: 0.82rem;
+    line-height: 1.3;
+}
+.projection-conclusion {
+    background: var(--aa-blue);
+    color: var(--aa-white);
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+/* ===== TABLA DE PROYECCIÓN ===== */
+.projection-table {
+    margin: 15px 0;
+}
+.proj-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.3fr 1.2fr;
+    gap: 8px;
+    padding: 12px;
+    background: var(--aa-white);
+    border-left: 5px solid var(--aa-blue);
+    margin-bottom: 8px;
+    border-radius: 0 8px 8px 0;
+    align-items: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+.proj-row.critical {
+    background: #fff0f0;
+    border-left-color: var(--aa-red);
+}
+.proj-level {
+    font-weight: bold;
+    color: var(--aa-blue);
+}
+.proj-row.critical .proj-level {
+    color: var(--aa-red);
+}
+.proj-groups {
+    font-weight: bold;
+    text-align: center;
+}
+.proj-diff {
+    color: var(--aa-red);
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.proj-people {
+    text-align: right;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+/* ===== RESPONSIVE BRECHA ===== */
+@media screen and (max-width: 768px) {
+    .reality-grid { grid-template-columns: repeat(2, 1fr); }
+    .reality-number { font-size: 1.9rem; }
+    .reality-label { font-size: 0.82rem; }
+    .gap-comparison { flex-direction: column; gap: 8px; }
+    .gap-arrow { transform: rotate(90deg); font-size: 1.5rem; }
+    .gap-percent { font-size: 2.2rem; }
+    .projection-grid { grid-template-columns: 1fr; }
+    .proj-row { 
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        font-size: 0.82rem;
+    }
+    .proj-diff, .proj-people { text-align: left; }
+}
+
+@media screen and (max-width: 400px) {
+    .reality-grid { grid-template-columns: 1fr; }
+    .reality-number { font-size: 2.2rem; }
+}
     </style>
 </head>
 <body>
@@ -559,26 +778,209 @@
             </ul>
         </div>
 
-        <!-- PRIORIZACIÓN -->
-        <div class="section">
-            <h3>🎯 Priorización de Cobertura Territorial - RACSG</h3>
-            <p>Localidades con urgencia de fortalecimiento estructural por déficit de cobertura:</p>
-            <p class="scroll-hint">← Desliza horizontalmente para ver la tabla →</p>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr><th>Localidad</th><th>Estado</th><th>Prioridad</th><th>Acción Requerida</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr class="highlight"><td><strong>Bosa</strong></td><td>Insuficiente</td><td>CRÍTICA</td><td>Apertura y fortalecimiento de nuevos grupos de apoyo mutuo</td></tr>
-                        <tr class="highlight"><td><strong>Ciudad Bolívar</strong></td><td>Insuficiente</td><td>CRÍTICA</td><td>Despliegue de información pública e infraestructura de servicio</td></tr>
-                        <tr><td>Usme</td><td>Déficit Moderado</td><td>ALTA</td><td>Talleres comunitarios y consolidación de la red local</td></tr>
-                        <tr><td>Kennedy</td><td>Saturada</td><td>ALTA</td><td>Ampliación de capacidad de atención existente</td></tr>
-                        <tr><td>Suba</td><td>Limitada</td><td>MEDIA</td><td>Fortalecimiento de grupos existentes</td></tr>
-                    </tbody>
-                </table>
+        <!-- REEMPLAZAR la sección "Priorización de Cobertura Territorial" por esta -->
+<div class="section">
+    <h3>📊 Brecha de Cobertura: La Realidad de AA en Bogotá</h3>
+    <p style="text-align:center; font-size:0.95rem; color:#555;">
+        Alcohólicos Anónimos es la red de apoyo más grande de la ciudad, pero la demanda nos supera ampliamente.
+    </p>
+
+    <!-- CONTADOR DE GRUPOS -->
+    <div class="reality-grid">
+        <div class="reality-card blue">
+            <div class="reality-number">78</div>
+            <div class="reality-label">Grupos AA activos en Bogotá</div>
+            <div class="reality-detail">Distribuidos en 9 distritos de servicios</div>
+        </div>
+        <div class="reality-card blue">
+            <div class="reality-number">~12</div>
+            <div class="reality-label">Miembros promedio por grupo</div>
+            <div class="reality-detail">Rango real: 8 a 15 miembros</div>
+        </div>
+        <div class="reality-card blue">
+            <div class="reality-number">50</div>
+            <div class="reality-label">Capacidad máxima por grupo</div>
+            <div class="reality-detail">Alcohólicos que puede acoger</div>
+        </div>
+        <div class="reality-card red">
+            <div class="reality-number">531.000</div>
+            <div class="reality-label">Personas que necesitan ayuda</div>
+            <div class="reality-detail">Abuso o dependencia del alcohol</div>
+        </div>
+    </div>
+
+    <!-- LA BRECHA IMPACTANTE -->
+    <div class="gap-box">
+        <div class="gap-title">⚠️ LA BRECHA REAL</div>
+        <div class="gap-comparison">
+            <div class="gap-side">
+                <div class="gap-label">Cobertura ACTUAL</div>
+                <div class="gap-percent">0,02%</div>
+                <div class="gap-detail">~106 personas atendidas<br>de 531.000 que necesitan ayuda</div>
+            </div>
+            <div class="gap-arrow">→</div>
+            <div class="gap-side">
+                <div class="gap-label">Cobertura OBJETIVO mínima</div>
+                <div class="gap-percent">1%</div>
+                <div class="gap-detail">5.310 personas atendidas<br>Requiere <strong>+440 grupos nuevos</strong></div>
             </div>
         </div>
+    </div>
+
+    <!-- PROYECCIÓN: ¿Y SI LLENAMOS LOS GRUPOS? -->
+    <div class="projection-box">
+        <div class="projection-title">🔍 Escenario: ¿Y si llenamos los 78 grupos a su máxima capacidad?</div>
+        <div class="projection-grid">
+            <div class="projection-item">
+                <div class="projection-value">78 × 50</div>
+                <div class="projection-desc">= 3.900 personas atendidas</div>
+            </div>
+            <div class="projection-item">
+                <div class="projection-value">0,73%</div>
+                <div class="projection-desc">Cobertura máxima posible</div>
+            </div>
+            <div class="projection-item red">
+                <div class="projection-value">527.100</div>
+                <div class="projection-desc">Personas SIN atención disponible</div>
+            </div>
+        </div>
+        <p class="projection-conclusion">
+            <strong>Aun operando al 100% de su capacidad, AA Bogotá apenas cubriría el 0,73% de la demanda.</strong>
+            Ni siquiera alcanzaríamos el 1%. La brecha es abismal.
+        </p>
+    </div>
+
+    <!-- DISTRIBUCIÓN REAL POR DISTRITO -->
+    <h4 style="color:var(--aa-blue); text-align:center; margin:20px 0 10px;">📍 Distribución Real de los 78 Grupos por Distrito</h4>
+    <p class="scroll-hint">← Desliza horizontalmente para ver la tabla →</p>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Distrito</th>
+                    <th>Zona / Localidades</th>
+                    <th>Grupos</th>
+                    <th>Demanda estimada</th>
+                    <th>Cobertura</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>D1</strong></td>
+                    <td>Usaquén · Chapinero (Norte)</td>
+                    <td>8</td>
+                    <td>~12.900 casos</td>
+                    <td>Baja</td>
+                </tr>
+                <tr>
+                    <td><strong>D2</strong></td>
+                    <td>Suba</td>
+                    <td>12</td>
+                    <td>~12.400 casos</td>
+                    <td>Media</td>
+                </tr>
+                <tr>
+                    <td><strong>D3</strong></td>
+                    <td>Barrios Unidos · Teusaquillo</td>
+                    <td>8</td>
+                    <td>~8.700 casos</td>
+                    <td>Baja</td>
+                </tr>
+                <tr>
+                    <td><strong>D4</strong></td>
+                    <td>Engativá</td>
+                    <td>12</td>
+                    <td>~9.500 casos</td>
+                    <td>Media</td>
+                </tr>
+                <tr>
+                    <td><strong>D5</strong></td>
+                    <td>Fontibón · Puente Aranda</td>
+                    <td>5</td>
+                    <td>~7.200 casos</td>
+                    <td class="gap-text">Muy baja</td>
+                </tr>
+                <tr>
+                    <td><strong>D6</strong></td>
+                    <td>Mártires · Santa Fe · San Cristóbal</td>
+                    <td>8</td>
+                    <td>~22.400 casos</td>
+                    <td class="gap-text">Crítica</td>
+                </tr>
+                <tr>
+                    <td><strong>D7</strong></td>
+                    <td>San Cristóbal · Usme</td>
+                    <td>7</td>
+                    <td>~15.800 casos</td>
+                    <td class="gap-text">Crítica</td>
+                </tr>
+                <tr class="highlight">
+                    <td><strong>D8</strong></td>
+                    <td>Ciudad Bolívar · Tunjuelito (Sur)</td>
+                    <td>9</td>
+                    <td>~15.800 casos</td>
+                    <td class="gap-text">CRÍTICA</td>
+                </tr>
+                <tr class="highlight">
+                    <td><strong>D9</strong></td>
+                    <td>Kennedy · Bosa (Suroccidente)</td>
+                    <td>9</td>
+                    <td>~34.700 casos</td>
+                    <td class="gap-text">CRÍTICA</td>
+                </tr>
+                <tr style="background:var(--aa-blue); color:white; font-weight:bold;">
+                    <td colspan="2">TOTAL BOGOTÁ</td>
+                    <td>78</td>
+                    <td>~531.000 casos</td>
+                    <td>0,02%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PROYECCIÓN DE CRECIMIENTO -->
+    <h4 style="color:var(--aa-blue); text-align:center; margin:25px 0 10px;">📈 ¿Cuántos grupos necesitamos?</h4>
+    <div class="projection-table">
+        <div class="proj-row">
+            <div class="proj-level">Cobertura 1%</div>
+            <div class="proj-groups">518 grupos</div>
+            <div class="proj-diff">+440 grupos nuevos</div>
+            <div class="proj-people">5.310 personas</div>
+        </div>
+        <div class="proj-row">
+            <div class="proj-level">Cobertura 5%</div>
+            <div class="proj-groups">1.062 grupos</div>
+            <div class="proj-diff">+984 grupos nuevos</div>
+            <div class="proj-people">26.550 personas</div>
+        </div>
+        <div class="proj-row critical">
+            <div class="proj-level">Cobertura 10%</div>
+            <div class="proj-groups">2.124 grupos</div>
+            <div class="proj-diff">+2.046 grupos nuevos</div>
+            <div class="proj-people">53.100 personas</div>
+        </div>
+        <div class="proj-row critical">
+            <div class="proj-level">Cobertura total</div>
+            <div class="proj-groups">10.620 grupos</div>
+            <div class="proj-diff">+10.542 grupos nuevos</div>
+            <div class="proj-people">531.000 personas</div>
+        </div>
+    </div>
+
+    <div class="key-finding">
+        <strong>💔 La Cruda Realidad</strong>
+        Hoy, por cada persona que encuentra un grupo de AA en Bogotá, 
+        <strong>hay 5.000 que no tienen dónde acudir.</strong> 
+        La expansión de AA no es opcional: es una necesidad urgente de salud pública.
+        Cada nuevo grupo que se abre salva vidas.
+    </div>
+
+    <div class="btn-container" style="margin-top:20px;">
+        <a href="https://aaintergrupos.org/" target="_blank" rel="noopener noreferrer" class="btn-red">
+            🤝 ¿Quieres formar un nuevo grupo? Contáctanos
+        </a>
+    </div>
+</div>
 
         <!-- AYUDA -->
         <div class="help-section">
