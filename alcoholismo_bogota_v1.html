@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcoholismo en Bogotá | Alcohólicos Anónimos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f4f8;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        :root {
+            --aa-blue: #003366;
+            --aa-blue-dark: #002244;
+            --aa-blue-light: #004a8f;
+            --aa-white: #ffffff;
+            --aa-red: #cc0000;
+            --aa-red-dark: #990000;
+            --aa-red-light: #ff1a1a;
+            --aa-gray: #f5f5f5;
+        }
+
+        /* ===== HEADER AZUL ===== */
+        header {
+            background: linear-gradient(135deg, var(--aa-blue) 0%, var(--aa-blue-dark) 100%);
+            color: var(--aa-white);
+            padding: 24px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        header h1 { font-size: 1.8rem; margin-bottom: 6px; }
+        header h2 { font-size: 1.2rem; font-weight: normal; margin-bottom: 4px; }
+        header p { font-size: 0.85rem; opacity: 0.85; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        /* ===== CONTADOR ROJO IMPACTANTE ===== */
+        .counter-box {
+            background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+            color: var(--aa-white);
+            padding: 30px 20px;
+            border-radius: 14px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 
+                0 8px 24px rgba(204,0,0,0.5),
+                inset 0 2px 10px rgba(255,255,255,0.15),
+                0 0 40px rgba(255,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 8px 24px rgba(204,0,0,0.5),
+                    inset 0 2px 10px rgba(255,255,255,0.15),
+                    0 0 40px rgba(255,0,0,0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 8px 28px rgba(204,0,0,0.7),
+                    inset 0 2px 10px rgba(255,255,255,0.25),
+                    0 0 60px rgba(255,0,0,0.5);
+            }
+        }
+
+        .counter-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .counter-label-top {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            font-weight: bold;
+        }
+
+        .counter-number {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--aa-white);
+            text-shadow: 
+                0 0 20px rgba(255,255,255,0.8),
+                0 4px 10px rgba(0,0,0,0.4),
+                0 0 40px rgba(255,200,200,0.6);
+            letter-spacing: -2px;
+            margin: 10px 0;
+            font-family: 'Times New Roman', serif;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.1s;
+        }
+
+        .counter-number.counting {
+            animation: numberShake 0.05s infinite;
+        }
+
+        @keyframes numberShake {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-1px); }
+        }
+
+        .counter-unit {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .counter-unit.visible {
+            opacity: 1;
+        }
+
+        .counter-desc {
+            font-size: 1rem;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+            line-height: 1.4;
+        }
+
+        .counter-desc.visible {
+            opacity: 0.95;
+        }
+
+        .counter-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: var(--aa-white);
+            border: 3px solid var(--aa-blue);
+            border-radius: 10px;
+            padding: 18px 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,51,102,0.15);
+        }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--aa-blue);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--aa-blue-dark);
+            line-height: 1.3;
+        }
+
+        /* ===== BOTÓN ROJO CTA ===== */
+        .btn-container { text-align: center; margin: 20px 0; }
+        .btn-red {
+            display: inline-block;
+            background: var(--aa-red);
+            color: var(--aa-white);
+            padding: 16px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 12px rgba(204,0,0,0.4);
+            transition: background 0.3s;
+        }
+        .btn-red:hover { background: var(--aa-red-dark); }
+
+        /* ===== SECCIONES AZULES ===== */
+        .section {
+            background: var(--aa-white);
+            padding: 22px 16px;
+            margin: 18px 0;
+            border-radius: 10px;
+            border-top: 5px solid var(--aa-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .section h3 {
+            color: var(--aa-blue);
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .section p { margin-bottom: 12px; text-align: justify; }
+
+        /* ===== MAPA DE CALOR ===== */
+        .heat-map {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .location-card {
+            padding: 14px;
+            border-radius: 8px;
+            border-left: 6px solid;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .location-card.critical { border-left-color: #dc3545; background: #fff0f0; }
+        .location-card.high     { border-left-color: #fd7e14; background: #fff6ee; }
+        .location-card.medium   { border-left-color: #ffc107; background: #fffce8; }
+        .location-card.moderate { border-left-color: #28a745; background: #eefbf2; }
+
+        .location-name {
+            font-weight: bold;
+            color: var(--aa-blue);
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+        .location-stats { font-size: 0.88rem; color: #444; }
+
+        /* ===== LEYENDA ===== */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .legend-dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ===== KEY FINDING ROJO ===== */
+        .key-finding {
+            background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+            color: var(--aa-white);
+            padding: 20px 16px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+            box-shadow: 0 3px 10px rgba(204,0,0,0.3);
+        }
+        .key-finding strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            font-style: normal;
+        }
+
+        /* ===== TABLAS ===== */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 16px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 550px;
+            background: var(--aa-white);
+        }
+        thead { background: var(--aa-blue); color: var(--aa-white); }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tbody tr:nth-child(even) { background: #f8fafc; }
+        tbody tr:hover { background: #e8eef5; }
+        tr.highlight {
+            background: var(--aa-red) !important;
+            color: var(--aa-white);
+        }
+        tr.highlight td { font-weight: bold; }
+
+        /* ===== COBERTURA EN TABLA DE DISTRITOS ===== */
+        td.cobertura-normal {
+            color: #333333;
+            font-weight: bold;
+        }
+
+        td.cobertura-muy-baja {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        td.cobertura-critica-clara {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        tr.fila-roja td.cobertura-critica-roja {
+            color: #FFFFFF !important;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+
+        tr.fila-roja {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%) !important;
+            color: #FFFFFF !important;
+        }
+        tr.fila-roja td {
+            color: #FFFFFF !important;
+            font-weight: bold;
+        }
+
+        /* ===== ALERTAS TEMPRANAS ===== */
+        .alert-list { list-style: none; padding: 0; }
+        .alert-list li {
+            background: #fff0f0;
+            border-left: 5px solid var(--aa-red);
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+        .alert-list li strong { color: var(--aa-red); }
+
+        /* ===== SECCIÓN BRECHA DE COBERTURA ===== */
+        .reality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .reality-card {
+            padding: 18px 12px;
+            border-radius: 10px;
+            text-align: center;
+            color: var(--aa-white);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+        .reality-card.blue {
+            background: linear-gradient(135deg, var(--aa-blue) 0%, var(--aa-blue-dark) 100%);
+        }
+        .reality-card.red {
+            background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+            box-shadow: 0 3px 12px rgba(204,0,0,0.35);
+        }
+        .reality-number {
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .reality-label {
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .reality-detail {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* ===== CAJA DE BRECHA ===== */
+        .gap-box {
+            background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+            color: var(--aa-white);
+            padding: 22px 16px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(204,0,0,0.35);
+        }
+        .gap-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+        .gap-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .gap-side {
+            flex: 1;
+            min-width: 140px;
+            padding: 10px;
+        }
+        .gap-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+        .gap-percent {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .gap-detail {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            line-height: 1.3;
+        }
+        .gap-arrow {
+            font-size: 2rem;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* ===== PROYECCIÓN ===== */
+        .projection-box {
+            background: var(--aa-gray);
+            border: 2px solid var(--aa-blue);
+            border-left: 6px solid var(--aa-blue);
+            padding: 20px 16px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .projection-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--aa-blue);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .projection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .projection-item {
+            background: var(--aa-white);
+            padding: 14px 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--aa-blue);
+        }
+        .projection-item.red {
+            background: var(--aa-red);
+            color: var(--aa-white);
+            border-color: var(--aa-red-dark);
+        }
+        .projection-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--aa-blue);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .projection-item.red .projection-value {
+            color: var(--aa-white);
+        }
+        .projection-desc {
+            font-size: 0.82rem;
+            line-height: 1.3;
+        }
+        .projection-conclusion {
+            background: var(--aa-blue);
+            color: var(--aa-white);
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        /* ===== TABLA DE PROYECCIÓN ===== */
+        .projection-table {
+            margin: 15px 0;
+        }
+        .proj-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1.3fr 1.2fr;
+            gap: 8px;
+            padding: 12px;
+            background: var(--aa-white);
+            border-left: 5px solid var(--aa-blue);
+            margin-bottom: 8px;
+            border-radius: 0 8px 8px 0;
+            align-items: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        .proj-row.critical {
+            background: #fff0f0;
+            border-left-color: var(--aa-red);
+        }
+        .proj-level {
+            font-weight: bold;
+            color: var(--aa-blue);
+        }
+        .proj-row.critical .proj-level {
+            color: var(--aa-red);
+        }
+        .proj-groups {
+            font-weight: bold;
+            text-align: center;
+        }
+        .proj-diff {
+            color: var(--aa-red);
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .proj-people {
+            text-align: right;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* ===== SECCIÓN AYUDA ROJA ===== */
+        .help-section {
+            background: linear-gradient(135deg, var(--aa-red) 0%, var(--aa-red-dark) 100%);
+            color: var(--aa-white);
+            padding: 28px 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 24px 0;
+            box-shadow: 0 4px 16px rgba(204,0,0,0.35);
+        }
+        .help-section h3 { font-size: 1.5rem; margin-bottom: 12px; color: var(--aa-white); }
+        .help-section a { color: var(--aa-white); text-decoration: underline; font-weight: bold; }
+        .help-section .quote {
+            margin-top: 18px;
+            font-style: italic;
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        /* ===== FOOTER AZUL ===== */
+        footer {
+            background: var(--aa-blue-dark);
+            color: var(--aa-white);
+            text-align: center;
+            padding: 22px 16px;
+            margin-top: 24px;
+        }
+        footer a { color: #aaccee; text-decoration: underline; }
+        footer p { margin-bottom: 6px; }
+
+        .scroll-hint {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 6px;
+            display: none;
+        }
+
+        /* ===== RESPONSIVE MÓVIL ===== */
+        @media screen and (max-width: 768px) {
+            body { font-size: 15px; }
+            header { padding: 18px 12px; }
+            header h1 { font-size: 1.45rem; }
+            header h2 { font-size: 1rem; }
+            header p { font-size: 0.8rem; }
+            .container { padding: 10px; }
+
+            .counter-box { padding: 24px 14px; }
+            .counter-number { font-size: 3.8rem; letter-spacing: -1px; }
+            .counter-unit { font-size: 1.2rem; }
+            .counter-label-top { font-size: 0.85rem; letter-spacing: 1.5px; }
+            .counter-desc { font-size: 0.9rem; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .stat-number { font-size: 1.8rem; }
+            .stat-label { font-size: 0.82rem; }
+            .section { padding: 16px 12px; }
+            .section h3 { font-size: 1.15rem; }
+            .btn-red { display: block; padding: 14px 20px; font-size: 1rem; }
+            .scroll-hint { display: block; }
+            th, td { padding: 10px 8px; font-size: 0.88rem; }
+            .help-section { padding: 22px 14px; }
+            .help-section h3 { font-size: 1.3rem; }
+            .key-finding { padding: 16px 14px; }
+
+            .reality-grid { grid-template-columns: repeat(2, 1fr); }
+            .reality-number { font-size: 1.9rem; }
+            .reality-label { font-size: 0.82rem; }
+            .gap-comparison { flex-direction: column; gap: 8px; }
+            .gap-arrow { transform: rotate(90deg); font-size: 1.5rem; }
+            .gap-percent { font-size: 2.2rem; }
+            .projection-grid { grid-template-columns: 1fr; }
+            .proj-row { 
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                font-size: 0.82rem;
+            }
+            .proj-diff, .proj-people { text-align: left; }
+        }
+
+        @media screen and (max-width: 400px) {
+            header h1 { font-size: 1.25rem; }
+            .counter-number { font-size: 3rem; }
+            .counter-unit { font-size: 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-number { font-size: 2rem; }
+            .location-name { font-size: 0.95rem; }
+            th, td { padding: 8px 6px; font-size: 0.82rem; }
+            .reality-grid { grid-template-columns: 1fr; }
+            .reality-number { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Alcoholismo en Bogotá D.C.</h1>
+        <h2>Alcohólicos Anónimos</h2>
+        <p>Datos basados en Estudio Distrital 2022 - UNODC / Secretaría Distrital de Salud</p>
+    </header>
+
+    <div class="container">
+
+        <!-- ===== CONTADOR ROJO IMPACTANTE CON ANIMACIÓN ===== -->
+        <div class="counter-box">
+            <span class="counter-icon">⚠️</span>
+            <div class="counter-label-top">Crisis de Alcoholismo en Bogotá</div>
+            <div class="counter-number" id="mainCounter">0</div>
+            <div class="counter-unit" id="counterUnit">PERSONAS</div>
+            <div class="counter-desc" id="counterDesc">
+                Con abuso o dependencia del alcohol en Bogotá D.C.<br>
+                <strong>8,19% de la población entre 12 y 65 años</strong>
+            </div>
+        </div>
+
+        <!-- ===== OTRAS ESTADÍSTICAS ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">39%</span>
+                <span class="stat-label">Consumo Actual (último mes)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">88.84%</span>
+                <span class="stat-label">Ha consumido alcohol alguna vez en la vida</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">75%</span>
+                <span class="stat-label">Hombres (3 de cada 4 casos)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">21%</span>
+                <span class="stat-label">De los consumidores requieren ayuda</span>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://aaintergrupos.org/" target="_blank" rel="noopener noreferrer" class="btn-red">📞 Busque Ayuda - Alcohólicos Anónimos</a>
+        </div>
+
+        <!-- MAPA DE CALOR -->
+        <div class="section">
+            <h3>🗺️ Mapa de Calor: Alcoholismo por Localidades</h3>
+            <p style="text-align:center; font-size:0.9rem; color:#555;">Distribución territorial del consumo problemático y demanda de atención (VESPA 2015-2026)</p>
+
+            <div class="legend">
+                <span class="legend-item"><span class="legend-dot" style="background:#dc3545;"></span> Crítico (&gt;15,000)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#fd7e14;"></span> Alto (10,000-15,000)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#ffc107;"></span> Medio (5,000-10,000)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#28a745;"></span> Moderado (&lt;5,000)</span>
+            </div>
+
+            <div class="heat-map">
+                <div class="location-card critical">
+                    <div class="location-name">🔴 Kennedy — 18,500+ casos</div>
+                    <div class="location-stats">Mayor demanda VESPA Alcohol: 69.2% casos</div>
+                </div>
+                <div class="location-card critical">
+                    <div class="location-name">🔴 Bosa — 16,200+ casos</div>
+                    <div class="location-stats">Epicentro emergente · Cobertura insuficiente</div>
+                </div>
+                <div class="location-card critical">
+                    <div class="location-name">🔴 Ciudad Bolívar — 15,800+ casos</div>
+                    <div class="location-stats">Prioridad CRÍTICA · Déficit de servicios</div>
+                </div>
+                <div class="location-card high">
+                    <div class="location-name">🟠 Suba — 12,400+ casos</div>
+                    <div class="location-stats">Alta prevalencia · Consumo problemático</div>
+                </div>
+                <div class="location-card high">
+                    <div class="location-name">🟠 Santa Fe — 11,900+ casos</div>
+                    <div class="location-stats">Habitante de calle · 1 de cada 6 casos</div>
+                </div>
+                <div class="location-card high">
+                    <div class="location-name">🟠 Los Mártires — 10,500+ casos</div>
+                    <div class="location-stats">Centro tradicional · Alta concentración</div>
+                </div>
+                <div class="location-card medium">
+                    <div class="location-name">🟡 Usme — 8,200+ casos</div>
+                    <div class="location-stats">Déficit moderado · Prioridad ALTA</div>
+                </div>
+                <div class="location-card medium">
+                    <div class="location-name">🟡 San Cristóbal — 7,600+ casos</div>
+                    <div class="location-stats">Consumo tabaco y alcohol</div>
+                </div>
+                <div class="location-card medium">
+                    <div class="location-name">🟡 Rafael Uribe — 6,900+ casos</div>
+                    <div class="location-stats">Zona sur · Atención creciente</div>
+                </div>
+                <div class="location-card moderate">
+                    <div class="location-name">🟢 Chapinero — 4,800+ casos</div>
+                    <div class="location-stats">Consumo recreativo · Vida nocturna</div>
+                </div>
+                <div class="location-card moderate">
+                    <div class="location-name">🟢 Usaquén — 4,200+ casos</div>
+                    <div class="location-stats">Mayor ingreso · Consumo social</div>
+                </div>
+                <div class="location-card moderate">
+                    <div class="location-name">🟢 Teusaquillo — 3,900+ casos</div>
+                    <div class="location-stats">Zona universitaria · Consumo joven</div>
+                </div>
+            </div>
+
+            <div class="key-finding">
+                <strong>📊 Hallazgo Clave: La Doble Bogotá</strong>
+                El norte consume más (Chapinero, Usaquén, Teusaquillo - zonas de mayor ingreso y vida nocturna),
+                pero el daño se concentra en el sur y occidente (Kennedy, Bosa, Ciudad Bolívar - periferia popular).
+                Esta es una brecha de desigualdad, no solo un mapa de consumo.
+            </div>
+        </div>
+
+        <!-- CARACTERIZACIÓN -->
+        <div class="section">
+            <h3>📈 Caracterización del Alcoholismo en Bogotá</h3>
+            <p class="scroll-hint">← Desliza horizontalmente para ver la tabla →</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Indicador</th><th>Cifra</th><th>Observación</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Población afectada</td><td>531.000</td><td>Abuso/dependencia (8.19% población 12-65 años)</td></tr>
+                        <tr><td>Consumo actual</td><td>2.533.364</td><td>38.98% (último mes) - Creció de 36.5% en 2016</td></tr>
+                        <tr><td>Distribución por género</td><td>75% hombres / 25% mujeres</td><td>De 4 casos de dependencia, 3 son hombres</td></tr>
+                        <tr><td>Edad de inicio</td><td>17.8 años</td><td>Promedio primera experiencia</td></tr>
+                        <tr><td>Mayor prevalencia</td><td>25-34 años (55.08%)</td><td>Seguido por 18-24 años (51.63%)</td></tr>
+                        <tr class="highlight"><td>Estratos más afectados</td><td>Estrato 2 (9.54%)</td><td>Seguido por estrato 1 (9.49%)</td></tr>
+                        <tr><td>Sustancia en VESPA</td><td>69.2%</td><td>Alcohol es la sustancia legal más reportada</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ESCALAFÓN -->
+        <div class="section">
+            <h3>🏆 Escalafón: Alcohol vs Otras Sustancias</h3>
+            <p class="scroll-hint">← Desliza horizontalmente para ver la tabla →</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Pos.</th><th>Sustancia</th><th>Afectados</th><th>Observación Crítica</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight"><td>🥇</td><td><strong>ALCOHOL</strong></td><td><strong>531.000</strong></td><td>Legal y normalizada - Mayor carga de daño</td></tr>
+                        <tr><td>🥈</td><td>Marihuana</td><td>371.086</td><td>Baja percepción de riesgo en jóvenes</td></tr>
+                        <tr><td>🥉</td><td>Cocaína</td><td>67.000</td><td>Alto impacto sociofamiliar y laboral</td></tr>
+                        <tr><td>4</td><td>Sintéticas / Éxtasis</td><td>46.000</td><td>Crecimiento por mezclas clandestinas</td></tr>
+                        <tr><td>5</td><td>Bazuco</td><td>24.000</td><td>Alta correlación con habitabilidad en calle</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ALERTAS TEMPRANAS -->
+        <div class="section">
+            <h3>🚨 Alertas Tempranas 2024-2026</h3>
+            <ul class="alert-list">
+                <li><strong>Sustancias Sintéticas:</strong> Casos de Tusi aumentaron más del 50% entre 2023-2024. Se detectó xilacina (sedante veterinario) en muestras de Bogotá.</li>
+                <li><strong>Desplazamiento Geográfico:</strong> Kennedy y Bosa están sustituyendo al centro tradicional (Santa Fe, Los Mártires) como epicentro de atención por consumo problemático.</li>
+                <li><strong>Aumento en Mujeres:</strong> El consumo de alcohol creció significativamente en mujeres, especialmente en el grupo de 25 a 34 años.</li>
+            </ul>
+        </div>
+
+        <!-- BRECHA DE COBERTURA -->
+        <div class="section">
+            <h3>📊 Brecha de Cobertura: La Realidad de AA en Bogotá</h3>
+            <p style="text-align:center; font-size:0.95rem; color:#555;">
+                Alcohólicos Anónimos es la red de apoyo más grande de la ciudad, pero la demanda nos supera ampliamente.
+            </p>
+
+            <!-- CONTADOR DE GRUPOS -->
+            <div class="reality-grid">
+                <div class="reality-card blue">
+                    <div class="reality-number">78</div>
+                    <div class="reality-label">Grupos AA activos en Bogotá</div>
+                    <div class="reality-detail">Distribuidos en 9 distritos de servicios</div>
+                </div>
+                <div class="reality-card blue">
+                    <div class="reality-number">~12</div>
+                    <div class="reality-label">Miembros promedio por grupo</div>
+                    <div class="reality-detail">Rango real: 8 a 15 miembros</div>
+                </div>
+                <div class="reality-card blue">
+                    <div class="reality-number">50</div>
+                    <div class="reality-label">Capacidad máxima por grupo</div>
+                    <div class="reality-detail">Alcohólicos que puede acoger</div>
+                </div>
+                <div class="reality-card red">
+                    <div class="reality-number">531.000</div>
+                    <div class="reality-label">Personas que necesitan ayuda</div>
+                    <div class="reality-detail">Abuso o dependencia del alcohol</div>
+                </div>
+            </div>
+
+            <!-- LA BRECHA IMPACTANTE -->
+            <div class="gap-box">
+                <div class="gap-title">⚠️ LA BRECHA REAL</div>
+                <div class="gap-comparison">
+                    <div class="gap-side">
+                        <div class="gap-label">Cobertura ACTUAL</div>
+                        <div class="gap-percent">0,18%</div>
+                        <div class="gap-detail">~936 personas atendidas<br>de 531.000 que necesitan ayuda</div>
+                    </div>
+                    <div class="gap-arrow">→</div>
+                    <div class="gap-side">
+                        <div class="gap-label">Cobertura OBJETIVO mínima</div>
+                        <div class="gap-percent">1%</div>
+                        <div class="gap-detail">5.310 personas atendidas<br>Requiere <strong>+440 grupos nuevos</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROYECCIÓN: ¿Y SI LLENAMOS LOS GRUPOS? -->
+            <div class="projection-box">
+                <div class="projection-title">🔍 Escenario: ¿Y si llenamos los 78 grupos a su máxima capacidad?</div>
+                <div class="projection-grid">
+                    <div class="projection-item">
+                        <div class="projection-value">78 × 50</div>
+                        <div class="projection-desc">= 3.900 personas atendidas</div>
+                    </div>
+                    <div class="projection-item">
+                        <div class="projection-value">0,73%</div>
+                        <div class="projection-desc">Cobertura máxima posible</div>
+                    </div>
+                    <div class="projection-item red">
+                        <div class="projection-value">527.100</div>
+                        <div class="projection-desc">Personas SIN atención disponible</div>
+                    </div>
+                </div>
+                <p class="projection-conclusion">
+                    <strong>Aun operando al 100% de su capacidad, AA Bogotá apenas cubriría el 0,73% de la demanda.</strong>
+                    Ni siquiera alcanzaríamos el 1%. La brecha es abismal.
+                </p>
+            </div>
+
+            <!-- DISTRIBUCIÓN REAL POR DISTRITO -->
+            <h4 style="color:var(--aa-blue); text-align:center; margin:20px 0 10px;">📍 Distribución Real de los 78 Grupos por Distrito</h4>
+            <p class="scroll-hint">← Desliza horizontalmente para ver la tabla →</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Distrito</th>
+                            <th>Zona / Localidades</th>
+                            <th>Grupos</th>
+                            <th>Demanda estimada</th>
+                            <th>Cobertura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>D1</strong></td>
+                            <td>Usaquén · Chapinero (Norte)</td>
+                            <td>8</td>
+                            <td>~12.900 casos</td>
+                            <td class="cobertura-normal">Baja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D2</strong></td>
+                            <td>Suba</td>
+                            <td>12</td>
+                            <td>~12.400 casos</td>
+                            <td class="cobertura-normal">Media</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D3</strong></td>
+                            <td>Barrios Unidos · Teusaquillo</td>
+                            <td>8</td>
+                            <td>~8.700 casos</td>
+                            <td class="cobertura-normal">Baja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D4</strong></td>
+                            <td>Engativá</td>
+                            <td>12</td>
+                            <td>~9.500 casos</td>
+                            <td class="cobertura-normal">Media</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D5</strong></td>
+                            <td>Fontibón · Puente Aranda</td>
+                            <td>5</td>
+                            <td>~7.200 casos</td>
+                            <td class="cobertura-muy-baja">Muy baja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D6</strong></td>
+                            <td>Mártires · Santa Fe · San Cristóbal</td>
+                            <td>8</td>
+                            <td>~22.400 casos</td>
+                            <td class="cobertura-critica-clara">Crítica</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D7</strong></td>
+                            <td>San Cristóbal · Usme</td>
+                            <td>7</td>
+                            <td>~15.800 casos</td>
+                            <td class="cobertura-critica-clara">Crítica</td>
+                        </tr>
+                        <tr class="fila-roja">
+                            <td><strong>D8</strong></td>
+                            <td>Ciudad Bolívar · Tunjuelito (Sur)</td>
+                            <td>9</td>
+                            <td>~15.800 casos</td>
+                            <td class="cobertura-critica-roja">CRÍTICA</td>
+                        </tr>
+                        <tr class="fila-roja">
+                            <td><strong>D9</strong></td>
+                            <td>Kennedy · Bosa (Suroccidente)</td>
+                            <td>9</td>
+                            <td>~34.700 casos</td>
+                            <td class="cobertura-critica-roja">CRÍTICA</td>
+                        </tr>
+                        <tr style="background:var(--aa-blue); color:white; font-weight:bold;">
+                            <td colspan="2">TOTAL BOGOTÁ</td>
+                            <td>78</td>
+                            <td>~531.000 casos</td>
+                            <td>0,18%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROYECCIÓN DE CRECIMIENTO -->
+            <h4 style="color:var(--aa-blue); text-align:center; margin:25px 0 10px;">📈 ¿Cuántos grupos necesitamos?</h4>
+            <div class="projection-table">
+                <div class="proj-row">
+                    <div class="proj-level">Cobertura 1%</div>
+                    <div class="proj-groups">518 grupos</div>
+                    <div class="proj-diff">+440 grupos nuevos</div>
+                    <div class="proj-people">5.310 personas</div>
+                </div>
+                <div class="proj-row">
+                    <div class="proj-level">Cobertura 5%</div>
+                    <div class="proj-groups">1.062 grupos</div>
+                    <div class="proj-diff">+984 grupos nuevos</div>
+                    <div class="proj-people">26.550 personas</div>
+                </div>
+                <div class="proj-row critical">
+                    <div class="proj-level">Cobertura 10%</div>
+                    <div class="proj-groups">2.124 grupos</div>
+                    <div class="proj-diff">+2.046 grupos nuevos</div>
+                    <div class="proj-people">53.100 personas</div>
+                </div>
+                <div class="proj-row critical">
+                    <div class="proj-level">Cobertura total</div>
+                    <div class="proj-groups">10.620 grupos</div>
+                    <div class="proj-diff">+10.542 grupos nuevos</div>
+                    <div class="proj-people">531.000 personas</div>
+                </div>
+            </div>
+
+            <div class="key-finding">
+                <strong>💔 La Cruda Realidad</strong>
+                Hoy, por cada persona que encuentra un grupo de AA en Bogotá, 
+                <strong>hay 5.000 que no tienen dónde acudir.</strong> 
+                La expansión de AA no es opcional: es una necesidad urgente de salud pública.
+                Cada nuevo grupo que se abre salva vidas.
+            </div>
+
+            <div class="btn-container" style="margin-top:20px;">
+                <a href="https://aaintergrupos.org/" target="_blank" rel="noopener noreferrer" class="btn-red">
+                    🤝 ¿Quieres formar un nuevo grupo? Contáctanos
+                </a>
+            </div>
+        </div>
+
+        <!-- AYUDA -->
+        <div class="help-section">
+            <h3>🤝 La Recuperación es Posible</h3>
+            <p>Si usted o alguien que conoce tiene problemas con el alcohol, no está solo.</p>
+            <p style="margin-top:16px; font-size:1.05rem; line-height:1.8;">
+                <strong>Alcohólicos Anónimos - Bogotá</strong><br>
+                📞 Línea de Ayuda: <a href="https://aaintergrupos.org/" target="_blank" rel="noopener noreferrer">AA Intergrupos</a><br>
+                🕐 Reuniones: <a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html" target="_blank" rel="noopener noreferrer">Reuniones de Grupos AA Bogotá</a><br>
+                💚 Confidencial: Anonimato garantizado
+            </p>
+            <p class="quote">"El primer paso es reconocer que necesitamos ayuda.<br>En AA encontrarás comprensión, apoyo y esperanza."</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>Alcohólicos Anónimos Bogotá</strong></p>
+        <p>
+            <a href="https://www.unodc.org/documents/colombia/2023/septiembre-9/ESTUDIO_DE_CONSUMO_DE_SUSTANCIAS_PSICOACTIVAS_BOGOTA_2022.pdf" target="_blank" rel="noopener noreferrer">
+                Estudio de Consumo de Sustancias Psicoactivas en Bogotá D.C., 2022 Secretaría Distrital de Salud + UNODC + Centro Nacional de Consultoría
+            </a>
+        </p>
+        <p style="font-size:0.85rem; margin-top:8px; opacity:0.8;">Datos VESPA 2015-2026 | Vigilancia Epidemiológica del Abuso de SPA</p>
+    </footer>
+
+    <script>
+        // ===== ANIMACIÓN DEL CONTADOR PRINCIPAL =====
+        function animateCounter(element, target, duration) {
+            const start = 0;
+            const startTime = performance.now();
+            
+            element.classList.add('counting');
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function: easeOutExpo para un efecto más dramático al final
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(start + (target - start) * easeProgress);
+                
+                // Formatear número con puntos de miles
+                element.textContent = current.toLocaleString('es-CO');
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target.toLocaleString('es-CO');
+                    element.classList.remove('counting');
+                    
+                    // Mostrar "PERSONAS" y descripción después de contar
+                    setTimeout(() => {
+                        document.getElementById('counterUnit').classList.add('visible');
+                    }, 200);
+                    setTimeout(() => {
+                        document.getElementById('counterDesc').classList.add('visible');
+                    }, 500);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // Iniciar la animación cuando cargue la página
+        window.addEventListener('load', () => {
+            const counterElement = document.getElementById('mainCounter');
+            const targetNumber = 531000;
+            const duration = 2500; // 2.5 segundos
+            
+            // Pequeño retraso inicial para que el usuario vea el efecto
+            setTimeout(() => {
+                animateCounter(counterElement, targetNumber, duration);
+            }, 300);
+        });
+    </script>
+
+</body>
+</html>
