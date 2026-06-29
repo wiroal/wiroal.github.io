@@ -134,6 +134,12 @@ button{font-family:inherit;cursor:pointer}
 }
 .nav-open .nav-links a{font-size:20px;padding:14px 0;border-bottom:var(--r0);min-height:44px;display:flex;align-items:center}
 
+/* El nav colapsa a menú móvil antes en pantallas medianas, para dar cabida a los enlaces añadidos */
+@media(max-width:980px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+}
+
 /* ════════════════════════════════════════════
    HERO
 ════════════════════════════════════════════ */
@@ -527,6 +533,52 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ════════════════════════════════════════════
+   #OPERADORES — operadores turísticos
+════════════════════════════════════════════ */
+.op-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.op-card{
+  background:var(--n700);border:var(--r0);border-radius:var(--radius);
+  padding:24px;display:flex;flex-direction:column;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.op-card:hover{border-color:var(--g400);transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,0,0,.4)}
+.op-rnt{font-size:11px;letter-spacing:.06em;color:var(--w300);margin:2px 0 12px}
+.op-cat{
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--g400);font-weight:600;margin:14px 0 6px;
+}
+.op-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.op-list li{font-size:13px;color:var(--w200);line-height:1.45;padding-left:16px;position:relative}
+.op-list li::before{content:'›';position:absolute;left:0;top:-1px;color:var(--g400);font-weight:700}
+.op-links{display:flex;flex-wrap:wrap;gap:8px}
+.op-links-wrap{margin-top:auto;padding-top:14px;border-top:var(--r0)}
+.op-links a{
+  font-size:11.5px;color:var(--g300);text-decoration:none;
+  border:1px solid rgba(201,163,70,.3);border-radius:20px;padding:5px 12px;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.op-links a:hover{background:rgba(201,163,70,.1);border-color:var(--g300);color:var(--g200)}
+.op-tel{margin-top:12px}
+.op-tel a{color:var(--g300);font-size:14px;text-decoration:none}
+.op-tel a:hover{text-decoration:underline}
+
+/* ── badges gastronómicos (sobre la base .hbadge) ── */
+.rbadge.rest{background:rgba(201,163,70,.18);color:var(--g300);border:1px solid rgba(201,163,70,.4)}
+.rbadge.rap{background:rgba(201,99,58,.2);color:#e8a07e;border:1px solid rgba(201,99,58,.45)}
+.rbadge.pan{background:rgba(160,120,60,.22);color:#dcb87a;border:1px solid rgba(160,120,60,.45)}
+.rbadge.caf{background:rgba(58,124,165,.2);color:#7ec8e3;border:1px solid rgba(58,124,165,.4)}
+.rbadge.otro{background:rgba(124,96,168,.22);color:#c2a8e6;border:1px solid rgba(124,96,168,.45)}
+
+/* ── tabs de filtro gastronómico (independientes de .ftab) ── */
+.rtab{
+  padding:8px 14px;border-radius:4px;border:var(--r0);background:transparent;
+  color:var(--w200);font-family:'Spectral',serif;font-size:12px;
+  letter-spacing:.06em;cursor:pointer;transition:all .2s;
+}
+.rtab:hover,.rtab.on{background:var(--g400);border-color:var(--g400);color:var(--ink);font-weight:600}
+
+
+/* ════════════════════════════════════════════
    #PROGRAMACIÓN — schedule accordion
 ════════════════════════════════════════════ */
 .prog-inner{max-width:var(--max);margin:0 auto}
@@ -740,6 +792,8 @@ button{font-family:inherit;cursor:pointer}
     <a href="#programacion">Programación</a>
     <a href="#inscripciones">Inscripciones</a>
     <a href="#alojamiento">Alojamiento</a>
+    <a href="#operadores">Turismo</a>
+    <a href="#gastronomia">Gastronomía</a>
     <a href="#llegar">Cómo llegar</a>
     <a href="#clima">Clima</a>
     <a href="#contacto">Contacto</a>
@@ -1044,6 +1098,11 @@ button{font-family:inherit;cursor:pointer}
         <div class="pc-amount">$70.000</div>
         <p class="pc-desc">Contribución del grupo base · independiente de la inscripción individual</p>
       </div>
+	  <div class="price-card">
+        <span class="pc-label">Aporte acompañante</span>
+        <div class="pc-amount">$20.000</div>
+        <p class="pc-desc">Los acompañantes (no alcoholicos) podrán ingresar a todo el Congreso incluída el acto cultural y el acto social</p>
+      </div>
     </div>
     <div class="pago-card">
       <div class="pago-item">
@@ -1071,7 +1130,7 @@ button{font-family:inherit;cursor:pointer}
       <p>Caracterización de la oferta hotelera del municipio. Precios de referencia — confirmar disponibilidad directamente con cada establecimiento.</p>
     </div>
     <button class="hotel-toggle" id="hotelBtn" onclick="toggleHoteles()" aria-expanded="false" aria-controls="hotelPanel">
-      <span>Ver listado completo — 20 establecimientos registrados</span>
+      <span>Ver listado completo — 22 establecimientos registrados</span>
       <span class="arr" aria-hidden="true">&#9660;</span>
     </button>
     <div class="hotel-panel" id="hotelPanel" role="region" aria-label="Directorio de hoteles">
@@ -1086,10 +1145,179 @@ button{font-family:inherit;cursor:pointer}
             <button class="ftab"    onclick="setF('rural',this)">🌿 Rural</button>
           </div>
         </div>
-        <div class="hotel-count" id="hcount" aria-live="polite">Mostrando 20 establecimientos</div>
+        <div class="hotel-count" id="hcount" aria-live="polite">Mostrando 22 establecimientos</div>
         <div class="hotel-grid" id="hgrid"></div>
         <div class="hotel-nores" id="nores" role="status">No se encontraron establecimientos con ese criterio.</div>
         <p class="hotel-note">ℹ️ Datos tomados del registro municipal de oferta hotelera de Ubaté, Cundinamarca. Precios orientativos; verifique disponibilidad y tarifas actualizadas antes de reservar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #OPERADORES ═══════════════════════ -->
+<section class="section alt" id="operadores" aria-labelledby="op-h">
+  <div class="aloj-inner">
+    <div class="section-head">
+      <span class="eyebrow">Turismo en la región</span>
+      <h2 id="op-h">Operadores turísticos</h2>
+      <p>Agencias formalizadas (RNT vigente) del Valle de Ubaté y la Laguna de Fúquene. Una buena opción para la tarde libre del domingo o un pasadía. Confirme planes y tarifas directamente con cada operador.</p>
+    </div>
+    <button class="hotel-toggle" id="opBtn" onclick="toggleOp()" aria-expanded="false" aria-controls="opPanel">
+      <span>Ver operadores y planes — 3 agencias registradas</span>
+      <span class="arr" aria-hidden="true">&#9660;</span>
+    </button>
+    <div class="hotel-panel" id="opPanel" role="region" aria-label="Operadores turísticos">
+      <div class="hotel-inner">
+        <div class="op-grid">
+
+          <!-- Altiplano Trip -->
+          <div class="op-card">
+            <div class="hcard-name">Altiplano Trip</div>
+            <div class="hcard-addr">📍 Sutatausa, Cundinamarca</div>
+            <span class="hbadge u">🧭 RNT 156291</span>
+            <div class="op-cat">Aventura y naturaleza</div>
+            <ul class="op-list">
+              <li>Trekking al farallón</li>
+              <li>Paseo por la Laguna de Fúquene</li>
+              <li>Camellón rupestre (arte)</li>
+            </ul>
+            <div class="op-cat">Patrimonio</div>
+            <ul class="op-list"><li>Conjunto Doctrinero San Juan Bautista (BICN)</li></ul>
+            <div class="op-cat">Pedagógicos</div>
+            <ul class="op-list">
+              <li>Arte rupestre y pintura mural</li>
+              <li>Salida al Parque Sabio Mutis</li>
+              <li>Lana y tradiciones</li>
+              <li>Caminata Ruta de la Libertad</li>
+            </ul>
+            <div class="op-cat">Pasadías</div>
+            <ul class="op-list">
+              <li>Pasadía por Boyacá</li>
+              <li>Día de piscina y calor</li>
+              <li>Termales y sus beneficios</li>
+              <li>Cultura y fe en Bogotá</li>
+            </ul>
+            <div class="op-cat">Ecuestre</div>
+            <ul class="op-list"><li>Paseos a caballo (hasta 2 h) por el valle de Ubaté</li></ul>
+            <div class="op-links-wrap">
+              <div class="op-tel"><a href="tel:+573115998531">📞 311 599 8531</a></div>
+              <div class="op-links">
+                <a href="https://www.altiplanotrip.com/ecuestre" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+                <a href="https://www.instagram.com/altiplanotrip/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+                <a href="https://www.facebook.com/AltiplanoTrip/" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ziguazinsa -->
+          <div class="op-card">
+            <div class="hcard-name">Ziguazinsa</div>
+            <div class="hcard-addr">📍 Ubaté, Cundinamarca</div>
+            <span class="hbadge u">🧭 RNT 31186</span>
+            <div class="op-cat">Rutas y caminatas</div>
+            <ul class="op-list">
+              <li>Camino Rial</li>
+              <li>Cueva la Ventana</li>
+              <li>Páramo Laguna Verde y Mirador del Páramo</li>
+              <li>Parque La Cara del Indio</li>
+              <li>Caminos de Fe — entre la sal y la tradición</li>
+              <li>Campesino Valiente</li>
+            </ul>
+            <div class="op-cat">Rutas largas</div>
+            <ul class="op-list">
+              <li>Ruta Eje Cafetero</li>
+              <li>Ruta Hacienda Nápoles</li>
+            </ul>
+            <div class="op-cat">Hospedaje</div>
+            <ul class="op-list"><li>Cabaña Taravita — La Granja del Tío Mao</li></ul>
+            <div class="op-links-wrap">
+              <div class="op-tel"><a href="tel:+573138175529">📞 313 817 5529</a></div>
+              <div class="op-links">
+                <a href="https://ziguazinsa.com" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+                <a href="https://www.instagram.com/ziguazinsa.viajes/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+                <a href="https://www.facebook.com/search/top?q=ziguazinsa%20fuquene" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ruta 45 -->
+          <div class="op-card">
+            <div class="hcard-name">Ruta 45</div>
+            <div class="hcard-addr">📍 Fúquene, Cundinamarca</div>
+            <span class="hbadge u">🧭 RNT 120581</span>
+            <div class="op-cat">Aventura</div>
+            <ul class="op-list">
+              <li>Paseo en lancha por la laguna</li>
+              <li>Aventura en cuatrimoto</li>
+              <li>Mirador y Mano de Fúquene</li>
+              <li>Caminata por la vía del tren</li>
+              <li>Piedra Colgada</li>
+            </ul>
+            <div class="op-cat">Talleres</div>
+            <ul class="op-list">
+              <li>Taller de cuajada</li>
+              <li>Taller de artesanías</li>
+            </ul>
+            <div class="op-cat">Lugares</div>
+            <ul class="op-list">
+              <li>Finca Fuquenópolis</li>
+              <li>Parque La Cara del Indio</li>
+              <li>Spots Ruta 45</li>
+            </ul>
+            <div class="op-cat">Alojamiento</div>
+            <ul class="op-list">
+              <li>Barril — Aldea Fuquenense</li>
+              <li>Juncos Glamping</li>
+              <li>Cabaña Alpina</li>
+            </ul>
+            <div class="op-links-wrap">
+              <div class="op-tel"><a href="tel:+573125184781">📞 312 518 4781</a></div>
+              <div class="op-links">
+                <a href="https://ruta45tours.com/" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+                <a href="https://www.tiktok.com/@ruta45.tours" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+                <a href="https://www.facebook.com/profile.php?id=100075875607296" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <p class="hotel-note">ℹ️ Datos tomados de la caracterización de agencias de turismo del Valle de Ubaté. Operadores con RNT vigente. Verifique disponibilidad, cupos y tarifas directamente con cada agencia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ #GASTRONOMÍA ═══════════════════════ -->
+<section class="section" id="gastronomia" aria-labelledby="gastro-h">
+  <div class="aloj-inner">
+    <div class="section-head">
+      <span class="eyebrow">Dónde comer en Ubaté</span>
+      <h2 id="gastro-h">Establecimientos gastronómicos</h2>
+      <p>Caracterización gastronómica del municipio: 75 establecimientos entre restaurantes, comidas rápidas, panaderías, cafeterías y más. Use el buscador y los filtros para encontrar opciones cerca de la sede.</p>
+    </div>
+    <button class="hotel-toggle" id="restoBtn" onclick="toggleResto()" aria-expanded="false" aria-controls="restoPanel">
+      <span>Ver directorio gastronómico — 75 establecimientos</span>
+      <span class="arr" aria-hidden="true">&#9660;</span>
+    </button>
+    <div class="hotel-panel" id="restoPanel" role="region" aria-label="Directorio gastronómico">
+      <div class="hotel-inner">
+        <div class="hotel-controls">
+          <input class="hotel-search" type="search" id="rsrch"
+                 placeholder="Buscar por nombre, dirección o administrador…"
+                 oninput="renderR()" aria-label="Buscar establecimiento gastronómico">
+          <div class="ftabs" role="group" aria-label="Filtrar por tipo de establecimiento">
+            <button class="rtab on" onclick="setFR('todos',this)">Todos</button>
+            <button class="rtab"    onclick="setFR('rest',this)">🍽 Restaurantes</button>
+            <button class="rtab"    onclick="setFR('rap',this)">🍔 Comida rápida</button>
+            <button class="rtab"    onclick="setFR('pan',this)">🥐 Panaderías</button>
+            <button class="rtab"    onclick="setFR('caf',this)">☕ Cafeterías y onces</button>
+            <button class="rtab"    onclick="setFR('otro',this)">🍧 Otros</button>
+          </div>
+        </div>
+        <div class="hotel-count" id="rcount" aria-live="polite">Mostrando 75 establecimientos</div>
+        <div class="hotel-grid" id="rgrid"></div>
+        <div class="hotel-nores" id="rnores" role="status">No se encontraron establecimientos con ese criterio.</div>
+        <p class="hotel-note">ℹ️ Datos tomados de la caracterización gastronómica del municipio de Ubaté. La capacidad se indica en número de comensales. Verifique horarios y disponibilidad directamente con cada establecimiento.</p>
       </div>
     </div>
   </div>
@@ -1266,6 +1494,8 @@ button{font-family:inherit;cursor:pointer}
       <a href="#programacion">Programación</a>
       <a href="#inscripciones">Inscripciones</a>
       <a href="#alojamiento">Alojamiento</a>
+      <a href="#operadores">Turismo</a>
+      <a href="#gastronomia">Gastronomía</a>
       <a href="#llegar">Cómo llegar</a>
       <a href="#clima">Clima</a>
       <a href="#contacto">Contacto</a>
@@ -1282,7 +1512,7 @@ button{font-family:inherit;cursor:pointer}
 /* ─── DATOS HOTELES ───────────────────────────────── */
 const H=[
   {n:"Hotel La Casona del Parque",a:"Calle 7 #6-28",t:"urbano",cap:"17 habitaciones",sv:"Hospedaje",p:"$80.000 sencilla",adm:"Martha Luz Rendón",tel:"3102496542",link:"https://www.facebook.com/share/14Y9E7kpG7S/?mibextid=wwXIfr",ll:"Facebook"},
-  {n:"Hotel San Francisco",a:"Calle 9 #8-08",t:"urbano",cap:"24 hab · 12 apartaestudios",sv:"WiFi, parqueadero (26 carros), salones de eventos",p:"$100.000 por persona",adm:"Claudia Gómez",tel:"3187820851",link:"https://san-francisco-250430.todos-los-hoteles-cundinamarca.com/es/",ll:"Sitio web"},
+  {n:"Hotel San Francisco",a:"Calle 9 #8-08",t:"urbano",cap:"24 hab · 12 apartaestudios",sv:"WiFi, parqueadero (26 carros), salones de eventos",p:"$100.000 por persona",adm:"Claudia Gómez",tel:"3114590114",link:"https://san-francisco-250430.todos-los-hoteles-cundinamarca.com/es/",ll:"Sitio web"},
   {n:"Hotel Villa del Sol",a:"Calle 10 #4-92",t:"urbano",cap:"15 habitaciones",sv:"Hospedaje, parqueadero",p:"$30.000",adm:"Julián Villamil",tel:"3142263318",link:null},
   {n:"Hotel Alcalá",a:"Calle 10 #4-54",t:"urbano",cap:"12 habitaciones",sv:"Hospedaje, WiFi",p:"$40.000",adm:"Jenny A. Delgadillo",tel:"3208744263",link:"https://share.google/1lYp5rOrYBC3VDXPs",ll:"Ver más"},
   {n:"Hotel Villa Anyela",a:"Cl. 11 #7-15",t:"urbano",cap:"",sv:"Baño privado, TV cable",p:"Consultar",adm:"Flor Ángela Niño",tel:"3105506130",link:null},
@@ -1299,8 +1529,10 @@ const H=[
   {n:"Hotel Primavera",a:"Km 1 vía Ubaté–Bogotá",t:"rural",cap:"30 pers. (15 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Betulia Poveda",tel:"3115621513",link:"https://share.google/SsaSbVGjTPJuUHg1M",ll:"Ver más"},
   {n:"Hotel Ángel San Gabriel (Rural)",a:"Km 1 vía Ubaté–Bogotá, Vda. Apartadero",t:"rural",cap:"20 pers. (13 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Angie Lucía López",tel:"3202308865",link:"https://share.google/W9DnuQVU2eBl0aXie",ll:"Ver más"},
   {n:"Hotel San Antonio",a:"Vereda Palogordo, Ubaté",t:"rural",cap:"4 habitaciones",sv:"Hospedaje",p:"$95.000 – $120.000",adm:"María Pachón",tel:"3123869021",link:"https://share.google/ZI3QK3ZaTXjdPdroY",ll:"Ver más"},
-  {n:"Hotel Sadima",a:"Ubaté",t:"urbano",cap:"",sv:"",p:"Consultar",adm:"",tel:"",link:"https://share.google/ojloELbv4y72GT577",ll:"Ver más"},
-  {n:"Hotel Paraíso Ubaté",a:"Cl. 12 No. 7-31",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Blanca Lilia Peña",tel:"3215097347",link:null}
+  {n:"Hotel Sadima",a:"Vereda Tausavita, Ubaté",t:"rural",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Samir Salamanca",tel:"3005143175",link:"https://share.google/ojloELbv4y72GT577",ll:"Ver más"},
+  {n:"Hotel Paraíso Ubaté",a:"Cl. 12 No. 7-31",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Blanca Lilia Peña",tel:"3215097347",link:null},
+  {n:"Hotel Octavo",a:"Carrera 9 #6-89",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Fabiola Rodríguez",tel:"3219806869",link:null,nf:true},
+  {n:"Hotel Central Plazas (antes Las Palmas)",a:"Centro, Ubaté · dirección por confirmar",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Yormari Amaya",tel:"3219167353",link:null,nf:true}
 ];
 
 /* ─── STATE ────────────────────────────────────── */
@@ -1322,6 +1554,21 @@ function toggleProg(){
   b.classList.toggle('open',open);
   b.setAttribute('aria-expanded',open);
 }
+function toggleOp(){
+  const p=document.getElementById('opPanel');
+  const b=document.getElementById('opBtn');
+  const open=p.classList.toggle('open');
+  b.classList.toggle('open',open);
+  b.setAttribute('aria-expanded',open);
+}
+function toggleResto(){
+  const p=document.getElementById('restoPanel');
+  const b=document.getElementById('restoBtn');
+  const open=p.classList.toggle('open');
+  b.classList.toggle('open',open);
+  b.setAttribute('aria-expanded',open);
+  if(open && !renderedR){renderR();renderedR=true;}
+}
 function setF(t,el){
   filt=t;
   document.querySelectorAll('.ftab').forEach(x=>x.classList.remove('on'));
@@ -1342,12 +1589,122 @@ function render(){
       <div class="hcard-name">${h.n}</div>
       <div class="hcard-addr">📍 ${h.a}</div>
       <span class="hbadge ${h.t==='urbano'?'u':'r'}">${h.t==='urbano'?'🏙 Urbano':'🌿 Rural'}</span>
+      ${h.nf?`<div class="hrow" style="font-size:11.5px;color:var(--g400)"><span class="ic">⚠️</span><span>Sin RNT en la caracterización municipal</span></div>`:''}
       ${h.cap?`<div class="hrow"><span class="ic">👥</span><span>${h.cap}</span></div>`:''}
       ${h.sv?`<div class="hrow"><span class="ic">✔</span><span>${h.sv}</span></div>`:''}
       <div class="hprice">💲 ${h.p}</div>
       ${h.adm?`<div class="hrow" style="font-size:12px;color:var(--w300)"><span class="ic">👤</span><span>${h.adm}</span></div>`:''}
       ${h.tel?`<div class="htel" style="margin-top:8px"><a href="tel:+57${h.tel.replace(/\s/g,'')}">📞 ${h.tel}</a></div>`:''}
       ${h.link?`<a href="${h.link}" target="_blank" rel="noopener noreferrer" class="hlink">🔗 ${h.ll||'Ver más'}</a>`:''}
+    `;g.appendChild(c);
+  });
+  nr.style.display=vis===0?'block':'none';
+  ct.textContent=`Mostrando ${vis} establecimiento${vis!==1?'s':''}`;
+}
+
+
+/* ─── DATOS GASTRONOMÍA ───────────────────────────── */
+const R=[
+  {n:"Sal y Pimienta",a:"Calle 10#7-29 cuatro piso",tp:"Restaurante",fc:"rest",cap:"100",adm:"Lucero Alvarado"},
+  {n:"Shawarma Ubate Fusion Turka",a:"Calle 3a 8e 27",tp:"Comida rápida",fc:"rap",cap:"30",adm:"Angy Alarcon"},
+  {n:"Restaurante Humo y Sabor",a:"Carrera 8 # 4-97",tp:"Restaurante",fc:"rest",cap:"32",adm:"Lecna Peña"},
+  {n:"Panaderia Miga de Pan",a:"Carrera 8 - 4-95",tp:"Panadería",fc:"pan",cap:"24",adm:"Wilson Redondo"},
+  {n:"Panadería Llenpan Ubate",a:"Carrera 8 5-02",tp:"Panadería",fc:"pan",cap:"36",adm:"Jorge Vargas"},
+  {n:"Asadero el Pecoso",a:"Carrera 8 calle 6 esquina",tp:"Restaurante",fc:"rest",cap:"60",adm:"Diana Arevalo"},
+  {n:"Panaderia y Pasteleria el Barco",a:"Carrera 8 # 6.16",tp:"Panadería",fc:"pan",cap:"24",adm:"Flor Marina Gomez"},
+  {n:"Panaderia Cafe y Aroma",a:"Carrera 8 # 6 -78",tp:"Panadería",fc:"pan",cap:"40",adm:"Lidia Charary"},
+  {n:"Tasty Burger",a:"Carrera 8 # 7-53",tp:"Comida rápida",fc:"rap",cap:"16",adm:"Pilar Pinzon"},
+  {n:"Punta del Oeste",a:"Carrera 8 # 8-29",tp:"Restaurante",fc:"rest",cap:"45",adm:"Jonathan Tarazona"},
+  {n:"Riko Broster",a:"Carrera 8 # 8-67",tp:"Restaurante",fc:"rest",cap:"60",adm:"Jessica Sierra"},
+  {n:"Heladeria y Taqueria Ñomi Ñomi",a:"Carrera 8 8-65",tp:"Heladería",fc:"otro",cap:"16",adm:"Gabriela Fajardo"},
+  {n:"Rafis Pizza",a:"Carrera 8 # 9-58",tp:"Comida rápida",fc:"rap",cap:"45",adm:"Sara Gomez"},
+  {n:"Jacobos Pizza",a:"Carrera 8 # 9 -75",tp:"Comida rápida",fc:"rap",cap:"68",adm:"Rocio Villamil"},
+  {n:"Restaurante Don Beto",a:"Carrera 8 # 9-87",tp:"Restaurante",fc:"rest",cap:"50",adm:"Alexander Quiñonez"},
+  {n:"Panaderia el Molino",a:"Carrera 8 calle 10 esquina",tp:"Panadería",fc:"pan",cap:"35",adm:"Chirly Paola Palacios"},
+  {n:"Andi Pan",a:"Carrera 8 calle 9 esquina",tp:"Panadería",fc:"pan",cap:"32",adm:"Adriana Camacho"},
+  {n:"Arepas Doña Delfina",a:"Carrera 8 # 11-30",tp:"Salón de onces",fc:"caf",cap:"40",adm:"Julio Gevara"},
+  {n:"Maxi Fritanga",a:"Carrera 8 # 12-31",tp:"Fritanguería",fc:"otro",cap:"34",adm:"Nebando Castiblanco"},
+  {n:"Restaurante Villa Luz",a:"Carrera 7 # 15",tp:"Restaurante",fc:"rest",cap:"46",adm:"Janeth Rocio Paez"},
+  {n:"Parador Don Luis",a:"Carrera 7 # 15-23",tp:"Salón de onces",fc:"caf",cap:"60",adm:"Luis Alfredo Parra"},
+  {n:"El Farol de Marco",a:"Carrera 7 # 14-01",tp:"Gastrobar",fc:"otro",cap:"40",adm:"Maria Paula Alarcon"},
+  {n:"Restaurante el Nevado",a:"Carrera 7 # 14-55",tp:"Restaurante",fc:"rest",cap:"66",adm:"Maria Teresa Rodriguez"},
+  {n:"Vikingos Restaurante y Asadero",a:"Carrera 7 # 12-57",tp:"Restaurante",fc:"rest",cap:"60",adm:"Jessica Garcia"},
+  {n:"El Secreto del Sabor",a:"Carrera 7 # 12-02",tp:"Restaurante",fc:"rest",cap:"50",adm:"Anderson Velazquez"},
+  {n:"Restaurante La.reina",a:"Carrera 7 12-52",tp:"Restaurante",fc:"rest",cap:"32",adm:"Juan Tunjano"},
+  {n:"Tapioca",a:"Carrera 9 # 5-08",tp:"Restaurante",fc:"rest",cap:"35",adm:"Orlando Forero"},
+  {n:"El Fogon Dorado",a:"Carrera 7 # 12-46",tp:"Restaurante",fc:"rest",cap:"80",adm:"Alan Moncada"},
+  {n:"Megapanes",a:"Carrera 7 calle 12 esquina",tp:"Panadería",fc:"pan",cap:"36",adm:"Rigoberto Orjuela"},
+  {n:"Pollo Carbonero",a:"Carrera 7 # 11-52",tp:"Restaurante",fc:"rest",cap:"65",adm:"Alexander Guzuara"},
+  {n:"Surti Aves 22",a:"Carrera 7 # 11-02",tp:"Restaurante",fc:"rest",cap:"60",adm:"Franco Minujosa"},
+  {n:"Panadería San Antonio",a:"Carrera 7 # 11- 126",tp:"Panadería",fc:"pan",cap:"40",adm:"Elizabeth Cornejo"},
+  {n:"Asadero la Estacion",a:"Carrera 7 # 11- 128",tp:"Asadero",fc:"rest",cap:"60",adm:"Angy Arcilla"},
+  {n:"Bandido",a:"Carrera 7 # 10 85",tp:"Comida rápida",fc:"rap",cap:"34",adm:"Rafael Pataquiva"},
+  {n:"Panaderia Pastelería San Diego",a:"Carrera 7 # 9-98",tp:"Panadería",fc:"pan",cap:"50",adm:"Carlos Vergara"},
+  {n:"Croqui Pollo",a:"Carrera 7 # 9-28",tp:"Restaurante",fc:"rest",cap:"40",adm:"Caren Castañeda"},
+  {n:"Asadero las Brasas",a:"Carrera 7 # 9-31",tp:"Restaurante",fc:"rest",cap:"68",adm:"Wilmary Pimentel"},
+  {n:"Parrilla Exprés Mc",a:"Calle 8. # 6-40",tp:"Restaurante",fc:"rest",cap:"70",adm:"Domingo Ribera"},
+  {n:"Isabellas Ice Crema",a:"Calle 8#5-04",tp:"Heladería",fc:"otro",cap:"8",adm:"Natalia Gómez"},
+  {n:"Panadería San Roque",a:"Calle 8#7-27",tp:"Panadería",fc:"pan",cap:"40",adm:"Flor Estela"},
+  {n:"Rapi Brother Deli",a:"Calle 8#7-65",tp:"Asadero",fc:"rest",cap:"60",adm:"Yuber Alexander Morenos"},
+  {n:"Restaurante Sabor y Sazon del Valle",a:"Calle 8 #8-33",tp:"Restaurante",fc:"rest",cap:"120",adm:"Amparo Guerrero"},
+  {n:"Jinzhan Comida China",a:"Calle 8-8-40",tp:"Restaurante",fc:"rest",cap:"50",adm:"Luz Estela Murcia"},
+  {n:"Restaurante el Bancario",a:"Calle 8#8-62",tp:"Restaurante",fc:"rest",cap:"200",adm:"Samuel Salamanca"},
+  {n:"Legado Delicias",a:"Calle9 #9-46",tp:"Restaurante",fc:"rest",cap:"60",adm:"Santiago Peña"},
+  {n:"Restaurante Sabor y Sazon Valluno",a:"Calle 9 s 8-42",tp:"Restaurante",fc:"rest",cap:"40",adm:"Ruabiela Saenz"},
+  {n:"Comida Rápida Friends",a:"Calle 9 #8-11",tp:"Comida rápida",fc:"rap",cap:"15",adm:"Rafael Carrillo"},
+  {n:"Buongiorno Pizza",a:"Calle 9 #6-60",tp:"Comida rápida",fc:"rap",cap:"40",adm:"Cristian Camino Veloza"},
+  {n:"Giulio Café",a:"Calle 12 # 9-80",tp:"Café · lácteos",fc:"otro",cap:"15",adm:"Lisbeth González"},
+  {n:"Panadería Pastelería la Nueva Babilonia Jym",a:"Calle12#7-74",tp:"Panadería",fc:"pan",cap:"50",adm:"Metha Navarrete"},
+  {n:"Venga y Coma Dónde Bueno",a:"Calle12#4-87",tp:"Comida rápida",fc:"rap",cap:"24",adm:"Herminio Figueroa"},
+  {n:"Restaurante la Villa",a:"Carrera 6 5 54",tp:"Restaurante",fc:"rest",cap:"100",adm:"Fernando Carrillo"},
+  {n:"Sabor Ubatense",a:"parque ricaurte puesto 1",tp:"Restaurante",fc:"rest",cap:"30",adm:"Liliana Castiblanco"},
+  {n:"Cómo en Casa",a:"parque ricaurte puesto 2",tp:"Restaurante",fc:"rest",cap:"70",adm:"Martha Rocha"},
+  {n:"La Chata",a:"Parque Ricaurte puesto 3",tp:"Restaurante",fc:"rest",cap:"80",adm:"Felipe Saboya"},
+  {n:"José y la Pecas",a:"Parque ricaurte puesto 4",tp:"Restaurante",fc:"rest",cap:"100",adm:"Ana Caicedo"},
+  {n:"Napoleat Pizza",a:"Calle 10 7 55",tp:"Comida rápida",fc:"rap",cap:"24",adm:"Camilo Sánchez"},
+  {n:"Cuore Di Pizza",a:"Calle 6 5 03",tp:"Comida rápida",fc:"rap",cap:"25",adm:"Leonardo Venegas"},
+  {n:"La Villa",a:"Calle 6 5 06",tp:"Restaurante",fc:"rest",cap:"100",adm:"Fernando Carrillo"},
+  {n:"Saint Michel",a:"Cr 5 5 69",tp:"Restaurante",fc:"rest",cap:"40",adm:"Sandra Moreno"},
+  {n:"La Margarita",a:"Calle 6 615",tp:"Restaurante",fc:"rest",cap:"150–200",adm:"Katherin Ospina"},
+  {n:"Arepas Donde Toño",a:"Calle 9",tp:"Comida rápida",fc:"rap",cap:"50",adm:"Migue Antonio Montaño"},
+  {n:"Doggeria la Rebaja",a:"Calle6 9 49",tp:"Comida rápida",fc:"rap",cap:"20",adm:"Yania Sofía Ahumada"},
+  {n:"La Casona del Valle",a:"Cr10 5 54",tp:"Gastrobar",fc:"otro",cap:"200",adm:"Luz Yaneth Alfonso"},
+  {n:"Cafe Santa Inés",a:"Calle7 740",tp:"Restaurante",fc:"rest",cap:"60",adm:"Martha Nieto"},
+  {n:"Los Años Maravillosos",a:"Calle 9 710",tp:"Cafetería",fc:"caf",cap:"42",adm:"Henry Gomez"},
+  {n:"Un Dos Postres",a:"Cr 4 6 57",tp:"Salón de onces",fc:"caf",cap:"",adm:"María Consuelo Gordillo"},
+  {n:"Empanadas Calderon",a:"Cr11 11a34",tp:"Salón de onces",fc:"caf",cap:"15",adm:"Lorenzo Calderon"},
+  {n:"Candy Love",a:"Cra11 11a24",tp:"Salón de onces",fc:"caf",cap:"10",adm:"Yaneth Gomez"},
+  {n:"St Louis Potosi",a:"Calle 6 643",tp:"Gastrobar",fc:"otro",cap:"60",adm:"Lucely Velásquez"},
+  {n:"Panadería las Delicias de Juanito",a:"Calle 13 n 2b 99 portal",tp:"Cafetería",fc:"caf",cap:"40",adm:"Juan Esteban Triana"},
+  {n:"Panadería la Nueva Babilonia",a:"Calle12 7 74",tp:"Panadería",fc:"pan",cap:"50",adm:"Martha Navarrete"},
+  {n:"Panadería Juliet",a:"Calle 12 10 55",tp:"Panadería",fc:"pan",cap:"10",adm:"Claudia Cañon"},
+  {n:"Panadería Smith",a:"Calle 9 # 5",tp:"Panadería",fc:"pan",cap:"50",adm:""},
+  {n:"Ando Pa",a:"Car 7775",tp:"Cafetería",fc:"caf",cap:"40",adm:"Fabio Monroy"}
+];
+
+let filtR='todos', renderedR=false;
+function setFR(t,el){
+  filtR=t;
+  el.parentElement.querySelectorAll('.rtab').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');renderR();
+}
+function renderR(){
+  const q=document.getElementById('rsrch').value.toLowerCase();
+  const g=document.getElementById('rgrid');
+  const nr=document.getElementById('rnores');
+  const ct=document.getElementById('rcount');
+  g.innerHTML='';let vis=0;
+  R.forEach(r=>{
+    const bT=filtR==='todos'||r.fc===filtR;
+    const bQ=!q||r.n.toLowerCase().includes(q)||r.a.toLowerCase().includes(q)||r.adm.toLowerCase().includes(q);
+    if(!bT||!bQ)return;vis++;
+    const c=document.createElement('div');c.className='hcard';
+    c.innerHTML=`
+      <div class="hcard-name">${r.n}</div>
+      <div class="hcard-addr">📍 ${r.a}</div>
+      <span class="hbadge rbadge ${r.fc}">${r.tp}</span>
+      ${r.cap?`<div class="hrow"><span class="ic">👥</span><span>${r.cap} comensales</span></div>`:''}
+      ${r.adm?`<div class="hrow" style="font-size:12px;color:var(--w300)"><span class="ic">👤</span><span>${r.adm}</span></div>`:''}
     `;g.appendChild(c);
   });
   nr.style.display=vis===0?'block':'none';
