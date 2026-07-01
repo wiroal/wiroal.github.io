@@ -1,0 +1,1147 @@
+<!--============================================================
+     35° CONGRESO REGIÓN C - ALCOHÓLICOS ANÓNIMOS COLOMBIA
+     Diseño sobrio y emotivo · Colores oficiales AA
+     Compatible con Blogger (HTML autocontenido)
+     Versión con afiche integrado y listado de hoteles
+     ============================================================-->
+
+<div class="aa-congreso-wrapper">
+  <style>
+    /* ===== Reset local y tipografía ===== */
+    .aa-congreso-wrapper *,
+    .aa-congreso-wrapper *::before,
+    .aa-congreso-wrapper *::after { box-sizing: border-box; }
+
+    .aa-congreso-wrapper {
+      --aa-azul-profundo: #002F6C;
+      --aa-azul-medio:    #1B4F8C;
+      --aa-azul-claro:    #4A7BB7;
+      --aa-dorado:        #C9A227;
+      --aa-dorado-suave:  #E8D58A;
+      --aa-crema:         #FBF7EE;
+      --aa-blanco:        #FFFFFF;
+      --aa-texto:         #2C2C2C;
+      --aa-texto-suave:   #5A5A5A;
+      --pastel-lugar:     #E6EEF7;
+      --pastel-lugar-b:   #B8CDE3;
+      --pastel-valor:     #FBF1D6;
+      --pastel-valor-b:   #E8D58A;
+      --pastel-pago:      #EAF1E4;
+      --pastel-pago-b:    #BFD3B0;
+
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--aa-texto);
+      line-height: 1.65;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0;
+      background: var(--aa-blanco);
+    }
+
+    /* ===== Afiche ===== */
+    .aa-afiche-wrap {
+      background: var(--aa-azul-profundo);
+      text-align: center;
+      padding: 0;
+      line-height: 0;
+      border-bottom: 4px solid var(--aa-dorado);
+    }
+    .aa-afiche-wrap img {
+      max-width: 460px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ===== Encabezado ===== */
+    .aa-hero {
+      background: linear-gradient(135deg, var(--aa-azul-profundo) 0%, var(--aa-azul-medio) 100%);
+      color: var(--aa-blanco);
+      padding: 50px 30px 45px;
+      text-align: center;
+      border-bottom: 4px solid var(--aa-dorado);
+      position: relative;
+    }
+    .aa-hero::before {
+      content: "";
+      position: absolute;
+      top: 15px; left: 15px; right: 15px; bottom: 15px;
+      border: 1px solid rgba(201, 162, 39, 0.4);
+      pointer-events: none;
+    }
+    .aa-hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--aa-dorado-suave);
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    .aa-hero-title {
+      font-family: Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0 0 8px;
+      letter-spacing: 1px;
+      line-height: 1.15;
+    }
+    .aa-hero-title .num { color: var(--aa-dorado); font-style: italic; }
+    .aa-hero-subtitle {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--aa-dorado-suave);
+      margin: 5px 0 25px;
+    }
+    .aa-hero-fecha {
+      display: inline-block;
+      padding: 10px 28px;
+      border: 1px solid var(--aa-dorado);
+      border-radius: 2px;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      color: var(--aa-blanco);
+    }
+
+    /* ===== Lemas ===== */
+    .aa-lemas {
+      background: var(--aa-crema);
+      padding: 35px 30px;
+      text-align: center;
+      border-bottom: 1px solid #E5DFD0;
+    }
+    .aa-lema { font-family: Georgia, serif; font-style: italic; color: var(--aa-azul-profundo); margin: 8px 0; }
+    .aa-lema-principal { font-size: 1.5rem; font-weight: 600; }
+    .aa-lema-secundario { font-size: 1.15rem; color: var(--aa-azul-medio); margin-top: 6px; }
+    .aa-divisor { width: 60px; height: 2px; background: var(--aa-dorado); margin: 18px auto; border: 0; }
+
+    /* ===== Importancia ===== */
+    .aa-importancia { padding: 45px 35px; background: var(--aa-blanco); }
+    .aa-importancia h2 {
+      font-family: Georgia, serif;
+      color: var(--aa-azul-profundo);
+      font-size: 1.6rem;
+      text-align: center;
+      margin: 0 0 8px;
+      letter-spacing: 0.5px;
+    }
+    .aa-importancia .aa-eyebrow {
+      text-align: center;
+      color: var(--aa-dorado);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+      font-weight: 600;
+    }
+    .aa-importancia p { font-size: 1.02rem; color: var(--aa-texto); margin: 0 0 16px; text-align: justify; hyphens: auto; }
+    .aa-importancia p:first-of-type::first-letter {
+      font-size: 3rem; float: left; line-height: 0.9; padding: 4px 10px 0 0;
+      color: var(--aa-azul-profundo); font-weight: 700; font-family: Georgia, serif;
+    }
+    .aa-cita {
+      border-left: 3px solid var(--aa-dorado);
+      padding: 8px 20px; margin: 24px 0;
+      font-style: italic; color: var(--aa-azul-medio);
+      background: var(--aa-crema); font-size: 1.05rem;
+    }
+
+    /* ===== Tarjetas ===== */
+    .aa-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; padding: 35px 30px;
+      background: var(--aa-crema);
+    }
+    .aa-card {
+      border-radius: 8px; padding: 25px 22px;
+      text-align: center; border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,47,108,0.06);
+    }
+    .aa-card-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      margin: 0 auto 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.4rem; font-weight: 700;
+    }
+    .aa-card-titulo {
+      font-family: Georgia, serif; color: var(--aa-azul-profundo);
+      font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase;
+      margin: 0 0 12px; font-weight: 700;
+    }
+    .aa-card-contenido { font-size: 0.98rem; color: var(--aa-texto); line-height: 1.55; }
+    .aa-card-contenido strong { color: var(--aa-azul-profundo); display: block; margin: 4px 0; font-size: 1.05rem; }
+    .aa-card-contenido .num-cuenta {
+      display: inline-block; background: rgba(255,255,255,0.7);
+      padding: 4px 10px; border-radius: 4px; letter-spacing: 1px;
+      font-family: "Courier New", monospace; font-weight: 700;
+      color: var(--aa-azul-profundo); margin-top: 4px;
+    }
+    .aa-card-lugar { background: var(--pastel-lugar); border-color: var(--pastel-lugar-b); }
+    .aa-card-lugar .aa-card-icon { background: var(--pastel-lugar-b); color: var(--aa-azul-profundo); }
+    .aa-card-valor { background: var(--pastel-valor); border-color: var(--pastel-valor-b); }
+    .aa-card-valor .aa-card-icon { background: var(--pastel-valor-b); color: #6B5414; }
+    .aa-valor-fila {
+      display: flex; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px dashed rgba(107,84,20,0.25); font-size: 0.98rem;
+    }
+    .aa-valor-fila:last-child { border-bottom: 0; }
+    .aa-valor-fila .precio { font-weight: 700; color: #6B5414; }
+    .aa-card-pago { background: var(--pastel-pago); border-color: var(--pastel-pago-b); }
+    .aa-card-pago .aa-card-icon { background: var(--pastel-pago-b); color: #3E5A2C; }
+
+    /* ===== Mapa ===== */
+    .aa-mapa-section { padding: 40px 30px; background: var(--aa-blanco); text-align: center; }
+    .aa-mapa-section h2 { font-family: Georgia, serif; color: var(--aa-azul-profundo); font-size: 1.5rem; margin: 0 0 6px; }
+    .aa-mapa-section .aa-eyebrow { color: var(--aa-dorado); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 8px; font-weight: 600; }
+    .aa-mapa-descripcion { color: var(--aa-texto-suave); font-size: 0.95rem; max-width: 620px; margin: 0 auto 22px; }
+    .aa-mapa-contenedor {
+      position: relative; width: 100%; padding-bottom: 65%; max-height: 520px;
+      border: 3px solid var(--aa-azul-profundo); border-radius: 6px;
+      overflow: hidden; box-shadow: 0 4px 16px rgba(0,47,108,0.15);
+    }
+    .aa-mapa-contenedor iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .aa-mapa-rutas { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; font-size: 0.92rem; }
+    .aa-mapa-punto { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: var(--aa-crema); border-radius: 20px; color: var(--aa-azul-profundo); }
+    .aa-mapa-punto .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .aa-mapa-punto.origen .dot { background: var(--aa-azul-profundo); }
+    .aa-mapa-punto.destino .dot { background: var(--aa-dorado); }
+
+    /* ===== Cierre ===== */
+    .aa-cierre {
+      background: var(--aa-azul-profundo); color: var(--aa-blanco);
+      padding: 35px 30px; text-align: center;
+      border-top: 4px solid var(--aa-dorado);
+    }
+    .aa-cierre p { margin: 6px 0; font-style: italic; font-size: 1.05rem; }
+    .aa-cierre .firma { color: var(--aa-dorado-suave); font-size: 0.9rem; letter-spacing: 2px; margin-top: 12px; font-style: normal; text-transform: uppercase; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .aa-hero-title { font-size: 1.7rem; }
+      .aa-hero-subtitle { font-size: 0.95rem; }
+      .aa-hero-fecha { font-size: 0.9rem; padding: 8px 18px; letter-spacing: 1px; }
+      .aa-importancia, .aa-lemas { padding: 28px 22px; }
+      .aa-importancia h2 { font-size: 1.35rem; }
+      .aa-lema-principal { font-size: 1.2rem; }
+      .aa-info-grid { padding: 25px 18px; gap: 16px; }
+      .aa-mapa-section { padding: 28px 18px; }
+      .aa-mapa-contenedor { padding-bottom: 90%; }
+      .aa-afiche-wrap img { max-width: 100%; }
+    }
+
+    /* ===== HOTELES — sección desplegable ===== */
+    .aa-hoteles-section {
+      padding: 40px 30px;
+      background: var(--aa-blanco);
+      border-top: 1px solid #E5DFD0;
+    }
+    .aa-hoteles-section h2 {
+      font-family: Georgia, serif; color: var(--aa-azul-profundo);
+      font-size: 1.5rem; text-align: center; margin: 0 0 6px;
+    }
+    .aa-hoteles-eyebrow {
+      text-align: center; color: var(--aa-dorado);
+      font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+      margin: 0 0 10px; font-weight: 600;
+    }
+    .aa-hoteles-intro {
+      text-align: center; color: var(--aa-texto-suave);
+      font-size: 0.93rem; max-width: 580px; margin: 0 auto 22px;
+    }
+    .aa-hotel-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 16px 22px;
+      background: var(--aa-azul-profundo); color: var(--aa-blanco);
+      border: none; border-radius: 6px; border-left: 5px solid var(--aa-dorado);
+      cursor: pointer; font-family: Georgia, serif; font-size: 1rem;
+      text-align: left; transition: background 0.2s; margin-bottom: 0;
+    }
+    .aa-hotel-btn:hover { background: var(--aa-azul-medio); }
+    .aa-hotel-btn .aa-h-arrow {
+      font-size: 0.85rem; flex-shrink: 0;
+      transition: transform 0.35s ease; color: var(--aa-dorado-suave);
+      margin-left: 12px;
+    }
+    .aa-hotel-btn.open .aa-h-arrow { transform: rotate(180deg); }
+    .aa-hotel-panel {
+      overflow: hidden; max-height: 0;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    .aa-hotel-panel.open { max-height: 5500px; }
+    .aa-hotel-inner { padding-top: 24px; }
+    .aa-h-controls {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 14px; align-items: center;
+    }
+    .aa-h-search {
+      flex: 1; min-width: 180px; padding: 10px 14px;
+      border: 1px solid #C5D5E8; border-radius: 4px;
+      font-family: Georgia, serif; font-size: 0.93rem;
+      color: var(--aa-texto); background: var(--aa-crema); outline: none;
+      transition: border-color 0.2s;
+    }
+    .aa-h-search:focus { border-color: var(--aa-azul-medio); }
+    .aa-h-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .aa-h-ftab {
+      padding: 8px 14px; border-radius: 4px;
+      border: 1px solid #C5D5E8; background: transparent;
+      color: var(--aa-azul-medio); font-family: Georgia, serif;
+      font-size: 0.86rem; cursor: pointer; transition: all 0.2s;
+    }
+    .aa-h-ftab:hover, .aa-h-ftab.on {
+      background: var(--aa-azul-profundo);
+      border-color: var(--aa-azul-profundo); color: var(--aa-blanco);
+    }
+    .aa-h-count { font-size: 0.84rem; color: var(--aa-texto-suave); margin-bottom: 14px; }
+    .aa-h-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .aa-h-card {
+      background: var(--aa-crema); border: 1px solid #D8E6F2;
+      border-radius: 8px; padding: 18px;
+      border-top: 3px solid var(--aa-azul-claro);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .aa-h-card:hover {
+      box-shadow: 0 4px 16px rgba(0,47,108,0.12);
+      transform: translateY(-2px);
+    }
+    .aa-h-nombre {
+      font-family: Georgia, serif; font-size: 1rem; font-weight: 700;
+      color: var(--aa-azul-profundo); margin-bottom: 4px; line-height: 1.3;
+    }
+    .aa-h-addr { font-size: 0.82rem; color: var(--aa-texto-suave); margin-bottom: 10px; }
+    .aa-h-badge {
+      display: inline-block; font-size: 0.74rem; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 12px; font-weight: 700;
+    }
+    .aa-h-badge.u { background: #D8EAF5; color: var(--aa-azul-profundo); border: 1px solid #B0CEEA; }
+    .aa-h-badge.r { background: #D8EFE2; color: #2E5A3A; border: 1px solid #A8D4B8; }
+    .aa-h-row { display: flex; gap: 7px; margin-bottom: 5px; font-size: 0.87rem; color: var(--aa-texto); line-height: 1.4; }
+    .aa-h-ic { flex-shrink: 0; width: 18px; color: var(--aa-azul-claro); }
+    .aa-h-precio { font-size: 0.95rem; font-weight: 700; color: #6B5414; margin: 10px 0 6px; font-family: Georgia, serif; }
+    .aa-h-tel a { color: var(--aa-azul-medio); text-decoration: none; font-size: 0.87rem; }
+    .aa-h-tel a:hover { text-decoration: underline; }
+    .aa-h-link {
+      display: inline-block; margin-top: 10px; font-size: 0.82rem;
+      color: var(--aa-azul-medio); text-decoration: none;
+      border-bottom: 1px dashed #B0CEEA; transition: color 0.2s;
+    }
+    .aa-h-link:hover { color: var(--aa-azul-profundo); }
+    .aa-h-nores { text-align: center; color: var(--aa-texto-suave); padding: 40px 20px; font-style: italic; display: none; }
+    .aa-h-nota { margin-top: 16px; font-size: 0.81rem; color: var(--aa-texto-suave); border-top: 1px solid #E5DFD0; padding-top: 12px; line-height: 1.5; font-style: italic; }
+    @media (max-width: 600px) {
+      .aa-hoteles-section { padding: 28px 18px; }
+      .aa-h-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PROGRAMACIÓN ===== */
+    .aa-prog-section {
+      padding: 40px 30px;
+      background: var(--aa-crema);
+      border-top: 1px solid #E5DFD0;
+    }
+    .aa-prog-section h2 {
+      font-family: Georgia, serif; color: var(--aa-azul-profundo);
+      font-size: 1.5rem; text-align: center; margin: 0 0 6px;
+    }
+    .aa-prog-eyebrow, .aa-op-eyebrow, .aa-gastro-eyebrow, .aa-clima-eyebrow {
+      text-align: center; color: var(--aa-dorado);
+      font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+      margin: 0 0 10px; font-weight: 600;
+    }
+    .aa-prog-intro, .aa-op-intro, .aa-gastro-intro {
+      text-align: center; color: var(--aa-texto-suave);
+      font-size: 0.93rem; max-width: 580px; margin: 0 auto 22px;
+    }
+    .aa-prog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+    .aa-prog-day-title {
+      font-family: Georgia, serif; color: var(--aa-azul-profundo);
+      font-size: 1.1rem; font-weight: 700; margin: 0 0 14px;
+      border-bottom: 2px solid var(--aa-dorado); padding-bottom: 8px;
+    }
+    .aa-prog-day-title span { color: var(--aa-dorado); font-style: italic; font-weight: 400; margin-left: 6px; }
+    .aa-prog-block {
+      background: var(--aa-blanco); border: 1px solid #E5DFD0; border-left: 3px solid var(--aa-azul-claro);
+      border-radius: 6px; padding: 12px 14px; margin-bottom: 12px;
+    }
+    .aa-pbadge {
+      display: inline-block; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 8px; font-weight: 700;
+    }
+    .aa-pbadge.reunion { background: var(--pastel-lugar); color: var(--aa-azul-profundo); border: 1px solid var(--pastel-lugar-b); }
+    .aa-pbadge.acto { background: var(--pastel-valor); color: #6B5414; border: 1px solid var(--pastel-valor-b); }
+    .aa-pbadge.libre { background: var(--pastel-pago); color: #3E5A2C; border: 1px solid var(--pastel-pago-b); }
+    .aa-prog-time { font-size: 0.85rem; color: var(--aa-texto-suave); font-style: italic; margin-bottom: 6px; }
+    .aa-prog-list { margin: 0; padding-left: 18px; font-size: 0.88rem; color: var(--aa-texto); line-height: 1.5; }
+    .aa-prog-list li { margin-bottom: 3px; }
+
+    /* ===== OPERADORES TURÍSTICOS ===== */
+    .aa-op-section { padding: 40px 30px; background: var(--aa-blanco); border-top: 1px solid #E5DFD0; }
+    .aa-op-section h2 { font-family: Georgia, serif; color: var(--aa-azul-profundo); font-size: 1.5rem; text-align: center; margin: 0 0 6px; }
+    .aa-op-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .aa-op-card { background: var(--aa-crema); border: 1px solid #D8E6F2; border-radius: 8px; padding: 18px; border-top: 3px solid var(--aa-dorado); }
+    .aa-op-cat { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aa-azul-medio); font-weight: 700; margin: 10px 0 4px; }
+    .aa-op-list { margin: 0 0 6px; padding-left: 18px; font-size: 0.86rem; color: var(--aa-texto); line-height: 1.45; }
+    .aa-op-links { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .aa-op-links a, .aa-op-tel a { color: var(--aa-azul-medio); text-decoration: none; font-size: 0.84rem; border-bottom: 1px dashed #B0CEEA; }
+    .aa-op-links a:hover, .aa-op-tel a:hover { color: var(--aa-azul-profundo); }
+    .aa-op-tel { margin-top: 8px; }
+
+    /* ===== GASTRONOMÍA ===== */
+    .aa-gastro-section { padding: 40px 30px; background: var(--aa-crema); border-top: 1px solid #E5DFD0; }
+    .aa-gastro-section h2 { font-family: Georgia, serif; color: var(--aa-azul-profundo); font-size: 1.5rem; text-align: center; margin: 0 0 6px; }
+    .aa-g-badge { background: #EDE3F5; color: #5B3A80; border: 1px solid #D6C2E8; }
+
+    /* ===== CLIMA ===== */
+    .aa-clima-section { padding: 40px 30px; background: var(--aa-blanco); border-top: 1px solid #E5DFD0; text-align: center; }
+    .aa-clima-section h2 { font-family: Georgia, serif; color: var(--aa-azul-profundo); font-size: 1.5rem; margin: 0 0 6px; }
+    .aa-clima-intro { color: var(--aa-texto-suave); font-size: 0.93rem; max-width: 620px; margin: 0 auto 24px; }
+    .aa-clima-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .aa-clima-card { background: var(--pastel-lugar); border: 1px solid var(--pastel-lugar-b); border-radius: 8px; padding: 18px 12px; }
+    .aa-clima-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .aa-clima-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aa-azul-medio); font-weight: 700; }
+    .aa-clima-main { font-family: Georgia, serif; font-size: 1.15rem; color: var(--aa-azul-profundo); font-weight: 700; margin: 4px 0 2px; }
+    .aa-clima-sub { font-size: 0.78rem; color: var(--aa-texto-suave); }
+    .aa-clima-empacar {
+      border-left: 3px solid var(--aa-dorado); padding: 10px 18px; margin: 0 0 22px;
+      font-size: 0.95rem; color: var(--aa-azul-medio); background: var(--aa-crema); text-align: left;
+    }
+    .aa-clima-live { min-height: 20px; margin-bottom: 16px; }
+    .aa-clima-live-title { font-weight: 700; color: var(--aa-azul-profundo); margin-bottom: 12px; }
+    .aa-clima-live-loading { color: var(--aa-texto-suave); font-style: italic; font-size: 0.9rem; }
+    .aa-clima-days { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+    .aa-clima-day { background: var(--pastel-valor); border: 1px solid var(--pastel-valor-b); border-radius: 8px; padding: 14px 18px; min-width: 120px; }
+    .aa-clima-day .aa-cd-date { font-size: 0.82rem; font-weight: 700; color: #6B5414; margin-bottom: 4px; }
+    .aa-clima-day .aa-cd-icon { font-size: 1.5rem; margin: 4px 0; }
+    .aa-clima-day .aa-cd-temp { font-family: Georgia, serif; font-weight: 700; color: var(--aa-azul-profundo); }
+    .aa-clima-day .aa-cd-temp .lo { font-weight: 400; color: var(--aa-texto-suave); }
+    .aa-clima-day .aa-cd-rain { font-size: 0.75rem; color: var(--aa-texto-suave); margin-top: 4px; }
+    .aa-clima-now { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; color: var(--aa-azul-profundo); }
+    .aa-clima-note { margin-top: 16px; font-size: 0.81rem; color: var(--aa-texto-suave); font-style: italic; }
+
+    @media (max-width: 600px) {
+      .aa-prog-section, .aa-op-section, .aa-gastro-section, .aa-clima-section { padding: 28px 18px; }
+    }
+  </style>
+
+  <!--============ AFICHE ============-->
+  <div class="aa-afiche-wrap">
+    <img alt="35° Congreso de AA · Región C · Ubaté, Cundinamarca · 15, 16 y 17 de agosto de 2026" src="https://blogger.googleusercontent.com/img/a/AVvXsEhc_58fb73uZBwzipeZE5--pCMglqG4GiMZGpZrR5nApa_BfTBx0vfrBz-j9jNyOmb1FDIOICv2p_PBV3yWN6FomORlMjL61UjbH-ya09CRExceju6IQmMUiO0GFAPh0C0nhl5dqjSAFowSbpR3MMZbcxRI8J5SgSWNqDJUUuTre8bElWgW4bnsL640Z2tm" />
+  </div>
+
+  <!--============ HERO ============-->
+  <header class="aa-hero">
+    <p class="aa-hero-eyebrow"><a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=define+Alcoh%C3%B3licos+An%C3%B3nimos&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">Alcohólicos Anónimos</a> · Colombia</p>
+    <h1 class="aa-hero-title"><span class="num">35°</span> Congreso Región C, Ubaté Cundinamarca - Colombia</h1>
+    <p class="aa-hero-subtitle">Encuentro regional de recuperación - amor y servicio</p>
+    <span class="aa-hero-fecha">15 · 16 · 17 de Agosto de 2026</span>
+  </header>
+
+  <!--============ LEMAS ============-->
+  <section class="aa-lemas">
+    <p class="aa-lema aa-lema-principal">«Nuestra recuperación, el faro que guía al que sufre»</p>
+    <hr class="aa-divisor" />
+    <p class="aa-lema aa-lema-secundario">«Nuestros pasos, camino a la sobriedad»</p>
+  </section>
+
+  <!--============ IMPORTANCIA ============-->
+  <section class="aa-importancia">
+    <p class="aa-eyebrow">Una invitación fraterna</p>
+    <h2>La importancia de asistir</h2>
+    <p>Los congresos regionales no son eventos sociales más en el calendario de la comunidad: son la expresión viva de nuestra <a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=Tercera+Legado+Alcoh%C3%B3licos+An%C3%B3nimos&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">Tercera Legado</a>, el servicio. Cada vez que un compañero o compañera atraviesa montañas y caminos para sentarse junto a otros miembros, está reafirmando aquello que nos sostiene desde hace nueve décadas —la convicción de que un alcohólico solo puede ayudar verdaderamente a otro alcohólico, y que esa ayuda crece cuando la compartimos en grupo.</p>
+    <p>Asistir al <a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=35%C2%B0+Congreso+de+la+Regi%C3%B3n+C+Alcoh%C3%B3licos+An%C3%B3nimos&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">35° Congreso de la Región C</a> es renovar nuestro compromiso con el alcohólico que aún sufre, dentro y fuera de los salones. Es escuchar experiencias que nos recuerdan de dónde venimos, descubrir herramientas nuevas para nuestros grupos base, fortalecer los vínculos con servidores de toda la región y unificar criterios sobre los temas que la comunidad nacional discute hoy. La Región C —que reúne a Bogotá y los departamentos vecinos— se nutre cuando sus delegados, MCDs, RSGs y miembros llegan al encuentro con disposición para escuchar y aportar.</p>
+    <div class="aa-cita">«Cuando todo lo demás falla, los principios fundamentales nos sostienen. Los congresos son el espacio donde esos principios dejan de ser abstractos y se vuelven rostros, voces y abrazos.»</div>
+    <p>Más allá del programa, hay una razón profundamente personal para asistir: la sobriedad se fortalece en la presencia del otro. El faro de la portada no es metáfora vacía: cada miembro que llega es luz para quien todavía navega en la tormenta. Te esperamos en Ubaté con los brazos abiertos.</p>
+  </section>
+
+  <!--============ INFO GRID ============-->
+  <section class="aa-info-grid">
+    <article class="aa-card aa-card-lugar">
+      <div class="aa-card-icon">📍</div>
+      <h3 class="aa-card-titulo">Lugar</h3>
+      <div class="aa-card-contenido">
+        <b><a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=Sal%C3%B3n+de+Eventos+La+Mansi%C3%B3n+Ubat%C3%A9&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">Salón de Eventos La Mansión</a></b>
+        Vía Altamira, kilómetro 0,7<br />
+        Villa de San Diego de Ubaté<br />
+        <a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=Cundinamarca+Colombia&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">Cundinamarca</a>, Colombia
+      </div>
+    </article>
+    <article class="aa-card aa-card-valor">
+      <div class="aa-card-icon">✦</div>
+      <h3 class="aa-card-titulo">Aportes</h3>
+      <div class="aa-card-contenido">
+        <div class="aa-valor-fila"><span>Aporte individual (persona)</span><span class="precio">$130.000</span></div>
+        <div class="aa-valor-fila"><span>Aporte por grupo</span><span class="precio">$70.000</span></div>
+      </div>
+    </article>
+    <article class="aa-card aa-card-pago">
+      <div class="aa-card-icon">✉</div>
+      <h3 class="aa-card-titulo">Forma de pago</h3>
+      <div class="aa-card-contenido">
+        <b>Cuenta de Ahorros <a data-preview="" href="https://www.google.com/search?ved=1t:260882&amp;q=Davivienda+Colombia&amp;bbid=6658235590252405876&amp;bpid=3739399051726248463" target="_blank">Davivienda</a></b>
+        <span class="num-cuenta">006101050240</span><br /><br />
+        <b>Llave Bre-B</b>
+        <span class="num-cuenta">311 242 0531</span>
+      </div>
+    </article>
+    <article class="aa-card aa-card-pago">
+      <div class="aa-card-icon">✉</div>
+      <h3 class="aa-card-titulo">Forma de pago</h3>
+      <div class="aa-card-contenido">
+        <b>En Bogotá OFICINAS</b>
+        <span class="num-cuenta">Tenemos inscripciones disponibles</span><br /><br />
+        <b>En las oficinas del Comité de Área e Intergrupos</b>
+        <span class="num-cuenta">Y a través de los RSG, MCD y Delegados</span>
+      </div>
+    </article>
+  </section>
+
+  <!--============ PROGRAMACIÓN ============-->
+  <section class="aa-prog-section">
+    <p class="aa-prog-eyebrow">Orden del congreso</p>
+    <h2>Programación</h2>
+    <p class="aa-prog-intro">Itinerario de reuniones y actos del 35° Congreso — sábado 15, domingo 16 y lunes 17 de agosto.</p>
+
+    <button aria-expanded="false" class="aa-hotel-btn" id="aaProgBtn" onclick="aaToggleProg()">
+      <span>Ver programación completa</span>
+      <span class="aa-h-arrow">▼</span>
+    </button>
+
+    <div class="aa-hotel-panel" id="aaProgPanel">
+      <div class="aa-hotel-inner">
+        <div class="aa-prog-grid">
+
+          <div>
+            <h3 class="aa-prog-day-title">Sábado <span>15 ago</span></h3>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">9:00 PM</div>
+              <p class="aa-prog-list" style="padding-left:0;list-style:none">Inscripciones</p>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge acto">Reunión inaugural</span>
+              <div class="aa-prog-time">10:00 AM – 12:00 M</div>
+              <ul class="aa-prog-list">
+                <li>Himnos (Colombia – Ubaté)</li>
+                <li>Instalación del congreso</li>
+                <li>Saludo de bienvenida</li>
+                <li>Invitados especiales nos saludan</li>
+                <li>Desfile de banderas</li>
+                <li>Lema “Nuestra recuperación, el faro que guía al que sufre”</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">2:00 PM – 4:00 PM</div>
+              <ul class="aa-prog-list">
+                <li>Rendición e ingobernabilidad</li>
+                <li>Recuperando el sano juicio</li>
+                <li>Poner la voluntad en Sus manos</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">4:30 PM – 5:30 PM</div>
+              <ul class="aa-prog-list">
+                <li>PLAN NACIONAL DE ACCION PARA FORTALECER LA UNICIDAD DE PROPOSITO, A PARTIR DE LA RECUPAERACION DEL ENFERMO ALCOHÓLICO.</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge acto">Acto cultural</span>
+              <div class="aa-prog-time">8:00 PM</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="aa-prog-day-title">Domingo <span>16 ago</span></h3>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">8:00 AM – 9:40 AM · con coordinadores</div>
+              <ul class="aa-prog-list">
+                <li>Inventario moral sin miedo</li>
+                <li>La liberación de contar la verdad</li>
+                <li>Disposición al cambio total</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">10:10 AM – 12:00 M</div>
+              <ul class="aa-prog-list">
+                <li>Humildad para ser liberados</li>
+                <li>Corazones dispuestos a reparar</li>
+                <li>Resarcir daños directamente</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge libre">Tarde libre</span>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge acto">Acto social</span>
+              <div class="aa-prog-time">8:00 PM</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="aa-prog-day-title">Lunes <span>17 ago</span></h3>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge reunion">Reunión</span>
+              <div class="aa-prog-time">8:00 AM – 9:40 AM</div>
+              <ul class="aa-prog-list">
+                <li>El mantenimiento de la sobriedad</li>
+                <li>La voluntad de Dios y la oración</li>
+                <li>Despertar para dar el mensaje</li>
+              </ul>
+            </div>
+            <div class="aa-prog-block">
+              <span class="aa-pbadge acto">Reunión de clausura</span>
+              <div class="aa-prog-time">10:10 AM – 12:00 M</div>
+              <ul class="aa-prog-list">
+                <li>Nuestra OSG comparte</li>
+                <li>Entrega de responsabilidad del congreso</li>
+                <li>Informe de tesorería</li>
+                <li>Tema: “Nuestros pasos, camino a la sobriedad”</li>
+                <li><strong>Palabras de agradecimiento y clausura</strong></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--============ HOTELES ============-->
+  <section class="aa-hoteles-section">
+    <p class="aa-hoteles-eyebrow">Hospedaje en Ubaté</p>
+    <h2>Alojamiento disponible</h2>
+    <p class="aa-hoteles-intro">Caracterización de la oferta hotelera del municipio de Ubaté. Precios de referencia — confirmar disponibilidad y tarifas directamente con cada establecimiento.</p>
+
+    <button aria-expanded="false" class="aa-hotel-btn" id="aaHotelBtn" onclick="aaToggleHoteles()">
+      <span>Ver listado de hoteles — 22 establecimientos registrados</span>
+      <span class="aa-h-arrow">▼</span>
+    </button>
+
+    <div class="aa-hotel-panel" id="aaHotelPanel">
+      <div class="aa-hotel-inner">
+        <div class="aa-h-controls">
+          <input class="aa-h-search" id="aaHSrch" oninput="aaRender()" placeholder="Buscar por nombre, dirección o servicio…" type="search" />
+          <div class="aa-h-filters">
+            <button class="aa-h-ftab on" onclick="aaSetF('todos',this)">Todos</button>
+            <button class="aa-h-ftab" onclick="aaSetF('urbano',this)">🏙 Urbano</button>
+            <button class="aa-h-ftab" onclick="aaSetF('rural',this)">🌿 Rural</button>
+          </div>
+        </div>
+        <div class="aa-h-count" id="aaHCount">Mostrando 22 establecimientos</div>
+        <div class="aa-h-grid" id="aaHGrid"></div>
+        <div class="aa-h-nores" id="aaHNores">No se encontraron establecimientos con ese criterio.</div>
+        <p class="aa-h-nota">ℹ️ Datos tomados del registro municipal de oferta hotelera de Ubaté. Precios orientativos; verifique disponibilidad antes de reservar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--============ OPERADORES TURÍSTICOS ============-->
+  <section class="aa-op-section">
+    <p class="aa-op-eyebrow">Turismo en la región</p>
+    <h2>Operadores turísticos</h2>
+    <p class="aa-op-intro">Agencias formalizadas (RNT vigente) del Valle de Ubaté y la Laguna de Fúquene. Una buena opción para la tarde libre del domingo o un pasadía. Confirme planes y tarifas directamente con cada operador.</p>
+
+    <button aria-expanded="false" class="aa-hotel-btn" id="aaOpBtn" onclick="aaToggleOp()">
+      <span>Ver operadores y planes — 3 agencias registradas</span>
+      <span class="aa-h-arrow">▼</span>
+    </button>
+
+    <div class="aa-hotel-panel" id="aaOpPanel">
+      <div class="aa-hotel-inner">
+        <div class="aa-op-grid">
+
+          <div class="aa-op-card">
+            <div class="aa-h-nombre">Altiplano Trip</div>
+            <div class="aa-h-addr">📍 Sutatausa, Cundinamarca</div>
+            <span class="aa-h-badge u">🧭 RNT 156291</span>
+            <div class="aa-op-cat">Aventura y naturaleza</div>
+            <ul class="aa-op-list">
+              <li>Trekking al farallón</li>
+              <li>Paseo por la Laguna de Fúquene</li>
+              <li>Camellón rupestre (arte)</li>
+            </ul>
+            <div class="aa-op-cat">Patrimonio</div>
+            <ul class="aa-op-list"><li>Conjunto Doctrinero San Juan Bautista (BICN)</li></ul>
+            <div class="aa-op-cat">Pedagógicos</div>
+            <ul class="aa-op-list">
+              <li>Arte rupestre y pintura mural</li>
+              <li>Salida al Parque Sabio Mutis</li>
+              <li>Lana y tradiciones</li>
+              <li>Caminata Ruta de la Libertad</li>
+            </ul>
+            <div class="aa-op-cat">Pasadías</div>
+            <ul class="aa-op-list">
+              <li>Pasadía por Boyacá</li>
+              <li>Día de piscina y calor</li>
+              <li>Termales y sus beneficios</li>
+              <li>Cultura y fe en Bogotá</li>
+            </ul>
+            <div class="aa-op-cat">Ecuestre</div>
+            <ul class="aa-op-list"><li>Paseos a caballo (hasta 2 h) por el valle de Ubaté</li></ul>
+            <div class="aa-op-tel"><a href="tel:+573115998531">📞 311 599 8531</a></div>
+            <div class="aa-op-links">
+              <a href="https://www.altiplanotrip.com/ecuestre" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+              <a href="https://www.instagram.com/altiplanotrip/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+              <a href="https://www.facebook.com/AltiplanoTrip/" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+            </div>
+          </div>
+
+          <div class="aa-op-card">
+            <div class="aa-h-nombre">Ziguazinsa</div>
+            <div class="aa-h-addr">📍 Ubaté, Cundinamarca</div>
+            <span class="aa-h-badge u">🧭 RNT 31186</span>
+            <div class="aa-op-cat">Rutas y caminatas</div>
+            <ul class="aa-op-list">
+              <li>Camino Rial</li>
+              <li>Cueva la Ventana</li>
+              <li>Páramo Laguna Verde y Mirador del Páramo</li>
+              <li>Parque La Cara del Indio</li>
+              <li>Caminos de Fe — entre la sal y la tradición</li>
+              <li>Campesino Valiente</li>
+            </ul>
+            <div class="aa-op-cat">Rutas largas</div>
+            <ul class="aa-op-list">
+              <li>Ruta Eje Cafetero</li>
+              <li>Ruta Hacienda Nápoles</li>
+            </ul>
+            <div class="aa-op-cat">Hospedaje</div>
+            <ul class="aa-op-list"><li>Cabaña Taravita — La Granja del Tío Mao</li></ul>
+            <div class="aa-op-tel"><a href="tel:+573138175529">📞 313 817 5529</a></div>
+            <div class="aa-op-links">
+              <a href="https://ziguazinsa.com" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+              <a href="https://www.instagram.com/ziguazinsa.viajes/" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+              <a href="https://www.facebook.com/search/top?q=ziguazinsa%20fuquene" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+            </div>
+          </div>
+
+          <div class="aa-op-card">
+            <div class="aa-h-nombre">Ruta 45</div>
+            <div class="aa-h-addr">📍 Fúquene, Cundinamarca</div>
+            <span class="aa-h-badge u">🧭 RNT 120581</span>
+            <div class="aa-op-cat">Aventura</div>
+            <ul class="aa-op-list">
+              <li>Paseo en lancha por la laguna</li>
+              <li>Aventura en cuatrimoto</li>
+              <li>Mirador y Mano de Fúquene</li>
+              <li>Caminata por la vía del tren</li>
+              <li>Piedra Colgada</li>
+            </ul>
+            <div class="aa-op-cat">Talleres</div>
+            <ul class="aa-op-list">
+              <li>Taller de cuajada</li>
+              <li>Taller de artesanías</li>
+            </ul>
+            <div class="aa-op-cat">Lugares</div>
+            <ul class="aa-op-list">
+              <li>Finca Fuquenópolis</li>
+              <li>Parque La Cara del Indio</li>
+              <li>Spots Ruta 45</li>
+            </ul>
+            <div class="aa-op-cat">Alojamiento</div>
+            <ul class="aa-op-list">
+              <li>Barril — Aldea Fuquenense</li>
+              <li>Juncos Glamping</li>
+              <li>Cabaña Alpina</li>
+            </ul>
+            <div class="aa-op-tel"><a href="tel:+573125184781">📞 312 518 4781</a></div>
+            <div class="aa-op-links">
+              <a href="https://ruta45tours.com/" target="_blank" rel="noopener noreferrer">🌐 Web</a>
+              <a href="https://www.tiktok.com/@ruta45.tours" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+              <a href="https://www.facebook.com/profile.php?id=100075875607296" target="_blank" rel="noopener noreferrer">👍 Facebook</a>
+            </div>
+          </div>
+
+        </div>
+        <p class="aa-h-nota">ℹ️ Datos tomados de la caracterización de agencias de turismo del Valle de Ubaté. Operadores con RNT vigente. Verifique disponibilidad, cupos y tarifas directamente con cada agencia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--============ GASTRONOMÍA ============-->
+  <section class="aa-gastro-section">
+    <p class="aa-gastro-eyebrow">Dónde comer en Ubaté</p>
+    <h2>Establecimientos gastronómicos</h2>
+    <p class="aa-gastro-intro">Caracterización gastronómica del municipio: 75 establecimientos entre restaurantes, comidas rápidas, panaderías, cafeterías y más. Use el buscador y los filtros para encontrar opciones cerca de la sede.</p>
+
+    <button aria-expanded="false" class="aa-hotel-btn" id="aaGastroBtn" onclick="aaToggleGastro()">
+      <span>Ver directorio gastronómico — 75 establecimientos</span>
+      <span class="aa-h-arrow">▼</span>
+    </button>
+
+    <div class="aa-hotel-panel" id="aaGastroPanel">
+      <div class="aa-hotel-inner">
+        <div class="aa-h-controls">
+          <input class="aa-h-search" id="aaRSrch" oninput="aaRenderR()" placeholder="Buscar por nombre, dirección o administrador…" type="search" />
+          <div class="aa-h-filters">
+            <button class="aa-h-ftab on" onclick="aaSetFR('todos',this)">Todos</button>
+            <button class="aa-h-ftab" onclick="aaSetFR('rest',this)">🍽 Restaurantes</button>
+            <button class="aa-h-ftab" onclick="aaSetFR('rap',this)">🍔 Comida rápida</button>
+            <button class="aa-h-ftab" onclick="aaSetFR('pan',this)">🥐 Panaderías</button>
+            <button class="aa-h-ftab" onclick="aaSetFR('caf',this)">☕ Cafeterías y onces</button>
+            <button class="aa-h-ftab" onclick="aaSetFR('otro',this)">🍧 Otros</button>
+          </div>
+        </div>
+        <div class="aa-h-count" id="aaRCount">Mostrando 75 establecimientos</div>
+        <div class="aa-h-grid" id="aaRGrid"></div>
+        <div class="aa-h-nores" id="aaRNores">No se encontraron establecimientos con ese criterio.</div>
+        <p class="aa-h-nota">ℹ️ Datos tomados de la caracterización gastronómica del municipio de Ubaté. La capacidad se indica en número de comensales. Verifique horarios y disponibilidad directamente con cada establecimiento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--============ MAPA ============-->
+  <section class="aa-mapa-section">
+    <p class="aa-eyebrow">Cómo llegar</p>
+    <h2>Ruta desde Bogotá</h2>
+    <p class="aa-mapa-descripcion">Trazado sugerido desde el <b>Comité de Área (Calle 57 # 13-65, Bogotá)</b> hasta el <b>Salón de Eventos La Mansión</b> en Ubaté, Cundinamarca. Aproximadamente 105 km · 2h 15min en automóvil.</p>
+    <div class="aa-mapa-contenedor">
+      <iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d508112.0!2d-74.05!3d4.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x8e3f9b292d24ae85%3A0xf9e2e68db12caf81!2sCalle%2057%20%2313-65%2C%20Bogot%C3%A1!3m2!1d4.643666!2d-74.0652157!4m5!1s0x8e40395c0c34e0c1%3A0x9831456a4e30143a!2sLa%20Mansi%C3%B3n%20Eventos%20Ubat%C3%A9%2C%20V%C3%ADa%20a%20Altamira%2C%20Ubat%C3%A9%2C%20Cundinamarca!3m2!1d5.297684!2d-73.805342!5e0!3m2!1ses!2sco!4v1714900000000" title="Ruta desde el Comité de Área en Bogotá hasta el Salón La Mansión en Ubaté" width="600"></iframe>
+    </div>
+    <div class="aa-mapa-rutas">
+      <span class="aa-mapa-punto origen"><span class="dot"></span>Salida: Comité de Área · Bogotá</span>
+      <span class="aa-mapa-punto destino"><span class="dot"></span>Llegada: La Mansión · Ubaté.</span></div><div class="aa-mapa-rutas"><span class="aa-mapa-punto destino"><div class="separator" style="clear: both; text-align: center;">&nbsp;<div class="separator" style="clear: both; text-align: center;"><object class="BLOG_video_class" contentid="0f2ceb7a48fd7143" height="335" id="BLOG_video-0f2ceb7a48fd7143" width="402"></object></div><br /></div></span></div>
+  </section>
+
+  <!--============ CLIMA ============-->
+  <section class="aa-clima-section">
+    <p class="aa-clima-eyebrow">Antes de empacar</p>
+    <h2>Clima en Ubaté</h2>
+    <p class="aa-clima-intro">Ubaté está a 2.556 m s.n.m., en el altiplano cundiboyacense: clima frío de montaña. Si vienes de tierra caliente, ten esto en cuenta al empacar.</p>
+
+    <div class="aa-clima-cards">
+      <div class="aa-clima-card">
+        <div class="aa-clima-icon">⛰️</div>
+        <div class="aa-clima-label">Altitud</div>
+        <div class="aa-clima-main">2.556 m s.n.m.</div>
+        <div class="aa-clima-sub">Piso térmico frío del altiplano</div>
+      </div>
+      <div class="aa-clima-card">
+        <div class="aa-clima-icon">☀️</div>
+        <div class="aa-clima-label">De día</div>
+        <div class="aa-clima-main">15° – 23°C</div>
+        <div class="aa-clima-sub">Agosto suele ser soleado en Ubaté</div>
+      </div>
+      <div class="aa-clima-card">
+        <div class="aa-clima-icon">🌙</div>
+        <div class="aa-clima-label">Mañanas y noches</div>
+        <div class="aa-clima-main">7° – 11°C</div>
+        <div class="aa-clima-sub">Frío marcado al amanecer y tras el atardecer</div>
+      </div>
+      <div class="aa-clima-card">
+        <div class="aa-clima-icon">🌦️</div>
+        <div class="aa-clima-label">Lluvia</div>
+        <div class="aa-clima-main">Probabilidad baja</div>
+        <div class="aa-clima-sub">Agosto es estadísticamente el mes más seco del año</div>
+      </div>
+    </div>
+
+    <div class="aa-clima-empacar">🧥 <strong>Qué empacar:</strong> chaqueta o saco abrigado, una prenda de manga larga para la noche, zapato cerrado y algo liviano para el sol del mediodía. Las salas de reunión también pueden estar frías — vístete por capas.</div>
+
+    <div id="aaClimaLive" class="aa-clima-live"><p class="aa-clima-live-loading">Consultando pronóstico…</p></div>
+
+    <p class="aa-clima-note">ℹ️ Datos de referencia según promedios históricos de Ubaté, Cundinamarca. El pronóstico puntual para el 15–17 de agosto aparecerá automáticamente arriba cuando la fecha entre en el rango de 16 días.</p>
+  </section>
+
+  <!--============ CIERRE ============-->
+  <footer class="aa-cierre">
+    <p>«La Unidad, la Confianza y la Comunicación fortalecen nuestra Estructura»</p>
+    <p>Te esperamos en Ubaté para caminar juntos un día más.</p>
+    <p class="firma">Región C · Alcohólicos Anónimos Colombia</p>
+  </footer>
+
+  <script>
+    /* ─── DATOS HOTELES ─────────────────────────────────── */
+    var aaH = [
+      {n:"Hotel La Casona del Parque",  a:"Calle 7 #6-28",                          t:"urbano", cap:"17 habitaciones",              sv:"Hospedaje",                                                        p:"$80.000 sencilla",            adm:"Martha Luz Rendón",       tel:"3102496542", link:"https://www.facebook.com/share/14Y9E7kpG7S/?mibextid=wwXIfr",                              ll:"Facebook"},
+      {n:"Hotel San Francisco",         a:"Calle 9 #8-08",                          t:"urbano", cap:"24 hab · 12 apartaestudios",   sv:"WiFi, parqueadero (26 carros), salones de eventos",                p:"$100.000 por persona",        adm:"Claudia Gómez",           tel:"3114590114", link:"https://san-francisco-250430.todos-los-hoteles-cundinamarca.com/es/",                   ll:"Sitio web"},
+      {n:"Hotel Villa del Sol",         a:"Calle 10 #4-92",                         t:"urbano", cap:"15 habitaciones",              sv:"Hospedaje, parqueadero",                                           p:"$30.000",                     adm:"Julián Villamil",         tel:"3142263318", link:null},
+      {n:"Hotel Alcalá",                a:"Calle 10 #4-54",                         t:"urbano", cap:"12 habitaciones",              sv:"Hospedaje, WiFi",                                                  p:"$40.000",                     adm:"Jenny A. Delgadillo",     tel:"3208744263", link:"https://share.google/1lYp5rOrYBC3VDXPs",                                              ll:"Ver más"},
+      {n:"Hotel Villa Anyela",          a:"Cl. 11 #7-15",                           t:"urbano", cap:"",                             sv:"Baño privado, TV cable",                                           p:"Consultar",                   adm:"Flor Ángela Niño",        tel:"3105506130", link:null},
+      {n:"Hotel El Valle de Ubaté",     a:"Calle 11 #3c-18",                        t:"urbano", cap:"18 habitaciones",              sv:"Alojamiento, parqueadero",                                         p:"$35.000",                     adm:"Óscar Iván González",     tel:"3114844402", link:null},
+      {n:"Hotel Ángel San Gabriel",     a:"Calle 15 #10-48",                        t:"urbano", cap:"12 habitaciones",              sv:"Alojamiento",                                                      p:"$40.000",                     adm:"Angy Lucía López Correa", tel:"3223053772", link:"https://share.google/X9xfuqdzb4fUN0xPS",                                              ll:"Ver más"},
+      {n:"Hotel Finca La Esperanza",    a:"Vía Carmen de Carupa Km 1, Vda. Sucunchoque", t:"rural",  cap:"40 pers. · eventos 400",  sv:"Sauna, cabañas, cabalgatas, zonas comunes, canchas",                p:"Consultar",                   adm:"Paula Barrantes",         tel:"3202585776", link:"https://www.instagram.com/fincalaesperanzaubate?igsh=azgxdWV5d2F4ZGJo",              ll:"Instagram"},
+      {n:"Hotel Nazaret",               a:"Cra 7 #19-90, Romboy (salida Chiquinquirá)", t:"urbano", cap:"",                        sv:"Hospedaje, WiFi, televisión",                                      p:"Consultar",                   adm:"",                        tel:"3108701942", link:null},
+      {n:"Hotel Mursua",                a:"Cra 7 #15a-55",                          t:"urbano", cap:"23 personas",                  sv:"Hospedaje",                                                        p:"$60.000 ind. / $90.000 par.", adm:"Clara Suárez",            tel:"3124651231", link:null},
+      {n:"Hotel La Avenida",            a:"Cra 7 #12-87",                           t:"urbano", cap:"15 personas",                  sv:"Hospedaje",                                                        p:"$35.000 ind. / $60.000 par.", adm:"Dora Alarcón",            tel:"3142959042", link:null},
+      {n:"Hotel Baccarat",              a:"Cra 7 #11-74",                           t:"urbano", cap:"35 personas",                  sv:"Hospedaje",                                                        p:"$35.000 ind. / $60.000 par.", adm:"María Teresa León",       tel:"3144510003", link:"https://share.google/Ig3M31eYx59PpscLU",                                              ll:"Ver más"},
+      {n:"Hotel La Provincia",          a:"Cra 7 #11-67",                           t:"urbano", cap:"35 personas",                  sv:"Hospedaje",                                                        p:"$65.000 ind. / $110.000 par.",adm:"Héctor Gómez",            tel:"3227241524", link:"https://share.google/Ig3M31eYx59PpscLU",                                              ll:"Ver más"},
+      {n:"Hotel San Lorenzo",           a:"Cra 8 #8-61",                            t:"urbano", cap:"35 personas",                  sv:"Hospedaje",                                                        p:"$50.000 por persona",         adm:"Lizeth Herrera",          tel:"3213795575", link:"https://share.google/uNznhU9OTHM57fM5y",                                              ll:"Ver más"},
+      {n:"Hotel Zaclordy",              a:"Cra 8 #9-45",                            t:"urbano", cap:"30 personas",                  sv:"Hospedaje",                                                        p:"$50.000 por persona",         adm:"Yolanda Murcia",          tel:"3143314097", link:"https://share.google/5ur0NVUiy4dYBlHII",                                              ll:"Ver más"},
+      {n:"Hotel Primavera",             a:"Km 1 vía Ubaté–Bogotá",                  t:"rural",  cap:"30 pers. (15 hab.)",           sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Betulia Poveda",          tel:"3115621513", link:"https://share.google/SsaSbVGjTPJuUHg1M",                                              ll:"Ver más"},
+      {n:"Hotel Ángel San Gabriel (Rural)", a:"Km 1 vía Ubaté–Bogotá, Vda. Apartadero", t:"rural", cap:"20 pers. (13 hab.)",      sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Angie Lucía López",       tel:"3202308865", link:"https://share.google/W9DnuQVU2eBl0aXie",                                              ll:"Ver más"},
+      {n:"Hotel San Antonio",           a:"Vereda Palogordo, Ubaté",                t:"rural",  cap:"4 habitaciones",               sv:"Hospedaje",                                                        p:"$95.000 – $120.000",          adm:"María Pachón",            tel:"3123869021", link:"https://share.google/ZI3QK3ZaTXjdPdroY",                                              ll:"Ver más"},
+      {n:"Hotel Sadima",                a:"Vereda Tausavita, Ubaté",                t:"rural",  cap:"",                             sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Samir Salamanca",         tel:"3005143175", link:"https://share.google/ojloELbv4y72GT577",                                              ll:"Ver más"},
+      {n:"Hotel Paraíso Ubaté",         a:"Cl. 12 No. 7-31",                        t:"urbano", cap:"",                             sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Blanca Lilia Peña",       tel:"3215097347", link:null},
+      {n:"Hotel Octavo",                a:"Carrera 9 #6-89",                        t:"urbano", cap:"",                             sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Fabiola Rodríguez",       tel:"3219806869", link:null,                                                                                    nf:true},
+      {n:"Hotel Central Plazas (antes Las Palmas)", a:"Centro, Ubaté · dirección por confirmar", t:"urbano", cap:"",                sv:"Hospedaje",                                                        p:"Consultar",                   adm:"Yormari Amaya",           tel:"3219167353", link:null,                                                                                    nf:true}
+    ];
+
+    var aaFilt = "todos";
+    var aaReady = false;
+
+    function aaToggleHoteles() {
+      var panel = document.getElementById("aaHotelPanel");
+      var btn   = document.getElementById("aaHotelBtn");
+      var open  = panel.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open);
+      if (open && !aaReady) { aaRender(); aaReady = true; }
+    }
+
+    function aaToggleProg() {
+      var panel = document.getElementById("aaProgPanel");
+      var btn   = document.getElementById("aaProgBtn");
+      var open  = panel.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open);
+    }
+
+    function aaToggleOp() {
+      var panel = document.getElementById("aaOpPanel");
+      var btn   = document.getElementById("aaOpBtn");
+      var open  = panel.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open);
+    }
+
+    function aaToggleGastro() {
+      var panel = document.getElementById("aaGastroPanel");
+      var btn   = document.getElementById("aaGastroBtn");
+      var open  = panel.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open);
+      if (open && !aaReadyR) { aaRenderR(); aaReadyR = true; }
+    }
+
+    function aaSetF(tipo, el) {
+      aaFilt = tipo;
+      var tabs = document.querySelectorAll(".aa-h-ftab");
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove("on");
+      el.classList.add("on");
+      aaRender();
+    }
+
+    function aaRender() {
+      var srch  = document.getElementById("aaHSrch").value.toLowerCase();
+      var grid  = document.getElementById("aaHGrid");
+      var nores = document.getElementById("aaHNores");
+      var cnt   = document.getElementById("aaHCount");
+      grid.innerHTML = "";
+      var vis = 0;
+      for (var i = 0; i < aaH.length; i++) {
+        var h = aaH[i];
+        var byT = aaFilt === "todos" || h.t === aaFilt;
+        var byS = !srch || h.n.toLowerCase().indexOf(srch) > -1 || h.a.toLowerCase().indexOf(srch) > -1 || h.sv.toLowerCase().indexOf(srch) > -1 || h.adm.toLowerCase().indexOf(srch) > -1;
+        if (!byT || !byS) continue;
+        vis++;
+        var card = document.createElement("div");
+        card.className = "aa-h-card";
+        var capHtml = h.cap ? '<div class="aa-h-row"><span class="aa-h-ic">👥</span><span>' + h.cap + '</span></div>' : "";
+        var svHtml  = h.sv  ? '<div class="aa-h-row"><span class="aa-h-ic">✔</span><span>' + h.sv  + '</span></div>' : "";
+        var admHtml = h.adm ? '<div class="aa-h-row" style="font-size:0.8rem;color:#5A5A5A"><span class="aa-h-ic">👤</span><span>' + h.adm + '</span></div>' : "";
+        var telHtml = h.tel ? '<div class="aa-h-tel" style="margin-top:8px"><a href="tel:+57' + h.tel.replace(/\s/g,"") + '">📞 ' + h.tel + '</a></div>' : "";
+        var lnkHtml = h.link ? '<a href="' + h.link + '" target="_blank" rel="noopener noreferrer" class="aa-h-link">🔗 ' + (h.ll||"Ver más") + '</a>' : "";
+        var bLabel  = h.t === "urbano" ? "🏙 Urbano" : "🌿 Rural";
+        card.innerHTML = '<div class="aa-h-nombre">' + h.n + '</div>' +
+          '<div class="aa-h-addr">📍 ' + h.a + '</div>' +
+          '<span class="aa-h-badge ' + h.t.charAt(0) + '">' + bLabel + '</span>' +
+          (h.nf ? '<div class="aa-h-row" style="font-size:0.72rem;color:#8a6d1d"><span class="aa-h-ic">⚠️</span><span>Sin RNT en la caracterización municipal</span></div>' : '') +
+          capHtml + svHtml +
+          '<div class="aa-h-precio">💲 ' + h.p + '</div>' +
+          admHtml + telHtml + lnkHtml;
+        grid.appendChild(card);
+      }
+      nores.style.display = vis === 0 ? "block" : "none";
+      cnt.textContent = "Mostrando " + vis + " establecimiento" + (vis !== 1 ? "s" : "");
+    }
+
+    /* ─── DATOS GASTRONOMÍA ─────────────────────────────── */
+    var aaR = [
+      {n:"Sal y Pimienta",a:"Calle 10#7-29 cuatro piso",tp:"Restaurante",fc:"rest",cap:"100",adm:"Lucero Alvarado"},
+      {n:"Shawarma Ubate Fusion Turka",a:"Calle 3a 8e 27",tp:"Comida rápida",fc:"rap",cap:"30",adm:"Angy Alarcon"},
+      {n:"Restaurante Humo y Sabor",a:"Carrera 8 # 4-97",tp:"Restaurante",fc:"rest",cap:"32",adm:"Lecna Peña"},
+      {n:"Panaderia Miga de Pan",a:"Carrera 8 - 4-95",tp:"Panadería",fc:"pan",cap:"24",adm:"Wilson Redondo"},
+      {n:"Panadería Llenpan Ubate",a:"Carrera 8 5-02",tp:"Panadería",fc:"pan",cap:"36",adm:"Jorge Vargas"},
+      {n:"Asadero el Pecoso",a:"Carrera 8 calle 6 esquina",tp:"Restaurante",fc:"rest",cap:"60",adm:"Diana Arevalo"},
+      {n:"Panaderia y Pasteleria el Barco",a:"Carrera 8 # 6.16",tp:"Panadería",fc:"pan",cap:"24",adm:"Flor Marina Gomez"},
+      {n:"Panaderia Cafe y Aroma",a:"Carrera 8 # 6 -78",tp:"Panadería",fc:"pan",cap:"40",adm:"Lidia Charary"},
+      {n:"Tasty Burger",a:"Carrera 8 # 7-53",tp:"Comida rápida",fc:"rap",cap:"16",adm:"Pilar Pinzon"},
+      {n:"Punta del Oeste",a:"Carrera 8 # 8-29",tp:"Restaurante",fc:"rest",cap:"45",adm:"Jonathan Tarazona"},
+      {n:"Riko Broster",a:"Carrera 8 # 8-67",tp:"Restaurante",fc:"rest",cap:"60",adm:"Jessica Sierra"},
+      {n:"Heladeria y Taqueria Ñomi Ñomi",a:"Carrera 8 8-65",tp:"Heladería",fc:"otro",cap:"16",adm:"Gabriela Fajardo"},
+      {n:"Rafis Pizza",a:"Carrera 8 # 9-58",tp:"Comida rápida",fc:"rap",cap:"45",adm:"Sara Gomez"},
+      {n:"Jacobos Pizza",a:"Carrera 8 # 9 -75",tp:"Comida rápida",fc:"rap",cap:"68",adm:"Rocio Villamil"},
+      {n:"Restaurante Don Beto",a:"Carrera 8 # 9-87",tp:"Restaurante",fc:"rest",cap:"50",adm:"Alexander Quiñonez"},
+      {n:"Panaderia el Molino",a:"Carrera 8 calle 10 esquina",tp:"Panadería",fc:"pan",cap:"35",adm:"Chirly Paola Palacios"},
+      {n:"Andi Pan",a:"Carrera 8 calle 9 esquina",tp:"Panadería",fc:"pan",cap:"32",adm:"Adriana Camacho"},
+      {n:"Arepas Doña Delfina",a:"Carrera 8 # 11-30",tp:"Salón de onces",fc:"caf",cap:"40",adm:"Julio Gevara"},
+      {n:"Maxi Fritanga",a:"Carrera 8 # 12-31",tp:"Fritanguería",fc:"otro",cap:"34",adm:"Nebando Castiblanco"},
+      {n:"Restaurante Villa Luz",a:"Carrera 7 # 15",tp:"Restaurante",fc:"rest",cap:"46",adm:"Janeth Rocio Paez"},
+      {n:"Parador Don Luis",a:"Carrera 7 # 15-23",tp:"Salón de onces",fc:"caf",cap:"60",adm:"Luis Alfredo Parra"},
+      {n:"El Farol de Marco",a:"Carrera 7 # 14-01",tp:"Gastrobar",fc:"otro",cap:"40",adm:"Maria Paula Alarcon"},
+      {n:"Restaurante el Nevado",a:"Carrera 7 # 14-55",tp:"Restaurante",fc:"rest",cap:"66",adm:"Maria Teresa Rodriguez"},
+      {n:"Vikingos Restaurante y Asadero",a:"Carrera 7 # 12-57",tp:"Restaurante",fc:"rest",cap:"60",adm:"Jessica Garcia"},
+      {n:"El Secreto del Sabor",a:"Carrera 7 # 12-02",tp:"Restaurante",fc:"rest",cap:"50",adm:"Anderson Velazquez"},
+      {n:"Restaurante La.reina",a:"Carrera 7 12-52",tp:"Restaurante",fc:"rest",cap:"32",adm:"Juan Tunjano"},
+      {n:"Tapioca",a:"Carrera 9 # 5-08",tp:"Restaurante",fc:"rest",cap:"35",adm:"Orlando Forero"},
+      {n:"El Fogon Dorado",a:"Carrera 7 # 12-46",tp:"Restaurante",fc:"rest",cap:"80",adm:"Alan Moncada"},
+      {n:"Megapanes",a:"Carrera 7 calle 12 esquina",tp:"Panadería",fc:"pan",cap:"36",adm:"Rigoberto Orjuela"},
+      {n:"Pollo Carbonero",a:"Carrera 7 # 11-52",tp:"Restaurante",fc:"rest",cap:"65",adm:"Alexander Guzuara"},
+      {n:"Surti Aves 22",a:"Carrera 7 # 11-02",tp:"Restaurante",fc:"rest",cap:"60",adm:"Franco Minujosa"},
+      {n:"Panadería San Antonio",a:"Carrera 7 # 11- 126",tp:"Panadería",fc:"pan",cap:"40",adm:"Elizabeth Cornejo"},
+      {n:"Asadero la Estacion",a:"Carrera 7 # 11- 128",tp:"Asadero",fc:"rest",cap:"60",adm:"Angy Arcilla"},
+      {n:"Bandido",a:"Carrera 7 # 10 85",tp:"Comida rápida",fc:"rap",cap:"34",adm:"Rafael Pataquiva"},
+      {n:"Panaderia Pastelería San Diego",a:"Carrera 7 # 9-98",tp:"Panadería",fc:"pan",cap:"50",adm:"Carlos Vergara"},
+      {n:"Croqui Pollo",a:"Carrera 7 # 9-28",tp:"Restaurante",fc:"rest",cap:"40",adm:"Caren Castañeda"},
+      {n:"Asadero las Brasas",a:"Carrera 7 # 9-31",tp:"Restaurante",fc:"rest",cap:"68",adm:"Wilmary Pimentel"},
+      {n:"Parrilla Exprés Mc",a:"Calle 8. # 6-40",tp:"Restaurante",fc:"rest",cap:"70",adm:"Domingo Ribera"},
+      {n:"Isabellas Ice Crema",a:"Calle 8#5-04",tp:"Heladería",fc:"otro",cap:"8",adm:"Natalia Gómez"},
+      {n:"Panadería San Roque",a:"Calle 8#7-27",tp:"Panadería",fc:"pan",cap:"40",adm:"Flor Estela"},
+      {n:"Rapi Brother Deli",a:"Calle 8#7-65",tp:"Asadero",fc:"rest",cap:"60",adm:"Yuber Alexander Morenos"},
+      {n:"Restaurante Sabor y Sazon del Valle",a:"Calle 8 #8-33",tp:"Restaurante",fc:"rest",cap:"120",adm:"Amparo Guerrero"},
+      {n:"Jinzhan Comida China",a:"Calle 8-8-40",tp:"Restaurante",fc:"rest",cap:"50",adm:"Luz Estela Murcia"},
+      {n:"Restaurante el Bancario",a:"Calle 8#8-62",tp:"Restaurante",fc:"rest",cap:"200",adm:"Samuel Salamanca"},
+      {n:"Legado Delicias",a:"Calle9 #9-46",tp:"Restaurante",fc:"rest",cap:"60",adm:"Santiago Peña"},
+      {n:"Restaurante Sabor y Sazon Valluno",a:"Calle 9 s 8-42",tp:"Restaurante",fc:"rest",cap:"40",adm:"Ruabiela Saenz"},
+      {n:"Comida Rápida Friends",a:"Calle 9 #8-11",tp:"Comida rápida",fc:"rap",cap:"15",adm:"Rafael Carrillo"},
+      {n:"Buongiorno Pizza",a:"Calle 9 #6-60",tp:"Comida rápida",fc:"rap",cap:"40",adm:"Cristian Camino Veloza"},
+      {n:"Giulio Café",a:"Calle 12 # 9-80",tp:"Café · lácteos",fc:"otro",cap:"15",adm:"Lisbeth González"},
+      {n:"Panadería Pastelería la Nueva Babilonia Jym",a:"Calle12#7-74",tp:"Panadería",fc:"pan",cap:"50",adm:"Metha Navarrete"},
+      {n:"Venga y Coma Dónde Bueno",a:"Calle12#4-87",tp:"Comida rápida",fc:"rap",cap:"24",adm:"Herminio Figueroa"},
+      {n:"Restaurante la Villa",a:"Carrera 6 5 54",tp:"Restaurante",fc:"rest",cap:"100",adm:"Fernando Carrillo"},
+      {n:"Sabor Ubatense",a:"parque ricaurte puesto 1",tp:"Restaurante",fc:"rest",cap:"30",adm:"Liliana Castiblanco"},
+      {n:"Cómo en Casa",a:"parque ricaurte puesto 2",tp:"Restaurante",fc:"rest",cap:"70",adm:"Martha Rocha"},
+      {n:"La Chata",a:"Parque Ricaurte puesto 3",tp:"Restaurante",fc:"rest",cap:"80",adm:"Felipe Saboya"},
+      {n:"José y la Pecas",a:"Parque ricaurte puesto 4",tp:"Restaurante",fc:"rest",cap:"100",adm:"Ana Caicedo"},
+      {n:"Napoleat Pizza",a:"Calle 10 7 55",tp:"Comida rápida",fc:"rap",cap:"24",adm:"Camilo Sánchez"},
+      {n:"Cuore Di Pizza",a:"Calle 6 5 03",tp:"Comida rápida",fc:"rap",cap:"25",adm:"Leonardo Venegas"},
+      {n:"La Villa",a:"Calle 6 5 06",tp:"Restaurante",fc:"rest",cap:"100",adm:"Fernando Carrillo"},
+      {n:"Saint Michel",a:"Cr 5 5 69",tp:"Restaurante",fc:"rest",cap:"40",adm:"Sandra Moreno"},
+      {n:"La Margarita",a:"Calle 6 615",tp:"Restaurante",fc:"rest",cap:"150–200",adm:"Katherin Ospina"},
+      {n:"Arepas Donde Toño",a:"Calle 9",tp:"Comida rápida",fc:"rap",cap:"50",adm:"Migue Antonio Montaño"},
+      {n:"Doggeria la Rebaja",a:"Calle6 9 49",tp:"Comida rápida",fc:"rap",cap:"20",adm:"Yania Sofía Ahumada"},
+      {n:"La Casona del Valle",a:"Cr10 5 54",tp:"Gastrobar",fc:"otro",cap:"200",adm:"Luz Yaneth Alfonso"},
+      {n:"Cafe Santa Inés",a:"Calle7 740",tp:"Restaurante",fc:"rest",cap:"60",adm:"Martha Nieto"},
+      {n:"Los Años Maravillosos",a:"Calle 9 710",tp:"Cafetería",fc:"caf",cap:"42",adm:"Henry Gomez"},
+      {n:"Un Dos Postres",a:"Cr 4 6 57",tp:"Salón de onces",fc:"caf",cap:"",adm:"María Consuelo Gordillo"},
+      {n:"Empanadas Calderon",a:"Cr11 11a34",tp:"Salón de onces",fc:"caf",cap:"15",adm:"Lorenzo Calderon"},
+      {n:"Candy Love",a:"Cra11 11a24",tp:"Salón de onces",fc:"caf",cap:"10",adm:"Yaneth Gomez"},
+      {n:"St Louis Potosi",a:"Calle 6 643",tp:"Gastrobar",fc:"otro",cap:"60",adm:"Lucely Velásquez"},
+      {n:"Panadería las Delicias de Juanito",a:"Calle 13 n 2b 99 portal",tp:"Cafetería",fc:"caf",cap:"40",adm:"Juan Esteban Triana"},
+      {n:"Panadería la Nueva Babilonia",a:"Calle12 7 74",tp:"Panadería",fc:"pan",cap:"50",adm:"Martha Navarrete"},
+      {n:"Panadería Juliet",a:"Calle 12 10 55",tp:"Panadería",fc:"pan",cap:"10",adm:"Claudia Cañon"},
+      {n:"Panadería Smith",a:"Calle 9 # 5",tp:"Panadería",fc:"pan",cap:"50",adm:""},
+      {n:"Ando Pa",a:"Car 7775",tp:"Cafetería",fc:"caf",cap:"40",adm:"Fabio Monroy"}
+    ];
+
+    var aaFiltR = "todos";
+    var aaReadyR = false;
+
+    function aaSetFR(tipo, el) {
+      aaFiltR = tipo;
+      var tabs = el.parentElement.querySelectorAll(".aa-h-ftab");
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove("on");
+      el.classList.add("on");
+      aaRenderR();
+    }
+
+    function aaRenderR() {
+      var srch  = document.getElementById("aaRSrch").value.toLowerCase();
+      var grid  = document.getElementById("aaRGrid");
+      var nores = document.getElementById("aaRNores");
+      var cnt   = document.getElementById("aaRCount");
+      grid.innerHTML = "";
+      var vis = 0;
+      for (var i = 0; i < aaR.length; i++) {
+        var r = aaR[i];
+        var byT = aaFiltR === "todos" || r.fc === aaFiltR;
+        var byS = !srch || r.n.toLowerCase().indexOf(srch) > -1 || r.a.toLowerCase().indexOf(srch) > -1 || r.adm.toLowerCase().indexOf(srch) > -1;
+        if (!byT || !byS) continue;
+        vis++;
+        var card = document.createElement("div");
+        card.className = "aa-h-card";
+        var capHtml = r.cap ? '<div class="aa-h-row"><span class="aa-h-ic">👥</span><span>' + r.cap + ' comensales</span></div>' : "";
+        var admHtml = r.adm ? '<div class="aa-h-row" style="font-size:0.8rem;color:#5A5A5A"><span class="aa-h-ic">👤</span><span>' + r.adm + '</span></div>' : "";
+        card.innerHTML = '<div class="aa-h-nombre">' + r.n + '</div>' +
+          '<div class="aa-h-addr">📍 ' + r.a + '</div>' +
+          '<span class="aa-h-badge aa-g-badge">' + r.tp + '</span>' +
+          capHtml + admHtml;
+        grid.appendChild(card);
+      }
+      nores.style.display = vis === 0 ? "block" : "none";
+      cnt.textContent = "Mostrando " + vis + " establecimiento" + (vis !== 1 ? "s" : "");
+    }
+
+    /* ─── CLIMA EN VIVO (Ubaté) ──────────────────────────── */
+    (function () {
+      var TARGET_DATES = ["2026-08-15", "2026-08-16", "2026-08-17"];
+      var ICONS = {
+        0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️", 45: "🌫️", 48: "🌫️",
+        51: "🌦️", 53: "🌦️", 55: "🌦️", 61: "🌧️", 63: "🌧️", 65: "🌧️",
+        71: "🌨️", 73: "🌨️", 75: "🌨️", 80: "🌦️", 81: "🌧️", 82: "⛈️",
+        95: "⛈️", 96: "⛈️", 99: "⛈️"
+      };
+      function icon(code) { return ICONS[code] || "🌥️"; }
+      function fmtDate(s) {
+        var d = new Date(s + "T12:00:00-05:00");
+        var txt = d.toLocaleDateString("es-CO", { weekday: "short", day: "numeric", month: "short" });
+        return txt.charAt(0).toUpperCase() + txt.slice(1);
+      }
+
+      var url = "https://api.open-meteo.com/v1/forecast?latitude=5.31&longitude=-73.82"
+        + "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+        + "&current_weather=true&timezone=America%2FBogota&forecast_days=16";
+
+      fetch(url).then(function (r) { return r.json(); }).then(function (data) {
+        var box = document.getElementById("aaClimaLive");
+        if (!box || !data.daily || !data.daily.time) return;
+
+        var idxs = [];
+        for (var i = 0; i < TARGET_DATES.length; i++) {
+          var idx = data.daily.time.indexOf(TARGET_DATES[i]);
+          if (idx !== -1) idxs.push(idx);
+        }
+
+        if (idxs.length) {
+          var html = '<p class="aa-clima-live-title">📡 Pronóstico actualizado para el congreso</p><div class="aa-clima-days">';
+          idxs.forEach(function (i) {
+            html += '<div class="aa-clima-day">'
+              + '<div class="aa-cd-date">' + fmtDate(data.daily.time[i]) + '</div>'
+              + '<div class="aa-cd-icon">' + icon(data.daily.weathercode[i]) + '</div>'
+              + '<div class="aa-cd-temp">' + Math.round(data.daily.temperature_2m_max[i]) + '° <span class="lo">/ ' + Math.round(data.daily.temperature_2m_min[i]) + '°</span></div>'
+              + '<div class="aa-cd-rain">☔ ' + data.daily.precipitation_probability_max[i] + '% de probabilidad</div>'
+              + '</div>';
+          });
+          html += '</div>';
+          box.innerHTML = html;
+        } else if (data.current_weather) {
+          box.innerHTML = '<p class="aa-clima-live-title">📡 Así está el clima en Ubaté ahora (referencia)</p>'
+            + '<div class="aa-clima-now"><span>' + icon(data.current_weather.weathercode) + '</span><span>' + Math.round(data.current_weather.temperature) + '°C en este momento</span></div>'
+            + '<p class="aa-clima-live-loading">El pronóstico específico del 15 al 17 de agosto aparecerá aquí automáticamente cuando falten 16 días o menos para el congreso.</p>';
+        } else {
+          box.innerHTML = "";
+        }
+      }).catch(function () {
+        var box = document.getElementById("aaClimaLive");
+        if (box) box.innerHTML = "";
+      });
+    })();
+  </script>
+
+</div>
+<!--============================================================
+     FIN DEL BLOQUE — Pegar todo dentro del editor HTML de Blogger
+     ============================================================-->
