@@ -768,10 +768,13 @@ button{font-family:inherit;cursor:pointer}
   .ftab,.hotel-toggle,.nav-toggle{min-height:44px}
   .contact-wa,.hlink{padding:6px 0;display:inline-block}
 }
-@media(max-height:600px) and (max-width:720px){
-  /* Landscape en móvil: héroe más compacto */
-  .hero{padding:72px 18px 44px;min-height:auto}
-  .hero-countdown{display:none}  /* se oculta en landscape muy corto */
+#@media(max-height:600px) and (max-width:720px){
+#  /* Landscape en móvil: héroe más compacto */
+#  .hero{padding:72px 18px 44px;min-height:auto}
+#  .hero-countdown{display:none}  /* se oculta en landscape muy corto */
+#}
+@media (orientation:landscape) and (max-height:600px){
+  .hero-countdown{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
