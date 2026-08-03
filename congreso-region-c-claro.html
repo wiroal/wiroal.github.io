@@ -992,7 +992,7 @@ button{font-family:inherit;cursor:pointer}
       <p>Caracterización de la oferta hotelera del municipio. Precios de referencia — confirmar disponibilidad directamente con cada establecimiento.</p>
     </div>
     <button class="hotel-toggle" id="hotelBtn" onclick="toggleHoteles()" aria-expanded="false" aria-controls="hotelPanel">
-      <span>Ver listado completo — 22 establecimientos registrados</span>
+      <span>Ver listado completo — Reserve ya! quedan muy pocos cupos.</span>
       <span class="arr" aria-hidden="true">&#9660;</span>
     </button>
     <div class="hotel-panel" id="hotelPanel" role="region" aria-label="Directorio de hoteles">
@@ -1374,7 +1374,7 @@ button{font-family:inherit;cursor:pointer}
 <script>
 /* ─── DATOS HOTELES ───────────────────────────────── */
 const H=[
-  {n:"Hotel La Casona del Parque",a:"Calle 7 #6-28",t:"urbano",cap:"17 habitaciones",sv:"Hospedaje",p:"$80.000 sencilla",adm:"Martha Luz Rendón",tel:"3102496542",link:"https://www.facebook.com/share/14Y9E7kpG7S/?mibextid=wwXIfr",ll:"Facebook"},
+  /* {n:"Hotel La Casona del Parque",a:"Calle 7 #6-28",t:"urbano",cap:"17 habitaciones",sv:"Hospedaje",p:"$80.000 sencilla",adm:"Martha Luz Rendón",tel:"3102496542",link:"https://www.facebook.com/share/14Y9E7kpG7S/?mibextid=wwXIfr",ll:"Facebook"},
   {n:"Hotel San Francisco",a:"Calle 9 #8-08",t:"urbano",cap:"24 hab · 12 apartaestudios",sv:"WiFi, parqueadero (26 carros), salones de eventos",p:"$100.000 por persona",adm:"Claudia Gómez",tel:"3114590114",link:"https://san-francisco-250430.todos-los-hoteles-cundinamarca.com/es/",ll:"Sitio web"},
   {n:"Hotel Villa del Sol",a:"Calle 10 #4-92",t:"urbano",cap:"15 habitaciones",sv:"Hospedaje, parqueadero",p:"$30.000",adm:"Julián Villamil",tel:"3142263318",link:null},
   {n:"Hotel Alcalá",a:"Calle 10 #4-54",t:"urbano",cap:"12 habitaciones",sv:"Hospedaje, WiFi",p:"$40.000",adm:"Jenny A. Delgadillo",tel:"3208744263",link:"https://share.google/1lYp5rOrYBC3VDXPs",ll:"Ver más"},
@@ -1385,16 +1385,16 @@ const H=[
   {n:"Hotel Nazaret",a:"Cra 7 #19-90, Romboy (salida Chiquinquirá)",t:"urbano",cap:"",sv:"Hospedaje, WiFi, televisión",p:"Consultar",adm:"",tel:"3108701942",link:null},
   {n:"Hotel Mursua",a:"Cra 7 #15a-55",t:"urbano",cap:"23 personas",sv:"Hospedaje",p:"$60.000 ind. / $90.000 par.",adm:"Clara Suárez",tel:"3124651231",link:null},
   {n:"Hotel La Avenida",a:"Cra 7 #12-87",t:"urbano",cap:"15 personas",sv:"Hospedaje",p:"$35.000 ind. / $60.000 par.",adm:"Dora Alarcón",tel:"3142959042",link:null},
-  {n:"Hotel Baccarat",a:"Cra 7 #11-74",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$35.000 ind. / $60.000 par.",adm:"María Teresa León",tel:"3144510003",link:"https://share.google/Ig3M31eYx59PpscLU",ll:"Ver más"},
+  {n:"Hotel Baccarat",a:"Cra 7 #11-74",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$35.000 ind. / $60.000 par.",adm:"María Teresa León",tel:"3144510003",link:"https://share.google/Ig3M31eYx59PpscLU",ll:"Ver más"},*/
   {n:"Hotel La Provincia",a:"Cra 7 #11-67",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$65.000 ind. / $110.000 par.",adm:"Héctor Gómez",tel:"3227241524",link:"https://share.google/Ig3M31eYx59PpscLU",ll:"Ver más"},
   {n:"Hotel San Lorenzo",a:"Cra 8 #8-61",t:"urbano",cap:"35 personas",sv:"Hospedaje",p:"$50.000 por persona",adm:"Lizeth Herrera",tel:"3213795575",link:"https://share.google/uNznhU9OTHM57fM5y",ll:"Ver más"},
-  {n:"Hotel Zaclordy",a:"Cra 8 #9-45",t:"urbano",cap:"30 personas",sv:"Hospedaje",p:"$50.000 por persona",adm:"Yolanda Murcia",tel:"3143314097",link:"https://share.google/5ur0NVUiy4dYBlHII",ll:"Ver más"},
-  {n:"Hotel Primavera",a:"Km 1 vía Ubaté–Bogotá",t:"rural",cap:"30 pers. (15 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Betulia Poveda",tel:"3115621513",link:"https://share.google/SsaSbVGjTPJuUHg1M",ll:"Ver más"},
+   {n:"Hotel Zaclordy",a:"Cra 8 #9-45",t:"urbano",cap:"30 personas",sv:"Hospedaje",p:"$50.000 por persona",adm:"Yolanda Murcia",tel:"3143314097",link:"https://share.google/5ur0NVUiy4dYBlHII",ll:"Ver más"},
+ /* {n:"Hotel Primavera",a:"Km 1 vía Ubaté–Bogotá",t:"rural",cap:"30 pers. (15 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Betulia Poveda",tel:"3115621513",link:"https://share.google/SsaSbVGjTPJuUHg1M",ll:"Ver más"},*/
   {n:"Hotel Ángel San Gabriel (Rural)",a:"Km 1 vía Ubaté–Bogotá, Vda. Apartadero",t:"rural",cap:"20 pers. (13 hab.)",sv:"Hospedaje",p:"Consultar",adm:"Angie Lucía López",tel:"3202308865",link:"https://share.google/W9DnuQVU2eBl0aXie",ll:"Ver más"},
   {n:"Hotel San Antonio",a:"Vereda Palogordo, Ubaté",t:"rural",cap:"4 habitaciones",sv:"Hospedaje",p:"$95.000 – $120.000",adm:"María Pachón",tel:"3123869021",link:"https://share.google/ZI3QK3ZaTXjdPdroY",ll:"Ver más"},
-  {n:"Hotel Sadima",a:"Vereda Tausavita, Ubaté",t:"rural",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Samir Salamanca",tel:"3005143175",link:"https://share.google/ojloELbv4y72GT577",ll:"Ver más"},
+ /* {n:"Hotel Sadima",a:"Vereda Tausavita, Ubaté",t:"rural",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Samir Salamanca",tel:"3005143175",link:"https://share.google/ojloELbv4y72GT577",ll:"Ver más"},
   {n:"Hotel Paraíso Ubaté",a:"Cl. 12 No. 7-31",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Blanca Lilia Peña",tel:"3215097347",link:null},
-  {n:"Hotel Octavo",a:"Carrera 9 #6-89",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Fabiola Rodríguez",tel:"3219806869",link:null,nf:true},
+  {n:"Hotel Octavo",a:"Carrera 9 #6-89",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Fabiola Rodríguez",tel:"3219806869",link:null,nf:true},*/
   {n:"Hotel Central Plazas (antes Las Palmas)",a:"Centro, Ubaté · dirección por confirmar",t:"urbano",cap:"",sv:"Hospedaje",p:"Consultar",adm:"Yormari Amaya",tel:"3219167353",link:null,nf:true}
 ];
 
