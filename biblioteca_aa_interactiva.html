@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b4f6c">
+<meta name="description" content="Biblioteca interactiva de literatura y documentos de servicio de Alcohólicos Anónimos.">
+<title>Biblioteca AA · 36° Congreso Regional</title>
+
+<style>
+:root{
+  --primary:#0b4f6c;
+  --primary-2:#087e8b;
+  --accent:#f4a261;
+  --gold:#e9c46a;
+  --ink:#173042;
+  --muted:#657786;
+  --paper:#ffffff;
+  --bg:#f3f7f9;
+  --line:#dce7ec;
+  --shadow:0 18px 45px rgba(18,50,66,.12);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%,rgba(8,126,139,.12),transparent 28%),
+    radial-gradient(circle at 90% 8%,rgba(244,162,97,.12),transparent 24%),
+    var(--bg);
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+
+.topbar{
+  position:sticky;top:0;z-index:1000;
+  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,.88);
+  border-bottom:1px solid rgba(220,231,236,.85);
+}
+.nav{
+  max-width:1180px;margin:auto;padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800}
+.brand img{width:48px;height:48px;object-fit:contain;border-radius:13px}
+.brand small{display:block;color:var(--muted);font-weight:600;font-size:.72rem;letter-spacing:.04em}
+.navlinks{display:flex;gap:6px;align-items:center}
+.navlinks a,.navlinks button{
+  border:0;background:transparent;padding:10px 13px;border-radius:12px;
+  color:var(--ink);cursor:pointer;font-weight:700;font-size:.9rem;
+}
+.navlinks a:hover,.navlinks button:hover{background:#edf5f7;color:var(--primary)}
+.iconbtn{
+  width:42px;height:42px;border:1px solid var(--line);border-radius:13px;
+  background:#fff;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;
+}
+@media(max-width:760px){
+  .navlinks a{display:none}
+  .brand div{display:none}
+}
+
+.hero{
+  max-width:1180px;margin:0 auto;padding:70px 20px 34px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;
+}
+.hero h1{
+  margin:0 0 16px;font-size:clamp(2.35rem,6vw,5rem);line-height:.98;
+  letter-spacing:-.055em;
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#e5f2f4;color:var(--primary);border:1px solid #cfe6ea;
+  border-radius:999px;padding:8px 13px;font-size:.78rem;font-weight:900;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px;
+}
+.hero p{font-size:1.08rem;line-height:1.7;color:var(--muted);max-width:720px}
+.hero-card{
+  background:linear-gradient(145deg,var(--primary),var(--primary-2));
+  color:#fff;border-radius:30px;padding:30px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.hero-card:after{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  right:-90px;top:-90px;background:rgba(255,255,255,.12);
+}
+.hero-card strong{font-size:3rem;display:block;line-height:1}
+.hero-card span{opacity:.85}
+.hero-card .mini{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mini div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);padding:14px;border-radius:16px}
+.mini b{display:block;font-size:1.35rem}
+
+.wrap{max-width:1180px;margin:auto;padding:0 20px 70px}
+.toolbar{
+  background:rgba(255,255,255,.92);border:1px solid var(--line);
+  border-radius:20px;padding:14px;box-shadow:0 10px 30px rgba(18,50,66,.06);
+  display:grid;grid-template-columns:1fr auto auto;gap:10px;position:sticky;top:74px;z-index:50;
+}
+.search{position:relative}
+.search input{
+  width:100%;height:48px;border:1px solid var(--line);border-radius:14px;
+  padding:0 45px 0 15px;outline:none;background:#fbfdfe;
+}
+.search input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(11,79,108,.08)}
+.search span{position:absolute;right:15px;top:12px;color:var(--muted)}
+select{
+  height:48px;border:1px solid var(--line);border-radius:14px;background:#fff;
+  padding:0 14px;color:var(--ink);font-weight:700;outline:none;
+}
+@media(max-width:760px){.toolbar{grid-template-columns:1fr;top:72px}}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.chip{
+  border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 13px;
+  border-radius:999px;cursor:pointer;font-weight:800;font-size:.82rem;
+}
+.chip.active,.chip:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0 28px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}
+.stat b{font-size:1.7rem;display:block;color:var(--primary)}
+.stat span{color:var(--muted);font-size:.84rem}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+
+.card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 8px 25px rgba(18,50,66,.06);
+  display:flex;flex-direction:column;transition:.25s ease;
+}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.cover{
+  min-height:165px;padding:24px;display:flex;align-items:flex-end;
+  background:linear-gradient(135deg,#e7f2f4,#d7e9ee);position:relative;
+}
+.cover:before{
+  content:"AA";position:absolute;right:18px;top:12px;font-size:5.8rem;
+  line-height:1;font-weight:950;color:rgba(11,79,108,.08);letter-spacing:-.1em;
+}
+.cover .tag{
+  position:absolute;top:16px;left:16px;background:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(8px);
+  padding:6px 9px;border-radius:999px;font-size:.7rem;font-weight:900;
+  text-transform:uppercase;color:var(--primary);
+}
+.cover h3{margin:0;font-size:1.28rem;line-height:1.15;max-width:85%}
+.cardbody{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.cardbody p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta span{background:#f0f5f7;padding:6px 8px;border-radius:8px;color:#4d6673;font-size:.72rem;font-weight:800}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+.btn{
+  min-height:43px;border:1px solid var(--line);background:#fff;border-radius:12px;
+  cursor:pointer;font-weight:900;color:var(--primary);
+}
+.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+
+.empty{
+  display:none;text-align:center;background:#fff;border:1px dashed var(--line);
+  border-radius:20px;padding:50px;color:var(--muted)
+}
+
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:45px 0 18px}
+.section-title h2{margin:0;font-size:1.7rem}
+.section-title p{margin:4px 0 0;color:var(--muted)}
+
+.timeline{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px
+}
+.timeline article{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px
+}
+.timeline b{color:var(--primary);font-size:1.3rem}
+.timeline span{display:block;color:var(--muted);font-size:.82rem;line-height:1.45;margin-top:7px}
+@media(max-width:850px){.timeline{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.timeline{grid-template-columns:1fr}}
+
+footer{
+  background:#102f3d;color:#d9e7ec;padding:36px 20px;margin-top:20px
+}
+.footerin{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer small{opacity:.75;line-height:1.6}
+
+.modal{
+  display:none;position:fixed;inset:0;background:rgba(5,22,30,.72);z-index:2000;
+  padding:18px;align-items:center;justify-content:center;
+}
+.modal.open{display:flex}
+.modalbox{
+  width:min(1150px,100%);height:min(88vh,900px);background:#fff;border-radius:22px;
+  overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(0,0,0,.35)
+}
+.modalhead{
+  min-height:62px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);gap:12px
+}
+.modalhead h3{margin:0;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modalbody{flex:1;background:#e9eef0}
+.modalbody iframe{width:100%;height:100%;border:0}
+.close{border:0;background:#eef4f6;width:40px;height:40px;border-radius:12px;cursor:pointer;font-size:1.2rem}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);
+  background:#173042;color:#fff;padding:12px 17px;border-radius:12px;opacity:0;pointer-events:none;
+  transition:.25s;z-index:3000;font-weight:700
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.backtop{
+  position:fixed;right:18px;bottom:18px;width:46px;height:46px;border:0;border-radius:50%;
+  background:var(--primary);color:#fff;cursor:pointer;box-shadow:var(--shadow);display:none;z-index:100
+}
+.backtop.show{display:block}
+.dark{
+  --bg:#0d1d25;--paper:#132a35;--ink:#edf7fa;--muted:#a9bdc5;--line:#29444f;
+}
+.dark .topbar{background:rgba(13,29,37,.9)}
+.dark .toolbar,.dark .stat,.dark .card,.dark .timeline article{background:#132a35}
+.dark .search input,.dark select,.dark .btn{background:#10232d;color:var(--ink)}
+.dark .meta span{background:#1d3843;color:#bdd0d7}
+.dark .chip{background:#132a35;color:#b9ccd3}
+.dark .chip.active,.dark .chip:hover{background:var(--primary);color:#fff}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="#inicio">
+      <img src="https://raw.githubusercontent.com/wiroal/wiroal.github.io/main/36_congreso_2027/images/logo_36_congreso.jpeg" alt="Logo 36° Congreso">
+      <div>
+        <strong>36° Congreso Regional</strong>
+        <small>Bogotá · 14–16 agosto 2027</small>
+      </div>
+    </a>
+    <div class="navlinks">
+      <a href="#biblioteca">Biblioteca</a>
+      <a href="#recomendaciones">Recomendaciones</a>
+      <button id="favNav">★ Favoritos</button>
+      <button class="iconbtn" id="themeBtn" title="Cambiar tema">☾</button>
+    </div>
+  </nav>
+</header>
+
+<main id="inicio">
+<section class="hero">
+  <div>
+    <span class="kicker">Centro de estudio · Literatura y servicio</span>
+    <h1>Una biblioteca que se explora, no solo se lee.</h1>
+    <p>
+      Accede rápidamente a literatura de A.A., documentos históricos y materiales de servicio.
+      Busca por título, tema o categoría y abre cada documento directamente desde la página.
+    </p>
+  </div>
+  <aside class="hero-card">
+    <span>Documentos disponibles</span>
+    <strong id="heroCount">11</strong>
+    <div class="mini">
+      <div><b>3</b><span>Legados</span></div>
+      <div><b>12</b><span>Pasos</span></div>
+      <div><b>12</b><span>Tradiciones</span></div>
+      <div><b>12</b><span>Conceptos</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="wrap">
+<section id="biblioteca">
+  <div class="toolbar">
+    <div class="search">
+      <input id="search" type="search" placeholder="Buscar literatura, servicio, recuperación, historia..." autocomplete="off">
+      <span>⌕</span>
+    </div>
+    <select id="sort">
+      <option value="title">Ordenar: título</option>
+      <option value="category">Ordenar: categoría</option>
+      <option value="year">Ordenar: año</option>
+    </select>
+    <button class="iconbtn" id="clearBtn" title="Limpiar búsqueda">↺</button>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="stats">
+    <div class="stat"><b id="countAll">11</b><span>documentos</span></div>
+    <div class="stat"><b id="countVisible">11</b><span>mostrados</span></div>
+    <div class="stat"><b id="countFav">0</b><span>favoritos</span></div>
+    <div class="stat"><b>1935–2027</b><span>memoria y servicio</span></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">
+    <strong>No encontramos documentos.</strong>
+    <p>Prueba con otra palabra o elimina algún filtro.</p>
+  </div>
+</section>
+
+<section id="recomendaciones">
+  <div class="section-title">
+    <div>
+      <h2>La memoria de la Conferencia</h2>
+      <p>Algunos hitos de las recomendaciones y lemas de servicio.</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <article><b>1965</b><span>Primera reunión de la Conferencia de Servicios Generales de Colombia.</span></article>
+    <article><b>1990</b><span>«Regreso a lo fundamental».</span></article>
+    <article><b>2017</b><span>«El Texto Básico: volver a lo fundamental».</span></article>
+    <article><b>2025</b><span>«El inventario de grupo, vital en el fortalecimiento de AA».</span></article>
+  </div>
+</section>
+</div>
+</main>
+
+<footer>
+  <div class="footerin">
+    <div>
+      <strong>36° Congreso Regional de A.A. · Bogotá 2027</strong><br>
+      <small>Área 3 · Región C · 14, 15 y 16 de agosto de 2027</small>
+    </div>
+    <small>
+      Esta página funciona como interfaz de navegación.<br>
+      Los documentos deben estar disponibles en la carpeta <b>/documentos/</b>.
+    </small>
+  </div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modalbox">
+    <div class="modalhead">
+      <h3 id="modalTitle">Documento</h3>
+      <div style="display:flex;gap:8px">
+        <a id="openNew" class="btn" target="_blank" rel="noopener" style="display:grid;place-items:center;padding:0 14px">Abrir aparte ↗</a>
+        <button class="close" id="closeModal" aria-label="Cerrar">×</button>
+      </div>
+    </div>
+    <div class="modalbody"><iframe id="viewer" title="Visor de documento"></iframe></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button class="backtop" id="backtop" title="Volver arriba">↑</button>
+
+<script>
+const docs = [
+ {id:'recomendaciones',title:'Recomendaciones vigentes 1965–2025',category:'Servicio',year:2025,file:'Recomendaciones-al-2025.pdf',desc:'Compilación histórica de recomendaciones de la Conferencia de Servicios Generales de A.A. Colombia.',tags:['Conferencia','Servicio','Historia']},
+ {id:'conceptos-ilustrados',title:'Doce Conceptos Ilustrados',category:'Servicio',year:2025,file:'DOCE CONCEPTOS ILUSTRADOS.pdf',desc:'Material visual para acercarse a los Doce Conceptos para el Servicio Mundial.',tags:['Conceptos','Servicio','Ilustrado']},
+ {id:'tradiciones-ilustradas',title:'Doce Tradiciones Ilustradas',category:'Unidad',year:2025,file:'Doce Tradiciones Ilustradas.pdf',desc:'Presentación visual de las Doce Tradiciones y su experiencia de unidad.',tags:['Tradiciones','Unidad','Ilustrado']},
+ {id:'mayoria-edad',title:'A.A. llega a su mayoría de edad',category:'Historia',year:1967,file:'AA-llega-a-su-mayoria-de-edad.pdf',desc:'Historia de A.A. y del desarrollo de Recuperación, Unidad y Servicio.',tags:['Historia','Legados','Bill W.']},
+ {id:'lenguaje-corazon',title:'El lenguaje del corazón',category:'Recuperación',year:1995,file:'el_lenguaje_del_corazon.pdf',desc:'Escritos de Bill W. publicados originalmente en Grapevine, organizados cronológicamente.',tags:['Bill W.','Grapevine','Tradiciones']},
+ {id:'dr-bob',title:'El Dr. Bob y los Buenos Veteranos',category:'Historia',year:1988,file:'EL DR. BOB y los Buenos Veteranos.pdf',desc:'Biografía y recuerdos de los comienzos de A.A. en el Medio Oeste.',tags:['Dr. Bob','Historia','Akron']},
+ {id:'unicidad',title:'Plan Nacional de Acción para fortalecer la Unicidad de Propósito',category:'Recuperación',year:2025,file:'PLAN NACIONAL UNICIDAD DE PROPOPOSITO.pdf',desc:'Proyecto de acción centrado en la recuperación del enfermo alcohólico y la unicidad de propósito.',tags:['Recuperación','Unicidad','Plan']},
+ {id:'redela',title:'24.ª Reunión de las Américas · Bolivia 2025',category:'Servicio',year:2025,file:'24REDELA BOLIVIA OJEDAversión web.pdf',desc:'Reporte final de la 24.ª Reunión de las Américas, Santa Cruz de la Sierra.',tags:['REDELA','Servicio','Internacional']},
+ {id:'manual',title:'Manual de Servicio y Doce Conceptos',category:'Servicio',year:2025,file:'ManualDeServicio2025_Definitivo.pdf',desc:'Edición 2025–2027 del Manual de Servicio de A.A. Colombia y Doce Conceptos.',tags:['Manual','Conceptos','CSG']},
+ {id:'texto-basico',title:'Alcohólicos Anónimos · Texto Básico',category:'Recuperación',year:2015,file:'LIBRO_AA_TEXTO_BASICO.pdf',desc:'El Libro Grande: relato de cómo muchos miles de personas se han recuperado del alcoholismo.',tags:['Texto Básico','Pasos','Recuperación']},
+ {id:'pasos-tradiciones',title:'Doce Pasos y Doce Tradiciones',category:'Recuperación',year:2015,file:'DOCE PASOS Y DOCE TRADICIONES.pdf',desc:'Estudio de los Doce Pasos y las Doce Tradiciones, con explicaciones históricas y espirituales.',tags:['Pasos','Tradiciones','Recuperación']}
+];
+
+const $ = s => document.querySelector(s);
+const grid = $('#grid'), filters = $('#filters');
+const search = $('#search'), sort = $('#sort');
+let activeFilter='Todos';
+let favorites = JSON.parse(localStorage.getItem('aa-favorites') || '[]');
+
+const categories=['Todos',...new Set(docs.map(d=>d.category))];
+
+categories.forEach(c=>{
+  const b=document.createElement('button');
+  b.className='chip'+(c==='Todos'?' active':'');
+  b.textContent=c;
+  b.onclick=()=>{
+    activeFilter=c;
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    render();
+  };
+  filters.appendChild(b);
+});
+
+function esc(s){
+  return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function isFav(id){return favorites.includes(id)}
+function toggleFav(id){
+  favorites=isFav(id)?favorites.filter(x=>x!==id):[...favorites,id];
+  localStorage.setItem('aa-favorites',JSON.stringify(favorites));
+  render(); toast(isFav(id)?'Añadido a favoritos':'Quitado de favoritos');
+}
+function openDoc(doc){
+  const path='documentos/'+encodeURIComponent(doc.file);
+  $('#modalTitle').textContent=doc.title;
+  $('#viewer').src=path+'#view=FitH';
+  $('#openNew').href=path;
+  $('#modal').classList.add('open');
+  $('#modal').setAttribute('aria-hidden','false');
+}
+function closeDoc(){
+  $('#modal').classList.remove('open');
+  $('#modal').setAttribute('aria-hidden','true');
+  $('#viewer').src='';
+}
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+function render(){
+  const q=search.value.trim().toLowerCase();
+  let arr=docs.filter(d=>{
+    const hay=[d.title,d.category,d.desc,...d.tags].join(' ').toLowerCase();
+    return (activeFilter==='Todos'||d.category===activeFilter) && (!q||hay.includes(q));
+  });
+  if(sort.value==='title') arr.sort((a,b)=>a.title.localeCompare(b.title,'es'));
+  if(sort.value==='category') arr.sort((a,b)=>a.category.localeCompare(b.category,'es')||a.title.localeCompare(b.title,'es'));
+  if(sort.value==='year') arr.sort((a,b)=>b.year-a.year);
+
+  grid.innerHTML='';
+  arr.forEach(d=>{
+    const article=document.createElement('article');
+    article.className='card';
+    article.innerHTML=`
+      <div class="cover">
+        <span class="tag">${esc(d.category)}</span>
+        <h3>${esc(d.title)}</h3>
+      </div>
+      <div class="cardbody">
+        <p>${esc(d.desc)}</p>
+        <div class="meta">${d.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>
+        <div class="actions">
+          <button class="btn primary read">Leer</button>
+          <button class="btn fav">${isFav(d.id)?'★ Favorito':'☆ Favorito'}</button>
+        </div>
+      </div>`;
+    article.querySelector('.read').onclick=()=>openDoc(d);
+    article.querySelector('.fav').onclick=()=>toggleFav(d.id);
+    grid.appendChild(article);
+  });
+  $('#countVisible').textContent=arr.length;
+  $('#countFav').textContent=favorites.length;
+  $('#empty').style.display=arr.length?'none':'block';
+  $('#heroCount').textContent=docs.length;
+}
+search.addEventListener('input',render);
+sort.addEventListener('change',render);
+$('#clearBtn').onclick=()=>{search.value='';activeFilter='Todos';document.querySelectorAll('.chip').forEach((x,i)=>x.classList.toggle('active',i===0));render()};
+$('#closeModal').onclick=closeDoc;
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDoc()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeDoc();
+  if(e.key==='/' && document.activeElement!==search){e.preventDefault();search.focus()}
+});
+$('#themeBtn').onclick=()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('aa-dark',document.body.classList.contains('dark'));
+};
+if(localStorage.getItem('aa-dark')==='true')document.body.classList.add('dark');
+
+$('#favNav').onclick=()=>{
+  const ids=favorites;
+  if(!ids.length){toast('Todavía no tienes favoritos');return}
+  search.value='';
+  activeFilter='Todos';
+  document.querySelectorAll('.chip').forEach((x,i)=>x.classList.toggle('active',i===0));
+  // Ordena favoritos primero sin perder el buscador
+  render();
+  [...grid.children].forEach(card=>{
+    const title=card.querySelector('h3').textContent;
+    const d=docs.find(x=>x.title===title);
+    if(d && !ids.includes(d.id)) card.style.display='none';
+  });
+  document.querySelector('#biblioteca').scrollIntoView({behavior:'smooth'});
+};
+window.addEventListener('scroll',()=>$('#backtop').classList.toggle('show',scrollY>500));
+$('#backtop').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+$('#countAll').textContent=docs.length;
+render();
+</script>
+</body>
+</html>
