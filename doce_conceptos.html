@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Los Doce Conceptos, para quien apenas empieza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#003087; --oro:#C89000; --oro-suave:#F6EAD0;
+  --papel:#F5F7FB; --tarjeta:#FFFFFF; --tinta:#16213B; --tenue:#56607A;
+  --linea:#D3DBEA; --azul-suave:#E5ECF8; --ok:#1F6B3A; --mal:#9A2B1F;
+  --sans:"Instrument Sans", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --azul:#8FB0F0; --oro:#E2B04A; --oro-suave:#3A2E14;
+    --papel:#0E1526; --tarjeta:#16203A; --tinta:#E8ECF5; --tenue:#A5AEC4;
+    --linea:#2C3A5C; --azul-suave:#1C2A4C; --ok:#7CCB95; --mal:#F09A8C;
+  }
+}
+:root[data-theme="dark"]{
+  --azul:#8FB0F0; --oro:#E2B04A; --oro-suave:#3A2E14;
+  --papel:#0E1526; --tarjeta:#16203A; --tinta:#E8ECF5; --tenue:#A5AEC4;
+  --linea:#2C3A5C; --azul-suave:#1C2A4C; --ok:#7CCB95; --mal:#F09A8C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.55}
+a{color:var(--azul)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--oro);outline-offset:3px;border-radius:4px}
+.col{max-width:760px;margin:0 auto;padding:0 22px}
+.ancho{max-width:960px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0}
+h2{font-size:clamp(1.7rem,3.6vw,2.3rem);color:var(--azul);margin-bottom:.5rem}
+h3{font-size:1.3rem}
+p{margin:.6rem 0}
+.fuente{font-size:.82rem;color:var(--tenue);font-style:normal}
+section{padding:64px 0;border-top:1px solid var(--linea)}
+.intro{font-size:1.08rem;color:var(--tenue);max-width:62ch}
+
+/* HERO */
+header.hero{padding:72px 0 56px}
+.hero .sello{display:inline-flex;align-items:center;gap:10px;color:var(--azul);font-weight:600;font-size:.95rem}
+.hero .sello span{display:inline-grid;place-items:center;width:34px;height:34px;border:2px solid var(--azul);border-radius:50%;position:relative}
+.hero .sello span::after{content:"";width:14px;height:12px;background:var(--azul);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.hero h1{font-size:clamp(2.3rem,6vw,3.8rem);margin:22px 0 18px;letter-spacing:-.01em}
+.hero blockquote{margin:30px 0 8px;padding:20px 24px;border-left:4px solid var(--oro);background:var(--tarjeta);font-family:var(--serif);font-size:1.3rem;line-height:1.45}
+.hero .gancho{font-size:1.1rem;max-width:60ch}
+.botones{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{border:2px solid var(--azul);background:var(--azul);color:#fff;padding:11px 20px;border-radius:999px;font-weight:600;text-decoration:none;display:inline-block}
+:root[data-theme="dark"] .btn, .btn{ }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0E1526}}
+:root[data-theme="dark"] .btn{color:#0E1526}
+.btn.sec{background:transparent;color:var(--azul)}
+
+/* TRES IDEAS */
+.ideas{display:grid;gap:18px;margin-top:26px}
+.idea{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.idea b{font-family:var(--serif);font-size:1.9rem;color:var(--oro);line-height:1}
+.idea q{font-family:var(--serif);font-size:1.08rem;quotes:"“" "”"}
+
+/* TRIÁNGULO */
+.tri{display:flex;flex-direction:column;align-items:center;gap:6px;margin:34px auto 0;max-width:820px}
+.nivel{border:0;background:var(--azul-suave);color:var(--tinta);padding:14px 10px;text-align:center;font-weight:600;font-size:.98rem;clip-path:polygon(0 0,100% 0,96% 100%,4% 100%);transition:background .2s,color .2s;position:relative}
+.nivel:hover{background:var(--linea)}
+.nivel[aria-pressed="true"]{background:var(--azul);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nivel[aria-pressed="true"]{color:#0E1526}}
+:root[data-theme="dark"] .nivel[aria-pressed="true"]{color:#0E1526}
+.nivel.usted{box-shadow:inset 0 0 0 3px var(--oro)}
+.nivel .aqui{display:block;font-size:.75rem;font-weight:700;color:var(--oro)}
+.nivel[aria-pressed="true"] .aqui{color:inherit}
+.panel-nivel{max-width:760px;margin:26px auto 0;background:var(--tarjeta);border:1px solid var(--linea);border-radius:14px;padding:22px 24px;min-height:150px}
+.panel-nivel h3{color:var(--azul)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{border:1.5px solid var(--oro);background:var(--oro-suave);border-radius:999px;padding:3px 12px;font-weight:600;font-size:.9rem}
+.cita{font-family:var(--serif);font-size:1.08rem;border-left:3px solid var(--oro);padding:4px 0 4px 14px;margin:12px 0}
+.leyenda{text-align:center;color:var(--tenue);font-size:.9rem;margin-top:10px}
+
+/* DERECHOS */
+.derechos{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:24px}
+.derecho{background:var(--tarjeta);border:1px solid var(--linea);border-radius:12px;padding:16px}
+.derecho h3{font-size:1.15rem;color:var(--azul)}
+.derecho .num{font-size:.85rem;color:var(--tenue);font-weight:600}
+
+/* CONCEPTOS */
+.filtro{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+.filtro button{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:999px;padding:6px 14px;font-size:.92rem}
+.filtro button[aria-pressed="true"]{border-color:var(--azul);background:var(--azul-suave);color:var(--azul);font-weight:600}
+.conceptos{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.concepto{background:var(--tarjeta);border:1px solid var(--linea);border-radius:14px;overflow:hidden}
+.concepto>button{width:100%;display:grid;grid-template-columns:72px 1fr 28px;gap:14px;align-items:center;text-align:left;background:none;border:0;padding:16px 18px}
+.romano{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--azul);text-align:center}
+.concepto .titulo{font-weight:600;font-size:1.08rem}
+.concepto .sub{display:block;color:var(--tenue);font-size:.92rem;font-weight:400}
+.flecha{width:22px;height:22px;transition:transform .2s;color:var(--tenue)}
+.concepto[data-open="true"] .flecha{transform:rotate(180deg)}
+.cuerpo{display:none;padding:0 22px 22px;border-top:1px solid var(--linea)}
+.concepto[data-open="true"] .cuerpo{display:block}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 14px}
+.tabs button{border:0;background:var(--azul-suave);border-radius:8px;padding:7px 12px;font-size:.9rem;font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--azul);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tabs button[aria-selected="true"]{color:#0E1526}}
+:root[data-theme="dark"] .tabs button[aria-selected="true"]{color:#0E1526}
+.vista{font-size:1.02rem}
+.vista .literal{font-family:var(--serif);font-size:1.15rem;line-height:1.55}
+.nota-par{font-size:.85rem;color:var(--tenue);margin-top:12px}
+
+/* JUEGO */
+.juego{background:var(--tarjeta);border:1px solid var(--linea);border-radius:16px;padding:24px;margin-top:24px}
+.progreso{display:flex;gap:5px;margin-bottom:18px}
+.progreso i{flex:1;height:6px;border-radius:3px;background:var(--linea)}
+.progreso i.hecho{background:var(--oro)}
+.caso{font-family:var(--serif);font-size:1.25rem;line-height:1.45;margin:6px 0 18px}
+.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opciones button{border:2px solid var(--linea);background:var(--papel);border-radius:10px;padding:12px;font-weight:600}
+.opciones button:hover:not(:disabled){border-color:var(--azul)}
+.opciones button.bien{border-color:var(--ok);color:var(--ok)}
+.opciones button.malo{border-color:var(--mal);color:var(--mal)}
+.respuesta{margin-top:16px;display:none}
+.respuesta.ver{display:block}
+.respuesta strong{display:block;margin-bottom:4px}
+.pie-juego{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px;flex-wrap:wrap}
+
+/* GUION */
+.guion{list-style:none;padding:0;margin:24px 0 0;border-left:2px solid var(--oro)}
+.guion li{position:relative;padding:0 0 22px 24px}
+.guion li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--oro)}
+.guion .min{font-weight:700;color:var(--azul);font-size:.92rem}
+
+/* CIERRE */
+.cierre{background:var(--azul);color:#fff;border-top:0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cierre{background:#13254F;color:var(--tinta)}}
+:root[data-theme="dark"] .cierre{background:#13254F;color:var(--tinta)}
+.cierre h2{color:#fff}
+.cierre blockquote{font-family:var(--serif);font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.35;margin:18px 0 6px}
+.cierre .fuente{color:#C9D5F0}
+.cierre .btn{background:var(--oro);border-color:var(--oro);color:#16213B}
+
+footer{padding:36px 0 50px;font-size:.88rem;color:var(--tenue)}
+
+/* PROYECTAR */
+.proy{position:fixed;inset:0;background:var(--papel);z-index:50;display:none;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) 24px calc(20px + env(safe-area-inset-bottom,0px))}
+.proy.abierto{display:flex}
+.proy .barra{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.proy .barra button{border:1.5px solid var(--linea);background:var(--tarjeta);border-radius:999px;padding:8px 16px}
+.proy .lienzo{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:1000px;margin:0 auto;width:100%;overflow:auto}
+.proy .grande{font-family:var(--serif);font-size:clamp(4rem,14vw,9rem);color:var(--oro);line-height:1}
+.proy .nombre{font-size:clamp(1.3rem,3vw,2rem);font-weight:700;color:var(--azul);margin:6px 0 16px}
+.proy .texto{font-family:var(--serif);font-size:clamp(1.15rem,2.6vw,1.75rem);line-height:1.4}
+.proy .bill{margin-top:22px;font-family:var(--serif);font-style:italic;font-size:clamp(1rem,2vw,1.3rem);color:var(--tenue);border-left:3px solid var(--oro);padding-left:14px}
+.tema{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;border:1px solid var(--linea);background:var(--tarjeta);border-radius:999px;padding:8px 14px;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="col">
+    <div class="sello"><span aria-hidden="true"></span>Taller de servicio · Doce Conceptos</div>
+    <h1>Usted ya vive los Doce Conceptos. Solo que nadie le había dicho cómo se llaman.</h1>
+    <p class="gancho">Si alguna vez pensó que los Conceptos son cosa de custodios y de la Oficina, está en buena compañía. Eso mismo le decían a Bill W. antes de que existiera la Conferencia:</p>
+    <blockquote>“Y el golpe contundente era siempre el mismo: ‘No compliquemos esto. Mantengámoslo sencillo’.”
+      <div class="fuente">Concepto I, p. C3</div></blockquote>
+    <p class="gancho">Y añade que el miembro común, ocupado con su grupo y su Paso Doce, “no sabía casi nada del servicio mundial de AA” (p. C3). Esta página es para cambiar eso, empezando por donde usted ya está parado.</p>
+    <div class="botones">
+      <a class="btn" href="#triangulo">Ver dónde estoy en la estructura</a>
+      <button class="btn sec" type="button" id="abrirProy">Proyectar los doce en la reunión</button>
+    </div>
+  </div>
+</header>
+
+<section id="antes">
+  <div class="col">
+    <h2>Tres cosas antes de empezar</h2>
+    <div class="ideas">
+      <div class="idea"><b>1</b><div><p>Los Conceptos explican el <em>porqué</em> de la estructura, no solo el cómo.</p>
+        <q>Estos Conceptos, por consiguiente, se dirigen a recopilar el “por qué” de nuestra estructura de servicio</q> <span class="fuente">Introducción, p. C1</span></div></div>
+      <div class="idea"><b>2</b><div><p>Son principios, igual que los Pasos y las Tradiciones. Bill los llama así.</p>
+        <q>estos principios de servicio son también el resultado de largas reflexiones y extensas consultas</q> <span class="fuente">Introducción, p. C2</span></div></div>
+      <div class="idea"><b>3</b><div><p>No se dejan resumir en una frase, y eso no es un defecto: cada uno es un paquete.</p>
+        <q>Ya que cada Concepto es en realidad un juego de principios relacionados, no ha sido posible utilizar enunciados abreviados como se usan en los Doce Pasos y en las Doce Tradiciones.</q> <span class="fuente">Introducción, p. C2</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="triangulo">
+  <div class="ancho">
+    <div class="col" style="padding:0">
+      <h2>¿Dónde estoy yo?</h2>
+      <p class="intro">La estructura de AA está al revés: arriba van los grupos, que son los dueños. Toque cada nivel para ver qué Conceptos se viven ahí. El suyo está marcado.</p>
+    </div>
+    <div class="tri" id="tri" role="group" aria-label="Estructura de servicio de AA"></div>
+    <p class="leyenda">La autoridad final fluye desde los grupos hacia abajo; la responsabilidad delegada sube a rendir cuentas.</p>
+    <div class="panel-nivel" id="panelNivel" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="derechos">
+  <div class="col">
+    <h2>Los cuatro derechos que nos protegen</h2>
+    <p class="intro">En la Introducción, Bill señala cuatro derechos que atraviesan toda la estructura y dice que se pueden usar “con buenos resultados por toda nuestra estructura” (p. C1). Es decir, también en su Distrito.</p>
+    <div class="derechos">
+      <div class="derecho"><div class="num">Concepto III</div><h3>Decisión</h3><p>“le da a nuestros directores de servicio una apropiada discreción y libertad”</p></div>
+      <div class="derecho"><div class="num">Concepto IV</div><h3>Participación</h3><p>“le da a cada servidor en el mundo, una posibilidad de votar, en la medida de su responsabilidad”</p></div>
+      <div class="derecho"><div class="num">Concepto V</div><h3>Apelación</h3><p>“protege y anima la opinión de la minoría”</p></div>
+      <div class="derecho"><div class="num">Concepto V</div><h3>Petición</h3><p>“da la seguridad de que las injusticias sean oídas y solucionadas apropiadamente”</p></div>
+    </div>
+    <p class="fuente" style="margin-top:12px">Todas las frases: Introducción a los Doce Conceptos, p. C1.</p>
+  </div>
+</section>
+
+<section id="doce">
+  <div class="col">
+    <h2>Los doce, uno por uno</h2>
+    <p class="intro">Cada Concepto tiene cinco miradas: el texto aprobado, una explicación sencilla, cómo lo vive un MCD, lo que dice Bill en su ensayo y una pregunta para compartir con los RSG.</p>
+    <div class="filtro" role="group" aria-label="Filtrar conceptos">
+      <button type="button" data-f="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-f="grupos">La autoridad de los grupos</button>
+      <button type="button" data-f="derechos">Los derechos</button>
+      <button type="button" data-f="junta">La Junta y su equipo</button>
+      <button type="button" data-f="liderazgo">Liderazgo y equilibrio</button>
+    </div>
+    <div class="conceptos" id="conceptos"></div>
+    <p class="nota-par">Las pestañas “En sencillo”, “Como MCD” y “Para compartir” son explicaciones de apoyo para el taller, no literatura aprobada. El texto de la Forma corta y las citas de Bill son literales.</p>
+  </div>
+</section>
+
+<section id="juego">
+  <div class="col">
+    <h2>¿Qué Concepto es?</h2>
+    <p class="intro">Ocho situaciones de la vida real de un Distrito. Úselas en voz alta con los RSG: lea el caso, deje que discutan y después revele la respuesta.</p>
+    <div class="juego" id="juegoCaja"></div>
+  </div>
+</section>
+
+<section id="guion">
+  <div class="col">
+    <h2>Un guion para 30 minutos</h2>
+    <p class="intro">Para el compañero que va a dar el tema. Es una sugerencia; cada Área tiene su tiempo y su estilo.</p>
+    <ol class="guion">
+      <li><div class="min">Minutos 0 a 5</div><p>Abra con la cita de “Mantengámoslo sencillo” (p. C3) y pregunte a la sala: “¿Quién sabe quiénes son nuestros custodios?”. Bill escribe que en su tiempo ni uno entre miles podía decirlo (p. C3).</p></li>
+      <li><div class="min">Minutos 5 a 10</div><p>Muestre el triángulo invertido. Pida a cada uno que diga en qué nivel sirve hoy. Lea el Concepto I en Forma corta.</p></li>
+      <li><div class="min">Minutos 10 a 20</div><p>Los cuatro derechos: Decisión, Participación, Apelación y Petición. Para cada uno, pida un ejemplo real del Distrito o del Área.</p></li>
+      <li><div class="min">Minutos 20 a 27</div><p>Juego “¿Qué Concepto es?” con tres o cuatro casos. No dé la respuesta de inmediato: deje que la sala discuta.</p></li>
+      <li><div class="min">Minutos 27 a 30</div><p>Cierre con el Concepto IX: “Todo padrino es necesariamente un líder” (p. C29). Invite a leer un Concepto por mes en el Distrito.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="cierre">
+  <div class="col">
+    <h2>Para llevarse a casa</h2>
+    <blockquote>“Así como no hay miembros de AA de segunda clase, no debe haber tampoco trabajadores de servicio de segunda clase.”</blockquote>
+    <p class="fuente">Concepto IV, p. C14</p>
+    <p style="margin-top:22px">El Manual le pide al MCD “Ayudar a los RSG a familiarizarse con el Manual de Servicio de AA y los Doce Conceptos para el Servicio Mundial” (p. 15). Ese trabajo ya es suyo. Bill dice que sus ideas sobre liderazgo pueden ser útiles “a cualquier persona que participe activamente en nuestra Sociedad” (p. C29).</p>
+    <div class="botones"><button class="btn" type="button" id="abrirProy2">Proyectar los doce</button></div>
+  </div>
+</section>
+
+<footer>
+  <div class="col">
+    <p><strong>Fuente única:</strong> El Manual de Servicio de AA y Doce Conceptos para el Servicio Mundial, 2025-2027, Oficina de Servicios Generales de AA Colombia. Las páginas en números arábigos corresponden a la primera parte del Manual; V y VI, a las formas corta y larga de los Conceptos; las que empiezan por C, al texto de los Doce Conceptos de Bill W.</p>
+    <p>Los ensayos de Bill describen la estructura de Estados Unidos y Canadá. Los principios son los mismos; los procedimientos concretos de Colombia están en la primera parte del Manual.</p>
+  </div>
+</footer>
+
+<div class="proy" id="proy" role="dialog" aria-modal="true" aria-label="Modo proyección">
+  <div class="barra">
+    <button type="button" id="cerrarProy">Cerrar (Esc)</button>
+    <span id="proyCuenta" class="fuente"></span>
+    <div style="display:flex;gap:8px"><button type="button" id="ant" aria-label="Concepto anterior">←</button><button type="button" id="sig" aria-label="Concepto siguiente">→</button></div>
+  </div>
+  <div class="lienzo" id="lienzo"></div>
+</div>
+
+<button class="tema" type="button" id="tema">Cambiar tema</button>
+
+<script>
+const C = [
+ {n:"I", t:"La autoridad final está en los grupos", g:"grupos",
+  corta:"La responsabilidad final y la autoridad fundamental de los servicios mundiales de AA deben siempre residir en la conciencia colectiva de toda nuestra Comunidad.",
+  sencillo:"Los dueños del servicio son los grupos. No la Oficina, ni los custodios, ni el Delegado: la conciencia de grupo de toda la Comunidad. Bill lo apoya directamente en la Segunda Tradición (p. C4).",
+  mcd:"Cada vez que usted visita un grupo sin RSG, o lleva un punto de la agenda para que los grupos lo discutan, está devolviéndole la autoridad a quien le pertenece. El Manual dice que el RSG es esencial para que los grupos cumplan esa responsabilidad (p. 7).",
+  bill:"Ellos tienen toda la responsabilidad y autoridad finales que puedan existir; la operación es realmente de su propiedad, realmente les pertenece.", pag:"Concepto II, p. C6",
+  preg:"¿Los grupos de mi Distrito saben que la estructura es suya? ¿En qué se notaría si lo supieran?"},
+ {n:"II", t:"La Conferencia es la voz de todos", g:"grupos",
+  corta:"La Conferencia de Servicios Generales se ha convertido, en casi todos los aspectos, en la voz activa y la conciencia efectiva de toda nuestra Comunidad en sus asuntos mundiales.",
+  sencillo:"Miles de grupos no pueden sentarse todos en la misma mesa. Por eso delegaron en la Conferencia la voz para los asuntos de servicio. Según la forma larga, se reservaron dos cosas: cualquier cambio en las Doce Tradiciones o en el Artículo 12 de la Carta (p. VI).",
+  mcd:"Usted es un eslabón de esa voz. Lo que se habla en el Distrito sube al Área, del Área al Delegado y del Delegado a la Conferencia. Si el eslabón se rompe, la voz llega incompleta.",
+  bill:"La conciencia de grupo no puede ser escuchada a menos que una Conferencia debidamente seleccionada tenga plena autoridad para hablar en su nombre acerca de la mayor parte de los temas de servicio mundial.", pag:"Concepto II, p. C6",
+  preg:"¿Cómo llega la voz de mi grupo hasta la Conferencia? ¿Dónde se puede perder en el camino?"},
+ {n:"III", t:"Derecho de Decisión", g:"derechos",
+  corta:"Para asegurar su dirección eficaz, debemos dotar a cada elemento de AA —la Conferencia, la Junta de Servicios Generales, y sus distintas corporaciones de servicio, personal directivo, Comités y ejecutivos— de un “Derecho de Decisión” tradicional.",
+  sencillo:"Confiar en el servidor. Dentro de lo que le corresponde, cada servidor puede decidir qué resuelve por sí mismo y qué debe consultar. Sin esa confianza nadie podría servir bien.",
+  mcd:"Usted no tiene que llevar cada detalle a votación del Distrito. Y el RSG que va a la asamblea no es un “recadero” de su grupo: escucha el debate completo y vota en conciencia, después de haber consultado y antes de informar.",
+  bill:"el delegado “instruido” previamente que no puede actuar según su propia conciencia en una votación final de la Conferencia, no es propiamente un “servidor de confianza” sino un mero mensajero.", pag:"Concepto III, p. C8",
+  preg:"¿Le doy al RSG la confianza para votar en conciencia, o le exijo que vote como yo quiero?"},
+ {n:"IV", t:"Derecho de Participación", g:"derechos",
+  corta:"Nosotros debemos mantener, a todos los niveles de responsabilidad, un “Derecho de Participación” tradicional, ocupándonos de que a cada clasificación o grupo de nuestros Servidores mundiales les sea permitida una representación con voto, en proporción razonable a la responsabilidad que cada uno tenga que desempeñar.",
+  sencillo:"Quien carga con una responsabilidad debe tener voz y voto en proporción a ella. Nadie queda por encima de los demás con autoridad absoluta.",
+  mcd:"Su voto en la Asamblea de Área existe por este principio: el Manual dice que los MCD y los RSG tienen derecho a voto en las Asambleas (p. 15). No es un favor; es participación.",
+  bill:"Así como no hay miembros de AA de segunda clase, no debe haber tampoco trabajadores de servicio de segunda clase.", pag:"Concepto IV, p. C14",
+  preg:"¿Hay alguien en mi Distrito que hace el trabajo pero no tiene voz?"},
+ {n:"V", t:"Derecho de Apelación y de Petición", g:"derechos",
+  corta:"En toda nuestra estructura de Servicio Mundial, un “Derecho de Apelación” tradicional debe prevalecer, asegurándonos así que se escuche la opinión de la minoría, y que las peticiones de rectificación de los agravios personales sean consideradas cuidadosamente.",
+  sencillo:"La minoría tiene derecho a ser escuchada, y a veces tiene la razón. Y cualquier servidor puede pedir que se repare un agravio sin miedo a represalias.",
+  mcd:"Cuando antes de cerrar una votación pregunta “¿alguien ve esto diferente?”, está aplicando el Concepto V. El Manual describe el procedimiento de la Opinión de la Minoría (p. 40).",
+  bill:"Una minoría bien escuchada es, por lo tanto, nuestra principal protección contra una mayoría mal informada, precipitada o airada.", pag:"Concepto V, p. C15",
+  preg:"¿La última vez que perdí una votación, me sentí escuchado? ¿Y la última vez que gané?"},
+ {n:"VI", t:"La iniciativa de los Custodios", g:"junta",
+  corta:"La Conferencia reconoce también que la principal iniciativa y la responsabilidad activa en la mayoría de estos asuntos, debe ser ejercida en primer lugar por los miembros Custodios de la Conferencia, cuando ellos actúan como la Junta de Servicios Generales de Alcohólicos Anónimos.",
+  sencillo:"La Conferencia se reúne pocos días al año. Entre una reunión y otra, alguien tiene que tomar la iniciativa y mover el trabajo: la Junta de Servicios Generales.",
+  mcd:"En pequeño, pasa lo mismo en el Distrito: entre reuniones, el comité necesita libertad para actuar sin esperar la próxima asamblea, y luego rinde cuentas.",
+  bill:"debe la Conferencia delegar una amplia autoridad administrativa a la Junta de Servicios Generales, a fin de que sus custodios puedan actuar libre y eficientemente en ausencia de la Conferencia misma.", pag:"Concepto VI, p. C18",
+  preg:"¿Mi comité puede actuar entre reuniones, o todo se frena hasta la próxima?"},
+ {n:"VII", t:"Poder legal y poder de la tradición", g:"junta",
+  corta:"La Carta Constitutiva y los Estatutos son instrumentos legales, y los Custodios están, por consiguiente, totalmente autorizados para administrar y dirigir todos los asuntos de servicios. La Carta de la Conferencia en sí misma no es un instrumento legal; se apoya en la fuerza de la tradición y en las finanzas de AA para su eficacia.",
+  sencillo:"La Junta tiene el respaldo legal. La Conferencia tiene la fuerza de la tradición y el apoyo de los grupos, incluido su dinero. Ninguno de los dos manda solo.",
+  mcd:"Por eso la Séptima Tradición en el grupo no es un asunto menor: las contribuciones voluntarias son parte de lo que le da fuerza a la voz de los grupos.",
+  bill:"Teóricamente, la Conferencia no es más que un cuerpo asesor, pero en la práctica tiene todos los derechos y controles finales que pueda necesitar.", pag:"Concepto VII, p. C20",
+  preg:"¿Mi grupo entiende que su contribución también es participación?"},
+ {n:"VIII", t:"Planear, y supervisar sin manejar", g:"junta",
+  corta:"Los Custodios son los principales planificadores y administradores de los asuntos de política y finanzas en general. Tienen una función de supervisión fiduciaria sobre nuestros servicios constantemente activos e incorporados separadamente, ejercida mediante su facultad de elegir a todos los directores de estas entidades.",
+  sencillo:"Los Custodios planean la política y las finanzas generales. Las entidades que hacen el trabajo diario las vigilan, pero no las manejan en el detalle.",
+  mcd:"Supervisar no es microadministrar. Vigile que cada comité del Distrito funcione, sin quitarle el trabajo a quien lo tiene asignado.",
+  bill:"La Junta de Servicios Generales es, en efecto, una compañía matriz a cargo de la supervisión fiduciaria de las subsidiarias de su propiedad que están incorporadas separadamente, cada una de las cuales tiene una administración separada para efectos de su operación.", pag:"Concepto VIII, p. C23",
+  preg:"¿Estoy acompañando a los coordinadores de comité, o haciendo su trabajo por ellos?"},
+ {n:"IX", t:"Buenos líderes en todos los niveles", g:"liderazgo",
+  corta:"Buenos directores de servicio en todos los niveles son indispensables para nuestro funcionamiento y seguridad en el futuro. La dirección básica del Servicio Mundial que una vez ejercieron los fundadores de Alcohólicos Anónimos, tiene necesariamente que ser asumida por los Custodios.",
+  sencillo:"Sin buenos servidores, la estructura no funciona. Un líder en AA no manda: da ejemplo, consulta, propone, escucha y explica sus razones.",
+  mcd:"Bill dice que estas ideas sirven para cualquiera que participe en AA, y que todo padrino es necesariamente un líder (p. C29). Usted ya lo es en su Distrito.",
+  bill:"Un líder en AA es, por lo tanto, un hombre (o mujer) que puede personalmente poner en efecto principios, planes y políticas de una manera tan dedicada y eficaz que los demás queremos apoyarlo y ayudarle a realizar su trabajo.", pag:"Concepto IX, p. C27",
+  preg:"¿Mi manera de servir hace que otros quieran ayudar, o que se alejen?"},
+ {n:"X", t:"Responsabilidad igual a autoridad", g:"liderazgo",
+  corta:"A cada responsabilidad de servicio, le debe corresponder una autoridad de servicio equivalente, y el alcance de tal autoridad debe estar siempre bien definido.",
+  sencillo:"Si a alguien le encargan algo, le deben dar con qué hacerlo, y debe quedar claro hasta dónde llega. Nunca dos “jefes” iguales para lo mismo. Este Concepto trata de cómo se diseña la estructura, no de vigilar la conducta de un miembro.",
+  mcd:"Antes de aceptar coordinar un taller o un comité, pregunte: ¿qué decido yo y qué decide el Distrito? Escríbanlo.",
+  bill:"La autoridad nunca puede dividirse en dos partes iguales.", pag:"Concepto X, p. C32",
+  preg:"¿Hay en mi Distrito un cargo con mucha responsabilidad y ninguna autoridad, o al revés?"},
+ {n:"XI", t:"Los mejores comités y servidores", g:"junta",
+  corta:"Los Custodios deben siempre contar con los mejores Comités permanentes y con directores de las corporaciones de servicio, ejecutivos, personal de oficina y consejeros bien capacitados. La composición, cualidades, procedimientos de iniciación y derechos y obligaciones serán siempre asuntos de verdadero interés.",
+  sencillo:"La Junta no puede sola. Necesita buenos comités, buen personal y buenos asesores; y cómo se escogen, cómo rotan y cómo se relacionan siempre importa.",
+  mcd:"Aquí aparece la rotación. Bill explica que a mayor responsabilidad, más tiempo de servicio, y pone el ejemplo de que un delegado debe servir dos años (p. C42). El servicio no es propiedad de nadie.",
+  bill:"Sus cualidades y dedicación, o la falta de ellas, significarán el éxito o la ruina para nuestra estructura de servicio.", pag:"Concepto XI, p. C34",
+  preg:"¿Estoy preparando a quien me va a reemplazar?"},
+ {n:"XII", t:"Las Garantías Generales", g:"liderazgo",
+  corta:"La Conferencia cumplirá con el espíritu de las Tradiciones de AA, teniendo especial cuidado de que la Conferencia nunca se convierta en sede de peligrosa riqueza o poder; que fondos suficientes para su funcionamiento, más una reserva adecuada, sean su prudente principio financiero, que ninguno de los miembros de la Conferencia sea nunca colocado en una posición de autoridad desmedida sobre ninguno de los otros, que se llegue a todas las decisiones importantes por discusión, votación y, siempre que sea posible, por unanimidad sustancial; que ninguna actuación de la Conferencia sea personalmente punitiva, o una incitación a controversia pública, que la Conferencia nunca realice ninguna acción de gobierno, y que como la Sociedad de Alcohólicos Anónimos, a la cual sirve, la Conferencia en sí misma siempre permanezca democrática en pensamiento y en acción.",
+  sencillo:"Una lista de seguros para que el servicio nunca se vuelva poder: ni riqueza peligrosa, ni nadie por encima de nadie, decisiones discutidas y con unanimidad sustancial, nada que castigue a una persona, ninguna acción de gobierno y siempre democracia. Bill dice que todas son consejos de prudencia (p. C44).",
+  mcd:"Úselas como lista de chequeo en cualquier reunión de Distrito: ¿estamos acumulando dinero? ¿alguien manda más de la cuenta? ¿estamos votando a la carrera?",
+  bill:"Para nosotros, la prudencia es un efectivo término medio, un canal de salida entre los obstáculos del temor a un lado y la temeridad por el otro.", pag:"Concepto XII, p. C44",
+  preg:"¿Cuál de las Garantías nos cuesta más en el Distrito?"}
+];
+
+const NIVELES = [
+ {k:"Grupos de AA", w:100, c:["I","II","VII"], txt:"Aquí reside la autoridad final. Los grupos son los dueños de la estructura y la sostienen con su conciencia y sus contribuciones.", cita:"Los principios fundamentales de la Tradición Dos son de una claridad cristalina: los grupos de AA son la suprema autoridad, y sus líderes deben estar investidos únicamente de responsabilidades delegadas.", p:"Concepto I, p. C4"},
+ {k:"RSG", w:88, c:["I","III","V"], txt:"El RSG es el nexo entre el grupo y AA como un todo. Lleva la voz del grupo y trae al grupo lo que pasa en la estructura.", cita:"El papel que cumple el RSG es esencial para asegurar que los grupos cumplan con esa responsabilidad.", p:"Manual, p. 7"},
+ {k:"MCD · Distrito", w:76, usted:true, c:["III","IV","V","IX","X"], txt:"Usted está aquí. Une a los RSG de su Distrito con el Área y acompaña a los grupos, incluso a los que no tienen RSG. El Manual le encarga además enseñar los Conceptos.", cita:"Ayudar a los RSG a familiarizarse con el Manual de Servicio de AA y los Doce Conceptos para el Servicio Mundial.", p:"Manual, p. 15"},
+ {k:"Comité de Área y Delegado", w:64, c:["III","IV","IX","X"], txt:"El Área reúne a los Distritos. El Delegado lleva la conciencia del Área a la Conferencia y vota en conciencia, no como mensajero.", cita:"el delegado “instruido” previamente que no puede actuar según su propia conciencia en una votación final de la Conferencia, no es propiamente un “servidor de confianza” sino un mero mensajero.", p:"Concepto III, p. C8"},
+ {k:"Conferencia de Servicios Generales", w:52, c:["II","V","VII","XII"], txt:"La voz activa y la conciencia efectiva de toda la Comunidad. Está atada por las Garantías del Concepto XII.", cita:"Teóricamente, la Conferencia no es más que un cuerpo asesor, pero en la práctica tiene todos los derechos y controles finales que pueda necesitar.", p:"Concepto VII, p. C20"},
+ {k:"Junta de Servicios Generales", w:42, c:["VI","VII","VIII","IX"], txt:"Los Custodios llevan la iniciativa entre Conferencias y planean la política y las finanzas generales.", cita:"debe la Conferencia delegar una amplia autoridad administrativa a la Junta de Servicios Generales, a fin de que sus custodios puedan actuar libre y eficientemente en ausencia de la Conferencia misma.", p:"Concepto VI, p. C18"},
+ {k:"Comités, entidades y personal", w:32, c:["VIII","X","XI"], txt:"Quienes hacen el trabajo diario del servicio. De su calidad depende la estructura entera.", cita:"Sus cualidades y dedicación, o la falta de ellas, significarán el éxito o la ruina para nuestra estructura de servicio.", p:"Concepto XI, p. C34"}
+];
+
+const CASOS = [
+ {c:"En la reunión de Distrito la votación va 12 a 3. Antes de cerrar, el coordinador pregunta si la minoría quiere hablar. Uno de ellos expone y varios cambian su voto.", r:"V", o:["III","V","X","XII"], ex:"Derecho de Apelación: “Una minoría bien escuchada es, por lo tanto, nuestra principal protección contra una mayoría mal informada, precipitada o airada” (p. C15)."},
+ {c:"Un grupo le dice a su RSG: “Usted vota que no en la asamblea, y no se deje convencer por nadie”.", r:"III", o:["I","III","IV","IX"], ex:"Derecho de Decisión: el servidor que no puede votar según su conciencia después del debate “no es propiamente un ‘servidor de confianza’ sino un mero mensajero” (p. C8)."},
+ {c:"A un MCD le encargan organizar el taller del Distrito, pero cada detalle debe pasar por votación, y otro compañero también se considera el encargado.", r:"X", o:["VI","VIII","X","XI"], ex:"A cada responsabilidad, una autoridad equivalente y bien definida. Y nada de dirección bicéfala: “La autoridad nunca puede dividirse en dos partes iguales” (p. C32)."},
+ {c:"Un comité propone que los coordinadores de los comités del Distrito asistan con voz pero sin voto, aunque son quienes hacen el trabajo.", r:"IV", o:["II","IV","V","VII"], ex:"Derecho de Participación: representación con voto en proporción a la responsabilidad. “no debe haber tampoco trabajadores de servicio de segunda clase” (p. C14)."},
+ {c:"El Distrito ha ido acumulando mucho más dinero del que necesita para funcionar y para una reserva prudente.", r:"XII", o:["VII","VIII","XI","XII"], ex:"Garantías Generales: la Conferencia nunca debe convertirse en “sede de peligrosa riqueza o poder”, y su principio financiero es tener fondos suficientes más una reserva adecuada (p. V)."},
+ {c:"Un MCD visita un grupo sin RSG, no para presionarlo sino para contarle que la estructura de servicio es suya y que su voz cuenta.", r:"I", o:["I","II","IX","XI"], ex:"La autoridad final reside en la conciencia colectiva de la Comunidad. La operación “realmente les pertenece” a los grupos (p. C6). El Manual también pide al MCD acercarse a estos grupos sin presionarlos (p. 15)."},
+ {c:"En una asamblea alguien propone sancionar públicamente a un servidor que se equivocó en un informe.", r:"XII", o:["V","IX","X","XII"], ex:"Garantías Generales: que ninguna actuación sea “personalmente punitiva, o una incitación a controversia pública” (p. V)."},
+ {c:"Un servidor lleva años en el mismo cargo del Distrito y dice que nadie más sabe hacerlo, así que no prepara a nadie.", r:"XI", o:["III","IX","X","XI"], ex:"El Concepto XI incluye “los sistemas de su rotación” entre los asuntos de verdadero interés (p. VII), y Bill desarrolla la rotación en su ensayo (p. C42). El Concepto IX también ayuda: un buen líder piensa en el futuro."}
+];
+
+/* TRIÁNGULO */
+const tri=document.getElementById('tri'), panel=document.getElementById('panelNivel');
+NIVELES.forEach((n,i)=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='nivel'+(n.usted?' usted':''); b.style.width=n.w+'%';
+  b.setAttribute('aria-pressed','false');
+  b.innerHTML=(n.usted?'<span class="aqui">Usted está aquí</span>':'')+n.k;
+  b.addEventListener('click',()=>verNivel(i));
+  tri.appendChild(b);
+});
+function verNivel(i){
+  [...tri.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===i?'true':'false'));
+  const n=NIVELES[i];
+  panel.innerHTML=`<h3>${n.k}</h3><p>${n.txt}</p><div class="chips">${n.c.map(x=>`<button type="button" class="chip" data-ir="${x}">Concepto ${x}</button>`).join('')}</div><div class="cita">“${n.cita}”<div class="fuente">${n.p}</div></div>`;
+  panel.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>irA(b.dataset.ir)));
+}
+verNivel(2);
+
+/* CONCEPTOS */
+const cont=document.getElementById('conceptos');
+const TABS=[["corta","Forma corta"],["sencillo","En sencillo"],["mcd","Como MCD"],["bill","Bill dice"],["preg","Para compartir"]];
+C.forEach((c,i)=>{
+  const d=document.createElement('article');
+  d.className='concepto'; d.id='c-'+c.n; d.dataset.g=c.g; d.dataset.open='false';
+  d.innerHTML=`<button type="button" aria-expanded="false" aria-controls="cu-${i}"><span class="romano">${c.n}</span><span class="titulo">${c.t}<span class="sub">${c.corta.slice(0,90)}…</span></span><svg class="flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+  <div class="cuerpo" id="cu-${i}"><div class="tabs" role="tablist">${TABS.map((t,k)=>`<button type="button" role="tab" aria-selected="${k===0}" data-t="${t[0]}">${t[1]}</button>`).join('')}</div><div class="vista" role="tabpanel"></div></div>`;
+  const head=d.querySelector(':scope>button');
+  head.addEventListener('click',()=>{const o=d.dataset.open!=='true';d.dataset.open=o;head.setAttribute('aria-expanded',o)});
+  const vista=d.querySelector('.vista');
+  const pinta=t=>{
+    if(t==='corta') vista.innerHTML=`<p class="literal">${c.corta}</p><p class="fuente">Los Doce Conceptos (Forma corta), p. V</p>`;
+    else if(t==='bill') vista.innerHTML=`<p class="literal">“${c.bill}”</p><p class="fuente">${c.pag}</p>`;
+    else if(t==='preg') vista.innerHTML=`<p class="literal">${c.preg}</p><p class="fuente">Pregunta sugerida para el compartimiento con los RSG.</p>`;
+    else vista.innerHTML=`<p>${c[t]}</p>`;
+  };
+  d.querySelectorAll('[role=tab]').forEach(tb=>tb.addEventListener('click',()=>{
+    d.querySelectorAll('[role=tab]').forEach(x=>x.setAttribute('aria-selected','false'));
+    tb.setAttribute('aria-selected','true'); pinta(tb.dataset.t);
+  }));
+  pinta('corta');
+  cont.appendChild(d);
+});
+function irA(n){
+  const d=document.getElementById('c-'+n); if(!d) return;
+  document.querySelector('.filtro [data-f="todos"]').click();
+  d.dataset.open='true'; d.querySelector(':scope>button').setAttribute('aria-expanded','true');
+  d.scrollIntoView({block:'start'}); d.querySelector(':scope>button').focus({preventScroll:true});
+}
+document.querySelectorAll('.filtro button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filtro button').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');
+  const f=b.dataset.f;
+  cont.querySelectorAll('.concepto').forEach(d=>d.style.display=(f==='todos'||d.dataset.g===f)?'':'none');
+}));
+
+/* JUEGO */
+const caja=document.getElementById('juegoCaja'); let ci=0, aciertos=0;
+function pintaCaso(){
+  if(ci>=CASOS.length){
+    caja.innerHTML=`<h3>Terminó: ${aciertos} de ${CASOS.length}</h3><p>El número importa poco. Lo valioso es la discusión que cada caso abrió en la sala.</p><div class="pie-juego"><button class="btn" type="button" id="otra">Jugar otra vez</button></div>`;
+    document.getElementById('otra').onclick=()=>{ci=0;aciertos=0;pintaCaso()}; return;
+  }
+  const k=CASOS[ci];
+  caja.innerHTML=`<div class="progreso">${CASOS.map((_,j)=>`<i class="${j<ci?'hecho':''}"></i>`).join('')}</div>
+  <div class="fuente">Caso ${ci+1} de ${CASOS.length}</div><p class="caso">${k.c}</p>
+  <div class="opciones">${k.o.map(o=>`<button type="button" data-o="${o}">Concepto ${o}</button>`).join('')}</div>
+  <div class="respuesta" id="resp" aria-live="polite"></div>
+  <div class="pie-juego"><span class="fuente">Aciertos: ${aciertos}</span><button class="btn" type="button" id="sigCaso" hidden>Siguiente caso</button></div>`;
+  caja.querySelectorAll('[data-o]').forEach(b=>b.addEventListener('click',()=>{
+    const ok=b.dataset.o===k.r; if(ok) aciertos++;
+    caja.querySelectorAll('[data-o]').forEach(x=>{x.disabled=true;if(x.dataset.o===k.r)x.classList.add('bien')});
+    if(!ok) b.classList.add('malo');
+    const r=document.getElementById('resp'); r.classList.add('ver');
+    r.innerHTML=`<strong>${ok?'Así es: Concepto '+k.r+'.':'Era el Concepto '+k.r+'.'}</strong>${k.ex}`;
+    const s=document.getElementById('sigCaso'); s.hidden=false; s.focus();
+    s.onclick=()=>{ci++;pintaCaso()};
+  }));
+}
+pintaCaso();
+
+/* PROYECTAR */
+const proy=document.getElementById('proy'), lienzo=document.getElementById('lienzo'), cuenta=document.getElementById('proyCuenta'); let pi=0, ultimoFoco=null;
+function pintaProy(){
+  const c=C[pi];
+  lienzo.innerHTML=`<div class="grande">${c.n}</div><div class="nombre">${c.t}</div><div class="texto">${c.corta}</div><div class="bill">“${c.bill}” · ${c.pag}</div>`;
+  cuenta.textContent=`Concepto ${pi+1} de 12 · Forma corta, p. V`;
+}
+function abrirProy(){ultimoFoco=document.activeElement;pi=0;pintaProy();proy.classList.add('abierto');document.getElementById('sig').focus()}
+function cerrarProy(){proy.classList.remove('abierto');if(ultimoFoco)ultimoFoco.focus()}
+document.getElementById('abrirProy').onclick=abrirProy;
+document.getElementById('abrirProy2').onclick=abrirProy;
+document.getElementById('cerrarProy').onclick=cerrarProy;
+document.getElementById('sig').onclick=()=>{pi=(pi+1)%12;pintaProy()};
+document.getElementById('ant').onclick=()=>{pi=(pi+11)%12;pintaProy()};
+document.addEventListener('keydown',e=>{
+  if(!proy.classList.contains('abierto'))return;
+  if(e.key==='Escape')cerrarProy();
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();pi=(pi+1)%12;pintaProy()}
+  if(e.key==='ArrowLeft'){pi=(pi+11)%12;pintaProy()}
+});
+
+/* TEMA */
+document.getElementById('tema').onclick=()=>{
+  const r=document.documentElement, oscuroAhora=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=oscuroAhora?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme)}catch(e){}
+};
+try{const t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}
+</script>
+</body>
+</html>
