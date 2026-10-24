@@ -23,7 +23,7 @@ fuente: "Concepto I, pp. C3–C6; Forma corta, p. V."
 
 ## En una frase
 
-**El grupo es el dueño de la estructura. La Conferencia, la Junta, la Oficina y el RSG existen para servirle, no para mandarle.**
+**La autoridad final está en la conciencia colectiva de la Comunidad. En la práctica empieza en cada grupo: la estructura existe para servirle, no para mandarle.**
 
 ## Lo que ya vives en tu grupo
 

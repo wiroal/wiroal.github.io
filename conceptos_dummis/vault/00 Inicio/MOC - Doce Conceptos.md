@@ -29,7 +29,7 @@ Este es el mapa del vault. Empieza por la **Semana 0** y avanza en orden, o salt
 
 ### La fuente
 
-- [[Concepto 01 - La autoridad final está en los grupos]] — El grupo es el dueño de la estructura. La Conferencia, la Junta, la Oficina y el RSG existen para servirle, no para mandarle.
+- [[Concepto 01 - La autoridad final está en los grupos]] — La autoridad final está en la conciencia colectiva de la Comunidad. En la práctica empieza en cada grupo: la estructura existe para servirle, no para mandarle.
 - [[Concepto 02 - La Conferencia es la voz de todos]] — Miles de grupos no caben en una sola mesa. La Conferencia habla por todos en los asuntos mundiales, con lo que los grupos le han delegado.
 ### Los derechos
 
@@ -48,7 +48,7 @@ Este es el mapa del vault. Empieza por la **Semana 0** y avanza en orden, o salt
 ### Límites
 
 - [[Concepto 11 - Los mejores comités y las mejores personas]] — La calidad de las personas, su selección, inducción y rotación sostienen la estructura. El servicio no es propiedad de nadie.
-- [[Concepto 12 - Las Garantías Generales]] — Seis seguros contra el poder y el dinero: ni riqueza peligrosa, ni autoridad desmedida, decisiones discutidas, nada punitivo, ninguna acción de gobierno y siempre democracia.
+- [[Concepto 12 - Las Garantías Generales]] — Seis seguros: ni riqueza peligrosa ni poder desmedido; fondos suficientes y una reserva prudente; decisiones discutidas y votadas; nada personalmente punitivo; ninguna acción de gobierno; y una Conferencia siempre democrática.
 
 ## Práctica
 

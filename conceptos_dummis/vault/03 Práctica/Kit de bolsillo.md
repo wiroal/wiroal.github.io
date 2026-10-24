@@ -13,7 +13,7 @@ tags:
 
 | # | Concepto | La idea |
 |---|---|---|
-| I | La autoridad final está en los grupos | El grupo es el dueño de la estructura. La Conferencia, la Junta, la Oficina y el RSG existen para servirle, no para mandarle. |
+| I | La autoridad final está en los grupos | La autoridad final está en la conciencia colectiva de la Comunidad. En la práctica empieza en cada grupo: la estructura existe para servirle, no para mandarle. |
 | II | La Conferencia es la voz de todos | Miles de grupos no caben en una sola mesa. La Conferencia habla por todos en los asuntos mundiales, con lo que los grupos le han delegado. |
 | III | Derecho de Decisión | Confiar en quien sirve: cada servidor decide dentro de su competencia, consulta lo que corresponde y rinde cuentas después. Sin esa confianza, nadie puede servir bien. |
 | IV | Derecho de Participación | Quien carga con una responsabilidad debe tener voz y voto en proporción a ella. Nadie es servidor de segunda clase. |
@@ -24,7 +24,7 @@ tags:
 | IX | Buen liderazgo en todos los niveles | Sin buenos servidores no hay estructura. Liderar en A.A. es dar ejemplo, consultar, explicar y formar relevo; no mandar. |
 | X | Responsabilidad igual a autoridad | Si te encargan algo, te deben dar con qué hacerlo, y debe quedar claro hasta dónde llega. Nunca dos jefes para lo mismo. |
 | XI | Los mejores comités y las mejores personas | La calidad de las personas, su selección, inducción y rotación sostienen la estructura. El servicio no es propiedad de nadie. |
-| XII | Las Garantías Generales | Seis seguros contra el poder y el dinero: ni riqueza peligrosa, ni autoridad desmedida, decisiones discutidas, nada punitivo, ninguna acción de gobierno y siempre democracia. |
+| XII | Las Garantías Generales | Seis seguros: ni riqueza peligrosa ni poder desmedido; fondos suficientes y una reserva prudente; decisiones discutidas y votadas; nada personalmente punitivo; ninguna acción de gobierno; y una Conferencia siempre democrática. |
 
 ## Las cuatro preguntas
 
