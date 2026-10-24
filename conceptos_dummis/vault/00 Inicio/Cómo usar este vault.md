@@ -7,7 +7,7 @@ tags:
 
 ## Qué es
 
-Un cuaderno de estudio para los Doce Conceptos del Servicio Mundial, escrito para una RSG que está fundando un grupo en el Distrito 2, Área C.3 (Bogotá D.C.). No es literatura aprobada: es una guía de práctica.
+Un cuaderno de estudio para los Doce Conceptos para el Servicio Mundial, escrito para una RSG que está fundando un grupo en el Distrito 2, Área C.3 (Bogotá D.C.). No es literatura aprobada: es una guía de práctica.
 
 ## Cómo abrirlo
 

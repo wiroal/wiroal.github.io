@@ -1,6 +1,6 @@
 # conceptos_dummis
 
-Cuaderno de estudio para los **Doce Conceptos del Servicio Mundial de A.A.**, pensado para una RSG que está fundando un grupo en el **Distrito 2, Área C.3 (Bogotá D.C.)**.
+Cuaderno de estudio para los **Doce Conceptos para el Servicio Mundial de A.A.**, pensado para una RSG que está fundando un grupo en el **Distrito 2, Área C.3 (Bogotá D.C.)**.
 
 **Página publicada:** https://wiroal.github.io/conceptos_dummis/
 

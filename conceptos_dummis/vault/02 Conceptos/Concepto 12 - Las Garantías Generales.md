@@ -23,7 +23,7 @@ fuente: "Concepto XII, p. C44; Forma corta, p. V."
 
 ## En una frase
 
-**Seis seguros contra el poder y el dinero: ni riqueza peligrosa, ni autoridad desmedida, decisiones discutidas, nada punitivo, ninguna acción de gobierno y siempre democracia.**
+**Seis seguros: ni riqueza peligrosa ni poder desmedido; fondos suficientes y una reserva prudente; decisiones discutidas y votadas; nada personalmente punitivo; ninguna acción de gobierno; y una Conferencia siempre democrática.**
 
 ## Lo que ya vives en tu grupo
 
