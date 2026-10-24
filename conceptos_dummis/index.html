@@ -1444,6 +1444,13 @@ function renderWeeks(){
       S.tasks[cb.dataset.task] = cb.checked;
       if(!cb.checked) delete S.tasks[cb.dataset.task];
       if(cb.checked) S.sessions = (S.sessions||0)+1;
+      const weekBox = cb.closest('.week');
+      if(weekBox){
+        const total = weekBox.querySelectorAll('input[data-task]').length;
+        const done = weekBox.querySelectorAll('input[data-task]:checked').length;
+        const head = weekBox.querySelector('h4');
+        if(head) head.textContent = `Sesiones · ${done}/${total}`;
+      }
       saveState(); renderStats(); renderToday(); renderProgressCard();
       if(cb.checked) toast('Sesión marcada. Una acción vale más que una intención.');
     });
