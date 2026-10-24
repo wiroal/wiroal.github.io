@@ -1,0 +1,319 @@
+{
+  "nodes": [
+    {
+      "id": "c1",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 01 - La autoridad final está en los grupos.md",
+      "x": 0,
+      "y": 0,
+      "width": 300,
+      "height": 150,
+      "color": "6"
+    },
+    {
+      "id": "c2",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 02 - La Conferencia es la voz de todos.md",
+      "x": 0,
+      "y": 190,
+      "width": 300,
+      "height": 150,
+      "color": "6"
+    },
+    {
+      "id": "c3",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 03 - Derecho de Decisión.md",
+      "x": 360,
+      "y": 0,
+      "width": 300,
+      "height": 150,
+      "color": "5"
+    },
+    {
+      "id": "c4",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 04 - Derecho de Participación.md",
+      "x": 360,
+      "y": 190,
+      "width": 300,
+      "height": 150,
+      "color": "5"
+    },
+    {
+      "id": "c5",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 05 - Derecho de Apelación y de Petición.md",
+      "x": 360,
+      "y": 380,
+      "width": 300,
+      "height": 150,
+      "color": "5"
+    },
+    {
+      "id": "c6",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 06 - La iniciativa de los Custodios.md",
+      "x": 720,
+      "y": 0,
+      "width": 300,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "c7",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 07 - Poder legal y poder de la tradición.md",
+      "x": 720,
+      "y": 190,
+      "width": 300,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "c8",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 08 - Planear y supervisar sin microadministrar.md",
+      "x": 720,
+      "y": 380,
+      "width": 300,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "c9",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 09 - Buen liderazgo en todos los niveles.md",
+      "x": 1080,
+      "y": 0,
+      "width": 300,
+      "height": 150,
+      "color": "1"
+    },
+    {
+      "id": "c10",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 10 - Responsabilidad igual a autoridad.md",
+      "x": 1080,
+      "y": 190,
+      "width": 300,
+      "height": 150,
+      "color": "1"
+    },
+    {
+      "id": "c11",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 11 - Los mejores comités y las mejores personas.md",
+      "x": 1440,
+      "y": 0,
+      "width": 300,
+      "height": 150,
+      "color": "4"
+    },
+    {
+      "id": "c12",
+      "type": "file",
+      "file": "02 Conceptos/Concepto 12 - Las Garantías Generales.md",
+      "x": 1440,
+      "y": 190,
+      "width": 300,
+      "height": 150,
+      "color": "4"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# Doce Conceptos en sencillo\n\nUn mapa para estudiar, entender y aplicar los Conceptos desde un grupo nuevo.\n\n**Distrito 2 · Área C.3 · Bogotá D.C.**",
+      "x": 0,
+      "y": -250,
+      "width": 760,
+      "height": 160,
+      "color": "6"
+    },
+    {
+      "id": "howto",
+      "type": "text",
+      "text": "## Cómo usar este canvas\n\n1. Abre una tarjeta para leer el Concepto.\n2. Sigue las líneas: son las relaciones entre Conceptos.\n3. Vuelve al [[MOC - Doce Conceptos]] para la ruta completa.\n4. Escribe en la [[Bitácora RSG]].",
+      "x": 0,
+      "y": 620,
+      "width": 420,
+      "height": 260
+    },
+    {
+      "id": "plan",
+      "type": "file",
+      "file": "01 Plan/Plan de 8 semanas.md",
+      "x": 470,
+      "y": 620,
+      "width": 330,
+      "height": 120,
+      "color": "3"
+    },
+    {
+      "id": "tensions",
+      "type": "file",
+      "file": "03 Práctica/Mapa de tensiones.md",
+      "x": 840,
+      "y": 620,
+      "width": 330,
+      "height": 120,
+      "color": "2"
+    },
+    {
+      "id": "diary",
+      "type": "file",
+      "file": "03 Práctica/Bitácora RSG.md",
+      "x": 1210,
+      "y": 620,
+      "width": 330,
+      "height": 120,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "c1",
+      "toNode": "c2",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e2",
+      "fromNode": "c1",
+      "toNode": "c12",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e3",
+      "fromNode": "c2",
+      "toNode": "c6",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e4",
+      "fromNode": "c2",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e5",
+      "fromNode": "c3",
+      "toNode": "c4",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e6",
+      "fromNode": "c3",
+      "toNode": "c10",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e7",
+      "fromNode": "c4",
+      "toNode": "c11",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e8",
+      "fromNode": "c5",
+      "toNode": "c3",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e9",
+      "fromNode": "c5",
+      "toNode": "c12",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e10",
+      "fromNode": "c6",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e11",
+      "fromNode": "c6",
+      "toNode": "c8",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e12",
+      "fromNode": "c7",
+      "toNode": "c8",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e13",
+      "fromNode": "c8",
+      "toNode": "c10",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e14",
+      "fromNode": "c8",
+      "toNode": "c11",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e15",
+      "fromNode": "c9",
+      "toNode": "c10",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e16",
+      "fromNode": "c9",
+      "toNode": "c11",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e17",
+      "fromNode": "c11",
+      "toNode": "c10",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    },
+    {
+      "id": "e18",
+      "fromNode": "c12",
+      "toNode": "c7",
+      "fromSide": "right",
+      "toSide": "left",
+      "color": "6"
+    }
+  ]
+}

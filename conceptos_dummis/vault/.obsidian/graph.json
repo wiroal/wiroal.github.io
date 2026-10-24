@@ -1,0 +1,65 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "tag:#fuente",
+      "color": {
+        "a": 1,
+        "rgb": 9117030
+      }
+    },
+    {
+      "query": "tag:#derechos",
+      "color": {
+        "a": 1,
+        "rgb": 902664
+      }
+    },
+    {
+      "query": "tag:#motor",
+      "color": {
+        "a": 1,
+        "rgb": 11813641
+      }
+    },
+    {
+      "query": "tag:#liderazgo",
+      "color": {
+        "a": 1,
+        "rgb": 12461498
+      }
+    },
+    {
+      "query": "tag:#limites",
+      "color": {
+        "a": 1,
+        "rgb": 2453531
+      }
+    },
+    {
+      "query": "tag:#plan",
+      "color": {
+        "a": 1,
+        "rgb": 8355711
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 0.8,
+  "close": true
+}
