@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juego de los Conceptos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+.portada{max-width:760px;margin:0 auto;padding:48px 16px}
+.portada h1{font-size:clamp(2rem,6vw,3.2rem);color:var(--azul)}
+.portada p.lead{font-size:1.15rem;color:var(--tenue);margin:12px 0 28px}
+.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.opciones a{display:block;text-decoration:none;color:inherit}
+.opciones .tarjeta{height:100%;transition:border-color .15s}
+.opciones a:hover .tarjeta{border-color:var(--azul)}
+.opciones h2{font-size:1.4rem;margin:8px 0}
+.pie{margin-top:32px;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="portada">
+  <span class="insignia">Tercer Legado · Doce Conceptos</span>
+  <h1>Juego de los Doce Conceptos</h1>
+  <p class="lead">Un test de entrada y uno de salida para medir lo aprendido en la charla. Cada participante entra desde su celular con un nombre tomado de la literatura de AA.</p>
+  <div class="opciones">
+    <a href="pantalla.html"><div class="tarjeta"><span class="tenue">Para el coordinador</span><h2>Abrir la pantalla</h2><p class="tenue">Se proyecta en la sala. Genera el código y el QR, lanza las preguntas y muestra el tablero.</p></div></a>
+    <a href="jugar.html"><div class="tarjeta"><span class="tenue">Para los participantes</span><h2>Entrar a jugar</h2><p class="tenue">Escribe el código de la sala que aparece en la pantalla y elige tu nombre.</p></div></a>
+  </div>
+  <p class="pie tenue">Preguntas tomadas de El Manual de Servicio de AA y Doce Conceptos para el Servicio Mundial, edición 2025-2027. Cada respuesta muestra la cita textual y la página.</p>
+</div>
+</body>
+</html>

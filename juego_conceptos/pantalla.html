@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pantalla · Juego de los Conceptos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+body{font-size:18px}
+.mando{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0}
+.mando .espacio{flex:1}
+.mando label{display:flex;align-items:center;gap:6px;font-size:.9rem;color:var(--tenue)}
+.mando select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--linea);background:var(--tarjeta);color:var(--tinta)}
+.lobby{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:20px}
+@media (max-width:820px){.lobby{grid-template-columns:1fr}}
+.qr{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+#qr{background:#fff;padding:12px;border-radius:12px;min-height:244px;min-width:244px;display:flex;align-items:center;justify-content:center}
+.codigo{font-family:var(--serif);font-size:3.4rem;letter-spacing:.18em;color:var(--azul);font-weight:600;line-height:1}
+.enlace{font-size:.85rem;word-break:break-all;color:var(--tenue)}
+.nombres{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.nombre{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:var(--azul-suave);border:1px solid var(--linea);font-weight:600}
+.nombre .p{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.nombre.fuera{opacity:.5}.nombre.fuera .p{background:var(--tenue)}
+.nombre button{border:0;background:transparent;color:var(--tenue);padding:0 2px;font-size:1rem}
+.pregunta h2{font-size:clamp(1.6rem,3.2vw,2.6rem);margin:12px 0 20px}
+.cabeza{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cabeza .espacio{flex:1}
+.reloj{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--azul);min-width:3ch;text-align:right}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media (max-width:820px){.ops{grid-template-columns:1fr}}
+.op{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:14px;border:2px solid var(--linea);background:var(--tarjeta);font-size:clamp(1.05rem,1.7vw,1.4rem);position:relative;overflow:hidden}
+.op .txt{position:relative;z-index:1;flex:1}
+.op .cuenta{position:relative;z-index:1;font-weight:700;font-variant-numeric:tabular-nums}
+.op .relleno{position:absolute;inset:0 auto 0 0;background:var(--azul-suave);z-index:0;transition:width .5s}
+.op.bien{border-color:var(--ok);background:var(--ok-suave)}
+.op.bien .relleno{background:rgba(31,107,58,.18)}
+.op.apagada{opacity:.55}
+.respondidas{font-size:1.1rem;color:var(--tenue)}
+.ranking{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.ranking li{display:grid;grid-template-columns:3rem 1fr auto auto;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;background:var(--tarjeta);border:1px solid var(--linea);font-size:1.2rem}
+.ranking li .pos{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--tenue)}
+.ranking li:nth-child(1){border-color:var(--oro);background:var(--oro-suave)}
+.ranking li:nth-child(1) .pos{color:var(--oro)}
+.ranking .pts{font-weight:700;font-variant-numeric:tabular-nums;color:var(--azul)}
+.ranking .ac{color:var(--tenue);font-size:.95rem}
+.resumen{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0 20px}
+.dato{background:var(--tarjeta);border:1px solid var(--linea);border-radius:14px;padding:16px}
+.dato b{display:block;font-family:var(--serif);font-size:2.4rem;color:var(--azul);line-height:1.1}
+.dato span{color:var(--tenue);font-size:.9rem}
+.barras{display:grid;gap:10px}
+.fila-c{display:grid;grid-template-columns:3.2rem 1fr 4.5rem;gap:10px;align-items:center}
+.fila-c .c{font-family:var(--serif);font-weight:600;color:var(--azul)}
+.dos{display:grid;gap:4px}
+.b{height:14px;border-radius:7px;background:var(--azul-suave);overflow:hidden}
+.b>i{display:block;height:100%}
+.b.e>i{background:var(--tenue)}.b.s>i{background:var(--oro)}
+.leyenda{display:flex;gap:16px;font-size:.85rem;color:var(--tenue);margin-bottom:10px}
+.leyenda i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.aviso{padding:12px 16px;border-radius:10px;background:var(--mal-suave);color:var(--mal);margin:12px 0}
+.titulo-vista{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:8px 0 16px}
+.titulo-vista h2{font-size:2rem}
+</style>
+</head>
+<body>
+<div class="barra">
+  <div class="marca">Juego de los <span>Doce Conceptos</span></div>
+  <span class="chip" id="red"><span class="punto"></span><span id="redTxt">Iniciando…</span></span>
+  <span class="chip" id="chipSala">Sala —</span>
+  <span class="chip" id="chipGente">0 participantes</span>
+  <div class="espacio"></div>
+  <button class="btn peq fantasma" id="btnPantallaCompleta" title="Pantalla completa">⛶ Pantalla completa</button>
+</div>
+<div class="envoltura">
+  <div class="mando" id="mando">
+    <button class="btn" id="btnLobby">Inscripción</button>
+    <button class="btn prim" id="btnEntrada">Iniciar test de entrada</button>
+    <button class="btn oro" id="btnSalida">Iniciar test de salida</button>
+    <button class="btn" id="btnTablero">Tablero</button>
+    <button class="btn" id="btnComparar">Comparativo entrada / salida</button>
+    <div class="espacio"></div>
+    <label>Tiempo por pregunta
+      <select id="selDur"><option value="20">20 s</option><option value="30">30 s</option><option value="45">45 s</option><option value="60">60 s</option><option value="90">90 s</option></select>
+    </label>
+    <button class="btn peq" id="btnCSV">Exportar CSV</button>
+    <button class="btn peq" id="btnNueva">Nueva sala</button>
+  </div>
+  <div id="avisoArchivo" class="aviso oculto">Esta pantalla está abierta como archivo local. Para que los celulares puedan entrar, ábrela desde <b>https://wiroal.github.io/juego_conceptos/pantalla.html</b>.</div>
+  <main id="vista"></main>
+</div>
+
+<script src="datos.js"></script>
+<script src="comun.js"></script>
+<script>
+const CLAVE = 'aa-conceptos-pantalla';
+function nuevoEstado(){
+  return { sala: codigoSala(), dur: 30, part: {}, resp: { entrada: {}, salida: {} },
+           fase: 'lobby', test: null, q: -1, inicio: 0, fin: 0, ultimoTest: null };
+}
+let E = guardado.leer(CLAVE) || nuevoEstado();
+if (!E.resp || !E.resp.entrada) E.resp = { entrada: {}, salida: {} };
+// Si se recarga en medio de una pregunta abierta, se reabre con el tiempo completo
+if (E.fase === 'pregunta') { E.inicio = Date.now(); E.fin = E.inicio + E.dur * 1000; }
+const guardar = () => guardado.escribir(CLAVE, E);
+
+const conns = new Map();          // token -> conexión
+let peer = null, intentosId = 0;
+
+/* ---------- cálculos ---------- */
+const P = (t, q) => TESTS[t].preguntas[q];
+const respDe = (t, q) => (E.resp[t][q] = E.resp[t][q] || {});
+const conNombre = () => Object.entries(E.part).filter(([, p]) => p.nombre);
+const conectado = tk => { const c = conns.get(tk); return !!(c && c.open); };
+function totales(tk, t){
+  let pts = 0, ac = 0, n = 0;
+  for (const q in E.resp[t]) { const r = E.resp[t][q][tk]; if (r) { pts += r.pts; n++; if (r.ok) ac++; } }
+  return { pts, ac, n };
+}
+function ranking(t){
+  return conNombre().map(([tk, p]) => ({ tk, nombre: p.nombre, ...totales(tk, t) }))
+    .filter(x => x.n > 0 || E.test === t)
+    .sort((a, b) => b.pts - a.pts || b.ac - a.ac || a.nombre.localeCompare(b.nombre));
+}
+function participoEn(tk, t){ return totales(tk, t).n > 0; }
+
+/* ---------- red ---------- */
+function setRed(tipo, txt){
+  const el = document.getElementById('red'); el.className = 'chip ' + tipo;
+  document.getElementById('redTxt').textContent = txt;
+}
+function iniciarPeer(){
+  if (peer && !peer.destroyed) peer.destroy();
+  setRed('esp', 'Abriendo sala…');
+  peer = new Peer(SALA_PREFIJO + E.sala, { debug: 1 });
+  peer.on('open', () => { intentosId = 0; setRed('ok', 'Sala abierta'); });
+  peer.on('connection', conn => {
+    conn.on('data', d => manejar(conn, d));
+    conn.on('close', () => soltar(conn));
+    conn.on('error', () => soltar(conn));
+  });
+  peer.on('disconnected', () => {
+    setRed('esp', 'Reconectando…');
+    setTimeout(() => { if (peer && !peer.destroyed && peer.disconnected) { try { peer.reconnect(); } catch (e) {} } }, 2000);
+  });
+  peer.on('error', err => {
+    if (err.type === 'unavailable-id') {
+      intentosId++;
+      if (intentosId > 6) { setRed('mal', 'La sala está abierta en otra ventana'); return; }
+      setRed('esp', 'Recuperando la sala…');
+      setTimeout(iniciarPeer, 4000);
+    } else if (['network', 'server-error', 'socket-error', 'socket-closed'].includes(err.type)) {
+      setRed('mal', 'Sin conexión al servidor de enlace');
+      setTimeout(() => { if (peer && !peer.destroyed && peer.disconnected) { try { peer.reconnect(); } catch (e) {} } }, 3000);
+    } else if (err.type !== 'peer-unavailable') {
+      console.warn('PeerJS', err.type, err);
+    }
+  });
+}
+function soltar(conn){
+  if (conn._tk && conns.get(conn._tk) === conn) { conns.delete(conn._tk); render(); }
+}
+function estadoPara(tk){
+  const p = E.part[tk] || {};
+  const t = E.test, abierta = E.fase === 'pregunta' || E.fase === 'revelada';
+  const preg = t && E.q >= 0 && E.q < TESTS[t].preguntas.length ? P(t, E.q) : null;
+  const r = preg ? (E.resp[t][E.q] || {})[tk] : null;
+  const rk = t ? ranking(t) : [];
+  const puesto = rk.findIndex(x => x.tk === tk) + 1;
+  const tot = t ? totales(tk, t) : { pts: 0, ac: 0, n: 0 };
+  const res = {};
+  for (const k of ['entrada', 'salida']) { const x = totales(tk, k); res[k] = { ac: x.ac, n: x.n, total: TESTS[k].preguntas.length }; }
+  return {
+    t: 'estado', sala: E.sala, fase: E.fase, test: t, tituloTest: t ? TESTS[t].titulo : '',
+    q: E.q, total: t ? TESTS[t].preguntas.length : 0,
+    miNombre: p.nombre || null,
+    tomados: conNombre().filter(([k]) => k !== tk).map(([, x]) => x.nombre),
+    pregunta: abierta && preg ? { c: preg.c, texto: preg.texto, op: preg.op } : null,
+    restanteMs: E.fase === 'pregunta' ? Math.max(0, E.fin - Date.now()) : 0,
+    durMs: E.dur * 1000,
+    miResp: r ? r.op : null, misPtsPregunta: r ? r.pts : 0,
+    correcta: E.fase === 'revelada' && preg ? preg.correcta : null,
+    cita: E.fase === 'revelada' && preg ? preg.cita : null,
+    pag: E.fase === 'revelada' && preg ? FUENTE_MANUAL + ', ' + preg.pag : null,
+    misPts: tot.pts, misAciertos: tot.ac, puesto, jugadores: rk.length, resumen: res
+  };
+}
+function enviar(tk, extra){
+  const c = conns.get(tk);
+  if (c && c.open) { try { c.send(extra || estadoPara(tk)); } catch (e) {} }
+}
+function difundir(){ guardar(); for (const tk of conns.keys()) enviar(tk); render(); }
+
+function manejar(conn, d){
+  if (!d || typeof d !== 'object') return;
+  if (d.t === 'hola') {
+    if (typeof d.token !== 'string' || d.token.length > 80) return;
+    const previa = conns.get(d.token);
+    if (previa && previa !== conn) { try { previa.close(); } catch (e) {} }
+    conn._tk = d.token; conns.set(d.token, conn);
+    if (!E.part[d.token]) E.part[d.token] = { nombre: null };
+    guardar(); enviar(d.token); render();
+    return;
+  }
+  const tk = conn._tk; if (!tk || !E.part[tk]) return;
+  if (d.t === 'elegir') {
+    const valido = NOMBRES.some(x => x.n === d.nombre);
+    const tomado = conNombre().some(([k, p]) => k !== tk && p.nombre === d.nombre);
+    if (!valido) return;
+    if (tomado) { enviar(tk, { t: 'aviso', msg: 'Ese nombre ya lo tomó otra persona. Elige otro.' }); enviar(tk); return; }
+    if (E.part[tk].nombre && E.fase !== 'lobby') { enviar(tk, { t: 'aviso', msg: 'Solo puedes cambiar de nombre durante la inscripción.' }); return; }
+    E.part[tk].nombre = d.nombre;
+    difundir();
+    return;
+  }
+  if (d.t === 'resp') {
+    if (E.fase !== 'pregunta' || d.test !== E.test || d.q !== E.q) return;
+    if (!E.part[tk].nombre) return;
+    const op = Number(d.op); if (!(op >= 0 && op <= 3)) return;
+    const rs = respDe(E.test, E.q); if (rs[tk]) return;
+    const ahora = Date.now(); if (ahora > E.fin + 1500) return;
+    const restante = Math.max(0, E.fin - ahora);
+    const ok = op === P(E.test, E.q).correcta;
+    rs[tk] = { op, ok, ms: ahora - E.inicio, pts: ok ? Math.round(500 + 500 * restante / (E.dur * 1000)) : 0 };
+    guardar(); enviar(tk);
+    const pendientes = conNombre().filter(([k]) => conectado(k) && !rs[k]).length;
+    if (pendientes === 0) revelar(); else render();
+  }
+}
+
+/* ---------- flujo ---------- */
+function iniciarTest(t){
+  const yaHay = Object.keys(E.resp[t]).length > 0;
+  if (yaHay && !confirm(`El ${TESTS[t].titulo.toLowerCase()} ya tiene respuestas. ¿Borrarlas y empezarlo de nuevo?`)) return;
+  if (!conNombre().length && !confirm('Todavía no hay participantes inscritos. ¿Empezar de todas formas?')) return;
+  E.resp[t] = {}; E.test = t; E.ultimoTest = t; E.q = -1;
+  siguiente();
+}
+function siguiente(){
+  if (!E.test) return;
+  if (E.q + 1 < TESTS[E.test].preguntas.length) {
+    E.q++; E.fase = 'pregunta'; E.inicio = Date.now(); E.fin = E.inicio + E.dur * 1000;
+  } else { E.fase = 'final'; }
+  difundir();
+}
+function revelar(){ if (E.fase !== 'pregunta') return; E.fase = 'revelada'; difundir(); }
+function irA(f){ E.fase = f; if (f === 'lobby' || f === 'comparativo') { /* conserva test */ } difundir(); }
+function accionPrincipal(){
+  if (E.fase === 'pregunta') revelar();
+  else if (E.fase === 'revelada') { if (E.q + 1 >= TESTS[E.test].preguntas.length) { E.fase = 'final'; difundir(); } else irA('tablero'); }
+  else if (E.fase === 'tablero') siguiente();
+}
+
+/* ---------- vistas ---------- */
+const V = document.getElementById('vista');
+function render(){
+  document.getElementById('chipSala').textContent = 'Sala ' + E.sala;
+  const n = conNombre().length, on = conNombre().filter(([k]) => conectado(k)).length;
+  document.getElementById('chipGente').textContent = `${n} inscritos · ${on} en línea`;
+  document.getElementById('selDur').value = String(E.dur);
+  const f = E.fase;
+  if (f === 'lobby') V.innerHTML = vLobby();
+  else if (f === 'pregunta' || f === 'revelada') V.innerHTML = vPregunta();
+  else if (f === 'tablero' || f === 'final') V.innerHTML = vTablero();
+  else if (f === 'comparativo') V.innerHTML = vComparativo();
+  if (f === 'lobby') pintarQR();
+  tic();
+}
+function urlJugar(){ return new URL('jugar.html?sala=' + E.sala, location.href).href; }
+let qrHecho = null;
+function pintarQR(){
+  const el = document.getElementById('qr'); if (!el) return;
+  if (window.QRCode) {
+    el.innerHTML = '';
+    new QRCode(el, { text: urlJugar(), width: 220, height: 220, colorDark: '#003087', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  } else el.innerHTML = '<span class="tenue">Cargando QR…</span>';
+}
+function vLobby(){
+  const lista = conNombre().sort((a, b) => a[1].nombre.localeCompare(b[1].nombre));
+  const chips = lista.map(([k, p]) => `<span class="nombre ${conectado(k) ? '' : 'fuera'}"><span class="p"></span>${esc(p.nombre)}<button title="Liberar este nombre" data-liberar="${esc(k)}">×</button></span>`).join('');
+  return `<div class="lobby">
+    <div class="tarjeta qr">
+      <span class="tenue">Escanea o entra con el código</span>
+      <div id="qr"></div>
+      <div class="codigo">${esc(E.sala)}</div>
+      <div class="enlace">${esc(urlJugar())}</div>
+    </div>
+    <div class="tarjeta">
+      <div class="titulo-vista"><h2>Inscripción</h2><span class="tenue">${lista.length} de ${NOMBRES.length} nombres tomados</span></div>
+      <p class="tenue">Cada participante elige un nombre de la literatura de AA: ${NOMBRES.slice(0, 6).map(x => esc(x.n)).join(', ')}…</p>
+      <div class="nombres">${chips || '<span class="tenue">Esperando a los primeros participantes…</span>'}</div>
+    </div>
+  </div>`;
+}
+function vPregunta(){
+  const t = E.test, preg = P(t, E.q), rs = E.resp[t][E.q] || {};
+  const nResp = Object.keys(rs).length, nTot = conNombre().filter(([k]) => conectado(k) || rs[k]).length;
+  const revel = E.fase === 'revelada';
+  const cuentas = [0, 0, 0, 0]; Object.values(rs).forEach(r => cuentas[r.op]++);
+  const max = Math.max(1, nResp);
+  const ops = preg.op.map((o, i) => {
+    const cls = revel ? (i === preg.correcta ? 'bien' : 'apagada') : '';
+    const ancho = revel ? (cuentas[i] / max * 100) : 0;
+    return `<div class="op ${cls}"><span class="relleno" style="width:${ancho}%"></span><span class="opcion-letra l${i}">${LETRAS[i]}</span><span class="txt">${esc(o)}</span>${revel ? `<span class="cuenta">${cuentas[i]}</span>` : ''}</div>`;
+  }).join('');
+  const ultima = E.q + 1 >= TESTS[t].preguntas.length;
+  return `<div class="pregunta">
+    <div class="cabeza">
+      <span class="insignia">${esc(TESTS[t].titulo)} · ${E.q + 1} de ${TESTS[t].preguntas.length}</span>
+      <span class="insignia" style="background:var(--azul-suave);color:var(--azul)">Concepto ${esc(preg.c)}</span>
+      <div class="espacio"></div>
+      <span class="respondidas"><b id="nResp">${nResp}</b> de ${nTot} respondieron</span>
+      ${revel ? '' : '<span class="reloj" id="reloj"></span>'}
+    </div>
+    ${revel ? '' : '<div class="tiempo" style="margin-top:12px"><i id="barra"></i></div>'}
+    <h2>${esc(preg.texto)}</h2>
+    <div class="ops">${ops}</div>
+    ${revel ? `<div class="cita" style="margin-top:20px">“${esc(preg.cita)}”<small>${esc(FUENTE_MANUAL)}, ${esc(preg.pag)}</small></div>` : ''}
+    <div class="mando">
+      ${revel
+        ? `<button class="btn" data-ir="tablero">Ver tablero</button><button class="btn prim" data-acc="sig">${ultima ? 'Resultados finales' : 'Siguiente pregunta'} →</button>`
+        : `<button class="btn prim" data-acc="revelar">Cerrar y mostrar respuesta</button>`}
+      <span class="tenue" style="font-size:.85rem">Tecla espacio: avanzar</span>
+    </div>
+  </div>`;
+}
+function vTablero(){
+  const t = E.test || E.ultimoTest;
+  if (!t) return `<div class="tarjeta"><h2>Tablero</h2><p class="tenue">Todavía no se ha jugado ningún test.</p></div>`;
+  const rk = ranking(t), nP = TESTS[t].preguntas.length;
+  const jugadas = Object.keys(E.resp[t]).length;
+  const final = E.fase === 'final';
+  const filas = rk.slice(0, 15).map((x, i) => `<li><span class="pos">${i + 1}</span><span>${esc(x.nombre)}</span><span class="ac">${x.ac}/${jugadas} aciertos</span><span class="pts">${x.pts.toLocaleString('es-CO')}</span></li>`).join('');
+  const prom = rk.length ? rk.reduce((s, x) => s + x.ac, 0) / rk.length : 0;
+  return `<div class="titulo-vista"><h2>${final ? 'Resultados finales' : 'Tablero'} · ${esc(TESTS[t].titulo)}</h2>
+      <span class="tenue">${jugadas} de ${nP} preguntas · promedio ${prom.toFixed(1)} aciertos</span></div>
+    <ol class="ranking">${filas || '<li><span></span><span class="tenue">Sin respuestas todavía</span></li>'}</ol>
+    ${rk.length > 15 ? `<p class="tenue">…y ${rk.length - 15} participantes más.</p>` : ''}
+    <div class="mando">
+      ${final
+        ? `<button class="btn" data-ir="lobby">Volver a inscripción</button>${t === 'entrada' ? '' : '<button class="btn prim" data-ir="comparativo">Ver comparativo entrada / salida →</button>'}`
+        : (E.fase === 'tablero' && E.test ? `<button class="btn prim" data-acc="sig">Siguiente pregunta →</button>` : '')}
+    </div>`;
+}
+function vComparativo(){
+  const ne = TESTS.entrada.preguntas.length, ns = TESTS.salida.preguntas.length;
+  const gente = conNombre().map(([tk, p]) => ({ nombre: p.nombre, e: totales(tk, 'entrada'), s: totales(tk, 'salida') }))
+    .filter(x => x.e.n || x.s.n).sort((a, b) => (b.s.ac - b.e.ac) - (a.s.ac - a.e.ac) || a.nombre.localeCompare(b.nombre));
+  const pct = (arr, k) => { const v = arr.filter(x => x[k].n); return v.length ? v.reduce((s, x) => s + x[k].ac / x[k].n, 0) / v.length * 100 : null; };
+  const pe = pct(gente, 'e'), ps = pct(gente, 's');
+  const ambos = gente.filter(x => x.e.n && x.s.n);
+  const mejoran = ambos.filter(x => x.s.ac / x.s.n > x.e.ac / x.e.n).length;
+  const fmt = v => v == null ? '—' : Math.round(v) + '%';
+  // por Concepto (una pregunta por Concepto en cada test)
+  const porC = TESTS.entrada.preguntas.map((pq, i) => {
+    const c = pq.c;
+    const qs = TESTS.salida.preguntas.findIndex(x => x.c === c);
+    const tasa = (t, q) => { const rs = E.resp[t][q]; if (!rs) return null; const v = Object.values(rs); return v.length ? v.filter(r => r.ok).length / v.length * 100 : null; };
+    return { c, e: tasa('entrada', i), s: qs >= 0 ? tasa('salida', qs) : null };
+  });
+  const barras = porC.map(x => `<div class="fila-c"><span class="c">${esc(x.c)}</span>
+      <div class="dos"><div class="b e"><i style="width:${x.e ?? 0}%"></i></div><div class="b s"><i style="width:${x.s ?? 0}%"></i></div></div>
+      <span class="tenue" style="font-size:.85rem;text-align:right">${fmt(x.e)} → <b style="color:var(--tinta)">${fmt(x.s)}</b></span></div>`).join('');
+  const filas = gente.map(x => {
+    const d = (x.e.n && x.s.n) ? x.s.ac - x.e.ac : null;
+    return `<tr><td>${esc(x.nombre)}</td><td class="num">${x.e.n ? x.e.ac + '/' + ne : '—'}</td><td class="num">${x.s.n ? x.s.ac + '/' + ns : '—'}</td>
+      <td class="num ${d > 0 ? 'sube' : d < 0 ? 'baja' : ''}">${d == null ? '—' : (d > 0 ? '+' : '') + d}</td></tr>`;
+  }).join('');
+  return `<div class="titulo-vista"><h2>Comparativo entrada / salida</h2><span class="tenue">Un Concepto por pregunta en cada test</span></div>
+    <div class="resumen">
+      <div class="dato"><b>${fmt(pe)}</b><span>Aciertos promedio · entrada</span></div>
+      <div class="dato"><b style="color:var(--oro)">${fmt(ps)}</b><span>Aciertos promedio · salida</span></div>
+      <div class="dato"><b>${pe != null && ps != null ? (ps - pe >= 0 ? '+' : '') + Math.round(ps - pe) : '—'}</b><span>Puntos porcentuales de cambio</span></div>
+      <div class="dato"><b>${mejoran}/${ambos.length}</b><span>Participantes que mejoraron (hicieron ambos)</span></div>
+    </div>
+    <div class="lobby" style="grid-template-columns:1fr 1fr">
+      <div class="tarjeta"><h3 style="margin-bottom:8px">Aciertos por Concepto</h3>
+        <div class="leyenda"><span><i style="background:var(--tenue)"></i>Entrada</span><span><i style="background:var(--oro)"></i>Salida</span></div>
+        <div class="barras">${barras}</div></div>
+      <div class="tarjeta"><h3 style="margin-bottom:8px">Por participante</h3>
+        <table><thead><tr><th>Nombre</th><th class="num">Entrada</th><th class="num">Salida</th><th class="num">Cambio</th></tr></thead>
+        <tbody>${filas || '<tr><td colspan="4" class="tenue">Sin datos todavía</td></tr>'}</tbody></table></div>
+    </div>`;
+}
+function tic(){
+  if (E.fase !== 'pregunta') return;
+  const rest = Math.max(0, E.fin - Date.now());
+  const b = document.getElementById('barra'), r = document.getElementById('reloj');
+  if (b) b.style.width = (rest / (E.dur * 1000) * 100) + '%';
+  if (r) r.textContent = Math.ceil(rest / 1000);
+  if (rest <= 0) revelar();
+}
+setInterval(tic, 200);
+
+/* ---------- exportar ---------- */
+function exportarCSV(){
+  const filas = [['test', 'pregunta', 'concepto', 'participante', 'opcion_elegida', 'correcta', 'acierto', 'puntos', 'segundos']];
+  for (const t of ['entrada', 'salida']) for (const q in E.resp[t]) {
+    const preg = P(t, +q);
+    for (const tk in E.resp[t][q]) {
+      const r = E.resp[t][q][tk], nom = (E.part[tk] || {}).nombre || '(sin nombre)';
+      filas.push([t, +q + 1, preg.c, nom, LETRAS[r.op], LETRAS[preg.correcta], r.ok ? 'si' : 'no', r.pts, (r.ms / 1000).toFixed(1)]);
+    }
+  }
+  const csv = filas.map(f => f.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(';')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `conceptos_sala_${E.sala}_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* ---------- eventos ---------- */
+document.getElementById('btnLobby').onclick = () => irA('lobby');
+document.getElementById('btnEntrada').onclick = () => iniciarTest('entrada');
+document.getElementById('btnSalida').onclick = () => iniciarTest('salida');
+document.getElementById('btnTablero').onclick = () => {
+  if (E.fase === 'pregunta') { revelar(); return; }
+  if (!E.test && E.ultimoTest) E.test = E.ultimoTest;
+  const terminado = E.test && E.q + 1 >= TESTS[E.test].preguntas.length;
+  irA(E.fase === 'final' || terminado ? 'final' : 'tablero');
+};
+document.getElementById('btnComparar').onclick = () => irA('comparativo');
+document.getElementById('selDur').onchange = e => { E.dur = +e.target.value; guardar(); };
+document.getElementById('btnCSV').onclick = exportarCSV;
+document.getElementById('btnNueva').onclick = () => {
+  if (!confirm('¿Crear una sala nueva? Se borran los inscritos y todos los resultados (exporta el CSV antes si los necesitas).')) return;
+  for (const c of conns.values()) { try { c.close(); } catch (e) {} }
+  conns.clear(); E = nuevoEstado(); guardar(); iniciarPeer(); render();
+};
+document.getElementById('btnPantallaCompleta').onclick = () => {
+  if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.();
+};
+V.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.acc === 'revelar') revelar();
+  else if (b.dataset.acc === 'sig') accionPrincipal();
+  else if (b.dataset.ir) irA(b.dataset.ir);
+  else if (b.dataset.liberar) {
+    const tk = b.dataset.liberar, p = E.part[tk];
+    if (p && confirm(`¿Liberar el nombre “${p.nombre}”?`)) { p.nombre = null; difundir(); }
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.target.closest('select,input,textarea')) return;
+  if (e.code === 'Space' || e.code === 'ArrowRight' || e.code === 'Enter') { e.preventDefault(); accionPrincipal(); }
+});
+
+/* ---------- arranque ---------- */
+if (location.protocol === 'file:') document.getElementById('avisoArchivo').classList.remove('oculto');
+render();
+cargarScript(URLS_QR).then(() => { if (E.fase === 'lobby') pintarQR(); }).catch(() => {
+  const el = document.getElementById('qr'); if (el) el.innerHTML = '<span class="tenue">No se pudo cargar el QR; usa el enlace.</span>';
+});
+cargarScript(URLS_PEERJS).then(iniciarPeer).catch(() => setRed('mal', 'No se pudo cargar PeerJS (revisa internet)'));
+</script>
+</body>
+</html>
