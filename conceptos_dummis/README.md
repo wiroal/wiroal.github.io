@@ -6,20 +6,23 @@ Cuaderno de estudio para los **Doce Conceptos para el Servicio Mundial de A.A.**
 
 ## Qué contiene
 
-- `index.html` — cuaderno interactivo y autónomo (sin dependencias). Incluye:
-  - ruta de 8 semanas con fechas y sesiones;
-  - los 12 Conceptos con Forma corta, explicación, aplicación al grupo, rol de RSG, trampa, cita de Bill, micro-acción y diario;
-  - mapa interactivo, tarjetas de repaso, quiz de casos, mapa de tensiones y bitácora;
-  - progreso guardado en `localStorage` (nada se envía a un servidor);
-  - exportación e importación de progreso en JSON.
+- `index.html` — **Doce Conceptos en Juego** (versión 2026). Juego de aprendizaje autónomo para quien empieza desde cero:
+  - 8 niveles (0 a 7): Primeros pasos, La fuente, Los tres derechos, El motor, Liderazgo, Personas y garantías, El gran tejido y el Reto de Excelencia (20 preguntas, 3 vidas);
+  - fichas por Concepto: en una frase, Forma corta textual, imagen sencilla, explicación a fondo, cita de Bill con página, dinámica de grupo, puente con los Pasos y con las Tradiciones, trampa y micro-reto;
+  - 99 retos de seis tipos (opción múltiple, verdadero/falso, casos, completar la Forma corta, emparejar y ordenar), con explicación y fuente;
+  - XP, rachas, estrellas (★ 80 % · ★★ 90 % · ★★★ 100 %), rangos, insignias, metas y reto diario;
+  - mapa de puentes Conceptos–Pasos–Tradiciones, glosario y exportación/importación del progreso (localStorage).
+- `cuaderno.html` — el cuaderno de 8 semanas anterior (ruta, bitácora, tarjetas y casos).
 - `vault/` — vault de Obsidian con notas enlazadas, plantillas, casos, glosario y MOC.
 - `README.md` — este archivo.
+
+Todas las citas fueron cotejadas con el *Manual de Servicio de AA 2025-2027* (OSG Colombia) y *Doce Pasos y Doce Tradiciones*; las páginas “C” son de la sección de los Doce Conceptos. Los “puentes” son material de estudio, no literatura aprobada.
 
 ## Cómo usarlo
 
 ### En el navegador
 
-Abre la página publicada o `index.html`. Empieza por la **Semana 0** y fija tu fecha de inicio en la ruta. El progreso se guarda en tu navegador; usa **Exportar** para respaldarlo.
+Abre la página publicada o `index.html` y empieza por el **Nivel 0**: lee las fichas y luego haz los retos. Con 80 % se abre el siguiente nivel. El progreso se guarda en tu navegador; usa **Exportar** (en “Fuentes y progreso”) para respaldarlo. Si prefieres el plan de 8 semanas con bitácora, abre `cuaderno.html`.
 
 ### En Obsidian
 

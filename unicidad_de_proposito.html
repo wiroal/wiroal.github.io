@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La unicidad de propósito · HJ3RAW</title>
+<meta name="description" content="La unicidad de propósito · documento de William R. Alvarez (HJ3RAW)" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4efe3; --bg-elevated: #fbf8f0; --ink: #1c1a17; --ink-soft: #3a3630;
+  --ink-muted: #8a8478; --rule: #d9d2c1; --rule-strong: #b8ae96;
+  --accent: #a8431a; --accent-deep: #6b2a0f; --gold: #8a6b2e;
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --container: 900px; --pad-x: clamp(1.5rem, 4vw, 4rem);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body);
+  font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168,67,26,0.04), transparent 60%),
+    radial-gradient(ellipse 80% 40% at 100% 100%, rgba(138,107,46,0.05), transparent 60%);
+}
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); }
+.top-bar { border-bottom: 1px solid var(--rule); padding: 1.1rem 0; font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.top-bar .inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.callsign { color: var(--accent); font-weight: 600; letter-spacing: 0.12em; }
+.back { color: var(--ink-muted); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+.back:hover { color: var(--accent); }
+header.doc { padding: clamp(3rem, 7vw, 5rem) 0 1.5rem; border-bottom: 1px solid var(--rule-strong); margin-bottom: 2.5rem; }
+header.doc .kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+header.doc .kicker::before { content: ''; width: 2.5rem; height: 1px; background: var(--accent); }
+header.doc h1 { font-family: var(--font-display); font-weight: 350; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.08; font-variation-settings: "opsz" 96, "SOFT" 40; }
+header.doc .fecha { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); margin-top: 1rem; }
+article h1, article h2, article h3, article h4 {
+  font-family: var(--font-display); font-weight: 400; line-height: 1.2;
+  color: var(--ink); font-variation-settings: "opsz" 48, "SOFT" 40;
+}
+article h1 { font-size: 1.9rem; margin: 2.8rem 0 1rem; }
+article h2 { font-size: 1.55rem; margin: 3rem 0 1rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); }
+article h3 { font-size: 1.2rem; margin: 2rem 0 0.7rem; color: var(--accent-deep); }
+article h4 { font-size: 1.02rem; margin: 1.5rem 0 0.5rem; font-family: var(--font-body); font-weight: 700; }
+article p { margin: 0 0 1.1rem; color: var(--ink-soft); }
+article strong { color: var(--ink); font-weight: 650; }
+article em { color: var(--ink-soft); }
+article a { color: var(--accent-deep); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+article a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+article ul, article ol { margin: 0 0 1.2rem 1.3rem; color: var(--ink-soft); }
+article li { margin-bottom: 0.4rem; }
+article blockquote { margin: 1.4rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--accent); background: var(--bg-elevated); color: var(--ink); }
+article blockquote p { margin: 0.6rem 0; }
+article hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+article code { font-family: var(--font-mono); font-size: 0.86em; background: #efe7d6;
+  padding: 0.1em 0.35em; border-radius: 2px; }
+article table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.92rem; }
+article th, article td { border: 1px solid var(--rule); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+article th { background: var(--bg-elevated); font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+article tr:nth-child(even) td { background: rgba(251,248,240,0.55); }
+footer.colophon { margin-top: 4rem; padding: 2rem 0 3rem; border-top: 1px solid var(--rule);
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted);
+  display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="container inner">
+    <div><span class="callsign">HJ3RAW</span> <span style="margin-left:.6rem;">/ Bogotá, Colombia</span></div>
+    <a class="back" href="index.html">← Volver al índice</a>
+  </div>
+</div>
+<div class="container">
+  <header class="doc">
+    <div class="kicker">Servicio · AA</div>
+    <h1>La unicidad de propósito</h1>
+    <div class="fecha">25 de octubre de 2026 · Bogotá</div>
+  </header>
+  <article>
+<h1>La unicidad de propósito a partir de la recuperación del enfermo alcohólico</h1>
+<p><strong>Análisis documental y conceptual</strong> Fuentes: <em>Doce Pasos y Doce Tradiciones</em> (caps. 5 y 6), <em>Alcohólicos Anónimos</em> (cap. 7 y Tradiciones en forma larga), folleto <em>El grupo de A.A.</em> (SP-16), <em>Manual de Servicio</em> edición 2025-2027, Preámbulo de AA, sitios oficiales <code>aa.org/es</code> y <code>aacolombia.org</code>. Fecha de trabajo: 25 de octubre de 2026.</p>
+<hr />
+<h2>0. Resumen en diez tesis</h2>
+<ol><li>La unicidad de propósito no es una regla administrativa: es el <strong>principio de identidad</strong> de AA. El 12 y 12 dice que «la vida misma de nuestra Comunidad depende de la conservación de este principio».</li><li>El propósito se define por <strong>tres coordenadas</strong>: un destinatario (el alcohólico que aún sufre), un contenido (el mensaje) y un medio (un alcohólico que ya encontró la salida).</li><li>La recuperación del enfermo alcohólico no es solo el <strong>fin</strong>; es también el <strong>método</strong> de la recuperación del que ayuda. Esa doble dirección es la paradoja central.</li><li>Por eso la unicidad no empobrece al grupo: lo <strong>protege</strong> de las mil causas nobles que lo disolverían.</li><li>Llamar «enfermo» al alcohólico no es un eufemismo: cambia la relación (paciencia, no persuasión; compasión, no juicio) y funda la regla de no forzar a nadie.</li><li>Unicidad <strong>no</strong> significa exclusividad: la Tradición 3 abre la puerta y la Tradición 6 permite cooperar sin afiliarse.</li><li>Unicidad <strong>no</strong> significa monotonía: caben grupos especializados si todos son alcohólicos y la puerta queda abierta.</li><li>Lo que diluye el propósito no es el error doctrinal, sino las <strong>lealtades añadidas</strong>: dinero, prestigio, causa, institución, marca.</li><li>El principio se defiende con un <strong>test de decisiones</strong>, no con un juramento.</li><li>Su límite es también su fuerza: no dice cómo hacer las cosas; dice <strong>para qué</strong> existen.</li></ol>
+<hr />
+<h2>1. Dónde está escrito: el corpus de la unicidad</h2>
+<p>La expresión «unicidad de propósito» no aparece en el texto corto de la Tradición 5. Aparece en tres lugares distintos, y conviene verlos juntos porque se iluminan entre sí.</p>
+<h3>1.1. El Preámbulo: el propósito en primera persona del plural</h3>
+<blockquote><p>«Nuestro objetivo primordial es mantenernos sobrios y ayudar a otros alcohólicos a alcanzar el estado de sobriedad.» — Preámbulo de AA, <em>Manual de Servicio</em> 2025-2027, p. 3</p></blockquote>
+<p>El Preámbulo pone el propósito en <strong>nosotros</strong>, no en el grupo como entidad. Y une dos cosas que la mentalidad administrativa separa: mantenerme sobrio y ayudar a otro. No son dos objetivos: son el mismo, visto desde dentro y desde fuera.</p>
+<h3>1.2. La Tradición 5, forma corta y forma larga</h3>
+<blockquote><p>«Cada grupo tiene un solo objetivo primordial: llevar el mensaje al alcohólico que aún está sufriendo.» — Tradición 5, forma corta</p></blockquote>
+<blockquote><p>«Cada grupo de A.A. debe ser una entidad espiritual con un solo objetivo primordial — el de llevar el mensaje al alcohólico que aún sufre.» — Tradición 5, forma larga</p></blockquote>
+<p>La forma larga añade dos palabras decisivas: <strong>entidad espiritual</strong>. El grupo no es una asociación de servicios ni un centro de ayuda: es una entidad cuyo eje es espiritual, y su objetivo es uno. La forma corta añade <strong>aún</strong>: el destinatario está sufriendo ahora.</p>
+<h3>1.3. El capítulo de la Tradición 5 en el 12 y 12</h3>
+<p>Es el desarrollo más extenso y el que da el tono:</p>
+<blockquote><p>«“¡Zapatero a tus zapatos!” …más vale que hagas una cosa perfectamente bien que muchas mal hechas. Este es el tema central de esta tradición, el punto alrededor del cual toda nuestra Sociedad se congrega en unidad. La vida misma de nuestra Comunidad depende de la conservación de este principio.» — <em>Doce Pasos y Doce Tradiciones</em>, Quinta Tradición, p. 146</p></blockquote>
+<p>Y más adelante, la frase que sostiene todo el análisis:</p>
+<blockquote><p>«Hay otro motivo para esta unicidad de propósito. La gran paradoja de A.A. es que sabemos que raras veces podemos conservar el preciado don de la sobriedad a menos que lo pasemos a otros.» — <em>Ibíd.</em>, p. 147</p></blockquote>
+<h3>1.4. El folleto del grupo y la formulación de 1955</h3>
+<p>El folleto <em>El grupo de A.A.</em> dedica un capítulo entero, «El único objetivo de A.A.», y cita a Bill W. en 1955:</p>
+<blockquote><p>«Por lo tanto, nuestra Sociedad se aferrará prudentemente a su único propósito: llevar el mensaje al alcohólico que aún sufre. Resistámonos a la presunción de creer que, ya que Dios nos ha hecho posible hacer bien en un solo campo, estamos destinados a ser un conducto de la gracia salvadora para todos.» — Bill W., 1955, citado en <em>El grupo de A.A.</em> (SP-16), cap. «El único objetivo de A.A.»</p></blockquote>
+<h3>1.5. El Manual de Servicio: la unicidad como cuestión ya resuelta</h3>
+<p>En el Apéndice A, Bill W. cuenta cómo se escribieron las Tradiciones. Antes de redactarlas, enumera las cuestiones sobre las que AA ya tenía postura firme:</p>
+<blockquote><p>«Si ya habíamos llegado a estar lo suficientemente seguros de nuestra postura referente a tales cuestiones como quién era miembro, la autonomía de los grupos, la unicidad de nuestro propósito, el no respaldar a otras empresas, el profesionalismo, la controversia pública y el anonimato en sus diversos aspectos, sería posible entonces redactar tal código de principios.» — <em>Manual de Servicio</em> 2025-2027, Apéndice A, p. 86</p></blockquote>
+<p>Esto es históricamente importante: la unicidad de propósito <strong>no fue una consecuencia de la Tradición 5; fue una convicción previa</strong> que la Tradición 5 vino a codificar.</p>
+<hr />
+<h2>2. Anatomía del enunciado: cuatro piezas y una tensión</h2>
+<p>La Tradición 5 es una frase corta con una estructura muy precisa. Vale la pena desarmarla.</p>
+<table><thead><tr><th>Pieza</th><th>Texto</th><th>Qué fija</th></tr></thead><tbody><tr><td><strong>Sujeto</strong></td><td>«Cada grupo»</td><td>La unidad de decisión es el grupo, no el individuo ni la oficina nacional.</td></tr><tr><td><strong>Cantidad</strong></td><td>«un solo»</td><td>No hay objetivos principales y secundarios. Hay uno.</td></tr><tr><td><strong>Contenido</strong></td><td>«llevar el mensaje»</td><td>No dice «ayudar», «contener», «educar» ni «prevenir»: dice llevar el mensaje.</td></tr><tr><td><strong>Destinatario</strong></td><td>«al alcohólico que aún está sufriendo»</td><td>No es «la sociedad», ni «el público», ni «el alcohólico y su familia»: es el que todavía sufre.</td></tr></tbody></table>
+<p>La palabra que más trabajo hace es <strong>mensaje</strong>. No es información, no es consejo, no es tratamiento, no es doctrina. En el capítulo 7 del Libro Grande el mensaje tiene un contenido reconocible: lo que un alcohólico le transmite a otro sobre cómo salió. De ahí la frase del 12 y 12:</p>
+<blockquote><p>«Lo único que cuenta es que él es un alcohólico que ha encontrado la clave de la sobriedad. Estos legados de sufrimiento y de recuperación se pasan fácilmente entre los alcohólicos, de uno a otro.» — <em>Doce Pasos y Doce Tradiciones</em>, p. 147</p></blockquote>
+<h3>La tensión interna: puerta abierta, objetivo único</h3>
+<p>La Tradición 3 dice que el único requisito es querer dejar de beber. La Tradición 5 dice que el único objetivo es llevar el mensaje al que aún sufre. Leídas de prisa, parecen contradecirse: una abre, la otra estrecha.</p>
+<p>No se contradicen porque operan en planos distintos:</p>
+<ul><li>la <strong>Tradición 3</strong> regula <strong>quién entra</strong>;</li><li>la <strong>Tradición 5</strong> regula <strong>para qué existe el grupo</strong>.</li></ul>
+<p>Se puede admitir a cualquiera y seguir teniendo un solo propósito. Lo que no se puede es admitir cualquier <strong>propósito</strong>. La comunidad es inclusiva en las personas y excluyente en la finalidad. Esa asimetría es el corazón del principio.</p>
+<hr />
+<h2>3. Por qué «a partir de la recuperación del enfermo alcohólico»</h2>
+<p>La formulación del usuario —la unicidad de propósito <strong>a partir de la recuperación del enfermo alcohólico</strong>— es más precisa que la habitual, porque pone el acento en el punto de partida, no en el de llegada. Desarrollada, contiene cinco afirmaciones.</p>
+<h3>3.1. El sujeto del propósito es el que sufre, no el que ayuda</h3>
+<p>El destinatario está en el texto: «el alcohólico que aún está sufriendo». No es el alcohólico en general, ni el que ya está bien, ni la familia, ni el profesional que deriva. Es el que en este momento está enfermo y no sabe si hay salida.</p>
+<p>Eso tiene una consecuencia organizativa enorme: <strong>todo lo que el grupo hace debe poder justificarse ante esa persona concreta</strong>. Si una actividad del grupo no acerca el mensaje a alguien que aún sufre, no es que sea mala: es que es otra cosa.</p>
+<h3>3.2. La recuperación es el contenido del mensaje</h3>
+<p>El mensaje no es una teoría del alcoholismo. Es el relato verificable de una recuperación: qué pasó, qué se hizo, qué cambió. El 12 y 12 lo dice sin rodeos: lo que se pasa «de uno a otro» son « estos legados de sufrimiento y de recuperación».</p>
+<p>De ahí que el grupo no necesite expertos. Necesita testigos. Un testigo es alguien que puede decir «yo estaba así y hoy estoy así». La autoridad no viene del título sino de la experiencia.</p>
+<h3>3.3. La enfermedad cambia la relación, no la persona</h3>
+<p>El Libro Grande es explícito con quien va a hacer el Paso Doce:</p>
+<blockquote><p>«Recuerda que están muy enfermos.» — <em>Alcohólicos Anónimos</em>, cap. 7, p. 83</p></blockquote>
+<p>Y más adelante, hablando con la familia:</p>
+<blockquote><p>«Deben tener paciencia, dándose cuenta de que están tratando con una persona enferma.» — <em>Ibíd.</em>, p. 84</p></blockquote>
+<p>Llamar «enfermo» al alcohólico tiene tres efectos prácticos:</p>
+<ol><li><strong>Desplaza el juicio moral.</strong> No es un vicioso: es un enfermo. Eso cambia el tono de todo.</li><li><strong>Funda la no persuasión.</strong> Si es una enfermedad, no se cura con sermones: «Si no quiere dejar de beber, no pierdas el tiempo tratando de persuadirlo» (cap. 7, p. 84).</li><li><strong>Explica la paciencia.</strong> La recaída no se lee como traición, sino como síntoma.</li></ol>
+<p>Y hay un cuarto efecto, menos evidente: la enfermedad <strong>iguala</strong>. El que ayuda también está enfermo; solo está un poco más adelante. Esa simetría es lo que hace posible la identificación, que es el mecanismo real del mensaje.</p>
+<h3>3.4. La paradoja: conservar es dar</h3>
+<p>Aquí está el núcleo conceptual. Si el propósito fuera solo altruismo, la unicidad sería una exigencia moral. Pero el 12 y 12 dice que es una <strong>necesidad de supervivencia</strong>:</p>
+<blockquote><p>«La gran paradoja de A.A. es que sabemos que raras veces podemos conservar el preciado don de la sobriedad a menos que lo pasemos a otros. (…) si descuidamos a los que todavía sufren, nuestras vidas y nuestro sano juicio se ven grave e incesantemente amenazados.» — <em>Doce Pasos y Doce Tradiciones</em>, p. 147</p></blockquote>
+<p>Y el Libro Grande lo dice en la primera línea del capítulo 7:</p>
+<blockquote><p>«La experiencia práctica demuestra que no hay nada que asegure tanto la inmunidad a la bebida como el trabajo intensivo con otros alcohólicos. Funciona cuando fallan otras actividades. Esta es nuestra duodécima sugerencia.» — <em>Alcohólicos Anónimos</em>, cap. 7, p. 83</p></blockquote>
+<p>De aquí se sigue una consecuencia que suele pasarse por alto: <strong>la unicidad de propósito no es altruismo contra interés propio; los disuelve</strong>. El grupo que ayuda a otro se está ayudando a sí mismo, y por eso puede pedirle a sus miembros que antepongan el bien común sin pedirles heroísmo.</p>
+<p>El 12 y 12 usa la imagen de los médicos que encuentran la cura del cáncer: podrían dedicarse a su especialidad, pero una vez encontrada la cura, la propia lógica del hallazgo los obliga. La comparación sirve, pero el mismo texto señala el límite: a los médicos no se les acaba la vida si dejan de curar; a nosotros sí.</p>
+<h3>3.5. El destinatario está en presente: «aún»</h3>
+<p>La palabra «aún» introduce una dimensión temporal. El propósito no es conmemorar a los que se recuperaron en 1935, ni conservar una tradición para los que ya están dentro. Es atender al que está sufriendo <strong>hoy</strong>.</p>
+<p>Esto rompe la tentación patrimonial. Un grupo que se dedica a cuidar su local, su historia y su prestigio ha cambiado de destinatario: ahora el destinatario es el propio grupo. Y ese cambio, hecho sin darse cuenta, es la forma más común de perder la unicidad.</p>
+<hr />
+<h2>4. Unicidad no es exclusividad: cinco distinciones que evitan malentendidos</h2>
+<p>Este es el punto donde más se equivocan los grupos y los críticos. La unicidad de propósito se defiende mal cuando se convierte en una doctrina de puertas cerradas.</p>
+<h3>4.1. Único objetivo ≠ única actividad</h3>
+<p>AA coopera con médicos, jueces, hospitales, medios y escuelas. La Tradición 6 permite <strong>cooperar</strong> siempre que no haya <strong>afiliación</strong> ni respaldo. El 12 y 12 es explícito: el problema no es la relación, es el respaldo.</p>
+<h3>4.2. Unicidad ≠ uniformidad</h3>
+<p>La Tradición 4 da autonomía a cada grupo. Dos grupos pueden tener formatos, horarios y estilos completamente distintos y compartir el mismo propósito único. La unicidad es del <strong>fin</strong>, no del <strong>método</strong>.</p>
+<h3>4.3. Unicidad ≠ cerrar la puerta</h3>
+<p>El folleto del grupo resuelve el caso de los grupos especializados con una fórmula precisa:</p>
+<blockquote><p>«Algunos A.A. se reúnen como grupos especializados — para hombres, mujeres, jóvenes, médicos, homosexuales u otros. Si todos los miembros son alcohólicos, y si mantienen la puerta abierta para todo alcohólico que busque ayuda, sea cual sea su profesión, sexo, edad, etc., y si cumplen con los demás detalles que definen un grupo de A.A., pueden llamarse un grupo.» — <em>El grupo de A.A.</em> (SP-16)</p></blockquote>
+<p>La prueba no es la identidad de los miembros, sino la <strong>apertura de la puerta</strong> y la <strong>ausencia de otro objetivo</strong>.</p>
+<h3>4.4. Unicidad ≠ prohibir el servicio</h3>
+<p>El servicio (RSG, distrito, área, comités, literatura) no compite con el propósito: lo hace posible. Pero el servicio es <strong>medio</strong>, y cuando se convierte en fin aparece la burocracia, que es una forma elegante de dilución. El Concepto X lo formula con claridad: a cada responsabilidad corresponde una autoridad equivalente, y su alcance debe estar bien definido.</p>
+<h3>4.5. Unicidad ≠ rechazar lo espiritual</h3>
+<p>«Entidad espiritual» no significa entidad religiosa. Significa que el eje del grupo no es administrativo ni terapéutico, sino el cambio de actitud que el programa describe. La Tradición 6 y la 10 impiden que ese eje se confunda con una confesión o con una causa.</p>
+<hr />
+<h2>5. Las fuerzas que diluyen el propósito</h2>
+<p>El capítulo de la Tradición 6 del 12 y 12 es, leído hoy, un catálogo asombrosamente actual. Bill W. enumera los sueños de los primeros miembros: construir hospitales propios, reescribir los libros de texto, cambiar las leyes, hacerse cargo de los alcohólicos en libertad condicional, ocuparse también de la drogadicción y de la criminalidad, reconciliar a obreros y patronos, purificar la política. Y remata:</p>
+<blockquote><p>«Podríamos transformar el mundo.» — <em>Doce Pasos y Doce Tradiciones</em>, Sexta Tradición, p. 151</p></blockquote>
+<p>No eran malas intenciones. Eran <strong>buenas intenciones acumuladas</strong>. Y aquí está la lección analítica: el propósito no se pierde por maldad, se pierde por suma. Cada añadido es razonable; el conjunto es otra cosa.</p>
+<p>Las formas contemporáneas de esa suma:</p>
+<ol><li><strong>Dinero institucional.</strong> Contratos con clínicas, cárceles o empresas; venta de servicios; cuotas encubiertas. La Tradición 7 y la 6 existen para esto.</li><li><strong>Prestigio y marca.</strong> Cursos, certificados, conferencias, presencia mediática, merchandising. La Tradición 11 lo llama «atracción, no promoción».</li><li><strong>Profesionalización.</strong> Convertir el padrinazgo en consejería, o el grupo en consultorio. La Tradición 8 distingue el trabajo especial del trabajo de Paso Doce, que nunca se paga.</li><li><strong>Causa social.</strong> Prevención, educación pública, lobby, campañas. Puede ser bueno; no es el propósito del grupo.</li><li><strong>Institución.</strong> El local, la junta, el patrimonio, la historia. El grupo empieza a existir para sí mismo.</li><li><strong>Identidad.</strong> El grupo se define por lo que sus miembros son (profesión, género, edad) más que por lo que hacen. El folleto lo tolera solo si la puerta sigue abierta.</li><li><strong>Burocracia.</strong> Comités que se reproducen, reuniones sobre reuniones, planes estratégicos. El servicio deja de servir.</li></ol>
+<p>Un criterio para reconocerlas: <strong>todas ellas pueden justificarse con la palabra «también»</strong>. «También podríamos…». La unicidad de propósito es, en la práctica, la disciplina de preguntar «¿y esto qué tiene que ver con el que aún sufre?».</p>
+<hr />
+<h2>6. Un test de unicidad para un grupo concreto</h2>
+<p>Siete preguntas. Si alguna se responde «no», el grupo tiene un objetivo adicional, aunque no lo haya declarado.</p>
+<ol><li><strong>¿Quién es el destinatario?</strong> ¿Podemos nombrar a una persona concreta que aún sufre y a la que este grupo está llegando? Si la respuesta es «la comunidad», hay dilución.</li><li><strong>¿Qué transmitimos?</strong> ¿Nuestra actividad principal es contar cómo se sale, o es otra cosa (charlas, cursos, campañas, acompañamiento social)?</li><li><strong>¿La puerta está abierta?</strong> ¿Cualquier alcohólico que quiera dejar de beber puede entrar, sin condiciones económicas, sociales o de creencias?</li><li><strong>¿De quién es el dinero?</strong> ¿El grupo se sostiene con aportes de sus miembros o depende de alguien de fuera?</li><li><strong>¿A quién respaldamos?</strong> ¿Hemos prestado el nombre, el local o el aval a alguna entidad, causa o empresa?</li><li><strong>¿Qué hacemos con el prestigio?</strong> ¿Buscamos aparecer, o aceptamos que nos recomienden otros?</li><li><strong>¿El servicio sirve?</strong> ¿Las estructuras que tenemos acercan el mensaje a alguien, o solo se sostienen a sí mismas?</li></ol>
+<p>Este test no resuelve los casos difíciles, pero impide el autoengaño, que es el verdadero enemigo.</p>
+<hr />
+<h2>7. Aplicación a la estructura de servicio</h2>
+<p>La unicidad de propósito no es solo un principio del grupo: es el <strong>límite</strong> de toda la estructura.</p>
+<ul><li>La <strong>Conferencia</strong> no gobierna (Concepto II y Tradición 2): su autoridad es la conciencia de la comunidad, y su función es mantener los servicios que permiten llevar el mensaje.</li><li>La <strong>Junta</strong> custodia Tradiciones y fondos; no define el propósito.</li><li>La <strong>OSG</strong> publica literatura y coordina; no crea doctrina.</li><li>Los <strong>comités</strong> (información pública, cooperación profesional, instituciones de tratamiento, correccionales) existen porque hay alcohólicos que aún sufren en lugares donde el grupo no llega. Su legitimidad depende de eso, no de su tamaño.</li></ul>
+<p>En Colombia, la estructura descrita en el <em>Manual de Servicio</em> 2025-2027 (Corporación Nacional, OSG en Medellín, cinco regiones, unas 51 áreas, la Reunión Anual de la Conferencia) tiene sentido exactamente en la medida en que sirve a ese propósito. Cuando pierde esa referencia, se convierte en lo que el 12 y 12 temía: una organización que se ocupa de sí misma.</p>
+<hr />
+<h2>8. Objeciones y respuestas</h2>
+<p><strong>«Es una doctrina estrecha y egoísta.»</strong> Es estrecha en el fin y amplia en la puerta. Y no es egoísta: la paradoja del capítulo de la Tradición 5 muestra que el que ayuda se está salvando. Lo que la unicidad impide es la <strong>dispersión</strong>, no la generosidad.</p>
+<p><strong>«¿Y los familiares, los jóvenes, los profesionales?»</strong> AA no los atiende como propósito, pero los atiende por derivación: Al-Anon y Alateen para la familia; grupos especializados para jóvenes o profesionales, con la puerta abierta; cooperación con profesionales sin afiliación. La Tradición 5 no prohíbe ayudar: prohíbe <strong>cambiar de oficio</strong>.</p>
+<p><strong>«¿Y la prevención y la educación pública?»</strong> Hay comités de información pública y de cooperación con la comunidad profesional. Pero su tarea es dar a conocer AA, no hacer campaña. La Tradición 10 marca la raya: AA no opina sobre asuntos ajenos.</p>
+<p><strong>«¿Y la ciencia del alcoholismo?»</strong> AA no se pronuncia sobre las causas médicas ni sobre tratamientos. Su saber es de otro orden: experiencia de recuperación. Confundir los dos órdenes perjudica a ambos.</p>
+<p><strong>«¿No es peligroso que un grupo decida solo qué es su propósito?»</strong> Sí, y por eso existe el resto del sistema: Tradiciones, Conceptos, literatura común, servicio y conciencia de grupo. La autonomía del grupo (Tradición 4) tiene un límite explícito: lo que afecte a otros grupos o a AA en su totalidad.</p>
+<hr />
+<h2>9. Lo que el principio no resuelve</h2>
+<p>Conviene decirlo, para no convertirlo en una fórmula mágica:</p>
+<ul><li><strong>No define el formato.</strong> Una reunión de estudio, una de orador y una de Paso pueden ser igualmente fieles.</li><li><strong>No zanja el debate digital.</strong> Las reuniones en línea y las redes plantean problemas nuevos de anonimato y de alcance que las Tradiciones no anticiparon; el principio orienta, no dictamina.</li><li><strong>No sustituye el criterio.</strong> «Llevar el mensaje» admite muchas traducciones concretas, y la comunidad discute cada una en cada época.</li><li><strong>No garantiza la eficacia.</strong> Un grupo puede tener el propósito correcto y funcionar mal. La unicidad es condición necesaria, no suficiente.</li></ul>
+<hr />
+<h2>10. Conclusión</h2>
+<p>La unicidad de propósito es, en AA, algo más que una norma de buen gobierno: es la forma que toma la identidad cuando una comunidad decide no crecer por acumulación sino por profundidad.</p>
+<p>Su fórmula es simple y exigente: <strong>un solo fin (el mensaje), un solo destinatario (el que aún sufre), un solo medio (un alcohólico que ya salió)</strong>. La recuperación del enfermo alcohólico no es el adorno del principio: es su punto de apoyo. De ella se derivan el tono (paciencia, no juicio), el método (identificación, no pericia), la economía (aportes propios, no dinero ajeno) y la política (atracción, no promoción).</p>
+<p>Y de ella se deriva, sobre todo, la paradoja que sostiene todo lo demás: <strong>solo se conserva lo que se entrega</strong>. Por eso el grupo que se encierra en sí mismo pierde aquello que quería proteger, y el que sale a buscar al que sufre lo conserva sin proponérselo.</p>
+<p>En palabras del 12 y 12: «tiene una sola y alta misión—la de llevar el mensaje de A.A. a aquellos que no saben que hay una salida» (p. 147).</p>
+<hr />
+<h2>Anexo. Citas verificadas y su ubicación</h2>
+<table><thead><tr><th>Cita</th><th>Fuente</th><th>Ubicación</th></tr></thead><tbody><tr><td>«Nuestro objetivo primordial es mantenernos sobrios y ayudar a otros alcohólicos…»</td><td>Preámbulo de AA</td><td><em>Manual de Servicio</em> 2025-2027, p. II</td></tr><tr><td>«Cada grupo tiene un solo objetivo primordial: llevar el mensaje al alcohólico que aún está sufriendo.»</td><td>Tradición 5, forma corta</td><td>Manual (Tradiciones); aa.org/es/the-twelve-traditions</td></tr><tr><td>«Cada grupo de A.A. debe ser una entidad espiritual con un solo objetivo primordial…»</td><td>Tradición 5, forma larga</td><td>Manual, Apéndice; Libro Grande, Tradiciones forma larga</td></tr><tr><td>«¡Zapatero a tus zapatos!… La vida misma de nuestra Comunidad depende de la conservación de este principio.»</td><td>12 y 12, Trad. 5</td><td>p. 146</td></tr><tr><td>«Lo único que cuenta es que él es un alcohólico que ha encontrado la clave de la sobriedad.»</td><td>12 y 12, Trad. 5</td><td>p. 147</td></tr><tr><td>«La gran paradoja de A.A. es que… raras veces podemos conservar el preciado don de la sobriedad a menos que lo pasemos a otros.»</td><td>12 y 12, Trad. 5</td><td>p. 147</td></tr><tr><td>«Mi padrino me vendió una sola idea, la sobriedad…»</td><td>12 y 12, Trad. 5</td><td>p. 149</td></tr><tr><td>«Podríamos transformar el mundo.»</td><td>12 y 12, Trad. 6</td><td>p. 151</td></tr><tr><td>«La experiencia práctica demuestra que no hay nada que asegure tanto la inmunidad a la bebida como el trabajo intensivo con otros alcohólicos.»</td><td>Libro Grande, cap. 7</td><td>p. 83</td></tr><tr><td>«Ser servicial es nuestro único propósito.»</td><td>Libro Grande, cap. 7</td><td>p. 83</td></tr><tr><td>«Recuerda que están muy enfermos.»</td><td>Libro Grande, cap. 7</td><td>p. 83</td></tr><tr><td>«Si no quiere dejar de beber, no pierdas el tiempo tratando de persuadirlo.»</td><td>Libro Grande, cap. 7</td><td>p. 84</td></tr><tr><td>«…la unicidad de nuestro propósito…» (como convicción previa a las Tradiciones)</td><td>Manual, Apéndice A</td><td>p. 86</td></tr><tr><td>«…se aferrará prudentemente a su único propósito…»</td><td>Bill W., 1955, en SP-16</td><td>cap. «El único objetivo de A.A.»</td></tr><tr><td>Grupos especializados: «si mantienen la puerta abierta para todo alcohólico…»</td><td>SP-16</td><td>cap. sobre el grupo</td></tr></tbody></table>
+<p><strong>Fuentes consultadas en el barrido:</strong> <em>Doce Pasos y Doce Tradiciones</em> (texto completo, 181 páginas), <em>Alcohólicos Anónimos</em> (texto completo, 210 páginas), <em>El grupo de A.A.</em> SP-16 (56 páginas), <em>Manual de Servicio</em> 2025-2027, folleto de apadrinamiento, Preámbulo, aa.org/es (Pasos, Tradiciones, Conceptos, historia, literatura), aacolombia.org (qué hace y qué no hace AA, estructura, grupos), buscador mundial de AA.</p>
+<p><strong>Límite declarado:</strong> no se pudo acceder al texto de la declaración australiana sobre <em>singleness of purpose</em> ni a los artículos de Grapevine por estar en PDF no legible; quedan como fuente pendiente para una segunda pasada.</p>
+  </article>
+  <footer class="colophon">
+    <div>William R. Alvarez · HJ3RAW</div>
+    <div>Bogotá · <span id="year">2026</span></div>
+  </footer>
+</div>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
