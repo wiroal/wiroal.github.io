@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#003087">
+<title>Jugar · Doce Conceptos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+body{padding-bottom:env(safe-area-inset-bottom,0)}
+.cel{max-width:560px;margin:0 auto;padding:16px}
+.cel h2{font-size:1.6rem;margin:6px 0 10px}
+.campo{display:flex;gap:8px;margin-top:12px}
+.campo input{flex:1;font:inherit;font-size:1.6rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 12px;border-radius:10px;border:1px solid var(--linea);background:var(--tarjeta);color:var(--tinta);min-width:0}
+.lista{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+@media (max-width:360px){.lista{grid-template-columns:1fr}}
+.lista button{text-align:left;padding:10px 12px;border-radius:12px;border:1px solid var(--linea);background:var(--tarjeta);color:var(--tinta)}
+.lista button b{display:block;font-size:1rem}
+.lista button small{color:var(--tenue);font-size:.78rem;line-height:1.25;display:block;margin-top:2px}
+.lista button:disabled{opacity:.35;text-decoration:line-through}
+.lista button.yo{border-color:var(--azul);background:var(--azul-suave)}
+.grande{font-family:var(--serif);font-size:2.6rem;font-weight:600;color:var(--azul);line-height:1}
+.botones{display:grid;gap:10px;margin-top:14px}
+.botones button{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px;border-radius:14px;border:2px solid var(--linea);background:var(--tarjeta);color:var(--tinta);font-size:1.02rem;min-height:56px}
+.botones button:active:not(:disabled){transform:scale(.98)}
+.botones button.elegida{border-color:var(--azul);background:var(--azul-suave)}
+.botones button.bien{border-color:var(--ok);background:var(--ok-suave)}
+.botones button.mal{border-color:var(--mal);background:var(--mal-suave)}
+.botones button:disabled{cursor:default;opacity:1}
+.botones button.apagada{opacity:.5}
+.preg{font-family:var(--serif);font-size:1.3rem;line-height:1.3;margin:10px 0 0}
+.veredicto{padding:16px;border-radius:14px;margin:12px 0;font-weight:700;font-size:1.2rem}
+.veredicto.bien{background:var(--ok-suave);color:var(--ok)}
+.veredicto.mal{background:var(--mal-suave);color:var(--mal)}
+.veredicto.nada{background:var(--azul-suave);color:var(--tenue)}
+.fila{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.minis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.minis .dato{background:var(--azul-suave);border-radius:12px;padding:12px}
+.minis .dato b{display:block;font-family:var(--serif);font-size:1.8rem;color:var(--azul)}
+.minis .dato span{font-size:.85rem;color:var(--tenue)}
+.aviso{padding:10px 14px;border-radius:10px;background:var(--mal-suave);color:var(--mal);margin:10px 0}
+</style>
+</head>
+<body>
+<div class="barra">
+  <div class="marca">Doce <span>Conceptos</span></div>
+  <div class="espacio"></div>
+  <span class="chip" id="red"><span class="punto"></span><span id="redTxt">Sin conectar</span></span>
+</div>
+<div class="cel">
+  <div id="avisos"></div>
+  <main id="vista"></main>
+</div>
+<script src="datos.js"></script>
+<script src="comun.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+let sala = (params.get('sala') || guardado.leer('aa-conceptos-ultima-sala') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+let token = null, peer = null, conn = null, S = null, tReint = null, cambiando = false, enviando = null, fin = 0;
+const V = document.getElementById('vista');
+
+function setRed(tipo, txt){ document.getElementById('red').className = 'chip ' + tipo; document.getElementById('redTxt').textContent = txt; }
+function aviso(msg){
+  const a = document.getElementById('avisos');
+  a.innerHTML = msg ? `<div class="aviso">${esc(msg)}</div>` : '';
+  if (msg) setTimeout(() => { if (a.textContent.includes(msg)) a.innerHTML = ''; }, 6000);
+}
+
+/* ---------- red ---------- */
+function conectar(){
+  if (!window.Peer) return;
+  try { if (peer) peer.destroy(); } catch (e) {}
+  setRed('esp', 'Conectando…');
+  peer = new Peer({ debug: 1 });
+  peer.on('open', abrirConn);
+  peer.on('disconnected', () => { try { peer.reconnect(); } catch (e) {} });
+  peer.on('error', err => {
+    if (err.type === 'peer-unavailable') { setRed('mal', 'Sala no encontrada'); if (!S) pintarEspera(`No encuentro la sala ${sala}. Revisa el código o espera a que el coordinador abra la pantalla.`); }
+    else setRed('mal', 'Sin conexión');
+    reintentar();
+  });
+}
+function abrirConn(){
+  try { if (conn) conn.close(); } catch (e) {}
+  conn = peer.connect(SALA_PREFIJO + sala, { reliable: true });
+  conn.on('open', () => { setRed('ok', 'Conectado · sala ' + sala); conn.send({ t: 'hola', token }); });
+  conn.on('data', recibir);
+  conn.on('close', () => { setRed('esp', 'Reconectando…'); reintentar(); });
+  conn.on('error', () => reintentar());
+}
+function reintentar(){
+  if (tReint) return;
+  tReint = setTimeout(() => {
+    tReint = null;
+    if (conn && conn.open) return;
+    if (peer && !peer.destroyed && !peer.disconnected && peer.open) abrirConn(); else conectar();
+  }, 3000);
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && sala && !(conn && conn.open)) { clearTimeout(tReint); tReint = null; if (peer && peer.open) abrirConn(); else conectar(); }
+});
+function mandar(m){ if (conn && conn.open) { conn.send(m); return true; } aviso('Sin conexión con la sala. Reintentando…'); reintentar(); return false; }
+
+function recibir(d){
+  if (!d || typeof d !== 'object') return;
+  if (d.t === 'aviso') { aviso(d.msg); return; }
+  if (d.t !== 'estado') return;
+  const cambioPregunta = !S || S.q !== d.q || S.test !== d.test || S.fase !== d.fase;
+  if ((S && d.miNombre !== S.miNombre) || d.fase !== 'lobby') cambiando = false;
+  S = d;
+  if (cambioPregunta) enviando = null;
+  if (d.fase === 'pregunta') fin = Date.now() + d.restanteMs;
+  render();
+}
+
+/* ---------- vistas ---------- */
+function pintarEspera(txt){
+  V.innerHTML = `<div class="tarjeta"><h2>Un momento…</h2><p class="tenue">${esc(txt)}</p></div>`;
+}
+function vCodigo(){
+  V.innerHTML = `<div class="tarjeta">
+    <span class="insignia">Juego de los Doce Conceptos</span>
+    <h2>Entra a la sala</h2>
+    <p class="tenue">Escribe el código que aparece en la pantalla del salón.</p>
+    <form class="campo" id="fCodigo"><input id="iCodigo" maxlength="6" autocomplete="off" autocapitalize="characters" inputmode="text" placeholder="ABCD" value="${esc(sala)}"><button class="btn prim">Entrar</button></form>
+  </div>`;
+  document.getElementById('fCodigo').onsubmit = e => {
+    e.preventDefault();
+    const v = document.getElementById('iCodigo').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (v.length < 4) return aviso('El código tiene 4 caracteres.');
+    iniciarSala(v);
+  };
+}
+function vNombres(){
+  const tomados = new Set(S.tomados || []);
+  const libres = NOMBRES.filter(x => !tomados.has(x.n)).length;
+  V.innerHTML = `<div class="tarjeta">
+    <h2>Elige tu nombre</h2>
+    <p class="tenue">Todos son personas que aparecen en la literatura de AA. Quedan ${libres} disponibles.</p>
+    <div class="lista">${NOMBRES.map(x => `<button data-n="${esc(x.n)}" ${tomados.has(x.n) ? 'disabled' : ''} class="${S.miNombre === x.n ? 'yo' : ''}"><b>${esc(x.n)}</b><small>${esc(x.d)}</small></button>`).join('')}</div>
+    ${S.miNombre ? '<div class="mando"><button class="btn" id="bCancelar">Conservar mi nombre</button></div>' : ''}
+  </div>`;
+  V.querySelectorAll('.lista button').forEach(b => b.onclick = () => { if (b.dataset.n === S.miNombre) { cambiando = false; return render(); } mandar({ t: 'elegir', nombre: b.dataset.n }); });
+  const c = document.getElementById('bCancelar'); if (c) c.onclick = () => { cambiando = false; render(); };
+}
+function cabeza(){
+  const yo = NOMBRES.find(x => x.n === S.miNombre);
+  return `<div class="fila" style="margin-bottom:10px"><div><span class="tenue" style="font-size:.85rem">Juegas como</span><div style="font-family:var(--serif);font-size:1.3rem;font-weight:600">${esc(S.miNombre)}</div>${yo ? `<small class="tenue">${esc(yo.d)} · ${esc(yo.f)}</small>` : ''}</div>
+    ${S.test ? `<div style="text-align:right"><div class="grande" style="font-size:1.6rem">${S.misPts.toLocaleString('es-CO')}</div><small class="tenue">puntos</small></div>` : ''}</div>`;
+}
+function vEspera(){
+  const r = S.resumen;
+  V.innerHTML = cabeza() + `<div class="tarjeta">
+    <h2>¡Listo!</h2>
+    <p class="tenue">Mira la pantalla del salón. Las preguntas aparecerán aquí cuando el coordinador inicie el test.</p>
+    ${(r.entrada.n || r.salida.n) ? `<div class="minis">
+      <div class="dato"><b>${r.entrada.n ? r.entrada.ac + '/' + r.entrada.total : '—'}</b><span>Test de entrada</span></div>
+      <div class="dato"><b style="color:var(--oro)">${r.salida.n ? r.salida.ac + '/' + r.salida.total : '—'}</b><span>Test de salida</span></div></div>` : ''}
+    ${S.fase === 'lobby' ? '<div class="mando"><button class="btn" id="bCambiar">Cambiar de nombre</button></div>' : ''}
+  </div>`;
+  const bc = document.getElementById('bCambiar'); if (bc) bc.onclick = () => { cambiando = true; render(); };
+}
+function vPregunta(){
+  const p = S.pregunta, revel = S.fase === 'revelada';
+  const mia = enviando != null ? enviando : S.miResp;
+  const bloqueada = revel || mia != null;
+  const botones = p.op.map((o, i) => {
+    let cls = '';
+    if (revel) cls = i === S.correcta ? 'bien' : (i === mia ? 'mal' : 'apagada');
+    else if (i === mia) cls = 'elegida';
+    return `<button data-op="${i}" class="${cls}" ${bloqueada ? 'disabled' : ''}><span class="opcion-letra l${i}">${LETRAS[i]}</span><span>${esc(o)}</span></button>`;
+  }).join('');
+  let pie = '';
+  if (revel) {
+    const v = S.miResp == null ? ['nada', 'No alcanzaste a responder'] : (S.miResp === S.correcta ? ['bien', `¡Correcto! +${S.misPtsPregunta} puntos`] : ['mal', 'Esta vez no']);
+    pie = `<div class="veredicto ${v[0]}">${v[1]}</div><div class="cita">“${esc(S.cita)}”<small>${esc(S.pag)}</small></div>`;
+  } else if (mia != null) {
+    pie = `<p class="tenue" style="margin-top:12px">Respuesta enviada (${LETRAS[mia]}). Espera a que se cierre la pregunta.</p>`;
+  }
+  V.innerHTML = cabeza() + `<div class="tarjeta">
+    <div class="fila"><span class="insignia">${esc(S.tituloTest)} · ${S.q + 1}/${S.total} · Concepto ${esc(p.c)}</span>${revel ? '' : '<b id="reloj" style="font-size:1.3rem;color:var(--azul)"></b>'}</div>
+    ${revel ? '' : '<div class="tiempo" style="margin-top:10px"><i id="barra"></i></div>'}
+    <p class="preg">${esc(p.texto)}</p>
+    <div class="botones">${botones}</div>
+    ${pie}
+  </div>`;
+  V.querySelectorAll('.botones button').forEach(b => b.onclick = () => {
+    if (enviando != null || S.miResp != null || S.fase !== 'pregunta') return;
+    const op = +b.dataset.op;
+    if (mandar({ t: 'resp', test: S.test, q: S.q, op })) { enviando = op; render(); }
+  });
+  tic();
+}
+function vTablero(){
+  const final = S.fase === 'final';
+  const r = S.resumen;
+  V.innerHTML = cabeza() + `<div class="tarjeta" style="text-align:center">
+    <span class="insignia">${esc(S.tituloTest)}</span>
+    <h2>${final ? 'Resultado final' : 'Vas en el puesto'}</h2>
+    <div class="grande" style="font-size:3.4rem">${S.puesto ? S.puesto + '°' : '—'}</div>
+    <p class="tenue">de ${S.jugadores} participantes · ${S.misAciertos} aciertos</p>
+    ${final ? `<div class="minis">
+      <div class="dato"><b>${r.entrada.n ? r.entrada.ac + '/' + r.entrada.total : '—'}</b><span>Test de entrada</span></div>
+      <div class="dato"><b style="color:var(--oro)">${r.salida.n ? r.salida.ac + '/' + r.salida.total : '—'}</b><span>Test de salida</span></div></div>` : '<p class="tenue">Mira el tablero en la pantalla.</p>'}
+  </div>`;
+}
+function vComparativo(){
+  const r = S.resumen;
+  const d = (r.entrada.n && r.salida.n) ? r.salida.ac - r.entrada.ac : null;
+  V.innerHTML = cabeza() + `<div class="tarjeta">
+    <h2>Tu avance</h2>
+    <div class="minis">
+      <div class="dato"><b>${r.entrada.n ? r.entrada.ac + '/' + r.entrada.total : '—'}</b><span>Test de entrada</span></div>
+      <div class="dato"><b style="color:var(--oro)">${r.salida.n ? r.salida.ac + '/' + r.salida.total : '—'}</b><span>Test de salida</span></div>
+    </div>
+    ${d != null ? `<p style="margin-top:14px;font-size:1.1rem">${d > 0 ? `Subiste <b class="sube">${d}</b> aciertos. ¡Gracias por participar!` : d === 0 ? 'Mantuviste tu resultado. ¡Gracias por participar!' : 'Gracias por participar. Los Conceptos se aprenden en el servicio.'}</p>` : ''}
+    <p class="tenue">Mira el comparativo del grupo en la pantalla.</p>
+  </div>`;
+}
+function render(){
+  if (!sala) return vCodigo();
+  if (!S) return pintarEspera(`Conectando con la sala ${sala}…`);
+  if (!S.miNombre || cambiando) return vNombres();
+  if ((S.fase === 'pregunta' || S.fase === 'revelada') && S.pregunta) return vPregunta();
+  if (S.fase === 'tablero' || S.fase === 'final') return vTablero();
+  if (S.fase === 'comparativo') return vComparativo();
+  return vEspera();
+}
+function tic(){
+  if (!S || S.fase !== 'pregunta') return;
+  const rest = Math.max(0, fin - Date.now());
+  const b = document.getElementById('barra'), r = document.getElementById('reloj');
+  if (b) b.style.width = (rest / S.durMs * 100) + '%';
+  if (r) r.textContent = Math.ceil(rest / 1000) + ' s';
+}
+setInterval(tic, 250);
+
+/* ---------- arranque ---------- */
+function iniciarSala(cod){
+  sala = cod;
+  guardado.escribir('aa-conceptos-ultima-sala', sala);
+  token = guardado.leer('aa-conceptos-token-' + sala);
+  if (!token) { token = nuevoToken(); guardado.escribir('aa-conceptos-token-' + sala, token); }
+  history.replaceState(null, '', '?sala=' + sala);
+  S = null; render();
+  if (window.Peer) conectar();
+}
+render();
+cargarScript(URLS_PEERJS).then(() => { if (sala) iniciarSala(sala); })
+  .catch(() => { setRed('mal', 'Sin librería'); pintarEspera('No se pudo cargar la librería de conexión. Revisa que tengas internet y recarga la página.'); });
+</script>
+</body>
+</html>

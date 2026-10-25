@@ -1,0 +1,61 @@
+:root{
+  --azul:#003087; --azul-2:#0A3FA3; --oro:#C89000; --oro-suave:#F6EAD0;
+  --papel:#F5F7FB; --tarjeta:#FFFFFF; --tinta:#16213B; --tenue:#56607A;
+  --linea:#D3DBEA; --azul-suave:#E5ECF8; --ok:#1F6B3A; --ok-suave:#E3F2E8; --mal:#9A2B1F; --mal-suave:#F8E4E1;
+  --a:#003087; --b:#C89000; --c:#1F6B3A; --d:#8A2D5A;
+  --sans:"Instrument Sans","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --azul:#8FB0F0; --azul-2:#A9C2F5; --oro:#E2B04A; --oro-suave:#3A2E14;
+    --papel:#0E1526; --tarjeta:#16203A; --tinta:#E8ECF5; --tenue:#A5AEC4;
+    --linea:#2C3A5C; --azul-suave:#1C2A4C; --ok:#7CCB95; --ok-suave:#173826; --mal:#F09A8C; --mal-suave:#3D1F1B;
+    --a:#3E6BD1; --b:#B88512; --c:#2E8B57; --d:#A0477A;
+  }
+}
+:root[data-theme="dark"]{
+  --azul:#8FB0F0; --azul-2:#A9C2F5; --oro:#E2B04A; --oro-suave:#3A2E14;
+  --papel:#0E1526; --tarjeta:#16203A; --tinta:#E8ECF5; --tenue:#A5AEC4;
+  --linea:#2C3A5C; --azul-suave:#1C2A4C; --ok:#7CCB95; --ok-suave:#173826; --mal:#F09A8C; --mal-suave:#3D1F1B;
+  --a:#3E6BD1; --b:#B88512; --c:#2E8B57; --d:#A0477A;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--papel);color:var(--tinta);font-family:var(--sans);line-height:1.45;min-height:100vh}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.45}
+.oculto{display:none!important}
+.envoltura{max-width:1200px;margin:0 auto;padding:16px}
+.barra{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;background:var(--azul);color:#fff}
+:root[data-theme="dark"] .barra{background:#0B1B45}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .barra{background:#0B1B45}}
+.barra .marca{font-family:var(--serif);font-size:1.15rem;font-weight:600}
+.barra .marca span{color:#F2C14E}
+.barra .espacio{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.85rem;background:rgba(255,255,255,.14);color:#fff}
+.chip .punto{width:8px;height:8px;border-radius:50%;background:#bbb}
+.chip.ok .punto{background:#5FD38D}.chip.mal .punto{background:#F08A7A}.chip.esp .punto{background:#F2C14E}
+.btn{border:1px solid var(--linea);background:var(--tarjeta);color:var(--tinta);padding:10px 16px;border-radius:10px;font-weight:600}
+.btn:hover:not(:disabled){border-color:var(--azul)}
+.btn.prim{background:var(--azul);color:#fff;border-color:var(--azul)}
+:root[data-theme="dark"] .btn.prim{color:#0E1526}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.prim{color:#0E1526}}
+.btn.oro{background:var(--oro);border-color:var(--oro);color:#1b1300}
+.btn.peq{padding:6px 10px;font-size:.85rem}
+.btn.fantasma{background:transparent;color:inherit;border-color:rgba(255,255,255,.35)}
+.tarjeta{background:var(--tarjeta);border:1px solid var(--linea);border-radius:16px;padding:20px}
+.tenue{color:var(--tenue)}
+.insignia{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--oro-suave);color:var(--oro);font-weight:700;font-size:.85rem;letter-spacing:.02em}
+.cita{border-left:4px solid var(--oro);background:var(--oro-suave);padding:12px 16px;border-radius:0 10px 10px 0;font-family:var(--serif);font-size:1.05rem}
+.cita small{display:block;font-family:var(--sans);color:var(--tenue);margin-top:6px;font-size:.85rem}
+.opcion-letra{display:inline-flex;align-items:center;justify-content:center;width:1.8em;height:1.8em;border-radius:8px;color:#fff;font-weight:700;flex:none}
+.l0{background:var(--a)}.l1{background:var(--b)}.l2{background:var(--c)}.l3{background:var(--d)}
+.tiempo{height:10px;border-radius:999px;background:var(--azul-suave);overflow:hidden}
+.tiempo>i{display:block;height:100%;background:var(--oro);width:100%;transition:width .25s linear}
+table{border-collapse:collapse;width:100%}
+th,td{padding:8px 10px;border-bottom:1px solid var(--linea);text-align:left}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--tenue)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.sube{color:var(--ok);font-weight:700}.baja{color:var(--mal);font-weight:700}
