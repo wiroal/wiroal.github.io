@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Los 12 mejores sitios de AA en el mundo · HJ3RAW</title>
+<meta name="description" content="Los 12 mejores sitios de AA en el mundo · documento de William R. Alvarez (HJ3RAW)" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4efe3; --bg-elevated: #fbf8f0; --ink: #1c1a17; --ink-soft: #3a3630;
+  --ink-muted: #8a8478; --rule: #d9d2c1; --rule-strong: #b8ae96;
+  --accent: #a8431a; --accent-deep: #6b2a0f; --gold: #8a6b2e;
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --container: 900px; --pad-x: clamp(1.5rem, 4vw, 4rem);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body);
+  font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168,67,26,0.04), transparent 60%),
+    radial-gradient(ellipse 80% 40% at 100% 100%, rgba(138,107,46,0.05), transparent 60%);
+}
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); }
+.top-bar { border-bottom: 1px solid var(--rule); padding: 1.1rem 0; font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.top-bar .inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.callsign { color: var(--accent); font-weight: 600; letter-spacing: 0.12em; }
+.back { color: var(--ink-muted); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+.back:hover { color: var(--accent); }
+header.doc { padding: clamp(3rem, 7vw, 5rem) 0 1.5rem; border-bottom: 1px solid var(--rule-strong); margin-bottom: 2.5rem; }
+header.doc .kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+header.doc .kicker::before { content: ''; width: 2.5rem; height: 1px; background: var(--accent); }
+header.doc h1 { font-family: var(--font-display); font-weight: 350; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.08; font-variation-settings: "opsz" 96, "SOFT" 40; }
+header.doc .fecha { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); margin-top: 1rem; }
+article h1, article h2, article h3, article h4 {
+  font-family: var(--font-display); font-weight: 400; line-height: 1.2;
+  color: var(--ink); font-variation-settings: "opsz" 48, "SOFT" 40;
+}
+article h1 { font-size: 1.9rem; margin: 2.8rem 0 1rem; }
+article h2 { font-size: 1.55rem; margin: 3rem 0 1rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); }
+article h3 { font-size: 1.2rem; margin: 2rem 0 0.7rem; color: var(--accent-deep); }
+article h4 { font-size: 1.02rem; margin: 1.5rem 0 0.5rem; font-family: var(--font-body); font-weight: 700; }
+article p { margin: 0 0 1.1rem; color: var(--ink-soft); }
+article strong { color: var(--ink); font-weight: 650; }
+article em { color: var(--ink-soft); }
+article a { color: var(--accent-deep); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+article a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+article ul, article ol { margin: 0 0 1.2rem 1.3rem; color: var(--ink-soft); }
+article li { margin-bottom: 0.4rem; }
+article blockquote { margin: 1.4rem 0; padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--accent); background: var(--bg-elevated); color: var(--ink); }
+article blockquote p { margin: 0.6rem 0; }
+article hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+article code { font-family: var(--font-mono); font-size: 0.86em; background: #efe7d6;
+  padding: 0.1em 0.35em; border-radius: 2px; }
+article table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.92rem; }
+article th, article td { border: 1px solid var(--rule); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+article th { background: var(--bg-elevated); font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+article tr:nth-child(even) td { background: rgba(251,248,240,0.55); }
+footer.colophon { margin-top: 4rem; padding: 2rem 0 3rem; border-top: 1px solid var(--rule);
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted);
+  display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="container inner">
+    <div><span class="callsign">HJ3RAW</span> <span style="margin-left:.6rem;">/ Bogotá, Colombia</span></div>
+    <a class="back" href="index.html">← Volver al índice</a>
+  </div>
+</div>
+<div class="container">
+  <header class="doc">
+    <div class="kicker">Servicio · AA</div>
+    <h1>Los 12 mejores sitios de AA en el mundo</h1>
+    <div class="fecha">25 de octubre de 2026 · Bogotá</div>
+  </header>
+  <article>
+<h1>Los 12 mejores sitios web de Alcohólicos Anónimos en el mundo</h1>
+<p><strong>Selección razonada · 25 de octubre de 2026</strong></p>
+<p>No existe un «ranking oficial» de sitios de AA. Lo que sigue es una evaluación propia, con criterios declarados y verificación una por una. La lista no pretende ser una verdad absoluta: pretende ser útil y reproducible.</p>
+<hr />
+<h2>1. Cómo se hizo</h2>
+<p><strong>Barrido.</strong> Se partió del directorio mundial oficial (<code>aa.org/es/find-aa/world</code>), de la página «AA en el mundo» y de búsquedas dirigidas por país e idioma. Se revisaron candidatos de América, Europa, Asia, África y Oceanía.</p>
+<p><strong>Verificación.</strong> A cada candidato se le abrió la portada y, cuando hizo falta, secciones internas. Tres sitios bloquearon el acceso automático (protección anti-bots): Australia, Reino Unido e Irlanda. Se mantienen en la lista por su peso real, pero su puntaje es <strong>provisional</strong> y así se indica.</p>
+<p><strong>Criterios y peso.</strong> Cada sitio se puntúa de 1 a 5 en seis criterios; el total se lleva a 100.</p>
+<table><thead><tr><th>Criterio</th><th>Peso</th><th>Qué mira</th></tr></thead><tbody><tr><td><strong>Oficialidad</strong></td><td>15</td><td>Que sea el sitio de la oficina de servicio general o de una entidad de AA, no de un particular.</td></tr><tr><td><strong>Contenido doctrinal y literario</strong></td><td>25</td><td>Pasos, Tradiciones, Conceptos, historia, literatura, manual de servicio.</td></tr><tr><td><strong>Encontrar reuniones</strong></td><td>20</td><td>Buscador propio, filtros, mapa, reuniones en línea.</td></tr><tr><td><strong>Ayuda inmediata</strong></td><td>15</td><td>Teléfono, WhatsApp, correo, horarios, «primeros pasos».</td></tr><tr><td><strong>Alcance</strong></td><td>15</td><td>Idiomas, secciones para familiares y profesionales, accesibilidad para discapacidad.</td></tr><tr><td><strong>Calidad de uso y actualización</strong></td><td>10</td><td>Navegación, diseño, contenido reciente.</td></tr></tbody></table>
+<p>El puntaje es un juicio evaluativo, no una medición instrumental. Dos personas con los mismos criterios pueden discrepar en dos o tres puntos.</p>
+<hr />
+<h2>2. La tabla</h2>
+<table><thead><tr><th>#</th><th>Sitio</th><th>País / entidad</th><th>Puntaje</th><th>Lo mejor</th></tr></thead><tbody><tr><td>1</td><td><a href="https://www.aa.org/es">aa.org</a></td><td>EE. UU. y Canadá / Servicios Mundiales</td><td>97</td><td>La referencia mundial, en tres idiomas</td></tr><tr><td>2</td><td><a href="https://www.anonyme-alkoholiker.de/">anonyme-alkoholiker.de</a></td><td>Alemania, Austria y Suiza</td><td>97</td><td>1.550 reuniones y atención en línea 24 h</td></tr><tr><td>3</td><td><a href="https://aa.org.nz/">aa.org.nz</a></td><td>Nueva Zelanda</td><td>95</td><td>Experiencia de uso y recursos en te reo</td></tr><tr><td>4</td><td><a href="https://aa.org.pl/">aa.org.pl</a></td><td>Polonia</td><td>95</td><td>Accesibilidad real (lengua de señas, sillas de ruedas)</td></tr><tr><td>5</td><td><a href="https://aa.org.ar/">aa.org.ar</a></td><td>Argentina</td><td>93</td><td>El sitio nacional en español más completo</td></tr><tr><td>6</td><td><a href="https://www.aa.org.br/">aa.org.br</a></td><td>Brasil</td><td>90</td><td>Reuniones a distancia y línea de ayuda por WhatsApp</td></tr><tr><td>7</td><td><a href="https://www.aa.org.au/">aa.org.au</a></td><td>Australia</td><td>87\*</td><td>Buscador de reuniones y área de miembros</td></tr><tr><td>8</td><td><a href="https://www.alcoholicos-anonimos.org/">alcoholicos-anonimos.org</a></td><td>España</td><td>85</td><td>Búsqueda por provincia con filtros finos</td></tr><tr><td>9</td><td><a href="https://www.alcoholics-anonymous.org.uk/">alcoholics-anonymous.org.uk</a></td><td>Reino Unido</td><td>80\*</td><td>Red de intergrupos y distritos</td></tr><tr><td>10</td><td><a href="https://aacolombia.org/">aacolombia.org</a></td><td>Colombia</td><td>78</td><td>Literatura, estructura y directorio virtual</td></tr><tr><td>11</td><td><a href="https://www.alcoholicsanonymous.ie/">alcoholicsanonymous.ie</a></td><td>Irlanda</td><td>73\*</td><td>Claridad para el recién llegado</td></tr><tr><td>12</td><td><a href="https://www.aagrapevine.org/">aagrapevine.org</a></td><td>AA Grapevine (mundial)</td><td>70</td><td>El archivo y la revista; versión en español</td></tr></tbody></table>
+<p>\* Puntaje provisional: el sitio bloqueó la verificación automática.</p>
+<hr />
+<h2>3. Fichas</h2>
+<h3>1. aa.org — Estados Unidos, Canadá y servicios mundiales</h3>
+<p><strong>Puntaje 97.</strong> Es la puerta de entrada al mundo de AA: la Oficina de Servicios Generales de EE. UU. y Canadá y AA World Services. Está en <strong>inglés, español y francés</strong>, y cada versión no es un traductor automático sino contenido propio.</p>
+<p>Tiene lo que ningún otro: el texto de los Pasos, las Tradiciones y los Conceptos; la historia y los archivos; el catálogo de literatura con lectura en línea; el manual de servicio; el buscador de reuniones; secciones para el recién llegado, la familia, el profesional que trabaja con alcohólicos y los miembros de las Fuerzas Armadas; y la puerta al directorio de oficinas de todo el mundo.</p>
+<p><strong>Lo que le falta:</strong> el buscador de reuniones cubre bien EE. UU. y Canadá, pero para el resto del mundo remite a la oficina local. La navegación es densa y algunas páginas cargan mucho.</p>
+<p><strong>Para qué sirve:</strong> es la fuente primaria. Todo lo demás se contrasta contra esta.</p>
+<h3>2. anonyme-alkoholiker.de — Alemania, Austria y Suiza</h3>
+<p><strong>Puntaje 97.</strong> La mejor combinación de escala y atención directa que se encontró. Publica cifras concretas: unas <strong>1.550 reuniones en Alemania</strong>, 140 en Austria y el Tirol del Sur y 110 en Suiza; además, <strong>28 reuniones por correo y chat que funcionan las 24 horas</strong> y unas 230 reuniones por vídeo y teléfono.</p>
+<p>Tiene línea de atención diaria (9:00 a 21:00), un equipo de «primera ayuda» por correo, historias de vida, literatura descargable, la revista <em>AA-DACH</em>, buscador de reuniones y una sección de preguntas frecuentes muy trabajada.</p>
+<p><strong>Lo que le falta:</strong> solo en alemán. Para un hispanohablante es un modelo, no una herramienta.</p>
+<p><strong>Para qué sirve:</strong> para ver cómo se hace un sitio nacional completo y actualizado.</p>
+<h3>3. aa.org.nz — Nueva Zelanda (Aotearoa)</h3>
+<p><strong>Puntaje 95.</strong> El sitio con mejor experiencia de uso de la lista. Portada limpia, mensaje claro («Help to stop drinking»), teléfono y correo a la vista, y un botón de <strong>salida rápida</strong> para quien necesita ocultar la página.</p>
+<p>Tiene más de <strong>500 reuniones</strong> con vista de mapa, sección para el recién llegado, para el miembro, para quien ayuda a otro y para profesionales; Pasos, Tradiciones y Conceptos; literatura; historias de miembros; estructura de servicio; archivo; y <strong>recursos en te reo maorí</strong>, algo que casi ningún sitio de AA hace.</p>
+<p><strong>Lo que le falta:</strong> solo en inglés y te reo.</p>
+<p><strong>Para qué sirve:</strong> como referencia de diseño y de trato al recién llegado.</p>
+<h3>4. aa.org.pl — Polonia</h3>
+<p><strong>Puntaje 95.</strong> El más accesible de todos, y no por casualidad: tiene una sección entera dedicada a la accesibilidad. El buscador de reuniones filtra por día, por reunión abierta o cerrada, por <strong>acceso para sillas de ruedas, baño adaptado, lengua de señas y cuidado de niños</strong>. Hay un contacto específico para personas sordas por SMS.</p>
+<p>Además: línea de atención, literatura, revista <em>Zdrój</em>, boletines para correccionales, tienda, fundación de servicio, reflexiones diarias y resultados de su encuesta de miembros.</p>
+<p><strong>Lo que le falta:</strong> solo en polaco.</p>
+<p><strong>Para qué sirve:</strong> es el sitio que hay que mirar cuando se habla de inclusión y discapacidad.</p>
+<h3>5. aa.org.ar — Argentina</h3>
+<p><strong>Puntaje 93.</strong> El sitio nacional en español más completo que se verificó. Tiene los Doce Pasos, las Doce Tradiciones, <strong>las Doce Promesas</strong>, «lo que AA hace» y «lo que AA no hace», historia, el Manual de Servicio, guías de servidores, apadrinamiento, inventario sobre las Tradiciones, cuestionario sobre los Conceptos y hasta una página dedicada a la <strong>unicidad de propósito</strong>.</p>
+<p>Suma directorio de todos los grupos del país, teléfonos de servicio, grupos virtuales, revista nacional <em>El Sendero</em>, contacto por WhatsApp y material para profesionales.</p>
+<p><strong>Lo que le falta:</strong> la portada está sobrecargada de imágenes y enlaces; el diseño no está a la altura del contenido. Se encontró un enlace comercial ajeno incrustado al pie (criptomoneda), señal de mantenimiento descuidado.</p>
+<p><strong>Para qué sirve:</strong> para estudiar servicio y doctrina en español, con material que otros países no publican.</p>
+<h3>6. aa.org.br — Brasil</h3>
+<p><strong>Puntaje 90.</strong> Muy completo y muy actualizado. Línea de ayuda por <strong>WhatsApp o teléfono</strong>, reuniones presenciales y <strong>reuniones a distancia</strong>, revista <em>Vivência</em>, tienda virtual, libros electrónicos, comités, eventos nacionales e internacionales, colección traducida de materiales de servicio y secciones para el recién llegado, el miembro, el profesional y la familia.</p>
+<p><strong>Lo que le falta:</strong> solo en portugués. La portada usa muchas imágenes y el contenido queda en segundo plano.</p>
+<p><strong>Para qué sirve:</strong> como modelo de integración entre revista, tienda y servicio.</p>
+<h3>7. aa.org.au — Australia <em>(provisional)</em></h3>
+<p><strong>Puntaje 87.</strong> No se pudo abrir la portada (bloqueo anti-bots), pero sus subpáginas están indexadas y muestran un ecosistema sólido: buscador de reuniones propio (<code>meetings.aa.org.au</code>), área de miembros con guías de servicio, y una estructura nacional con estados y distritos.</p>
+<p><strong>Lo que le falta:</strong> verificar. Es el sitio que más se echa de menos en la lista por su tamaño.</p>
+<h3>8. alcoholicos-anonimos.org — España</h3>
+<p><strong>Puntaje 85.</strong> Contenido muy rico: qué es AA, cómo funciona el programa, historia de AA en España y en el mundo, «lo que AA no hace», anonimato, autosostenimiento, estructura de servicio, sección para la familia, para la mujer, para jóvenes, para centros de tratamiento, para profesionales y para medios.</p>
+<p>El buscador de grupos es el más fino en español: por <strong>provincia</strong>, con filtros de <strong>reunión abierta, reuniones en línea y grupos que abren festivos</strong>, por horario de mañana o tarde y por día. Tiene también publicaciones descargables y la encuesta de miembros de 2023.</p>
+<p><strong>Lo que le falta:</strong> tecnología antigua. La navegación usa parámetros numéricos en la dirección (<code>apartado.asp?te=226</code>), el diseño no se adapta bien al móvil y la página declara una codificación antigua, que algunos lectores muestran con acentos rotos.</p>
+<p><strong>Para qué sirve:</strong> para encontrar grupo en España y para leer doctrina en español peninsular.</p>
+<h3>9. alcoholics-anonymous.org.uk — Reino Unido <em>(provisional)</em></h3>
+<p><strong>Puntaje 80.</strong> Bloqueado para verificación. Su estructura se conoce por las páginas de regiones e intergrupos indexadas: una red muy descentralizada, con distritos y convenciones locales.</p>
+<p><strong>Lo que le falta:</strong> confirmar el estado del buscador nacional de reuniones.</p>
+<h3>10. aacolombia.org — Colombia</h3>
+<p><strong>Puntaje 78.</strong> Es el sitio que corresponde a esta base. Tiene lo esencial bien cubierto: qué es AA, qué hace y qué no hace, test de autodiagnóstico, anonimato, historia de AA en Colombia, estructura de servicio, literatura, revista <em>AA El Mensaje</em>, automantenimiento, eventos por categoría y <strong>directorio virtual de grupos</strong> con buscador por cercanía.</p>
+<p><strong>Lo que le falta:</strong> el diseño y la navegación son pesados; las páginas cargan menús enormes antes del contenido y el texto se corta en la vista. No tiene un buscador de reuniones moderno con mapa.</p>
+<p><strong>Para qué sirve:</strong> es la referencia obligada para Colombia, y la puerta de entrada local.</p>
+<h3>11. alcoholicsanonymous.ie — Irlanda <em>(provisional)</em></h3>
+<p><strong>Puntaje 73.</strong> Bloqueado para verificación. Se le conocen secciones de «nuevo en AA» y preguntas frecuentes bien valoradas por su claridad.</p>
+<h3>12. aagrapevine.org — AA Grapevine (mundial)</h3>
+<p><strong>Puntaje 70.</strong> No es un sitio de servicio: es la revista oficial de AA, y entra en esta lista por la calidad de lo que ofrece. Tiene el número del mes, un <strong>archivo histórico</strong> enorme, podcasts, tienda, cita diaria, calculadora de sobriedad y una versión en español, <strong>La Viña</strong> (<a href="http://www.aalavina.org/">aalavina.org</a>).</p>
+<p><strong>Lo que le falta:</strong> buena parte del archivo y de los contenidos exige suscripción; no tiene buscador de reuniones ni atención directa.</p>
+<p><strong>Para qué sirve:</strong> para lectura, para preparar una reunión con un texto y para escuchar a otros.</p>
+<hr />
+<h2>4. Menciones y descartes</h2>
+<ul><li><strong>aamexico.org.mx</strong>: solo devolvió el título de la página; no se pudo evaluar. Queda pendiente.</li><li><strong>aa.org.za</strong> (Sudáfrica): el servidor no respondió en la verificación.</li><li><strong>Aplicaciones</strong>: <em>Meeting Guide</em> y <em>Everything AA</em> son oficiales y muy útiles, pero son</li></ul>
+<p>aplicaciones, no sitios web; se mencionan aparte.</p>
+<ul><li><strong>La Viña</strong> (<a href="http://www.aalavina.org/">aalavina.org</a>): la versión en español de Grapevine. Merece</li></ul>
+<p>entrada propia si se busca lectura y no servicio.</p>
+<hr />
+<h2>5. Cómo usar esta lista según lo que necesites</h2>
+<table><thead><tr><th>Si buscas…</th><th>Ve a</th></tr></thead><tbody><tr><td>Entender qué es AA con la fuente primaria</td><td><strong>aa.org/es</strong></td></tr><tr><td>Una reunión en Colombia</td><td><strong>aacolombia.org</strong></td></tr><tr><td>Una reunión en España, con filtros</td><td><strong>alcoholicos-anonimos.org</strong></td></tr><tr><td>Doctrina y material de servicio en español</td><td><strong>aa.org.ar</strong></td></tr><tr><td>Un modelo de sitio nacional completo</td><td><strong>anonyme-alkoholiker.de</strong></td></tr><tr><td>Un modelo de accesibilidad</td><td><strong>aa.org.pl</strong></td></tr><tr><td>Un modelo de trato al recién llegado</td><td><strong>aa.org.nz</strong></td></tr><tr><td>Leer historias y la revista</td><td><strong>aagrapevine.org</strong> / <strong>aalavina.org</strong></td></tr></tbody></table>
+<hr />
+<h2>6. Conclusión</h2>
+<p>El mejor sitio de AA del mundo no es el más bonito: es <strong>aa.org</strong>, porque es la fuente de la que beben todos los demás.</p>
+<p>Pero el más útil para una persona concreta suele ser el de su país, y ahí la diferencia se decide en tres cosas: que el buscador de reuniones funcione, que el teléfono esté a la vista y que el sitio esté actualizado. Por eso Alemania, Nueva Zelanda, Polonia y Argentina puntúan tan alto: no tienen más doctrina, tienen mejor servicio.</p>
+<p>Y una advertencia: cualquier lista de este tipo envejece. Antes de usar un enlace, conviene abrirlo y confirmar que sigue siendo el sitio oficial.</p>
+<hr />
+<h2>7. Fuentes de la verificación</h2>
+<ul><li>Directorio mundial: &lt;https://www.aa.org/es/find-aa/world&gt;</li><li>«AA en el mundo»: &lt;https://www.aa.org/es/aa-around-the-world&gt;</li><li>Portadas y secciones internas de cada uno de los doce sitios, consultadas el 25/10/2026.</li><li>Buscadores y páginas índice para los tres sitios bloqueados (Australia, Reino Unido, Irlanda).</li></ul>
+  </article>
+  <footer class="colophon">
+    <div>William R. Alvarez · HJ3RAW</div>
+    <div>Bogotá · <span id="year">2026</span></div>
+  </footer>
+</div>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

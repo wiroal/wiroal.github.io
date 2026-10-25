@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Doce Conceptos en sencillo · Cuaderno de estudio</title>
+<meta name="description" content="Un cuaderno interactivo para estudiar, entender y aplicar los Doce Conceptos para el Servicio Mundial de A.A. desde un grupo nuevo, un Distrito y un Área.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="dark light">
+<style>
+/* ============================================================
+   conceptos_dummis · cuaderno de estudio
+   Sin dependencias. Todo se guarda en el navegador.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#0b0b0f;
+  --bg-2:#0f0f15;
+  --panel:#15151d;
+  --panel-2:#1b1b24;
+  --panel-3:#22222d;
+  --line:#2a2a36;
+  --line-2:#3a3a49;
+  --text:#e9e9f0;
+  --muted:#a3a3b4;
+  --dim:#747486;
+  --accent:#a78bfa;
+  --accent-2:#7c3aed;
+  --accent-soft:rgba(167,139,250,.13);
+  --teal:#5eead4;
+  --teal-soft:rgba(94,234,212,.12);
+  --amber:#fbbf24;
+  --amber-soft:rgba(251,191,36,.12);
+  --rose:#fb7185;
+  --rose-soft:rgba(251,113,133,.12);
+  --blue:#60a5fa;
+  --blue-soft:rgba(96,165,250,.12);
+  --ok:#34d399;
+  --bad:#f87171;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --mono:"JetBrains Mono","Cascadia Code",Consolas,"Courier New",monospace;
+  --sidebar:286px;
+}
+html[data-theme="light"]{
+  --bg:#f4f1ea;
+  --bg-2:#efeae0;
+  --panel:#fbf9f4;
+  --panel-2:#f6f2e9;
+  --panel-3:#ece6d9;
+  --line:#d9d1c2;
+  --line-2:#c5baa7;
+  --text:#201d18;
+  --muted:#5f5a50;
+  --dim:#8a8377;
+  --accent:#6d28d9;
+  --accent-2:#5b21b6;
+  --accent-soft:rgba(109,40,217,.10);
+  --teal:#0f766e;
+  --teal-soft:rgba(15,118,110,.10);
+  --amber:#a16207;
+  --amber-soft:rgba(161,98,7,.10);
+  --rose:#be123c;
+  --rose-soft:rgba(190,18,60,.09);
+  --blue:#1d4ed8;
+  --blue-soft:rgba(29,78,216,.09);
+  --ok:#047857;
+  --bad:#b91c1c;
+  --shadow:0 20px 50px rgba(74,60,40,.12);
+}
+html{scroll-behavior:smooth;color-scheme:dark}
+html[data-theme="light"]{color-scheme:light}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 82% -10%, rgba(124,58,237,.16), transparent 60%),
+    radial-gradient(700px 400px at 8% 10%, rgba(94,234,212,.06), transparent 60%);
+  background-attachment:fixed;
+}
+html[data-theme="light"] body{
+  background-image:
+    radial-gradient(900px 500px at 82% -10%, rgba(109,40,217,.08), transparent 60%),
+    radial-gradient(700px 400px at 8% 10%, rgba(15,118,110,.06), transparent 60%);
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+::selection{background:var(--accent-soft)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#fff;padding:10px 16px;z-index:200}
+.skip:focus{left:10px;top:10px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* layout */
+.app{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow-y:auto;background:rgba(15,15,21,.72);
+  border-right:1px solid var(--line);padding:22px 16px 18px;display:flex;flex-direction:column;gap:18px;
+  backdrop-filter:blur(14px);z-index:40;
+}
+html[data-theme="light"] .sidebar{background:rgba(251,249,244,.82)}
+.shell{min-width:0;display:flex;flex-direction:column}
+.main{width:100%;max-width:1220px;margin:0 auto;padding:26px clamp(18px,3.4vw,44px) 56px;flex:1}
+.topbar{
+  position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px clamp(18px,3.4vw,44px);border-bottom:1px solid var(--line);
+  background:rgba(11,11,15,.72);backdrop-filter:blur(14px);
+}
+html[data-theme="light"] .topbar{background:rgba(244,241,234,.78)}
+.crumb{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--dim);min-width:0;flex:1}
+.crumb b{color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb .slash{opacity:.5}
+.icon-btn{
+  display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);
+  background:var(--panel);border-radius:10px;color:var(--muted);flex:0 0 auto;overflow:hidden;
+}
+.icon-btn svg{width:18px;height:18px;display:block}
+.icon-btn:hover{color:var(--text);border-color:var(--line-2);background:var(--panel-2)}
+.search-btn{
+  display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--panel);
+  color:var(--dim);border-radius:10px;padding:8px 12px;font-size:.84rem;min-width:210px;
+}
+.search-btn:hover{border-color:var(--line-2);color:var(--muted)}
+.search-btn kbd{margin-left:auto;font-family:var(--mono);font-size:.68rem;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.menu-btn{display:none}
+
+/* sidebar */
+.brand{display:flex;align-items:center;gap:11px;padding:2px 6px 10px;border-bottom:1px solid var(--line)}
+.brand-mark{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,var(--accent),var(--accent-2));color:#fff;
+  box-shadow:0 8px 24px rgba(124,58,237,.35);
+}
+.brand-mark svg{width:21px;height:21px}
+.brand-name{font-size:.93rem;font-weight:650;letter-spacing:-.01em;line-height:1.2}
+.brand-sub{font-size:.7rem;color:var(--dim);font-family:var(--mono);margin-top:2px}
+.side-label{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:0 10px;margin:2px 0 4px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;color:var(--muted);
+  font-size:.87rem;border:1px solid transparent;text-decoration:none;line-height:1.2;
+}
+.nav a svg{width:17px;height:17px;flex:0 0 auto;opacity:.8}
+.nav a:hover{background:var(--panel);color:var(--text);text-decoration:none}
+.nav a.active{background:var(--accent-soft);border-color:rgba(167,139,250,.25);color:var(--text)}
+.nav a.active svg{color:var(--accent);opacity:1}
+.nav .count{margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--dim)}
+.side-progress{margin-top:auto;border-top:1px solid var(--line);padding:14px 6px 0}
+.side-progress-top{display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:7px}
+.side-progress-top b{color:var(--text);font-weight:600}
+.bar{height:6px;border-radius:999px;background:var(--panel-3);overflow:hidden}
+.bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent));transition:width .4s ease}
+.side-note{font-size:.68rem;color:var(--dim);line-height:1.5;padding:10px 6px 0}
+.side-note a{color:var(--muted)}
+.side-actions{display:flex;gap:6px;padding:10px 6px 0}
+.side-actions button{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px;font-size:.7rem;color:var(--dim)}
+.side-actions button:hover{color:var(--text);border-color:var(--line-2)}
+
+/* typography */
+h1,h2,h3,h4{margin:0;line-height:1.18;letter-spacing:-.02em;font-weight:650}
+h1{font-size:clamp(2.1rem,4.4vw,3.6rem)}
+h2{font-size:clamp(1.35rem,2.3vw,1.8rem)}
+h3{font-size:1.08rem}
+p{margin:.55em 0}
+.eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.eyebrow.plain{color:var(--dim)}
+.lede{font-size:clamp(1rem,1.6vw,1.16rem);color:var(--muted);max-width:62ch;line-height:1.65}
+.muted{color:var(--muted)}
+.dim{color:var(--dim)}
+.small{font-size:.82rem}
+.tiny{font-size:.72rem}
+.mono{font-family:var(--mono)}
+.serif{font-family:var(--serif)}
+.center{text-align:center}
+.mt-0{margin-top:0}.mt-1{margin-top:8px}.mt-2{margin-top:16px}.mt-3{margin-top:26px}
+.flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;
+  border:1px solid var(--line);background:var(--panel-2);color:var(--text);
+  padding:10px 15px;font-size:.86rem;font-weight:550;line-height:1.2;text-decoration:none;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease;
+}
+.btn:hover{background:var(--panel-3);border-color:var(--line-2);text-decoration:none}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px}
+.btn.primary{background:linear-gradient(145deg,var(--accent),var(--accent-2));border-color:transparent;color:#fff;box-shadow:0 8px 26px rgba(124,58,237,.28)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent}
+.btn.small{padding:7px 11px;font-size:.78rem;border-radius:8px}
+.btn.tiny{padding:5px 9px;font-size:.72rem;border-radius:7px}
+.btn.danger{color:var(--bad);border-color:rgba(248,113,113,.35)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+
+/* generic card */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:relative;overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.card-head .label{font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.card-head .pill{font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:var(--panel-2);white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted);background:var(--panel-2);white-space:nowrap}
+.pill.accent{color:var(--accent);border-color:rgba(167,139,250,.35);background:var(--accent-soft)}
+.pill.ok{color:var(--ok);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.08)}
+
+/* hero */
+.hero{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:26px;align-items:center;
+  border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,44px);
+  background:
+    radial-gradient(700px 380px at 100% 0%, rgba(124,58,237,.17), transparent 65%),
+    radial-gradient(500px 300px at 0% 100%, rgba(94,234,212,.06), transparent 65%),
+    var(--panel);
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 1px);
+  background-size:22px 22px;mask-image:linear-gradient(120deg,transparent 35%,#000 100%);
+}
+html[data-theme="light"] .hero::after{background-image:radial-gradient(circle, rgba(32,29,24,.12) 1px, transparent 1px)}
+.hero-copy{position:relative;z-index:1}
+.hero h1{margin:0 0 14px;line-height:.98;letter-spacing:-.045em}
+.hero h1 span{color:var(--accent)}
+.hero .lede{max-width:52ch}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.hero-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}
+.hero-tags span{font-family:var(--mono);font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:4px 9px;background:var(--bg-2)}
+.hero-art{position:relative;z-index:1;min-width:0}
+.graph-wrap{position:relative;width:100%;height:300px;display:grid;place-items:center}
+.graph-wrap.small{height:300px}
+.hero-art .graph-wrap{height:268px}
+.hero-art .graph-caption{margin-top:10px}
+.graph-wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.graph-caption{font-family:var(--mono);font-size:.64rem;color:var(--dim);text-align:center;margin:0;letter-spacing:.04em}
+.graph-node{cursor:pointer}
+.graph-node circle{transition:r .15s ease,filter .15s ease}
+.graph-node:hover circle{filter:brightness(1.3)}
+.graph-node text{font-family:var(--mono);font-size:12px;font-weight:600;fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.graph-node .halo{fill:none;stroke-width:1;opacity:.45}
+.graph-edge{stroke:var(--line-2);stroke-width:1;opacity:.55}
+.graph-center{fill:var(--panel-3);stroke:var(--line-2)}
+.graph-center-text{font-family:var(--mono);font-size:8px;fill:var(--muted);text-anchor:middle;letter-spacing:.08em}
+.b-fuente{fill:#8b5cf6}.b-derechos{fill:#0d9488}.b-motor{fill:#b45309}.b-liderazgo{fill:#be123c}.b-limites{fill:#2563eb}
+.h-fuente{stroke:#8b5cf6}.h-derechos{stroke:#0d9488}.h-motor{stroke:#b45309}.h-liderazgo{stroke:#be123c}.h-limites{stroke:#2563eb}
+
+/* dashboard */
+.dashboard{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:18px}
+.span-5{grid-column:span 5}.span-7{grid-column:span 7}.span-12{grid-column:span 12}
+.today .today-title{font-size:1.6rem;margin:4px 0 8px}
+.today .today-sub{color:var(--muted);font-size:.95rem;max-width:56ch}
+.session-line{display:flex;align-items:center;gap:8px;margin:14px 0 4px;color:var(--muted);font-size:.84rem}
+.session-line svg{width:16px;height:16px;color:var(--accent)}
+.today .btn-row{margin-top:16px}
+.progress-card{display:flex;flex-direction:column;align-items:stretch}
+.ring-wrap{display:flex;align-items:center;gap:18px;margin:4px 0 12px}
+.ring{position:relative;width:104px;height:104px;flex:0 0 auto}
+.ring svg{width:104px;height:104px;transform:rotate(-90deg)}
+.ring .track{fill:none;stroke:var(--panel-3);stroke-width:8}
+.ring .value{fill:none;stroke:url(#ringGrad);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring-label{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring-label b{font-size:1.5rem;line-height:1;display:block}
+.ring-label span{font-size:.62rem;color:var(--dim);font-family:var(--mono);letter-spacing:.08em}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.stat{border:1px solid var(--line);background:var(--panel-2);border-radius:10px;padding:8px 10px}
+.stat b{display:block;font-size:1.05rem;line-height:1.2}
+.stat span{font-size:.68rem;color:var(--dim)}
+.spark-q{font-family:var(--serif);font-size:1.22rem;line-height:1.45;margin:2px 0 12px;min-height:3.4em}
+.spark textarea{min-height:92px}
+.streak{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;color:var(--amber);border:1px solid rgba(251,191,36,.25);background:var(--amber-soft);border-radius:999px;padding:3px 8px}
+.streak svg{width:13px;height:13px}
+.start-list{display:flex;flex-direction:column;gap:9px;margin:10px 0 14px}
+.start-item{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.start-item .n{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:.72rem;font-weight:600;border:1px solid rgba(167,139,250,.25)}
+.start-item p{margin:0;font-size:.86rem;color:var(--muted);line-height:1.5}
+.start-item b{color:var(--text);font-weight:600}
+.thesis{border-left:2px solid var(--accent);padding:2px 0 2px 12px;font-family:var(--serif);font-size:1.02rem;line-height:1.5;color:var(--text)}
+.quote-card{display:flex;flex-direction:column;justify-content:center;background:
+  radial-gradient(400px 200px at 100% 0%, rgba(251,191,36,.10), transparent 70%),var(--panel)}
+.quote-card blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:1.35}
+.quote-card cite{display:block;margin-top:12px;font-style:normal;font-family:var(--mono);font-size:.68rem;color:var(--dim);letter-spacing:.04em}
+
+/* view header */
+.page-head{margin:8px 0 22px}
+.page-head h1{font-size:clamp(1.9rem,3.4vw,2.7rem);margin-bottom:8px}
+.page-head .lede{max-width:72ch}
+.page-head .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 14px}
+.toolbar .grow{flex:1;min-width:180px}
+.input{
+  width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;color:var(--text);font-size:.86rem;outline:none;
+}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+textarea.input{resize:vertical;min-height:110px;line-height:1.6}
+select.input{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:5px 11px;font-size:.76rem}
+.filter-btn:hover{border-color:var(--line-2);color:var(--text)}
+.filter-btn[aria-pressed="true"]{background:var(--accent-soft);border-color:rgba(167,139,250,.45);color:var(--accent)}
+
+/* weeks */
+.weeks{display:flex;flex-direction:column;gap:12px}
+.week{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
+.week[open]{border-color:var(--line-2)}
+.week summary{
+  list-style:none;display:grid;grid-template-columns:52px minmax(0,1fr) auto 20px;gap:14px;align-items:center;
+  padding:16px 18px;cursor:pointer;user-select:none;
+}
+.week summary::-webkit-details-marker{display:none}
+.week summary:hover{background:var(--panel-2)}
+.week-num{font-family:var(--serif);font-size:1.7rem;color:var(--accent);line-height:1;text-align:center}
+.week-title{font-weight:600;font-size:1rem;line-height:1.25}
+.week-sub{display:block;color:var(--dim);font-size:.78rem;font-weight:400;margin-top:2px}
+.week-date{font-family:var(--mono);font-size:.68rem;color:var(--dim);white-space:nowrap}
+.week-chev{width:16px;height:16px;color:var(--dim);transition:transform .2s ease}
+.week[open] .week-chev{transform:rotate(180deg)}
+.week-body{padding:0 18px 18px;border-top:1px solid var(--line)}
+.week-goal{color:var(--muted);font-size:.9rem;margin:14px 0}
+.week-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;font-size:.72rem;border:1px solid var(--line);
+  border-radius:999px;padding:3px 9px;background:var(--panel-2);color:var(--muted);text-decoration:none;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.chip .r{font-family:var(--mono);font-size:.66rem;color:var(--accent)}
+.week h4{font-family:var(--mono);font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin:16px 0 8px}
+.sessions{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
+.sessions li label{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);cursor:pointer}
+.sessions li label:hover{border-color:var(--line-2)}
+.sessions input[type="checkbox"]{width:16px;height:16px;margin:3px 0 0;accent-color:var(--accent)}
+.sessions .s-label{font-size:.84rem;font-weight:550;display:block}
+.sessions .s-desc{font-size:.77rem;color:var(--dim);display:block;margin-top:2px;line-height:1.45}
+.sessions input:checked + span .s-label{color:var(--dim);text-decoration:line-through}
+.mini-case{border:1px solid var(--line);border-radius:9px;padding:12px 13px;background:var(--bg-2);margin-top:4px}
+.mini-case b{font-size:.8rem}
+.mini-case p{font-size:.8rem;color:var(--muted);margin:5px 0 0}
+.week-foot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.week-foot .box{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--panel-2)}
+.week-foot .box b{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.week-foot .box p{margin:0;font-size:.78rem;color:var(--muted);line-height:1.45}
+.week-note{font-size:.74rem;color:var(--dim);margin-top:12px;border-left:2px solid var(--line-2);padding-left:10px}
+.plan-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-top:14px}
+.plan-tools label{font-size:.72rem;color:var(--dim);display:flex;flex-direction:column;gap:4px;font-family:var(--mono);letter-spacing:.06em}
+.plan-tools input[type="date"]{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--sans);font-size:.8rem}
+
+/* concepts grid */
+.concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.concept-card{
+  display:flex;flex-direction:column;gap:8px;background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:16px;text-decoration:none;color:inherit;position:relative;overflow:hidden;
+  transition:border-color .15s ease,transform .15s ease,background .15s ease;
+}
+.concept-card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none;background:var(--panel-2)}
+.concept-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--line-2)}
+.concept-card[data-block="fuente"]::before{background:#8b5cf6}
+.concept-card[data-block="derechos"]::before{background:#0d9488}
+.concept-card[data-block="motor"]::before{background:#b45309}
+.concept-card[data-block="liderazgo"]::before{background:#be123c}
+.concept-card[data-block="limites"]::before{background:#2563eb}
+.cc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cc-roman{font-family:var(--serif);font-size:1.55rem;color:var(--accent);line-height:1}
+.cc-status{width:9px;height:9px;border-radius:50%;background:var(--panel-3);border:1px solid var(--line-2)}
+.cc-status[data-status="1"]{background:var(--blue);border-color:var(--blue)}
+.cc-status[data-status="2"]{background:var(--teal);border-color:var(--teal)}
+.cc-status[data-status="3"]{background:var(--amber);border-color:var(--amber)}
+.cc-status[data-status="4"]{background:var(--accent);border-color:var(--accent)}
+.concept-card h3{font-size:.98rem;line-height:1.3}
+.concept-card p{font-size:.78rem;color:var(--muted);margin:0;line-height:1.5;flex:1}
+.cc-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
+.cc-tag{font-family:var(--mono);font-size:.62rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.cc-state{font-size:.68rem;color:var(--dim)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;font-size:.72rem;color:var(--dim)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* concept detail */
+.detail-top{display:flex;gap:18px;align-items:flex-start;margin:4px 0 18px}
+.detail-num{font-family:var(--serif);font-size:clamp(3.2rem,7vw,5.4rem);line-height:.85;color:var(--accent);flex:0 0 auto}
+.detail-title h1{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-bottom:6px}
+.detail-title .kicker{font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.detail-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.75fr);gap:18px;align-items:start}
+.detail-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.detail-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:82px}
+.detail-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.detail-section h2{font-size:.72rem;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.detail-section p{font-size:.92rem;color:var(--muted);line-height:1.65}
+.detail-section p:first-of-type{margin-top:0}
+.detail-section .big{font-family:var(--serif);font-size:1.3rem;line-height:1.45;color:var(--text)}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:14px 16px}
+.callout .official{font-family:var(--serif);font-size:1.06rem;line-height:1.6;color:var(--text);margin:0}
+.callout .src{font-family:var(--mono);font-size:.64rem;color:var(--dim);margin-top:8px;letter-spacing:.03em}
+.quote-block{border-left:2px solid var(--amber);padding:2px 0 2px 14px;margin:0}
+.quote-block p{font-family:var(--serif);font-size:1.08rem;line-height:1.55;color:var(--text);margin:0}
+.quote-block cite{display:block;font-style:normal;font-family:var(--mono);font-size:.64rem;color:var(--dim);margin-top:7px}
+.trap{border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 10px 10px 0;padding:13px 15px}
+.trap p{margin:0;color:var(--text);font-size:.88rem}
+.action-box{border:1px solid rgba(251,191,36,.3);background:var(--amber-soft);border-radius:12px;padding:15px}
+.action-box p{color:var(--text);font-size:.9rem;margin:0 0 11px}
+.status-control{display:flex;flex-wrap:wrap;gap:5px}
+.status-control button{border:1px solid var(--line);background:var(--panel-2);color:var(--dim);border-radius:7px;padding:5px 8px;font-size:.68rem}
+.status-control button:hover{color:var(--text);border-color:var(--line-2)}
+.status-control button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.related-list{display:flex;flex-direction:column;gap:5px}
+.related-list a{display:flex;justify-content:space-between;gap:8px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:.78rem;color:var(--muted);text-decoration:none;background:var(--panel-2)}
+.related-list a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.related-list span{font-family:var(--mono);color:var(--accent);font-size:.7rem}
+.detail-nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.detail-nav a{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel);text-decoration:none;color:var(--muted);font-size:.78rem}
+.detail-nav a:hover{border-color:var(--accent);text-decoration:none}
+.detail-nav b{display:block;color:var(--text);font-size:.88rem;margin-top:2px}
+
+/* repaso */
+.rep-tabs{display:flex;gap:6px;margin:16px 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.rep-tabs button{border:1px solid transparent;background:transparent;color:var(--dim);border-radius:8px;padding:7px 12px;font-size:.84rem}
+.rep-tabs button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent);border-color:rgba(167,139,250,.3)}
+.flash-shell{max-width:680px}
+.flash-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-size:.76rem;color:var(--dim)}
+.flash{perspective:1200px;min-height:280px;cursor:pointer}
+.flash-inner{position:relative;width:100%;min-height:280px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.flash.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-face{
+  position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:18px;
+  background:var(--panel);padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;
+}
+.flash-face.back{transform:rotateY(180deg);background:linear-gradient(160deg,var(--panel-2),var(--panel))}
+.flash-face .roman{font-family:var(--serif);font-size:3.4rem;color:var(--accent);line-height:1}
+.flash-face .front-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.flash-face h3{font-size:1.3rem;max-width:26ch}
+.flash-face p{font-size:.88rem;color:var(--muted);max-width:40ch;margin:0}
+.flash-face .hint{font-family:var(--mono);font-size:.62rem;color:var(--dim);margin-top:8px}
+.flash-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.flash-actions .btn{flex:1}
+.flash-progress{height:5px;border-radius:999px;background:var(--panel-3);overflow:hidden;margin-top:12px}
+.flash-progress i{display:block;height:100%;background:var(--accent);transition:width .3s ease}
+.quiz-shell{max-width:760px}
+.quiz-case{font-family:var(--serif);font-size:1.25rem;line-height:1.5;margin:6px 0 18px}
+.quiz-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px}
+.quiz-options button{border:1px solid var(--line);background:var(--panel-2);border-radius:10px;padding:12px 10px;font-weight:600;font-size:.9rem}
+.quiz-options button:hover:not(:disabled){border-color:var(--accent)}
+.quiz-options button.correct{border-color:var(--ok);background:rgba(52,211,153,.1);color:var(--ok)}
+.quiz-options button.wrong{border-color:var(--bad);background:rgba(248,113,113,.1);color:var(--bad)}
+.quiz-feedback{margin-top:14px;border:1px solid var(--line);border-radius:10px;padding:13px 14px;background:var(--panel-2);font-size:.86rem;color:var(--muted);display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback b{color:var(--text)}
+.quiz-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.quiz-score{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+
+/* cases */
+.case-list{display:flex;flex-direction:column;gap:10px}
+.case-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.case-card summary{list-style:none;padding:14px 16px;cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) 16px;gap:12px;align-items:start}
+.case-card summary::-webkit-details-marker{display:none}
+.case-card summary:hover{background:var(--panel-2)}
+.case-n{font-family:var(--mono);font-size:.7rem;color:var(--accent);border:1px solid rgba(167,139,250,.3);background:var(--accent-soft);border-radius:7px;padding:3px 6px;text-align:center}
+.case-q{font-size:.86rem;color:var(--text);line-height:1.5}
+.case-chev{width:15px;height:15px;color:var(--dim);margin-top:3px;transition:transform .2s ease}
+.case-card[open] .case-chev{transform:rotate(180deg)}
+.case-body{padding:0 16px 16px;border-top:1px solid var(--line)}
+.case-answer{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.case-answer .opts{display:flex;gap:6px;flex-wrap:wrap}
+.case-answer .opt{border:1px solid var(--line);border-radius:7px;padding:3px 9px;font-size:.72rem;font-family:var(--mono);color:var(--dim)}
+.case-answer .opt.ok{border-color:var(--ok);color:var(--ok);background:rgba(52,211,153,.08)}
+.case-answer p{font-size:.82rem;color:var(--muted);margin:0}
+.case-guide{border-left:2px solid var(--accent);padding-left:11px;margin-top:4px}
+.case-guide b{font-size:.7rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+/* tensions */
+.tension-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tension{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:9px}
+.tension-pair{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.tension-pair .node{font-family:var(--mono);font-size:.72rem;border-radius:8px;padding:5px 8px;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);white-space:normal}
+.tension-pair .line{flex:1;min-width:24px;height:1px;background:repeating-linear-gradient(90deg,var(--line-2) 0 4px,transparent 4px 8px)}
+.tension-pair .node.a{border-color:rgba(139,92,246,.35);color:#a78bfa}
+.tension-pair .node.b{border-color:rgba(94,234,212,.3);color:var(--teal)}
+.tension-pair .line{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line-2) 0 4px,transparent 4px 8px)}
+.tension h3{font-size:.98rem}
+.tension p{font-size:.8rem;color:var(--muted);margin:0;line-height:1.55}
+.tension .balance{border-left:2px solid var(--accent);padding-left:10px;color:var(--text);font-size:.82rem}
+.slider-wrap{margin-top:4px}
+.slider-wrap label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--dim);font-family:var(--mono);letter-spacing:.02em}
+.slider{width:100%;accent-color:var(--accent);margin:5px 0 0}
+.slider-read{font-size:.72rem;color:var(--dim);margin-top:2px}
+
+/* diario */
+.diary-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(270px,.6fr);gap:16px;align-items:start}
+.diary-main{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.diary-side{display:flex;flex-direction:column;gap:12px}
+.diary-side .card{padding:16px}
+.diary-prompt{font-family:var(--serif);font-size:1.15rem;line-height:1.5;color:var(--text);margin:6px 0 12px}
+.diary-main textarea{min-height:280px}
+.wordcount{font-family:var(--mono);font-size:.66rem;color:var(--dim);margin-top:6px;text-align:right}
+.entries{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow:auto}
+.entry{border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:8px 10px;text-align:left;font-size:.76rem;color:var(--muted)}
+.entry:hover{border-color:var(--accent)}
+.entry b{display:block;color:var(--text);font-size:.78rem;margin-bottom:2px}
+.entry span{display:block;color:var(--dim);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* recursos */
+.res-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.res-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.res-card h2{font-size:1.1rem;margin-bottom:8px}
+.res-card h3{font-size:.95rem;margin:12px 0 5px}
+.res-card p,.res-card li{font-size:.85rem;color:var(--muted);line-height:1.6}
+.res-card ul,.res-card ol{padding-left:20px;margin:6px 0}
+.res-card li{margin:4px 0}
+.res-card a{color:var(--accent)}
+.res-card.wide{grid-column:1/-1}
+.method{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.method div{border:1px solid var(--line);border-radius:10px;padding:11px;background:var(--panel-2)}
+.method b{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.method p{font-size:.78rem;margin:0}
+details.res-details{border:1px solid var(--line);border-radius:10px;padding:0;background:var(--panel-2);margin-top:10px}
+details.res-details summary{padding:11px 13px;cursor:pointer;font-size:.84rem;font-weight:550;list-style:none}
+details.res-details summary::-webkit-details-marker{display:none}
+details.res-details .inner{padding:0 13px 13px;border-top:1px solid var(--line)}
+.fine{font-size:.72rem;color:var(--dim);line-height:1.6}
+.fine strong{color:var(--muted)}
+.kbd{font-family:var(--mono);font-size:.7rem;border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--panel-2);color:var(--muted)}
+
+/* footer */
+.footer{border-top:1px solid var(--line);padding:22px 0 4px;margin-top:30px;font-size:.74rem;color:var(--dim);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.footer a{color:var(--muted)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;display:none}
+.modal.open{display:block}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px)}
+.modal-card{
+  position:relative;max-width:760px;max-height:calc(100vh - 48px);overflow:auto;margin:24px auto;
+  background:var(--panel);border:1px solid var(--line-2);border-radius:18px;padding:24px;box-shadow:var(--shadow);
+}
+.modal-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);display:grid;place-items:center;font-size:1.1rem;line-height:1}
+.modal-x:hover{color:var(--text)}
+.modal h2{font-size:1.35rem;margin-bottom:4px;padding-right:34px}
+.modal .modal-sub{color:var(--muted);font-size:.85rem;margin:0 0 16px}
+.timer{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg-2);margin:12px 0}
+.timer-time{font-family:var(--mono);font-size:2rem;letter-spacing:.04em;line-height:1}
+.timer-step{font-size:.78rem;color:var(--muted)}
+.timer-step b{display:block;color:var(--text);font-size:.9rem;margin-bottom:2px}
+.timer-steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
+.timer-steps li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:9px;font-size:.8rem;color:var(--dim);padding:6px 8px;border-radius:7px}
+.timer-steps li.active{background:var(--accent-soft);color:var(--text)}
+.timer-steps li.done{color:var(--dim);opacity:.65}
+.timer-steps .t{font-family:var(--mono);font-size:.68rem;color:var(--dim)}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-grid label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:var(--dim);font-family:var(--mono);letter-spacing:.04em}
+.form-grid input{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--sans);font-size:.84rem}
+.form-grid .full{grid-column:1/-1}
+
+/* palette */
+.palette{position:fixed;inset:0;z-index:110;display:none}
+.palette.open{display:block}
+.palette-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
+.palette-card{position:relative;max-width:560px;margin:12vh auto 0;background:var(--panel);border:1px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.palette-card input{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:15px 16px;font-size:.95rem;outline:none;color:var(--text)}
+.palette-list{max-height:340px;overflow:auto;padding:6px}
+.palette-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:.84rem;color:var(--muted)}
+.palette-item .p-kind{font-family:var(--mono);font-size:.6rem;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:1px 5px;margin-left:auto;white-space:nowrap}
+.palette-item:hover,.palette-item.sel{background:var(--accent-soft);color:var(--text)}
+.palette-empty{padding:16px;color:var(--dim);font-size:.8rem;text-align:center}
+.palette-foot{border-top:1px solid var(--line);padding:8px 12px;font-family:var(--mono);font-size:.62rem;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--panel-3);border:1px solid var(--line-2);color:var(--text);padding:10px 16px;border-radius:10px;font-size:.82rem;box-shadow:var(--shadow);z-index:120;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;max-width:min(90vw,520px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hidden{display:none!important}
+
+/* responsive */
+@media (max-width:1080px){
+  .concept-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .detail-grid{grid-template-columns:1fr}
+  .detail-side{position:static;display:grid;grid-template-columns:1fr 1fr;align-items:start}
+  .tension-list{grid-template-columns:1fr}
+  .method{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-105%);transition:transform .22s ease;box-shadow:var(--shadow)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:inline-grid}
+  .hero{grid-template-columns:1fr;gap:8px}
+  .hero-art{display:none}
+  .span-5,.span-7{grid-column:span 12}
+  .diary-grid{grid-template-columns:1fr}
+  .res-grid{grid-template-columns:1fr}
+  .week summary{grid-template-columns:44px minmax(0,1fr) 18px}
+  .week-date{display:none}
+  .modal-card{margin:10px;max-height:calc(100vh - 20px)}
+  .form-grid{grid-template-columns:1fr}
+  .palette-card{margin:8vh 12px 0}
+}
+@media (max-width:640px){
+  .main{padding:18px 14px 44px}
+  .topbar{padding:10px 14px}
+  .search-btn{min-width:0;width:38px;height:38px;padding:0;justify-content:center}
+  .search-btn span,.search-btn kbd{display:none}
+  .concept-grid{grid-template-columns:1fr}
+  .detail-side{grid-template-columns:1fr}
+  .hero{padding:22px 18px;border-radius:18px}
+  .card{padding:17px}
+  .week summary{padding:13px 14px;gap:10px}
+  .week-body{padding:0 14px 14px}
+  .week-foot{grid-template-columns:1fr}
+  .status-control button{font-size:.62rem}
+  .method{grid-template-columns:1fr}
+  .flash{min-height:250px}
+  .flash-inner{min-height:250px}
+  .flash-face{padding:20px}
+  .timer{flex-direction:column;align-items:flex-start}
+  .detail-top{gap:12px}
+  .footer{flex-direction:column;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .flash-inner{transition:none}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .sidebar,.topbar,.hero-art,.btn,.icon-btn,.search-btn,.menu-btn,.footer .noprint,.plan-tools,.toolbar,.rep-tabs,.flash-actions,.quiz-foot,.modal,.palette,.toast,.detail-side .btn,.side-actions{display:none!important}
+  .app{display:block}
+  .main{max-width:none;padding:0}
+  .hero,.card,.week,.concept-card,.detail-section,.tension,.res-card{break-inside:avoid;border-color:#bbb;background:#fff;box-shadow:none}
+  .hero{background:#fff}
+  .week summary{list-style:none}
+  a{color:#000;text-decoration:underline}
+  .detail-grid{display:block}
+  .detail-side{display:block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 19H14a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="7" y="3" width="13" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 7v12a2 2 0 0 0 2 2h11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M7 7l-3 6h6zM17 7l-3 6h6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.2 6.2L21 12l-6.8 2.8L12 21l-2.2-6.2L3 12l6.8-2.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3zM13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-graph" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="8" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="18" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8 7 8 1M7.5 8.2l2 7.4M16.8 10l-5.6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navegación del cuaderno">
+    <div class="brand">
+      <div class="brand-mark"><svg><use href="#i-graph"/></svg></div>
+      <div>
+        <div class="brand-name">conceptos_dummis</div>
+        <div class="brand-sub">vault de estudio · v1</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="side-label">Espacio</div>
+      <nav class="nav" id="navMain">
+        <a href="#/inicio" data-nav="inicio"><svg><use href="#i-home"/></svg> Inicio</a>
+        <a href="#/ruta" data-nav="ruta"><svg><use href="#i-route"/></svg> Ruta de 8 semanas</a>
+        <a href="#/conceptos" data-nav="conceptos"><svg><use href="#i-grid"/></svg> Los 12 Conceptos <span class="count">12</span></a>
+        <a href="#/repaso" data-nav="repaso"><svg><use href="#i-cards"/></svg> Modo repaso</a>
+      </nav>
+    </div>
+
+    <div>
+      <div class="side-label">Práctica</div>
+      <nav class="nav">
+        <a href="#/casos" data-nav="casos"><svg><use href="#i-case"/></svg> Casos del Distrito <span class="count">10</span></a>
+        <a href="#/tensiones" data-nav="tensiones"><svg><use href="#i-scale"/></svg> Mapa de tensiones</a>
+        <a href="#/diario" data-nav="diario"><svg><use href="#i-book"/></svg> Bitácora</a>
+      </nav>
+    </div>
+
+    <div>
+      <div class="side-label">Recursos</div>
+      <nav class="nav">
+        <a href="#/recursos" data-nav="recursos"><svg><use href="#i-search"/></svg> Cómo usar y fuentes</a>
+      </nav>
+    </div>
+
+    <div class="side-progress">
+      <div class="side-progress-top"><span>Tu progreso</span><b id="sidePct">0%</b></div>
+      <div class="bar"><i id="sideBar" style="width:0%"></i></div>
+      <div class="side-progress-top" style="margin-top:9px"><span id="sideDone">0 de 12 aplicados</span><span id="sideStreak">0 días</span></div>
+      <div class="side-actions">
+        <button type="button" data-settings><svg style="width:12px;height:12px"><use href="#i-edit"/></svg> Ajustes</button>
+        <button type="button" data-export><svg style="width:12px;height:12px"><use href="#i-download"/></svg> Exportar</button>
+      </div>
+      <div class="side-note">Todo se guarda en este navegador. Nada se envía a ningún servidor. <a href="#/recursos">Privacidad</a></div>
+    </div>
+  </aside>
+
+  <div class="shell">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-label="Abrir menú" aria-expanded="false"><svg><use href="#i-menu"/></svg></button>
+      <div class="crumb">
+        <span class="dim">conceptos_dummis</span><span class="slash">/</span><b id="crumb">inicio</b>
+      </div>
+      <button class="search-btn" type="button" id="openPalette" aria-label="Buscar en el cuaderno">
+        <svg style="width:15px;height:15px"><use href="#i-search"/></svg>
+        <span>Buscar en el vault…</span>
+        <kbd>Ctrl K</kbd>
+      </button>
+      <button class="icon-btn" type="button" id="themeBtn" aria-label="Cambiar tema"><svg><use href="#i-moon"/></svg></button>
+    </header>
+
+    <main class="main" id="main">
+      <!-- ================= INICIO ================= -->
+      <section class="view" data-view="inicio">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">ÁREA C.3 · BOGOTÁ D.C. · DISTRITO 2</p>
+            <h1>Doce Conceptos<br><span>en sencillo.</span></h1>
+            <p class="lede">Un cuaderno para estudiar, entender y aplicar los Conceptos desde el grupo que estás fundando. Sin doctorado, sin jerga y sin perder el programa.</p>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" data-start-session><svg><use href="#i-clock"/></svg> Empezar sesión guiada</button>
+              <a class="btn ghost" href="#/ruta"><svg><use href="#i-route"/></svg> Ver la ruta de 8 semanas</a>
+            </div>
+            <div class="hero-tags">
+              <span>Más de 13 años en los Pasos</span><span>RSG</span><span>Grupo nuevo</span><span>Distrito 2</span>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="graph-wrap" id="heroGraph"></div>
+            <p class="graph-caption">Cada punto es un Concepto. Toca uno para entrar.</p>
+          </div>
+        </div>
+
+        <div class="dashboard">
+          <article class="card span-7 today" id="todayCard"></article>
+          <article class="card span-5 progress-card" id="progressCard"></article>
+          <article class="card span-5 spark" id="sparkCard"></article>
+          <article class="card span-7 start" id="startCard"></article>
+          <article class="card span-7 map-card">
+            <div class="card-head"><span class="label">MAPA DEL VAULT</span><a class="pill" href="#/conceptos">Ver todos</a></div>
+            <div class="graph-wrap small" id="homeGraph"></div>
+          </article>
+          <article class="card span-5 quote-card">
+            <p class="eyebrow plain" style="margin-bottom:10px">PARA EMPEZAR</p>
+            <blockquote>“No compliquemos esto. Mantengámoslo sencillo.”</blockquote>
+            <cite>Bill W. · Concepto I, p. C3</cite>
+            <p class="small muted" style="margin-top:18px">La estructura se entiende cuando la usas. No cuando la memorizas.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= RUTA ================= -->
+      <section class="view hidden" data-view="ruta">
+        <div class="page-head">
+          <p class="eyebrow">LA RUTA</p>
+          <h1>Ocho semanas, tres sesiones cortas</h1>
+          <p class="lede">No es un curso para aprobar: es una práctica para usar. Cada semana tiene una sesión de lectura, una de mapa y una de acción. Si una semana se cae, no se repone: se continúa. La constancia vale más que el calendario.</p>
+          <p class="small muted" style="margin-top:8px">Si es tu primera vez, empieza por la <a href="#/semana/0">Semana 0 — Foto y brújula</a>. Si ya tienes grupo y rol, salta a la Semana 1.</p>
+          <div class="plan-tools">
+            <label>Fecha de inicio
+              <input type="date" id="startDate">
+            </label>
+            <button class="btn small" type="button" data-settings><svg><use href="#i-edit"/></svg> Personalizar</button>
+            <button class="btn small" type="button" id="printPlan"><svg><use href="#i-download"/></svg> Imprimir</button>
+            <button class="btn small danger" type="button" id="resetPlan">Reiniciar progreso</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="flex" style="justify-content:space-between">
+            <div>
+              <div class="eyebrow plain" style="margin-bottom:4px">CÓMO SE ESTUDIA</div>
+              <p class="small muted" style="margin:0">Cuatro preguntas para cada Concepto: <b style="color:var(--text)">¿qué dice?</b> · <b style="color:var(--text)">¿por qué existe?</b> · <b style="color:var(--text)">¿dónde lo vivo?</b> · <b style="color:var(--text)">¿qué hago distinto esta semana?</b></p>
+            </div>
+            <div class="pill accent" id="planSummary">0 / 27 sesiones</div>
+          </div>
+          <div class="bar" style="margin-top:12px"><i id="planBar" style="width:0%"></i></div>
+        </div>
+
+        <div class="weeks" id="weeks"></div>
+      </section>
+
+      <!-- ================= CONCEPTOS ================= -->
+      <section class="view hidden" data-view="conceptos">
+        <div class="page-head">
+          <p class="eyebrow">LOS DOCE</p>
+          <h1>Doce maneras de cuidar la estructura</h1>
+          <p class="lede">No son los Pasos. Son los principios que sostienen la estructura que lleva el mensaje. Léelos en orden o salta al que te esté preguntando el grupo esta semana.</p>
+          <div class="meta-row">
+            <span class="pill">Forma corta oficial</span>
+            <span class="pill">Explicación en sencillo</span>
+            <span class="pill">Aplicación a tu grupo</span>
+            <span class="pill">Tu rol de RSG</span>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <div class="grow"><input class="input" type="search" id="conceptSearch" placeholder="Buscar por título, idea o etiqueta…" aria-label="Buscar conceptos"></div>
+          <div class="filter-row" id="conceptFilters">
+            <button class="filter-btn" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+            <button class="filter-btn" type="button" data-filter="fuente" aria-pressed="false">La fuente</button>
+            <button class="filter-btn" type="button" data-filter="derechos" aria-pressed="false">Los derechos</button>
+            <button class="filter-btn" type="button" data-filter="motor" aria-pressed="false">El motor</button>
+            <button class="filter-btn" type="button" data-filter="liderazgo" aria-pressed="false">Liderazgo</button>
+            <button class="filter-btn" type="button" data-filter="limites" aria-pressed="false">Límites</button>
+          </div>
+        </div>
+
+        <div class="concept-grid" id="conceptGrid"></div>
+
+        <div class="legend">
+          <span><i style="background:var(--panel-3);border:1px solid var(--line-2)"></i> Sin empezar</span>
+          <span><i style="background:var(--blue)"></i> Leído</span>
+          <span><i style="background:var(--teal)"></i> Entendido</span>
+          <span><i style="background:var(--amber)"></i> Aplicado</span>
+          <span><i style="background:var(--accent)"></i> Enseñado</span>
+        </div>
+      </section>
+
+      <!-- ================= CONCEPTO DETALLE ================= -->
+      <section class="view hidden" data-view="concepto">
+        <div id="conceptDetail"></div>
+      </section>
+
+      <!-- ================= REPASO ================= -->
+      <section class="view hidden" data-view="repaso">
+        <div class="page-head">
+          <p class="eyebrow">REPASO</p>
+          <h1>Que se quede, no que se memorice</h1>
+          <p class="lede">Dos formas de repasar: tarjetas para la idea y casos para la decisión. Hazlo en voz alta, como en una reunión. La memoria sirve cuando se usa.</p>
+        </div>
+
+        <div class="rep-tabs" role="tablist" aria-label="Modo de repaso">
+          <button type="button" role="tab" id="tabFlash" aria-selected="true" aria-controls="flashPanel" data-rep="flash">Tarjetas</button>
+          <button type="button" role="tab" id="tabQuiz" aria-selected="false" aria-controls="quizPanel" data-rep="quiz">Casos</button>
+        </div>
+
+        <div id="flashPanel">
+          <div class="flash-shell">
+            <div class="flash-meta">
+              <span id="flashCount">0 de 12</span>
+              <span class="flex" style="gap:6px">
+                <select class="input" id="flashMode" style="width:auto;padding:5px 26px 5px 9px;font-size:.72rem" aria-label="Modo de tarjetas">
+                  <option value="num">Número → idea</option>
+                  <option value="idea">Idea → número</option>
+                </select>
+                <button class="btn tiny" type="button" id="flashReset">Barajar</button>
+              </span>
+            </div>
+            <div class="flash" id="flashCard" role="button" tabindex="0" aria-label="Tarjeta de repaso. Toca para voltear.">
+              <div class="flash-inner">
+                <div class="flash-face front" id="flashFront"></div>
+                <div class="flash-face back" id="flashBack"></div>
+              </div>
+            </div>
+            <div class="flash-progress"><i id="flashBar" style="width:0%"></i></div>
+            <div class="flash-actions">
+              <button class="btn" type="button" id="flashAgain">Otra vez</button>
+              <button class="btn primary" type="button" id="flashKnow">La sé</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="quizPanel" class="hidden">
+          <div class="quiz-shell card">
+            <div id="quizBox"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CASOS ================= -->
+      <section class="view hidden" data-view="casos">
+        <div class="page-head">
+          <p class="eyebrow">CASOS</p>
+          <h1>Diez situaciones, doce lentes</h1>
+          <p class="lede">Casos de grupo, Distrito y Área para conversar en voz alta. No hay una sola respuesta correcta: hay principios que te ayudan a decidir mejor. Úsalos en la reunión de trabajo o con tu padrino o madrina de servicio.</p>
+        </div>
+        <div class="case-list" id="caseList"></div>
+      </section>
+
+      <!-- ================= TENSIONES ================= -->
+      <section class="view hidden" data-view="tensiones">
+        <div class="page-head">
+          <p class="eyebrow">TENSIONES</p>
+          <h1>Los Conceptos no siempre se llevan bien</h1>
+          <p class="lede">La estructura vive en equilibrio, no en una sola regla. Estas son las tensiones que más aparecen en un grupo nuevo y en un Distrito. Mueve cada balanza y pregúntate dónde está tu grupo hoy.</p>
+        </div>
+        <div class="tension-list" id="tensionList"></div>
+      </section>
+
+      <!-- ================= DIARIO ================= -->
+      <section class="view hidden" data-view="diario">
+        <div class="page-head">
+          <p class="eyebrow">BITÁCORA</p>
+          <h1>Lo que no se escribe, se olvida</h1>
+          <p class="lede">Cinco líneas por semana bastan. No es un diario íntimo: es un registro de servicio para ver tu propio cambio y para llevar evidencia al Distrito.</p>
+        </div>
+
+        <div class="diary-grid">
+          <div class="diary-main">
+            <div class="flex" style="justify-content:space-between">
+              <label class="tiny mono dim" for="diaryWeek">SEMANA</label>
+              <span class="wordcount" id="wordCount">0 palabras</span>
+            </div>
+            <select class="input" id="diaryWeek" style="margin:6px 0 10px"></select>
+            <p class="diary-prompt" id="diaryPrompt"></p>
+            <textarea class="input" id="diaryText" placeholder="¿Qué viste? ¿Qué hiciste? ¿Qué te queda?"></textarea>
+            <div class="btn-row" style="margin-top:10px">
+              <button class="btn primary small" type="button" id="saveDiary">Guardar</button>
+              <button class="btn small" type="button" id="copyDiary">Copiar Markdown</button>
+              <span class="tiny dim" id="diarySaved">Se guarda automáticamente</span>
+            </div>
+          </div>
+
+          <aside class="diary-side">
+            <div class="card">
+              <div class="card-head"><span class="label">ENTRADAS</span><span class="pill" id="entryCount">0</span></div>
+              <div class="entries" id="entryList"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="label">RESPALDO</span></div>
+              <p class="small muted" style="margin-top:0">Tu progreso vive en este navegador. Exporta un archivo para no perderlo si cambias de equipo.</p>
+              <div class="btn-row">
+                <button class="btn small" type="button" data-export><svg><use href="#i-download"/></svg> Exportar JSON</button>
+                <button class="btn small" type="button" data-import><svg><use href="#i-upload"/></svg> Importar</button>
+                <button class="btn small" type="button" id="downloadMd">Descargar bitácora</button>
+              </div>
+              <input type="file" id="importFile" accept="application/json,.json" class="hidden">
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="label">CÓMO USARLA</span></div>
+              <p class="small muted" style="margin:0">Escribe al terminar la sesión C. Una línea de lo que hiciste vale más que un resumen perfecto. Si un día no sabes qué escribir, responde solo: <em>“Hoy vi… y me llevo…”</em>.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================= RECURSOS ================= -->
+      <section class="view hidden" data-view="recursos">
+        <div class="page-head">
+          <p class="eyebrow">RECURSOS</p>
+          <h1>Cómo usar este cuaderno</h1>
+          <p class="lede">Este es un material de estudio no oficial. No sustituye el Manual de Servicio ni la literatura aprobada. Es una forma de acercarte a los Conceptos desde tu experiencia y tu grupo.</p>
+        </div>
+
+        <div class="res-grid">
+          <article class="res-card">
+            <h2>El método en cuatro preguntas</h2>
+            <p>No leas para acumular. Lee para responder estas cuatro preguntas por cada Concepto:</p>
+            <div class="method">
+              <div><b>1 · ¿Qué dice?</b><p>La Forma corta y el ensayo de Bill. Subraya solo tres frases.</p></div>
+              <div><b>2 · ¿Por qué existe?</b><p>Qué problema resolvía en 1955 y qué problema resuelve hoy en tu grupo.</p></div>
+              <div><b>3 · ¿Dónde lo vivo?</b><p>Un caso real de tu grupo, tu Distrito 2 o tu Área C.3.</p></div>
+              <div><b>4 · ¿Qué hago distinto?</b><p>Una micro-acción esta semana. Sin acción, no hay estudio.</p></div>
+            </div>
+            <h3>La sesión de 35 minutos</h3>
+            <ul>
+              <li><b>0–5:</b> llegada. Lee la Forma corta en voz alta y respira.</li>
+              <li><b>5–15:</b> lectura activa. Subraya tres frases del ensayo.</li>
+              <li><b>15–25:</b> traducción. Explícalo en voz alta, sin jerga, como a alguien nuevo. Grábate si puedes.</li>
+              <li><b>25–32:</b> ubicación. Un caso real y qué harías.</li>
+              <li><b>32–35:</b> micro-acción. Una sola cosa para esta semana.</li>
+            </ul>
+            <p class="fine">Si tienes una semana caótica, haz la versión de 15 minutos: lee la Forma corta, di la idea en una frase y elige una acción. No rompas la cadena.</p>
+          </article>
+
+          <article class="res-card">
+            <h2>Cómo abrirlo en Obsidian</h2>
+            <p>La carpeta <span class="mono">vault/</span> es un vault de Obsidian listo para abrir. Tiene notas enlazadas, plantillas y un MOC (mapa de contenido).</p>
+            <ol>
+              <li>Descarga o clona el repositorio.</li>
+              <li>Abre Obsidian → <b>Abrir carpeta como vault</b> → elige <span class="mono">conceptos_dummis/vault</span>.</li>
+              <li>Empieza en <span class="mono">00 Inicio/MOC - Doce Conceptos</span>.</li>
+              <li>Usa el gráfico para ver las conexiones. Cada Concepto enlaza con su semana y con sus tensiones.</li>
+              <li>Escribe en <span class="mono">03 Práctica/Bitácora RSG</span> o crea una nota con la plantilla.</li>
+            </ol>
+            <p class="fine">El HTML y el vault son dos puertas al mismo contenido. El HTML guarda tu progreso en el navegador; el vault guarda tus notas en archivos.</p>
+            <h3>Enlaces</h3>
+            <p class="small"><a href="../doce_conceptos.html">Página de taller: los Doce Conceptos para quien apenas empieza</a> · <a href="https://www.aa.org/es/node/9861" target="_blank" rel="noopener">Los Doce Conceptos en aa.org</a> · <a href="https://aacolombia.org/" target="_blank" rel="noopener">Oficina de Servicios Generales de A.A. Colombia</a></p>
+          </article>
+
+          <article class="res-card wide">
+            <h2>Guion de 30 minutos para compartir en el Distrito</h2>
+            <p>Para cuando te inviten a llevar el tema. No es una conferencia: es una conversación con estructura.</p>
+            <details class="res-details">
+              <summary>Minuto 0–3 · Abrir con una pregunta</summary>
+              <div class="inner"><p>“¿Quién de ustedes ha visto un grupo nuevo tomar una decisión? ¿Cómo se sintió la gente?”. Deja que dos personas respondan. No corrijas.</p></div>
+            </details>
+            <details class="res-details">
+              <summary>Minuto 3–8 · Un caso, no la historia</summary>
+              <div class="inner"><p>Cuenta un caso real de tu grupo (sin nombres): el grupo necesitaba decidir algo, el fundador tenía una idea, varios callaban. Pregunta: “¿Qué Concepto falta aquí?”.</p></div>
+            </details>
+            <details class="res-details">
+              <summary>Minuto 8–20 · Tres lentes</summary>
+              <div class="inner"><p>Elige solo tres Conceptos: I (la autoridad es del grupo), III (confiar en quien sirve) y X (responsabilidad = autoridad). Para cada uno: una frase, un ejemplo, una pregunta. No leas los doce.</p></div>
+            </details>
+            <details class="res-details">
+              <summary>Minuto 20–27 · Trabajo en parejas</summary>
+              <div class="inner"><p>Pide que cada pareja elija un problema real de su grupo y lo mire con un Concepto. Luego dos parejas comparten en voz alta. El aprendizaje está en la conversación, no en tu exposición.</p></div>
+            </details>
+            <details class="res-details">
+              <summary>Minuto 27–30 · Cierre</summary>
+              <div class="inner"><p>“No se lleven los doce. Llévense uno y una acción.” Reparte el enlace a este cuaderno o la página de taller. Invita a leer un Concepto por mes en el Distrito.</p></div>
+            </details>
+          </article>
+
+          <article class="res-card">
+            <h2>Checklist del RSG</h2>
+            <p>Tomado de las responsabilidades que el Manual describe para el RSG. Úsalo como examen mensual, no como carga.</p>
+            <ul>
+              <li>Asistí a la reunión de Distrito y llevé la voz del grupo.</li>
+              <li>Informé al grupo lo que pasó, en menos de cinco minutos.</li>
+              <li>Recogí la opinión del grupo sobre al menos un punto de la agenda.</li>
+              <li>Revisé la Séptima Tradición con el tesorero.</li>
+              <li>Compartí literatura o material de servicio nuevo.</li>
+              <li>Mantuve actualizados los datos del grupo y del RSG suplente.</li>
+              <li>Hablé con mi padrino o madrina de servicio.</li>
+              <li>Hice algo que no era urgente, pero sí importante: formar a alguien.</li>
+            </ul>
+          </article>
+
+          <article class="res-card">
+            <h2>Preguntas para tu padrino o madrina de servicio</h2>
+            <p>El Manual recomienda un padrino o madrina de servicio para el RSG. No es un padrino de recuperación: es alguien que te ayuda a entender la estructura y a no cargarla solo.</p>
+            <ul>
+              <li>¿Cómo aprendiste tú los Conceptos?</li>
+              <li>¿Qué error de servicio te enseñó más?</li>
+              <li>¿Cómo distingues la conciencia del grupo de tu opinión personal?</li>
+              <li>¿Qué haces cuando el grupo te pide algo que no te corresponde?</li>
+              <li>¿Cómo te cuidas para no agotarte en el servicio?</li>
+            </ul>
+          </article>
+
+          <article class="res-card wide">
+            <h2>Fuentes, anonimato y derechos</h2>
+            <p><strong>Fuente principal:</strong> <em>El Manual de Servicio de A.A. y Doce Conceptos para el Servicio Mundial, 2025–2027</em>, Oficina de Servicios Generales de A.A. Colombia. Las citas de Bill W. y la Forma corta provienen de esa edición. Las páginas con “C” corresponden al texto de los Doce Conceptos; la “V” a la Forma corta; los números arábigos, a la primera parte del Manual.</p>
+            <p><strong>Este material es un estudio personal, no oficial.</strong> No reproduce los ensayos completos ni el texto largo de los Conceptos. Incluye la Forma corta y citas breves con fines educativos, con atribución. La literatura de A.A. está protegida por derechos de autor de A.A. World Services, Inc. y de la Oficina de Servicios Generales de A.A. Colombia. Para el texto completo, consulta la literatura aprobada.</p>
+            <p><strong>Anonimato:</strong> este cuaderno menciona un nombre de pila, el Área C.3 y el Distrito 2, pero no apellidos ni el nombre del grupo. Por la Tradición 11, compártelo con discreción y no lo publiques en redes abiertas. La página está marcada con <span class="mono">noindex</span> para que no aparezca en buscadores.</p>
+            <p><strong>Privacidad:</strong> todo lo que escribes se guarda en <span class="mono">localStorage</span> de tu navegador. No hay servidor, cuenta ni analítica. Si borras los datos del navegador, se borra el progreso; exporta el JSON de vez en cuando.</p>
+            <p><strong>Créditos:</strong> hecho como cuaderno de estudio para una RSG del Distrito 2, Área C.3, Bogotá. El método, las explicaciones y los casos son material de apoyo; no son literatura aprobada por la Conferencia.</p>
+            <p class="fine">Última edición: octubre de 2026. Si encuentras un error de cita o de traducción, corrígelo en el vault y avísale a quien te compartió el enlace.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>conceptos_dummis · cuaderno de estudio no oficial · <span id="footName">Laura</span></span>
+        <span class="noprint"><a href="#/recursos">Fuentes y privacidad</a> · <a href="../doce_conceptos.html">Taller</a></span>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<!-- modal -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-x" type="button" data-close-modal aria-label="Cerrar">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- command palette -->
+<div class="palette" id="palette" aria-hidden="true">
+  <div class="palette-backdrop" data-close-palette></div>
+  <div class="palette-card" role="dialog" aria-modal="true" aria-label="Buscar en el cuaderno">
+    <input type="search" id="paletteInput" placeholder="Buscar un Concepto, una semana o una acción…" autocomplete="off" aria-label="Buscar">
+    <div class="palette-list" id="paletteList"></div>
+    <div class="palette-foot"><span>↑ ↓ mover</span><span>Enter abrir</span><span>Esc cerrar</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   DATOS
+   ============================================================ */
+const DATA = {"meta":{"title":"Doce Conceptos en sencillo","subtitle":"Un cuaderno para estudiar, entender y aplicar los Conceptos desde un grupo nuevo","area":"Área C.3 — Bogotá D.C.","district":"Distrito 2","edition":"Edición 2026","source":"El Manual de Servicio de A.A. y Doce Conceptos para el Servicio Mundial, 2025–2027, Oficina de Servicios Generales de A.A. Colombia."},"concepts":[{"n":"I","num":1,"title":"La autoridad final está en los grupos","official":"La responsabilidad final y la autoridad fundamental de los servicios mundiales de A.A. deben siempre residir en la conciencia colectiva de toda nuestra Comunidad.","essence":"La autoridad final está en la conciencia colectiva de la Comunidad. En la práctica empieza en cada grupo: la estructura existe para servirle, no para mandarle.","group":"Tu grupo acaba de nacer y todavía se está acomodando. La autoridad no la tienen quienes lo fundaron ni quien lleva el cargo: la tiene la conciencia de grupo. Tu trabajo es ayudar a que esa conciencia se exprese, no sustituirla por tu criterio.","rsg":"Cuando lleves un tema al Distrito 2, pregúntate primero: ¿el grupo ya lo habló? Si no, vuelve y llévalo. Y cuando regreses, cuenta lo que pasó para que el grupo pueda formar opinión con información, no con rumores.","bill":"Ellos tienen toda la responsabilidad y autoridad finales que puedan existir; la operación es realmente de su propiedad, realmente les pertenece.","source":"Concepto I, pp. C3–C6; Forma corta, p. V.","trap":"Creer que la conciencia de grupo es que todos opinen, o que es la opinión del más antiguo. Es un proceso: información, discusión, decisión y, a veces, esperar.","action":"En la próxima reunión de trabajo del grupo, explica en dos minutos qué es la conciencia de grupo y por qué el RSG no decide solo.","journal":"¿En qué decisión reciente de tu grupo hubo conciencia de grupo de verdad? ¿Y en cuál solo habló el que más sabe?","tags":["grupos","autoridad","conciencia de grupo"],"related":["II","XII"],"block":"fuente","week":1,"billSource":"Concepto II, p. C6","shortSource":"Forma corta, p. V."},{"n":"II","num":2,"title":"La Conferencia es la voz de todos","official":"La Conferencia de Servicios Generales se ha convertido, en casi todos los aspectos, en la voz activa y la conciencia efectiva de toda nuestra Comunidad en sus asuntos mundiales.","essence":"Miles de grupos no caben en una sola mesa. La Conferencia habla por todos en los asuntos mundiales, con lo que los grupos le han delegado.","group":"Tu grupo no tiene que resolver los asuntos mundiales, pero tiene derecho a que su voz llegue. El RSG es el primer tramo de ese camino; si no lleva el tema, la voz se pierde en la salida.","rsg":"Asegúrate de que el grupo reciba el temario de la Conferencia y de que discuta al menos un punto. Lleva la respuesta al Distrito y explica cómo sube al Área y al Delegado.","bill":"La conciencia de grupo no puede ser escuchada a menos que una Conferencia debidamente seleccionada tenga plena autoridad para hablar en su nombre acerca de la mayor parte de los temas de servicio mundial.","source":"Concepto II, p. C6; Forma larga, p. VI.","trap":"Pensar que la Conferencia manda a los grupos. Es al revés: deriva su voz de ellos y no puede cambiar las Tradiciones ni el Artículo 12 por su cuenta.","action":"Lleva un punto de la agenda de la Conferencia a la reunión de trabajo del grupo y recoge la opinión por escrito.","journal":"¿Qué punto de la agenda de la Conferencia podría discutir tu grupo este mes?","tags":["conferencia","voz","delegación"],"related":["I","VI","VII"],"block":"fuente","week":1,"billSource":"Concepto II, p. C6","shortSource":"Forma corta, p. V."},{"n":"III","num":3,"title":"Derecho de Decisión","official":"Para asegurar su dirección eficaz, debemos dotar a cada elemento de A.A. —la Conferencia, la Junta de Servicios Generales y sus distintas corporaciones de servicio, personal directivo, Comités y ejecutivos— de un “Derecho de Decisión” tradicional.","essence":"Confiar en quien sirve: cada servidor decide dentro de su competencia, consulta lo que corresponde y rinde cuentas después. Sin esa confianza, nadie puede servir bien.","group":"En un grupo nuevo es fácil querer votarlo todo. Si el comité no puede decidir ni el horario del café, el grupo se agota. Define qué decide el comité, qué decide el grupo y cómo se informa.","rsg":"No eres un recadero. Escuchas el debate del Distrito, consultas a tu grupo antes y votas en conciencia. Luego vuelves y explicas por qué votaste así.","bill":"el delegado “instruido” previamente que no puede actuar según su propia conciencia en una votación final de la Conferencia, no es propiamente un “servidor de confianza” sino un mero mensajero.","source":"Concepto III, p. C8.","trap":"Confundir el derecho de decisión con hacer lo que me dé la gana. Va unido a la rendición de cuentas y al Concepto X.","action":"Escribe en una tarjeta: “Como RSG decido ___, consulto ___ e informo ___”. Compártela con el grupo.","journal":"¿Dónde te falta confiar en otros? ¿Dónde te están pidiendo que solo seas mensajero?","tags":["derecho de decisión","confianza","liderazgo"],"related":["IV","X"],"block":"derechos","week":2,"billSource":"Concepto III, p. C8","shortSource":"Forma corta, p. V."},{"n":"IV","num":4,"title":"Derecho de Participación","official":"Nosotros debemos mantener, a todos los niveles de responsabilidad, un “Derecho de Participación” tradicional, ocupándonos de que a cada clasificación o grupo de nuestros Servidores mundiales les sea permitida una representación con voto, en proporción razonable a la responsabilidad que cada uno tenga que desempeñar.","essence":"Quien carga con una responsabilidad debe tener voz y voto en proporción a ella. Nadie es servidor de segunda clase.","group":"En un grupo que empieza, todos hacen de todo. Cuidado con el que siempre barre, pone las sillas y nunca opina: también es dueño. Dale voz y voto.","rsg":"Tu voto en la Asamblea de Área existe por este principio. En el grupo, si alguien coordina un comité, que participe en la decisión de ese comité, no solo en la ejecución.","bill":"Así como no hay miembros de A.A. de segunda clase, no debe haber tampoco trabajadores de servicio de segunda clase.","source":"Concepto IV, p. C14.","trap":"Dar voz solo a los que tienen cargo o antigüedad. La participación no es un premio: es el reconocimiento de una responsabilidad.","action":"Revisa las últimas tres decisiones del grupo: ¿quién hizo el trabajo y quién decidió? Ajusta la próxima reunión.","journal":"¿Quién en tu grupo está haciendo servicio sin voz?","tags":["participación","voto","igualdad"],"related":["III","XI"],"block":"derechos","week":2,"billSource":"Concepto IV, p. C14","shortSource":"Forma corta, p. V."},{"n":"V","num":5,"title":"Derecho de Apelación y de Petición","official":"En toda nuestra estructura de Servicio Mundial, un “Derecho de Apelación” tradicional debe prevalecer, asegurándonos así que se escuche la opinión de la minoría, y que las peticiones de rectificación de los agravios personales sean consideradas cuidadosamente.","essence":"La minoría tiene derecho a ser escuchada y el agravio tiene cauce. Escuchar no es perder; es la protección contra una mayoría apurada.","group":"En un grupo nuevo hay roces por el local, los horarios, el café y los egos. Establece desde el principio: aquí se puede apelar y al que perdió se le escucha.","rsg":"Antes de cerrar una votación en el Distrito, pregunta: “¿alguien lo ve distinto?”. Si alguien se siente tratado injustamente, ayúdalo a usar el canal, no a quedarse callado.","bill":"Una minoría bien escuchada es, por lo tanto, nuestra principal protección contra una mayoría mal informada, precipitada o airada.","source":"Concepto V, p. C15.","trap":"Pensar que apelar es desafiar la autoridad o que la minoría tiene veto. Es derecho al debido proceso, no poder de bloqueo.","action":"En la próxima reunión, pide la opinión de la minoría antes de votar y anótala en el acta.","journal":"¿Cuándo perdiste una votación y te fuiste en paz? ¿Qué hizo la diferencia?","tags":["apelación","minoría","agravio"],"related":["III","XII"],"block":"derechos","week":2,"billSource":"Concepto V, p. C15","shortSource":"Forma corta, p. V."},{"n":"VI","num":6,"title":"La iniciativa de los Custodios","official":"La Conferencia reconoce también que la principal iniciativa y la responsabilidad activa en la mayoría de estos asuntos debe ser ejercida en primer lugar por los miembros Custodios de la Conferencia, cuando ellos actúan como la Junta de Servicios Generales de Alcohólicos Anónimos.","essence":"La Conferencia se reúne pocos días al año. Entre reunión y reunión, la Junta toma la iniciativa, mueve el trabajo y rinde cuentas.","group":"Llévalo a tu grupo: entre reunión y reunión, el comité o la junta necesita margen para actuar. Si todo se congela hasta el próximo sábado, el grupo se muere de inacción.","rsg":"En el Distrito, entre reuniones, el MCD y su comité deben poder mover el trabajo. Pregunta cómo apoyas sin esperar la próxima asamblea y sin quitarle la iniciativa a nadie.","bill":"debe la Conferencia delegar una amplia autoridad administrativa a la Junta de Servicios Generales, a fin de que sus custodios puedan actuar libre y eficientemente en ausencia de la Conferencia misma.","source":"Concepto VI, p. C18.","trap":"Confundir iniciativa con autonomía sin rendición de cuentas. La iniciativa va con la supervisión (C8) y con la confianza (C3).","action":"Propón en tu grupo un “mandato entre reuniones”: qué puede hacer el comité sin consultar y qué debe consultar.","journal":"¿Qué se frena en tu grupo por esperar la próxima reunión?","tags":["custodios","iniciativa","junta"],"related":["VII","VIII"],"block":"motor","week":3,"billSource":"Concepto VI, p. C18","shortSource":"Forma corta, p. V."},{"n":"VII","num":7,"title":"Poder legal y poder de la tradición","official":"La Carta Constitutiva y los Estatutos son instrumentos legales, y los Custodios están, por consiguiente, totalmente autorizados para administrar y dirigir todos los asuntos de servicios. La Carta de la Conferencia en sí misma no es un instrumento legal; se apoya en la fuerza de la tradición y en las finanzas de A.A. para su eficacia.","essence":"La Junta tiene el respaldo legal; la Conferencia tiene la fuerza de la tradición y de la Séptima Tradición. Ninguno de los dos manda solo.","group":"Tu grupo puede tener estatutos, pero la unidad no la sostiene el papel: la sostiene la tradición y la contribución voluntaria. Lo legal ordena; lo espiritual sostiene.","rsg":"Cuando el grupo discuta dinero, recuerda que la Séptima Tradición no es “pasar la canasta”: es sostener la estructura que conecta al grupo con A.A. entero.","bill":"Teóricamente, la Conferencia no es más que un cuerpo asesor, pero en la práctica tiene todos los derechos y controles finales que pueda necesitar.","source":"Concepto VII, p. C20.","trap":"Creer que lo legal es lo espiritual, o que la tradición no necesita dinero. Los dos planos se necesitan y se limitan.","action":"Explica en el grupo, en tres minutos, a dónde va la Séptima Tradición: grupo, Distrito, Área y OSG.","journal":"¿Tu grupo ve la contribución como obligación, gratitud o participación?","tags":["carta","tradición","séptima tradición"],"related":["II","VI","VIII"],"block":"motor","week":3,"billSource":"Concepto VII, p. C20","shortSource":"Forma corta, p. V."},{"n":"VIII","num":8,"title":"Planear y supervisar sin microadministrar","official":"Los Custodios son los principales planificadores y administradores de los asuntos de política y finanzas en general. Tienen una función de supervisión fiduciaria sobre nuestros servicios constantemente activos e incorporados separadamente, ejercida mediante su facultad de elegir a todos los directores de estas entidades.","essence":"Planear la política y las finanzas generales; supervisar sin microadministrar. El que supervisa asegura que el sistema funcione, no hace el trabajo de todos.","group":"El fundador suele caer en hacerlo todo. Tu grupo necesita que delegues y acompañes, no que cargues cada tarea. Si tú desapareces una semana, el grupo debe seguir.","rsg":"El Distrito tiene comités. Acompaña a los coordinadores; no les quites el trabajo. Pregunta “¿qué necesitas?” antes de “yo lo hago”.","bill":"La Junta de Servicios Generales es, en efecto, una compañía matriz a cargo de la supervisión fiduciaria de las subsidiarias de su propiedad...","source":"Concepto VIII, p. C23.","trap":"Llamar supervisión a controlar cada detalle. Supervisar es cuidar el conjunto, no hacer de todo.","action":"Elige una tarea que estés haciendo por otro en el grupo y devuélvela con acompañamiento.","journal":"¿Qué estás microadministrando en tu grupo o en el Distrito?","tags":["supervisión","delegación","finanzas"],"related":["VI","X","XI"],"block":"motor","week":3,"billSource":"Concepto VIII, p. C23","shortSource":"Forma corta, p. V."},{"n":"IX","num":9,"title":"Buen liderazgo en todos los niveles","official":"Buenos directores de servicio en todos los niveles son indispensables para nuestro funcionamiento y seguridad en el futuro. La dirección básica del Servicio Mundial que una vez ejercieron los fundadores de Alcohólicos Anónimos tiene necesariamente que ser asumida por los Custodios.","essence":"Sin buenos servidores no hay estructura. Liderar en A.A. es dar ejemplo, consultar, explicar y formar relevo; no mandar.","group":"Estás fundando: tu liderazgo se mide por lo que queda cuando no estás. Forma a otros desde ya, aunque el grupo sea pequeño.","rsg":"Un RSG líder no solo informa: hace que el grupo quiera participar, pregunta, invita y explica. Su presencia despierta servicio en otros.","bill":"Un líder en A.A. es... un hombre (o mujer) que puede personalmente poner en efecto principios, planes y políticas... de una manera tan dedicada y eficaz que los demás queremos apoyarlo y ayudarle a realizar su trabajo.","source":"Concepto IX, p. C27.","trap":"Confundir liderazgo con mando. El líder de A.A. no dice “porque yo lo digo”; logra que otros quieran apoyar.","action":"Identifica a una persona de tu grupo con potencial y invítala a acompañarte a una reunión de Distrito.","journal":"¿Qué huella de servicio estás dejando para cuando ya no estés?","tags":["liderazgo","relevo","ejemplo"],"related":["X","XI"],"block":"liderazgo","week":4,"billSource":"Concepto IX, p. C27","shortSource":"Forma corta, p. V."},{"n":"X","num":10,"title":"Responsabilidad igual a autoridad","official":"A cada responsabilidad de servicio le debe corresponder una autoridad de servicio equivalente, y el alcance de tal autoridad debe estar siempre bien definido.","essence":"Si te encargan algo, te deben dar con qué hacerlo, y debe quedar claro hasta dónde llega. Nunca dos jefes para lo mismo.","group":"En un grupo nuevo es fácil que todos opinen de todo. Define roles por escrito: qué decide el RSG, qué el comité, qué la conciencia de grupo.","rsg":"Antes de aceptar un encargo, pregunta: ¿qué decido yo, qué consulto, qué decido con otros? Escríbelo. Y evita la dirección bicéfala.","bill":"La autoridad nunca puede dividirse en dos partes iguales.","source":"Concepto X, p. C32.","trap":"Dar responsabilidad sin autoridad (y luego culpar) o autoridad sin responsabilidad (y luego no rendir cuentas).","action":"Haz un organigrama de una página de tu grupo: responsabilidad, autoridad y a quién rinde cuentas.","journal":"¿Hay un cargo en tu grupo con mucha responsabilidad y poca autoridad?","tags":["autoridad","responsabilidad","roles"],"related":["III","VIII","IX"],"block":"liderazgo","week":4,"billSource":"Concepto X, p. C32","shortSource":"Forma corta, p. V."},{"n":"XI","num":11,"title":"Los mejores comités y las mejores personas","official":"Los Custodios deben siempre contar con los mejores Comités permanentes y con directores de las corporaciones de servicio, ejecutivos, personal de oficina y consejeros bien capacitados. La composición, cualidades, procedimientos de iniciación y derechos y obligaciones serán siempre asuntos de verdadero interés.","essence":"La calidad de las personas, su selección, inducción y rotación sostienen la estructura. El servicio no es propiedad de nadie.","group":"No busques “el que sabe”; busca el que puede aprender y el que va a rotar. Prepara el relevo desde el día uno, incluso en un grupo pequeño.","rsg":"En el Distrito, apoya la rotación: no dejes que un cargo se vuelva propiedad de alguien. Propón un plan de relevo y compártelo.","bill":"Sus cualidades y dedicación, o la falta de ellas, significarán el éxito o la ruina para nuestra estructura de servicio.","source":"Concepto XI, p. C34.","trap":"Creer que nadie más puede hacerlo. Eso garantiza que el servicio se agote y que el grupo dependa de una sola persona.","action":"Escribe el perfil de tu cargo de RSG y a quién estás formando para que te suceda.","journal":"¿Qué estás haciendo para que tu grupo no dependa de ti?","tags":["rotación","comités","relevo"],"related":["IV","IX","X"],"block":"limites","week":5,"billSource":"Concepto XI, p. C34","shortSource":"Forma corta, p. V."},{"n":"XII","num":12,"title":"Las Garantías Generales","official":"La Conferencia cumplirá con el espíritu de las Tradiciones de A.A., teniendo especial cuidado de que la Conferencia nunca se convierta en sede de peligrosa riqueza o poder; que fondos suficientes para su funcionamiento, más una reserva adecuada, sean su prudente principio financiero, que ninguno de los miembros de la Conferencia sea nunca colocado en una posición de autoridad desmedida sobre ninguno de los otros, que se llegue a todas las decisiones importantes por discusión, votación y, siempre que sea posible, por unanimidad sustancial; que ninguna actuación de la Conferencia sea personalmente punitiva, o una incitación a controversia pública, que la Conferencia nunca realice ninguna acción de gobierno, y que como la Sociedad de Alcohólicos Anónimos, a la cual sirve, la Conferencia en sí misma siempre permanezca democrática en pensamiento y en acción.","essence":"Seis seguros: ni riqueza peligrosa ni poder desmedido; fondos suficientes y una reserva prudente; decisiones discutidas y votadas; nada personalmente punitivo; ninguna acción de gobierno; y una Conferencia siempre democrática.","group":"En un grupo nuevo, cuida el dinero y el poder desde el principio. La transparencia no es desconfianza: es una garantía para que el grupo dure.","rsg":"Usa las garantías como lista de chequeo en el Distrito: ¿hay transparencia financiera? ¿alguien manda más de la cuenta? ¿se votó a la carrera? ¿se castigó a alguien en público?","bill":"Para nosotros, la prudencia es un efectivo término medio, un canal de salida entre los obstáculos del temor a un lado y la temeridad por el otro.","source":"Concepto XII, p. C44; Forma corta, p. V.","trap":"Pensar que las garantías son solo para la Conferencia. Son principios para cualquier nivel, incluido tu grupo.","action":"Revisa las cuentas del grupo con otra persona y publica un resumen mensual. Sin acusar: por transparencia.","journal":"¿Cuál de las seis garantías le cuesta más a tu grupo?","tags":["garantías","dinero","poder"],"related":["I","V","VII"],"block":"limites","week":5,"billSource":"Concepto XII, p. C44","shortSource":"Forma corta, p. V."}],"weeks":[{"n":0,"title":"Foto y brújula","subtitle":"Antes de empezar, mirar dónde estás","goal":"Configurar el cuaderno, elegir un padrino o madrina de servicio y tomar una foto honesta de lo que ya sabes y lo que te falta. Sin esta semana, las otras ocho se vuelven lectura sin dirección.","concepts":[],"sessions":[{"id":"w0a","label":"Sesión A · Tu foto","minutes":30,"desc":"Escribe en una página: qué sabes de los Conceptos, qué te confunde y qué te gustaría poder explicar en diciembre. Sin buscar la respuesta correcta."},{"id":"w0b","label":"Sesión B · Tu gente","minutes":30,"desc":"Elige un padrino o madrina de servicio (alguien con experiencia en Distrito o Área). Cuéntale que vas a estudiar los Conceptos y acuerden una llamada de 20 minutos por semana."},{"id":"w0c","label":"Sesión C · Tu mapa","minutes":25,"desc":"Dibuja el triángulo invertido con tu grupo, tu Distrito 2, el Área C.3, la Conferencia y la Junta. Marca dónde estás tú y por dónde sube y baja la información."}],"case":{"title":"La primera pregunta","text":"Una compañera del grupo te dice: “Laura, yo no entiendo para qué sirven los Conceptos si nosotros apenas estamos empezando. ¿No será cosa de los que están arriba?”.","question":"¿Qué le responderías en dos minutos, sin darle un discurso?","concepts":["I","II"],"guide":"No empieces por la estructura. Empieza por su experiencia: cuando el grupo decide algo y todos se sienten dueños, ya está viviendo el Concepto I. Los Conceptos ponen nombre a lo que el grupo ya hace y protegen lo que está naciendo."},"evidence":"Una foto de tu mapa del triángulo y el nombre de tu padrino o madrina de servicio.","micro":"Agenda la primera llamada con tu padrino o madrina de servicio.","note":"No empieces por el libro completo. Empieza por la Forma corta y por el capítulo del Concepto que te toque esa semana."},{"n":1,"title":"La fuente","subtitle":"De dónde sale la autoridad","goal":"Entender que la estructura no manda desde arriba: se sostiene desde la conciencia de los grupos y se expresa por la Conferencia. Aplicarlo a la primera decisión difícil de tu grupo nuevo.","concepts":["I","II"],"sessions":[{"id":"w1a","label":"Sesión A · Leer y traducir","minutes":35,"desc":"Lee la Forma corta de los Conceptos I y II y el ensayo de Bill (pp. C3–C7). Subraya tres frases. Explícalo en voz alta, en tres minutos, como si se lo contaras a alguien que acaba de llegar."},{"id":"w1b","label":"Sesión B · Ubicar y mapear","minutes":25,"desc":"Dibuja el camino de una opinión: grupo, RSG, Distrito, Área, Delegado, Conferencia, y de vuelta. Marca dónde se puede perder la voz y qué puedes hacer tú."},{"id":"w1c","label":"Sesión C · Aplicar y contar","minutes":20,"desc":"Lleva un tema real a la reunión de trabajo del grupo, recoge la opinión y reporta al Distrito. Escribe cinco líneas en la bitácora."}],"case":{"title":"El grupo nuevo y la primera decisión","text":"El grupo lleva tres meses. Hay que decidir si se cambia el formato de la reunión. Tú tienes una idea clara, pero varios miembros no se han pronunciado. Una persona dice: “Como nadie dice nada, decidamos ya”.","question":"¿Qué haces con tu idea, con el silencio del grupo y con la prisa?","concepts":["I","II"],"guide":"Tu idea es una voz, no la conciencia. Pide un tiempo de información y discusión, invita a hablar a quienes callan y separa la decisión de la reunión. Si el grupo decide distinto, tu tarea como RSG es llevar esa voz, no la tuya."},"evidence":"El acta o las cinco líneas donde se vea la opinión del grupo, no solo la tuya.","micro":"En la próxima reunión, haz una ronda explícita para los que no han hablado antes de votar.","note":"La conciencia de grupo no es unanimidad. Es una decisión informada y suficientemente compartida, tomada en el momento oportuno."},{"n":2,"title":"Los tres derechos","subtitle":"Decidir, participar, apelar","goal":"Pasar de “yo llevo la voz” a “yo cuido un proceso”. Los Conceptos III, IV y V son las herramientas más prácticas para un RSG y para un grupo que está aprendiendo a decidir.","concepts":["III","IV","V"],"sessions":[{"id":"w2a","label":"Sesión A · Leer y traducir","minutes":40,"desc":"Lee los Conceptos III, IV y V (pp. C8–C17). Para cada uno, escribe una frase con tus palabras y un ejemplo de tu grupo. No uses la palabra “estructura”."},{"id":"w2b","label":"Sesión B · Ubicar y mapear","minutes":30,"desc":"Piensa en tres momentos del grupo: una decisión, un trabajo sin voz y un conflicto. Asígnales un derecho y escribe qué harías distinto."},{"id":"w2c","label":"Sesión C · Aplicar y contar","minutes":25,"desc":"En la próxima reunión, pide la opinión de la minoría antes de votar y anótala. Cuéntale a tu padrino o madrina de servicio cómo te sentiste."}],"case":{"title":"El RSG recibe instrucciones","text":"Antes de la Asamblea, el grupo te dice: “Vote que no y no se deje convencer por nadie. Usted va en representación nuestra”. Tú escuchaste el debate del Área y crees que el sí tiene argumentos.","question":"¿Obedecer, votar en conciencia o volver a consultar? ¿Cómo se hace sin traicionar al grupo?","concepts":["III","V"],"guide":"El grupo tiene derecho a instruirte y a ser escuchado; tú tienes derecho a decidir en conciencia después del debate. La salida no es elegir entre obedecer y traicionar: es volver al grupo, explicar lo que escuchaste y pedir una nueva conversación. Luego votas y rindes cuentas."},"evidence":"Una nota con las instrucciones del grupo, lo que aprendiste en el debate y cómo votaste.","micro":"Antes de la próxima votación, pregunta en voz alta: “¿alguien lo ve distinto?”.","note":"El derecho de decisión no te hace independiente del grupo. Te hace responsable ante el grupo."},{"n":3,"title":"El motor entre sesiones","subtitle":"Custodios, carta y supervisión","goal":"Entender quién mueve el trabajo cuando la Conferencia no está reunida y cómo se reparten la iniciativa, la legalidad y la supervisión. Llevarlo a la vida del comité de tu grupo.","concepts":["VI","VII","VIII"],"sessions":[{"id":"w3a","label":"Sesión A · Leer y traducir","minutes":40,"desc":"Lee los Conceptos VI, VII y VIII (pp. C18–C24). Dibuja tres cajas: Conferencia, Junta, comités. Escribe qué decide cada una y cómo se rinde cuentas."},{"id":"w3b","label":"Sesión B · Ubicar y mapear","minutes":30,"desc":"Trae un problema real de tu grupo que se haya frenado por esperar una reunión. ¿Qué habría pasado con un mandato entre reuniones?"},{"id":"w3c","label":"Sesión C · Aplicar y contar","minutes":25,"desc":"Propón al comité del grupo un pequeño mandato: qué puede resolver solo y qué debe consultar. Escríbelo en una tarjeta."}],"case":{"title":"El comité que no puede decidir","text":"El comité del grupo necesita comprar café, arreglar una silla y pagar el alquiler del local. Cada gasto, por pequeño que sea, se lleva a votación del grupo. La reunión se consume en trivialidades y la gente se cansa.","question":"¿Qué Conceptos están en juego y cómo se sale del círculo?","concepts":["VI","VIII","X"],"guide":"La iniciativa y la supervisión existen para que el trabajo camine. Propón un mandato claro: el comité decide gastos menores dentro de un presupuesto aprobado y rinde cuentas cada mes. El grupo conserva la autoridad final, pero no microadministra."},"evidence":"La tarjeta del mandato, con límites y rendición de cuentas.","micro":"Define un monto pequeño que el comité pueda decidir sin consultar y publícalo.","note":"La confianza no se decreta: se construye con límites claros y cuentas claras."},{"n":4,"title":"Liderazgo que deja relevo","subtitle":"Ejemplo, autoridad y responsabilidad","goal":"Mirar tu propio liderazgo al frente del grupo nuevo y ajustar la relación entre lo que cargas y lo que decides. Los Conceptos IX y X son un espejo, no un elogio.","concepts":["IX","X"],"sessions":[{"id":"w4a","label":"Sesión A · Leer y traducir","minutes":35,"desc":"Lee los Conceptos IX y X (pp. C25–C33). Subraya lo que Bill dice del liderazgo que no manda y lo que dice de la dirección bicéfala. ¿Dónde te ves?"},{"id":"w4b","label":"Sesión B · Ubicar y mapear","minutes":30,"desc":"Haz un organigrama de una página de tu grupo: cada cargo, qué decide, qué consulta y a quién rinde cuentas. Busca responsabilidades sin autoridad y autoridades sin responsabilidad."},{"id":"w4c","label":"Sesión C · Aplicar y contar","minutes":25,"desc":"Elige una tarea que haces tú y que otra persona podría aprender. Empieza a transferirla esta semana, con acompañamiento."}],"case":{"title":"Nadie más puede hacerlo","text":"Llevas casi un año fundando el grupo. Organizas la reunión, abres el local, llevas las cuentas, representas al grupo en el Distrito y casi nadie más se ofrece. Te dices: “Si no lo hago yo, esto se cae”.","question":"¿Es liderazgo o es una trampa? ¿Qué harías para que el grupo no dependa de ti?","concepts":["IX","XI"],"guide":"El liderazgo que no forma relevo termina agotando al líder y al grupo. No se trata de soltar todo de golpe: se trata de identificar una tarea, formar a alguien y acompañarlo. La rotación no es abandono; es salud."},"evidence":"El nombre de la persona a la que le estás transfiriendo una tarea y la fecha de la primera práctica.","micro":"Pide a alguien que te acompañe a la próxima reunión de Distrito y explícale lo que haces allí.","note":"Si el grupo solo funciona contigo, todavía no es un grupo: es una extensión de tu servicio."},{"n":5,"title":"Personas, dinero y límites","subtitle":"Rotación y garantías","goal":"Cerrar el mapa con los Conceptos XI y XII: la calidad y rotación de las personas y las garantías que protegen al grupo del poder y del dinero. Es la semana de mirar la caja y los cargos.","concepts":["XI","XII"],"sessions":[{"id":"w5a","label":"Sesión A · Leer y traducir","minutes":40,"desc":"Lee los Conceptos XI y XII (pp. C34–C45). Haz una lista de las seis garantías con tus palabras y marca la que más te cuesta en tu grupo."},{"id":"w5b","label":"Sesión B · Ubicar y mapear","minutes":30,"desc":"Revisa las cuentas del grupo y la rotación de cargos. ¿Hay transparencia? ¿Hay alguien que lleva demasiado tiempo? ¿Hay un plan de relevo?"},{"id":"w5c","label":"Sesión C · Aplicar y contar","minutes":25,"desc":"Publica un resumen simple de las cuentas y propón una fecha de rotación para un cargo. Cuéntale a tu padrino o madrina de servicio qué resistencia encontraste."}],"case":{"title":"La caja y el cargo vitalicio","text":"El grupo tiene tres meses de gastos guardados y nadie sabe exactamente cuánto hay. El tesorero dice: “Confíen en mí, yo llevo esto desde el principio”. Además, la persona que coordina el comité de literatura lleva cuatro años en el cargo y no quiere soltarlo.","question":"¿Cómo aplicas las garantías y la rotación sin acusar a nadie?","concepts":["XI","XII"],"guide":"No se trata de desconfiar de la persona, sino de proteger al grupo y a la persona. Propón un informe mensual simple, dos personas que cuenten el dinero y un plan de relevo con fecha. La transparencia y la rotación son actos de cuidado, no de castigo."},"evidence":"El resumen de cuentas y el nombre del próximo relevo, con fecha.","micro":"Pide que dos personas cuenten la caja este mes y firmen el resumen.","note":"Las garantías no son para los grandes: son para el grupo pequeño donde el dinero y el poder se vuelven personales."},{"n":6,"title":"Integración I: tu grupo","subtitle":"Los doce en la mesa de tu grupo","goal":"Dejar de estudiar los Conceptos por separado y usarlos como un sistema para diseñar tu grupo. Esta semana produces una página que puedas compartir con el grupo.","concepts":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"],"sessions":[{"id":"w6a","label":"Sesión A · El mapa completo","minutes":40,"desc":"Dibuja tu grupo en el centro y coloca los doce Conceptos alrededor. Para cada uno, escribe una sola frase: cómo se vive o cómo falta."},{"id":"w6b","label":"Sesión B · El caso del grupo","minutes":35,"desc":"Elige el problema más real de tu grupo hoy. Escribe qué Conceptos lo explican, qué derecho está en juego y qué acción concreta propones."},{"id":"w6c","label":"Sesión C · La carta de servicio","minutes":30,"desc":"Escribe una página para el grupo: qué decide el grupo, qué decide el comité, cómo se rinde cuentas, cómo se rota y cómo se escucha a la minoría."}],"case":{"title":"El grupo que quieres ser","text":"El grupo creció. Hay dos comités, una caja pequeña, tres personas que siempre hablan y cinco que nunca hablan. Una persona quiere ser coordinadora “para ordenar esto”. Tú estás cansada y quieres que el grupo camine solo.","question":"¿Qué tres cambios harías este mes, y con qué Conceptos los sostienes?","concepts":["I","III","IV","V","X","XI","XII"],"guide":"No hagas doce cambios. Elige tres: dar voz a los que callan (IV), definir qué decide cada cargo (X) y abrir las cuentas y la rotación (XI–XII). La conciencia de grupo (I) se practica en la reunión, no en el papel."},"evidence":"La carta de servicio de una página, leída por alguien más del grupo.","micro":"Comparte la carta con el grupo y pide una sola corrección.","note":"Un grupo sano no es el que no tiene problemas: es el que tiene cauces para resolverlos."},{"n":7,"title":"Integración II: tu Distrito y tu Área","subtitle":"Del grupo a la estructura","goal":"Llevar los Conceptos a tu papel de RSG en el Distrito 2 y el Área C.3. Preparar una intervención breve, concreta y conectada con la conciencia del grupo.","concepts":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"],"sessions":[{"id":"w7a","label":"Sesión A · Tu informe","minutes":35,"desc":"Prepara un informe de cinco minutos para el Distrito: qué pasó en el grupo, qué preguntas hay, qué necesitas. Sin opiniones personales disfrazadas de conciencia."},{"id":"w7b","label":"Sesión B · El mapa del Área","minutes":30,"desc":"Marca en el triángulo del Área C.3 dónde está tu Distrito 2, quién es tu MCD y cómo sube la voz al Delegado. Identifica un punto donde puedas participar."},{"id":"w7c","label":"Sesión C · Ensayo","minutes":25,"desc":"Ensaya la intervención con tu padrino o madrina de servicio. Pídele que te diga si suena a recado, a opinión personal o a conciencia del grupo."}],"case":{"title":"La intervención de cinco minutos","text":"En la reunión de Distrito se discute un punto que afecta a los grupos nuevos. Tú tienes experiencia y opinión. El grupo no alcanzó a discutirlo, pero te dio un mandato general: “Diga lo que sea mejor para los grupos nuevos”.","question":"¿Qué dices, qué no dices y cómo distingues tu opinión de la conciencia del grupo?","concepts":["II","III","IV","V"],"guide":"Puedes aportar experiencia, pero no inventes una conciencia que el grupo no formó. Di con claridad: “Esto es lo que el grupo discutió; esto es lo que yo he visto; esto recomiendo”. Y pide que el Distrito escuche a otros grupos nuevos."},"evidence":"El guion de cinco minutos y la respuesta de tu padrino o madrina de servicio.","micro":"Inscríbete para hablar en la próxima reunión de Distrito.","note":"En el Distrito no representas tus opiniones: representas una voz que tiene historia y límites."},{"n":8,"title":"Enseñar y cerrar","subtitle":"Si puedes explicarlo, lo entendiste","goal":"Cerrar el ciclo enseñando. Da un taller de 30 minutos en tu grupo o en el Distrito, recoge preguntas y escribe tu plan de los próximos 90 días.","concepts":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"],"sessions":[{"id":"w8a","label":"Sesión A · El taller","minutes":45,"desc":"Prepara el guion de 30 minutos (está en Recursos). Usa un caso real, no una conferencia. Deja que el grupo hable más que tú."},{"id":"w8b","label":"Sesión B · Preguntas","minutes":30,"desc":"Recoge las tres preguntas que más se repitieron. Esas son tus próximas notas de estudio, no tus fracasos."},{"id":"w8c","label":"Sesión C · Los próximos 90 días","minutes":25,"desc":"Escribe tres compromisos: uno contigo, uno con tu grupo y uno con el Distrito. Con fecha y con nombre de quien te va a preguntar."}],"case":{"title":"El taller de 30 minutos","text":"Te invitan a compartir los Conceptos en la reunión de Distrito. Tienes 30 minutos, una sala con gente cansada y mucha experiencia. Alguien dice: “¿Y esto para qué nos sirve?”.","question":"¿Cómo empiezas, qué caso usas y qué quieres que se lleven?","concepts":["I","IX","XII"],"guide":"Empieza por un caso real del Distrito, no por la historia de A.A. Usa un Concepto como lente, no los doce. Cierra con una pregunta que puedan llevarse a su grupo. El objetivo no es que sepan los doce: es que quieran estudiar uno."},"evidence":"El guion del taller, tres preguntas recogidas y tu plan de 90 días.","micro":"Agenda el taller y envía la invitación esta semana.","note":"Enseñar no es demostrar que sabes. Es crear las condiciones para que otro se atreva a aprender."}],"cases":[{"id":"c1","text":"El grupo lleva tres meses. Hay que decidir si se cambia el formato de la reunión. Tú tienes una idea clara, pero varios miembros no se han pronunciado. Alguien dice: “Como nadie dice nada, decidamos ya”.","answer":"I","options":["I","III","VI","XII"],"explain":"La autoridad final está en la conciencia colectiva del grupo, no en la prisa ni en la idea del fundador. Antes de decidir, falta información y falta escuchar a los que callan."},{"id":"c2","text":"Antes de la Asamblea, el grupo le dice a su RSG: “Vote que no y no se deje convencer por nadie. Usted va en representación nuestra”.","answer":"III","options":["I","III","IV","IX"],"explain":"Derecho de Decisión: el servidor que no puede votar según su conciencia después del debate “no es propiamente un servidor de confianza sino un mero mensajero”. El grupo instruye; el RSG escucha, consulta y decide en conciencia."},{"id":"c3","text":"Una persona coordina el comité de café, pone las sillas y organiza el local, pero en las reuniones de trabajo no tiene voz ni voto porque “no es de la junta”.","answer":"IV","options":["II","IV","V","VII"],"explain":"Derecho de Participación: representación con voto en proporción a la responsabilidad. “No debe haber trabajadores de servicio de segunda clase”."},{"id":"c4","text":"La votación va 9 a 3. La minoría pide hablar antes de cerrar. El coordinador responde: “Ya está decidido, no perdamos tiempo”.","answer":"V","options":["III","V","X","XII"],"explain":"Derecho de Apelación: una minoría bien escuchada es la protección contra una mayoría apurada. Escuchar no cambia automáticamente la votación, pero sí la legitimidad de la decisión."},{"id":"c5","text":"El comité del grupo necesita comprar café y arreglar una silla. Cada gasto, por pequeño que sea, se lleva a votación del grupo. Las reuniones se consumen en trivialidades.","answer":"VI","options":["II","VI","IX","XI"],"explain":"La iniciativa y la responsabilidad activa deben poder ejercerse entre reuniones. Un mandato claro con límites y rendición de cuentas permite que el trabajo camine sin perder la autoridad del grupo."},{"id":"c6","text":"El grupo tiene tres meses de gastos guardados y nadie sabe exactamente cuánto hay. El tesorero dice: “Confíen en mí, yo llevo esto desde el principio”.","answer":"XII","options":["V","VII","XI","XII"],"explain":"Garantías Generales: fondos suficientes más una reserva adecuada, con transparencia. La confianza personal no sustituye la rendición de cuentas."},{"id":"c7","text":"Dos personas creen ser las coordinadoras del mismo comité. Las dos convocan, las dos compran y las dos informan cosas distintas.","answer":"X","options":["III","VIII","X","XI"],"explain":"A cada responsabilidad, una autoridad equivalente y bien definida. La dirección bicéfala divide la autoridad y confunde al grupo."},{"id":"c8","text":"Una persona lleva cuatro años coordinando el comité de literatura. Dice: “Nadie más sabe hacerlo; si me voy, esto se cae”. No ha formado a nadie.","answer":"XI","options":["IV","IX","X","XI"],"explain":"El Concepto XI incluye la composición, la inducción y los sistemas de rotación. El servicio no es propiedad de nadie; preparar el relevo es parte del servicio."},{"id":"c9","text":"En una reunión alguien propone sancionar públicamente a un servidor que se equivocó en un informe, para que “sirva de ejemplo”.","answer":"XII","options":["V","IX","X","XII"],"explain":"Garantías Generales: ninguna actuación debe ser personalmente punitiva ni una incitación a controversia pública. Corregir el proceso sí; castigar a la persona, no."},{"id":"c10","text":"El grupo quiere votar para cambiar una de las Doce Tradiciones porque “la mayoría está de acuerdo”.","answer":"II","options":["I","II","V","VII"],"explain":"La Conferencia es la voz del grupo en los asuntos mundiales, pero los grupos se reservaron los cambios en las Doce Tradiciones y en el Artículo 12. La mayoría de un grupo no cambia la Tradición."}],"tensions":[{"id":"t1","a":"I","b":"II","title":"La voz del grupo y la voz de todos","tension":"El grupo es la autoridad final, pero no puede hablar solo en los asuntos mundiales. La Conferencia habla por todos, pero no puede inventar una conciencia que los grupos no le dieron.","balance":"La Conferencia no manda desde arriba: deriva su voz de los grupos y rinde cuentas ante ellos. El grupo no desaparece cuando delega: sigue formando la conciencia que sube.","group":"En tu grupo: cuando delegas en el RSG, no delegas la responsabilidad de pensar. Cuando el RSG regresa, el grupo vuelve a opinar con información.","question":"¿Tu grupo sabe qué delegó y qué se reservó?"},{"id":"t2","a":"II","b":"VI","title":"La Conferencia decide, la Junta inicia","tension":"La Conferencia tiene la decisión final sobre la política general, pero se reúne pocos días. La Junta tiene la iniciativa y la responsabilidad activa entre reuniones.","balance":"La Conferencia marca el rumbo y la Junta mueve el barco. La Junta no sustituye a la Conferencia; la Conferencia no microadministra a la Junta.","group":"En tu grupo: la asamblea de miembros decide el rumbo; el comité ejecuta entre reuniones y rinde cuentas. Si el comité no puede mover nada, el grupo se congela.","question":"¿Dónde se está frenando el trabajo por no distinguir rumbo de ejecución?"},{"id":"t3","a":"III","b":"X","title":"Libertad para decidir, límites claros","tension":"El Derecho de Decisión confía en el servidor; el Concepto X exige que la autoridad tenga un alcance definido. Sin límites, la confianza se vuelve arbitrariedad.","balance":"La confianza no es ausencia de límites: es decidir dentro de un marco claro y rendir cuentas. El límite protege al servidor y al grupo.","group":"En tu grupo: escribe qué decide el RSG, qué consulta y qué informa. Así puedes confiar sin controlarlo todo.","question":"¿Qué decisión estás tomando sin saber hasta dónde llega tu autoridad?"},{"id":"t4","a":"IV","b":"XI","title":"Participar no es hacer de todo","tension":"El Derecho de Participación pide voz y voto para quien carga responsabilidad; el Concepto XI pide competencia, inducción y rotación. Participar no significa que cualquiera haga cualquier cosa en cualquier momento.","balance":"La participación se gana con responsabilidad y se sostiene con formación y relevo. Un grupo sano combina voz para los que hacen y preparación para los que vienen.","group":"En tu grupo: si alguien hace el trabajo, que participe en la decisión. Si alguien va a asumir un cargo, que se prepare y tenga fecha de rotación.","question":"¿Estás dando voz a quien hace el trabajo y formación a quien va a relevar?"},{"id":"t5","a":"V","b":"XII","title":"Escuchar a la minoría, decidir con el grupo","tension":"El Derecho de Apelación protege a la minoría; las Garantías buscan decisiones por discusión, votación y, cuando sea posible, unanimidad sustancial. Escuchar no es vetar; decidir no es atropellar.","balance":"La minoría tiene derecho a ser escuchada y a pedir rectificación; la mayoría tiene derecho a decidir después de escuchar. La unidad se construye en el proceso, no en el resultado.","group":"En tu grupo: antes de cerrar una votación, pregunta si alguien lo ve distinto y registra la opinión. Luego decide y sigue adelante sin castigar al que perdió.","question":"¿Tu grupo escucha a la minoría solo para cumplir, o de verdad puede cambiar de opinión?"},{"id":"t6","a":"VII","b":"IX","title":"La estructura y el ejemplo","tension":"La Carta, los estatutos y el dinero sostienen la estructura; el liderazgo personal la anima. Una estructura sin líderes se vuelve papeleo; un líder sin estructura se vuelve indispensable.","balance":"La estructura no reemplaza el ejemplo, y el ejemplo no reemplaza la estructura. El buen líder usa la estructura para que otros sirvan, no para perpetuarse.","group":"En tu grupo: los papeles y las cuentas ordenan; tu ejemplo y tu relevo le dan vida. Si todo depende de ti, la estructura es una fachada.","question":"¿Tu grupo tiene estructura suficiente para sobrevivirte?"}],"sparks":["¿Qué decisión de tu grupo esta semana fue conciencia y cuál fue costumbre?","¿A quién no estás escuchando porque crees que ya sabes lo que va a decir?","¿Qué te da miedo perder si delegas?","¿Dónde estás siendo mensajero en vez de servidor de confianza?","¿Qué parte de la estructura todavía te suena a jerarquía?","¿Qué harías si tu grupo desapareciera mañana? ¿Qué quedaría de tu servicio?","¿Qué derecho de los tres te cuesta más practicar: decidir, participar o apelar?","¿Quién hace el trabajo en tu grupo y nunca opina?","¿Qué estás haciendo que otra persona podría aprender a hacer?","¿Tu grupo sabe cuánto dinero tiene y en qué se gasta?","¿Qué cargo de tu grupo se ha vuelto propiedad de alguien?","¿Cuándo fue la última vez que cambiaste de opinión en una reunión?","¿Qué le dirías a una persona nueva sobre los Conceptos en una sola frase?","¿Dónde estás confundiendo unidad con silencio?","¿Qué necesita tu grupo para no depender de una sola persona?","¿Qué aprendiste de los Pasos que te sirve para entender la estructura?","¿Qué te pide el grupo que no te corresponde decidir?","¿Qué te corresponde decidir y estás consultando de más?","¿Cómo se nota en tu grupo que la autoridad final es de todos?","¿Qué vas a enseñar de los Conceptos este mes?"]};
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const KEY = 'conceptos_dummis_laura_v1';
+const DEFAULT_STATE = {
+  name: 'Laura',
+  group: '',
+  district: '2',
+  area: 'C.3',
+  sponsor: '',
+  startDate: '',
+  theme: 'dark',
+  status: {},
+  tasks: {},
+  journal: {},
+  sparks: {},
+  tensions: {},
+  flashKnown: [],
+  flashMode: 'num',
+  quizBest: 0,
+  sessions: 0,
+  lastVisit: ''
+};
+let S = loadState();
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return {...DEFAULT_STATE};
+    const parsed = JSON.parse(raw);
+    return {...DEFAULT_STATE, ...parsed, status: {...(parsed.status||{})}, tasks: {...(parsed.tasks||{})}, journal: {...(parsed.journal||{})}, sparks: {...(parsed.sparks||{})}, tensions: {...(parsed.tensions||{})}, flashKnown: Array.isArray(parsed.flashKnown)?parsed.flashKnown:[]};
+  }catch(e){ return {...DEFAULT_STATE}; }
+}
+function saveState(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+}
+function saveSoon(){
+  clearTimeout(saveSoon._t);
+  saveSoon._t = setTimeout(saveState, 250);
+}
+
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const nl2br = (s) => esc(s).replace(/\n/g,'<br>');
+const pad = (n) => String(n).padStart(2,'0');
+const todayKey = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
+const dateKey = (d) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseDate = (s) => { if(!s) return null; const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const fmtShort = (d) => d ? d.toLocaleDateString('es-CO',{day:'numeric',month:'short'}) : '';
+const fmtLong = (d) => d ? d.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '';
+const byN = (n) => DATA.concepts.find(c => c.n === n);
+const blockName = {fuente:'La fuente', derechos:'Los derechos', motor:'El motor', liderazgo:'Liderazgo', limites:'Límites'};
+const blockColor = {fuente:'#8b5cf6', derechos:'#0d9488', motor:'#b45309', liderazgo:'#be123c', limites:'#2563eb'};
+const statusNames = ['Sin empezar','Leído','Entendido','Aplicado','Enseñado'];
+const statusShort = ['—','Leído','Entendido','Aplicado','Enseñado'];
+
+function status(n){ return Number(S.status[n] || 0); }
+function setStatus(n, level, silent=false){
+  S.status[n] = Math.max(0, Math.min(4, Number(level)||0));
+  if(S.status[n] === 0) delete S.status[n];
+  saveState();
+  if(!silent){ renderStats(); renderConceptCards(); if(currentConcept === n) renderConceptDetail(n, true); }
+}
+function taskDone(id){ return !!S.tasks[id]; }
+function totalTasks(){ return DATA.weeks.reduce((a,w)=>a+w.sessions.length,0); }
+function doneTasks(){ return Object.values(S.tasks).filter(Boolean).length; }
+function appliedCount(){ return DATA.concepts.filter(c => status(c.n) >= 3).length; }
+function taughtCount(){ return DATA.concepts.filter(c => status(c.n) >= 4).length; }
+function progressPct(){
+  const pts = DATA.concepts.reduce((a,c)=>a+status(c.n),0);
+  return Math.round(pts / (DATA.concepts.length*4) * 100);
+}
+
+/* ============================================================
+   FECHAS / SEMANA
+   ============================================================ */
+function currentWeek(){
+  if(!S.startDate) return 1;
+  const start = parseDate(S.startDate);
+  const now = new Date(); now.setHours(0,0,0,0);
+  const diff = Math.floor((now - start) / 86400000);
+  if(diff < 0) return 1;
+  return Math.min(8, Math.max(1, Math.floor(diff/7)+1));
+}
+function weekRange(n){
+  if(n === 0 || !S.startDate) return '';
+  const start = parseDate(S.startDate);
+  const a = new Date(start); a.setDate(a.getDate() + (n-1)*7);
+  const b = new Date(a); b.setDate(b.getDate() + 6);
+  return `${fmtShort(a)} – ${fmtShort(b)}`;
+}
+function weekForConcept(n){
+  const c = byN(n); return c ? c.week : 1;
+}
+function firstPendingSession(week){
+  const w = DATA.weeks.find(x => x.n === week);
+  if(!w) return null;
+  return w.sessions.find(s => !taskDone(s.id)) || null;
+}
+function suggestedSession(){
+  const start = currentWeek();
+  const order = [];
+  for(let i=0;i<8;i++) order.push(((start-1+i)%8)+1);
+  for(const n of order){
+    const w = DATA.weeks.find(x=>x.n===n);
+    const p = firstPendingSession(n);
+    if(p) return {week:w, session:p, allDone:false};
+  }
+  const w = DATA.weeks.find(x=>x.n===1);
+  return {week:w, session:w.sessions[0], allDone:true};
+}
+
+/* ============================================================
+   RENDER: CABECERA Y NAV
+   ============================================================ */
+function renderIdentity(){
+  $('#footName').textContent = S.name || 'Laura';
+  document.title = `Doce Conceptos en sencillo · ${S.name || 'Laura'}`;
+}
+function renderStats(){
+  const pct = progressPct();
+  $('#sidePct').textContent = pct + '%';
+  $('#sideBar').style.width = pct + '%';
+  $('#sideDone').textContent = `${appliedCount()} de 12 aplicados`;
+  $('#sideStreak').textContent = `${streak()} ${streak()===1?'día':'días'}`;
+  const planPct = Math.round(doneTasks()/totalTasks()*100);
+  const planBar = $('#planBar'); if(planBar) planBar.style.width = planPct + '%';
+  const planSummary = $('#planSummary'); if(planSummary) planSummary.textContent = `${doneTasks()} / ${totalTasks()} sesiones · ${planPct}%`;
+}
+function streak(){
+  const dates = Object.keys(S.sparks).filter(k => (S.sparks[k]||'').trim()).sort();
+  if(!dates.length) return 0;
+  const has = new Set(dates);
+  let d = new Date(); d.setHours(0,0,0,0);
+  if(!has.has(dateKey(d))) d.setDate(d.getDate()-1);
+  let n = 0;
+  while(has.has(dateKey(d))){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+
+/* ============================================================
+   GRAFICO
+   ============================================================ */
+function graphSVG(decor=false){
+  const cx = 200, cy = 200, R = decor ? 142 : 146;
+  const nodes = DATA.concepts.map((c,i)=>{
+    const ang = (-90 + i*30) * Math.PI/180;
+    return {c, x: cx + R*Math.cos(ang), y: cy + R*Math.sin(ang)};
+  });
+  const pos = Object.fromEntries(nodes.map(n=>[n.c.n,n]));
+  const edges = [];
+  const seen = new Set();
+  DATA.concepts.forEach(c=>{
+    (c.related||[]).forEach(r=>{
+      const k = [c.n,r].sort().join('-');
+      if(seen.has(k)) return; seen.add(k);
+      const a = pos[c.n], b = pos[r]; if(!a||!b) return;
+      edges.push(`<line class="graph-edge" x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}"/>`);
+    });
+  });
+  const dots = nodes.map(({c,x,y})=>`
+    <g class="graph-node" data-concept="${c.n}" tabindex="0" role="link" aria-label="Concepto ${c.n}: ${esc(c.title)}">
+      <title>Concepto ${c.n} — ${esc(c.title)}</title>
+      <circle class="halo h-${c.block}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="22"/>
+      <circle class="b-${c.block}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="15"/>
+      <text x="${x.toFixed(1)}" y="${(y+0.5).toFixed(1)}">${c.num}</text>
+    </g>`).join('');
+  return `<svg viewBox="0 0 400 400" role="img" aria-label="Mapa de los doce Conceptos">
+    <circle cx="200" cy="200" r="118" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 6" opacity=".55"/>
+    <circle class="graph-center" cx="200" cy="200" r="38"/>
+    <text class="graph-center-text" x="200" y="194">TU</text>
+    <text class="graph-center-text" x="200" y="204">GRUPO</text>
+    <text class="graph-center-text" x="200" y="214" style="font-size:6px">DISTRITO 2</text>
+    ${edges.join('')}
+    ${dots}
+  </svg>`;
+}
+function mountGraphs(){
+  const hero = $('#heroGraph'); if(hero) hero.innerHTML = graphSVG(true);
+  const home = $('#homeGraph'); if(home) home.innerHTML = graphSVG(false);
+  $$('.graph-node').forEach(g=>{
+    const go = ()=>{ location.hash = '#/concepto/' + g.dataset.concept; };
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); go(); }});
+  });
+}
+function renderHomeGraph(){ mountGraphs(); }
+
+/* ============================================================
+   RENDER: INICIO
+   ============================================================ */
+function renderToday(){
+  const sug = suggestedSession();
+  if(sug.allDone){
+    $('#todayCard').innerHTML = `
+      <div class="card-head">
+        <span class="label">HOY</span>
+        <span class="pill ok">8 semanas completas</span>
+      </div>
+      <h2 class="today-title">Terminaste la ruta. Ahora empieza la práctica.</h2>
+      <p class="today-sub">No hay sesiones pendientes. Vuelve a un Concepto que te cueste, repasa con tarjetas o comparte lo aprendido con tu grupo o tu Distrito.</p>
+      <div class="btn-row">
+        <a class="btn primary small" href="#/repaso">Ir a repaso</a>
+        <a class="btn small" href="#/conceptos">Ver los doce</a>
+        <a class="btn small ghost" href="#/diario">Escribir en la bitácora</a>
+      </div>`;
+    return;
+  }
+  const w = sug.week;
+  const session = sug.session;
+  const wk = w.n;
+  const chips = w.concepts.map(n=>{
+    const c = byN(n); return `<a class="chip" href="#/concepto/${n}"><span class="r">${n}</span> ${esc(c.title)}</a>`;
+  }).join('');
+  $('#todayCard').innerHTML = `
+    <div class="card-head">
+      <span class="label">HOY</span>
+      <span class="pill">${S.startDate ? `Semana ${wk} de 8` : 'Sin fecha de inicio'}</span>
+    </div>
+    <h2 class="today-title">${esc(w.title)}</h2>
+    <p class="today-sub">${esc(w.goal)}</p>
+    <div class="week-chips">${chips || '<span class="chip">Preparación</span>'}</div>
+    <div class="session-line"><svg><use href="#i-clock"/></svg> ${esc(session.label)} · ${session.minutes} min</div>
+    <p class="small dim" style="margin:0">${esc(session.desc)}</p>
+    <div class="btn-row">
+      <button class="btn primary small" type="button" data-start-session="${w.n}:${session.id}"><svg><use href="#i-clock"/></svg> Empezar ahora</button>
+      <a class="btn small" href="#/semana/${w.n}">Abrir la semana</a>
+      ${S.startDate ? '' : '<button class="btn small ghost" type="button" data-settings>Fijar fecha</button>'}
+    </div>`;
+}
+function renderProgressCard(){
+  const pct = progressPct();
+  const c = 2*Math.PI*42;
+  const off = c*(1-pct/100);
+  $('#progressCard').innerHTML = `
+    <div class="card-head"><span class="label">PROGRESO</span><span class="pill">${appliedCount()}/12 aplicados</span></div>
+    <div class="ring-wrap">
+      <div class="ring">
+        <svg viewBox="0 0 104 104" aria-hidden="true">
+          <circle class="track" cx="52" cy="52" r="42"/>
+          <circle class="value" cx="52" cy="52" r="42" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/>
+        </svg>
+        <div class="ring-label"><div><b>${pct}%</b><span>del mapa</span></div></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><b>${appliedCount()}</b><span>Aplicados</span></div>
+        <div class="stat"><b>${taughtCount()}</b><span>Enseñados</span></div>
+        <div class="stat"><b>${doneTasks()}</b><span>Sesiones</span></div>
+        <div class="stat"><b>${streak()}</b><span>Días de chispa</span></div>
+      </div>
+    </div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <p class="tiny dim" style="margin:10px 0 0">El porcentaje cuenta los cuatro niveles de cada Concepto: leído, entendido, aplicado y enseñado.</p>`;
+}
+function renderSpark(){
+  const prompts = DATA.sparks;
+  const day = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+  const prompt = prompts[day % prompts.length];
+  const key = todayKey();
+  const val = S.sparks[key] || '';
+  $('#sparkCard').innerHTML = `
+    <div class="card-head">
+      <span class="label">CHISPA DE HOY</span>
+      <span class="streak" id="sparkStreak"><svg><use href="#i-spark"/></svg> ${streak()} ${streak()===1?'día':'días'}</span>
+    </div>
+    <p class="spark-q">${esc(prompt)}</p>
+    <textarea class="input" id="sparkText" placeholder="Una línea basta…" aria-label="Respuesta a la chispa de hoy">${esc(val)}</textarea>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn small primary" type="button" id="saveSpark">Guardar</button>
+      <span class="tiny dim" id="sparkStatus">${val ? 'Guardado' : 'Sin escribir'}</span>
+    </div>`;
+  const ta = $('#sparkText');
+  ta.addEventListener('input', ()=>{
+    S.sparks[todayKey()] = ta.value;
+    saveSoon();
+    const st = $('#sparkStatus');
+    if(st) st.textContent = ta.value.trim() ? 'Guardando…' : 'Sin escribir';
+  });
+  $('#saveSpark').addEventListener('click', ()=>{
+    S.sparks[todayKey()] = ta.value.trim();
+    saveState();
+    $('#sparkStatus').textContent = ta.value.trim() ? 'Guardado' : 'Sin escribir';
+    renderStats(); renderProgressCard(); renderSpark();
+    toast('Chispa guardada');
+  });
+}
+function renderStart(){
+  $('#startCard').innerHTML = `
+    <div class="card-head"><span class="label">TU PUNTO DE PARTIDA</span><span class="pill accent">No empiezas de cero</span></div>
+    <h2 style="font-size:1.32rem;margin-bottom:8px">Lo que ya tienes te sirve</h2>
+    <div class="start-list">
+      <div class="start-item"><span class="n">13+</span><p><b>Más de 13 años en los Pasos.</b> Ya sabes hacer inventario, escuchar, pedir ayuda y servir sin protagonismo. Eso es oro para entender la estructura.</p></div>
+      <div class="start-item"><span class="n">R</span><p><b>Eres RSG.</b> Tienes voz y voto en el Distrito 2 y un canal directo con tu grupo. Los Conceptos te dan el mapa de ese canal.</p></div>
+      <div class="start-item"><span class="n">+</span><p><b>Estás fundando un grupo.</b> Estás construyendo justo lo que los Conceptos protegen: una conciencia que no dependa de una sola persona.</p></div>
+    </div>
+    <p class="thesis">Los Conceptos no reemplazan a los Pasos. Son los Pasos aplicados a la estructura: honestidad para mirar el poder, disposición para soltar, amor para dejar que otros sirvan.</p>`;
+}
+
+/* ============================================================
+   RENDER: RUTA
+   ============================================================ */
+function renderWeeks(){
+  const wrap = $('#weeks'); if(!wrap) return;
+  wrap.innerHTML = DATA.weeks.map(w=>{
+    const done = w.sessions.filter(s=>taskDone(s.id)).length;
+    const open = w.n === currentWeek() && w.n !== 0;
+    const chips = w.concepts.length
+      ? w.concepts.map(n=>{const c=byN(n);return `<a class="chip" href="#/concepto/${n}"><span class="r">${n}</span> ${esc(c.title)}</a>`}).join('')
+      : '<span class="chip">Preparación</span>';
+    const sessions = w.sessions.map(s=>`
+      <li><label><input type="checkbox" data-task="${s.id}" ${taskDone(s.id)?'checked':''}>
+        <span><span class="s-label">${esc(s.label)} <span class="dim">· ${s.minutes} min</span></span><span class="s-desc">${esc(s.desc)}</span></span>
+      </label></li>`).join('');
+    return `<details class="week" data-week="${w.n}" ${open?'open':''}>
+      <summary>
+        <div class="week-num">${w.n===0?'0':pad(w.n)}</div>
+        <div><div class="week-title">${esc(w.title)}<span class="week-sub">${esc(w.subtitle)}</span></div></div>
+        <div class="week-date">${w.n===0?'Antes de empezar':weekRange(w.n)}</div>
+        <svg class="week-chev"><use href="#i-chev"/></svg>
+      </summary>
+      <div class="week-body">
+        <p class="week-goal">${esc(w.goal)}</p>
+        <div class="week-chips">${chips}</div>
+        <h4>Sesiones · ${done}/${w.sessions.length}</h4>
+        <ul class="sessions">${sessions}</ul>
+        <h4>Caso de la semana</h4>
+        <div class="mini-case">
+          <b>${esc(w.case.title)}</b>
+          <p>${esc(w.case.text)}</p>
+          <p style="color:var(--text);margin-top:7px"><b>Para conversar:</b> ${esc(w.case.question)}</p>
+          <div class="btn-row" style="margin-top:8px"><button class="btn tiny" type="button" data-case-guide="${w.n}">Ver una lectura</button><a class="btn tiny ghost" href="#/casos">Más casos</a></div>
+        </div>
+        <div class="week-foot">
+          <div class="box"><b>Evidencia</b><p>${esc(w.evidence)}</p></div>
+          <div class="box"><b>Micro-acción</b><p>${esc(w.micro)}</p></div>
+        </div>
+        <p class="week-note">${esc(w.note)}</p>
+      </div>
+    </details>`;
+  }).join('');
+
+  $$('#weeks input[data-task]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      S.tasks[cb.dataset.task] = cb.checked;
+      if(!cb.checked) delete S.tasks[cb.dataset.task];
+      if(cb.checked) S.sessions = (S.sessions||0)+1;
+      const weekBox = cb.closest('.week');
+      if(weekBox){
+        const total = weekBox.querySelectorAll('input[data-task]').length;
+        const done = weekBox.querySelectorAll('input[data-task]:checked').length;
+        const head = weekBox.querySelector('h4');
+        if(head) head.textContent = `Sesiones · ${done}/${total}`;
+      }
+      saveState(); renderStats(); renderToday(); renderProgressCard();
+      if(cb.checked) toast('Sesión marcada. Una acción vale más que una intención.');
+    });
+  });
+  $$('#weeks [data-case-guide]').forEach(b=>{
+    b.addEventListener('click', ()=> openCaseGuide(Number(b.dataset.caseGuide)));
+  });
+  const sd = $('#startDate');
+  if(sd) sd.value = S.startDate || '';
+  renderStats();
+}
+function openCaseGuide(weekN){
+  const w = DATA.weeks.find(x=>x.n===weekN); if(!w) return;
+  openModal(`<h2 id="modalTitle">${esc(w.case.title)}</h2>
+    <p class="modal-sub">Semana ${w.n} · ${esc(w.title)}</p>
+    <div class="callout"><p class="official">${esc(w.case.text)}</p></div>
+    <p style="margin-top:14px"><b>Para conversar:</b> ${esc(w.case.question)}</p>
+    <p class="muted">${esc(w.case.guide)}</p>
+    <div class="btn-row" style="margin-top:14px"><button class="btn small" type="button" data-close-modal>Cerrar</button></div>`);
+}
+
+/* ============================================================
+   RENDER: CONCEPTOS
+   ============================================================ */
+let conceptFilter = 'todos';
+let conceptQuery = '';
+function renderConceptCards(){
+  const grid = $('#conceptGrid'); if(!grid) return;
+  const list = DATA.concepts.filter(c=>{
+    const okF = conceptFilter === 'todos' || c.block === conceptFilter;
+    const q = conceptQuery.toLowerCase();
+    const okQ = !q || (c.title+' '+c.essence+' '+c.tags.join(' ')+' '+c.official).toLowerCase().includes(q);
+    return okF && okQ;
+  });
+  grid.innerHTML = list.map(c=>{
+    const st = status(c.n);
+    return `<a class="concept-card" href="#/concepto/${c.n}" data-block="${c.block}">
+      <div class="cc-top"><span class="cc-roman">${c.n}</span><span class="cc-status" data-status="${st}" title="${statusNames[st]}"></span></div>
+      <h3>${esc(c.title)}</h3>
+      <p>${esc(c.essence)}</p>
+      <div class="cc-foot"><span class="cc-tag">${blockName[c.block]}</span><span class="cc-state">${statusNames[st]}</span></div>
+    </a>`;
+  }).join('');
+  if(!list.length) grid.innerHTML = `<p class="muted">No encontré un Concepto con esa búsqueda. Prueba con “grupo”, “dinero” o “liderazgo”.</p>`;
+}
+
+/* ============================================================
+   RENDER: DETALLE DE CONCEPTO
+   ============================================================ */
+let currentConcept = null;
+function renderConceptDetail(n, keepScroll=false){
+  const c = byN(n);
+  const wrap = $('#conceptDetail');
+  if(!c){ wrap.innerHTML = `<p class="muted">No encontré ese Concepto. <a href="#/conceptos">Volver a los doce</a>.</p>`; return; }
+  currentConcept = n;
+  const prev = DATA.concepts[(c.num-2+12)%12];
+  const next = DATA.concepts[c.num%12];
+  const related = (c.related||[]).map(r=>{const x=byN(r);return `<a href="#/concepto/${r}"><span>${r}</span>${esc(x.title)}</a>`}).join('');
+  const st = status(n);
+  const journal = S.journal[`c${n}`] || '';
+  wrap.innerHTML = `
+    <div class="detail-top">
+      <div class="detail-num">${c.n}</div>
+      <div class="detail-title">
+        <div class="kicker">${blockName[c.block]} · Semana ${c.week}</div>
+        <h1>${esc(c.title)}</h1>
+        <p class="small dim" style="margin:4px 0 0">${esc(c.source)}</p>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-main">
+        <div class="callout">
+          <p class="official">${esc(c.official)}</p>
+          <div class="src">${esc(c.shortSource || 'Forma corta, p. V.')}</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>EN UNA FRASE</h2>
+          <p class="big">${esc(c.essence)}</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>LO QUE YA VIVES EN TU GRUPO</h2>
+          <p>${esc(c.group)}</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>EN TU ROL DE RSG</h2>
+          <p>${esc(c.rsg)}</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>LA TRAMPA</h2>
+          <div class="trap"><p>${esc(c.trap)}</p></div>
+        </div>
+
+        <div class="detail-section">
+          <h2>BILL DICE</h2>
+          <blockquote class="quote-block"><p>“${esc(c.bill)}”</p><cite>${esc(c.billSource || c.source)}</cite></blockquote>
+        </div>
+
+        <div class="detail-section">
+          <h2>PREGUNTA DE DIARIO</h2>
+          <p class="big" style="font-size:1.1rem;margin-bottom:10px">${esc(c.journal)}</p>
+          <textarea class="input" data-concept-journal="${c.n}" placeholder="Escribe aquí. Se guarda en tu navegador.">${esc(journal)}</textarea>
+          <div class="tiny dim" style="margin-top:5px">Se guarda automáticamente.</div>
+        </div>
+
+        <div class="detail-nav">
+          <a href="#/concepto/${prev.n}"><span class="tiny dim">← Anterior</span><b>${prev.n} · ${esc(prev.title)}</b></a>
+          <a href="#/concepto/${next.n}" style="text-align:right"><span class="tiny dim">Siguiente →</span><b>${next.n} · ${esc(next.title)}</b></a>
+        </div>
+      </div>
+
+      <aside class="detail-side">
+        <div class="detail-section">
+          <h2>TU ESTADO</h2>
+          <div class="status-control" role="group" aria-label="Estado de aprendizaje">
+            ${statusNames.map((s,i)=>`<button type="button" data-set-status="${c.n}:${i}" aria-pressed="${st===i}">${s}</button>`).join('')}
+          </div>
+          <p class="tiny dim" style="margin:9px 0 0">No es una nota: es una brújula. “Aplicado” significa que hiciste la micro-acción.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>MICRO-ACCIÓN</h2>
+          <div class="action-box">
+            <p>${esc(c.action)}</p>
+            <button class="btn small ${st>=3?'':'primary'}" type="button" data-mark-applied="${c.n}">${st>=3?'✓ Aplicado':'Marcar como aplicado'}</button>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h2>CONECTA</h2>
+          <div class="related-list">${related}</div>
+          <p class="tiny dim" style="margin:9px 0 0">Toca un Concepto para ver la tensión o la complementariedad.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>PARA LLEVAR</h2>
+          <div class="btn-row">
+            <button class="btn small" type="button" data-copy-concept="${c.n}">Copiar nota</button>
+            <a class="btn small ghost" href="#/semana/${c.week}">Semana ${c.week}</a>
+          </div>
+        </div>
+      </aside>
+    </div>`;
+
+  $$('[data-set-status]', wrap).forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const [nn,lvl] = b.dataset.setStatus.split(':');
+      setStatus(nn, Number(lvl));
+      renderConceptDetail(nn, true);
+      renderToday(); renderProgressCard();
+    });
+  });
+  const applied = $('[data-mark-applied]', wrap);
+  if(applied) applied.addEventListener('click', ()=>{
+    setStatus(c.n, Math.max(3, status(c.n)));
+    renderConceptDetail(c.n, true); renderToday(); renderProgressCard();
+    toast('Micro-acción marcada. Ahora cuéntasela a alguien.');
+  });
+  const ta = $('[data-concept-journal]', wrap);
+  if(ta) ta.addEventListener('input', ()=>{
+    S.journal[`c${c.n}`] = ta.value;
+    saveSoon();
+  });
+  const copy = $('[data-copy-concept]', wrap);
+  if(copy) copy.addEventListener('click', ()=> copyText(conceptMarkdown(c), 'Nota copiada en Markdown'));
+  if(!keepScroll) window.scrollTo({top:0,behavior:'auto'});
+}
+
+function conceptMarkdown(c){
+  return `# Concepto ${c.n} — ${c.title}
+
+> [!quote] Forma corta
+> ${c.official}
+
+**En una frase:** ${c.essence}
+
+## En el grupo
+${c.group}
+
+## Como RSG
+${c.rsg}
+
+## La trampa
+${c.trap}
+
+## Bill dice
+> “${c.bill}”
+> — ${c.billSource || c.source}
+
+## Micro-acción
+- [ ] ${c.action}
+
+## Pregunta de diario
+${c.journal}
+
+## Conecta
+${(c.related||[]).map(r=>`- Concepto ${r} — ${byN(r).title}`).join('\n')}
+
+## Fuente
+${c.source}
+`;
+}
+
+/* ============================================================
+   REPASO: TARJETAS
+   ============================================================ */
+let flashDeck = [];
+let flashPos = 0;
+let flashFlipped = false;
+function resetFlash(){
+  flashDeck = DATA.concepts.filter(c=>!S.flashKnown.includes(c.n)).map(c=>c.n);
+  if(!flashDeck.length) flashDeck = DATA.concepts.map(c=>c.n);
+  flashDeck.sort(()=>Math.random()-0.5);
+  flashPos = 0;
+  flashFlipped = false;
+  renderFlash();
+}
+function renderFlash(){
+  const front = $('#flashFront'), back = $('#flashBack'), card = $('#flashCard');
+  if(!front) return;
+  if(!flashDeck.length){ resetFlash(); return; }
+  if(flashPos >= flashDeck.length){
+    front.innerHTML = `<div class="front-label">REPASO COMPLETO</div><h3>Doce ideas, una sola práctica.</h3><p>Vuelve mañana o baraja de nuevo. Lo importante no es la racha: es que puedas explicarlo sin leer.</p><div class="hint">Toca “Barajar” para empezar otra vez</div>`;
+    back.innerHTML = '';
+    card.classList.remove('flipped');
+    $('#flashCount').textContent = `${flashDeck.length} de ${flashDeck.length}`;
+    $('#flashBar').style.width = '100%';
+    return;
+  }
+  const c = byN(flashDeck[flashPos]);
+  const mode = S.flashMode || 'num';
+  if(mode === 'num'){
+    front.innerHTML = `<div class="front-label">CONCEPTO</div><div class="roman">${c.n}</div><h3>¿Cuál es la idea?</h3><p>Dila en una frase, sin leer.</p><div class="hint">Toca para voltear</div>`;
+    back.innerHTML = `<div class="front-label">LA IDEA</div><h3>${esc(c.title)}</h3><p>${esc(c.essence)}</p><div class="hint">${esc(c.source)}</div>`;
+  }else{
+    front.innerHTML = `<div class="front-label">LA IDEA</div><p style="font-family:var(--serif);font-size:1.25rem;color:var(--text)">“${esc(c.essence)}”</p><h3>¿Qué Concepto es?</h3><div class="hint">Toca para voltear</div>`;
+    back.innerHTML = `<div class="front-label">ES EL CONCEPTO</div><div class="roman">${c.n}</div><h3>${esc(c.title)}</h3><div class="hint">${esc(c.source)}</div>`;
+  }
+  card.classList.remove('flipped');
+  flashFlipped = false;
+  $('#flashCount').textContent = `${flashPos} de ${flashDeck.length}`;
+  $('#flashBar').style.width = `${(flashPos/flashDeck.length)*100}%`;
+}
+function flipFlash(){ const card = $('#flashCard'); if(!card) return; card.classList.toggle('flipped'); flashFlipped = card.classList.contains('flipped'); }
+function flashNext(known){
+  if(flashPos >= flashDeck.length) return;
+  const n = flashDeck[flashPos];
+  if(known && !S.flashKnown.includes(n)) S.flashKnown.push(n);
+  if(!known) flashDeck.push(n);
+  flashPos++;
+  saveState(); renderFlash(); renderStats();
+}
+function renderFlashUI(){
+  const card = $('#flashCard');
+  if(card){
+    card.addEventListener('click', flipFlash);
+    card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();flipFlash();} });
+  }
+  $('#flashAgain').addEventListener('click', ()=>flashNext(false));
+  $('#flashKnow').addEventListener('click', ()=>flashNext(true));
+  $('#flashReset').addEventListener('click', ()=>{ S.flashKnown=[]; saveState(); resetFlash(); toast('Baraja reiniciada'); });
+  $('#flashMode').value = S.flashMode || 'num';
+  $('#flashMode').addEventListener('change', ()=>{ S.flashMode = $('#flashMode').value; saveState(); renderFlash(); });
+}
+
+/* ============================================================
+   REPASO: QUIZ
+   ============================================================ */
+let quizDeck = [];
+let quizPos = 0;
+let quizScore = 0;
+let quizAnswered = false;
+function resetQuiz(){
+  quizDeck = [...DATA.cases].sort(()=>Math.random()-0.5);
+  quizPos = 0; quizScore = 0; quizAnswered = false;
+  renderQuiz();
+}
+function renderQuiz(){
+  const box = $('#quizBox'); if(!box) return;
+  if(quizPos >= quizDeck.length){
+    const best = Math.max(S.quizBest||0, quizScore);
+    S.quizBest = best; saveState();
+    box.innerHTML = `<div class="card-head"><span class="label">RESULTADO</span><span class="pill">${quizScore} de ${quizDeck.length}</span></div>
+      <h2 style="font-size:1.5rem">${quizScore >= 8 ? 'Muy bien. Ahora llévalo a la reunión.' : quizScore >= 5 ? 'Buen camino. Repasa los casos que fallaste.' : 'El puntaje importa poco. La conversación importa todo.'}</h2>
+      <p class="muted">Mejor marca: ${best} de ${quizDeck.length}. Los casos no buscan memoria: buscan que puedas nombrar el principio en una situación real.</p>
+      <div class="btn-row"><button class="btn primary" type="button" id="quizAgain">Jugar otra vez</button><a class="btn" href="#/casos">Leer todos los casos</a></div>`;
+    $('#quizAgain').addEventListener('click', resetQuiz);
+    renderStats();
+    return;
+  }
+  const q = quizDeck[quizPos];
+  quizAnswered = false;
+  box.innerHTML = `<div class="flash-meta"><span>Caso ${quizPos+1} de ${quizDeck.length}</span><span>Aciertos: ${quizScore}</span></div>
+    <p class="quiz-case">${esc(q.text)}</p>
+    <div class="quiz-options">${q.options.map(o=>`<button type="button" data-opt="${o}">Concepto ${o}</button>`).join('')}</div>
+    <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+    <div class="quiz-foot"><span class="quiz-score">Mejor marca: ${S.quizBest||0}</span><button class="btn small primary" type="button" id="quizNext" hidden>Siguiente</button></div>`;
+  $$('[data-opt]', box).forEach(b=>{
+    b.addEventListener('click', ()=>{
+      if(quizAnswered) return;
+      quizAnswered = true;
+      const ok = b.dataset.opt === q.answer;
+      if(ok) quizScore++;
+      $$('[data-opt]', box).forEach(x=>{
+        x.disabled = true;
+        if(x.dataset.opt === q.answer) x.classList.add('correct');
+      });
+      if(!ok) b.classList.add('wrong');
+      const fb = $('#quizFeedback');
+      fb.classList.add('show');
+      fb.innerHTML = `<b>${ok?'Correcto: Concepto '+q.answer+'.':'Era el Concepto '+q.answer+'.'}</b> ${esc(q.explain)}`;
+      const next = $('#quizNext'); next.hidden = false; next.focus();
+      next.addEventListener('click', ()=>{ quizPos++; renderQuiz(); });
+    });
+  });
+}
+
+/* ============================================================
+   CASOS
+   ============================================================ */
+function renderCases(){
+  const list = $('#caseList'); if(!list) return;
+  list.innerHTML = DATA.cases.map((q,i)=>`
+    <details class="case-card">
+      <summary>
+        <span class="case-n">${pad(i+1)}</span>
+        <span class="case-q">${esc(q.text)}</span>
+        <svg class="case-chev"><use href="#i-chev"/></svg>
+      </summary>
+      <div class="case-body">
+        <div class="case-answer">
+          <div class="opts">${q.options.map(o=>`<span class="opt ${o===q.answer?'ok':''}">Concepto ${o}</span>`).join('')}</div>
+          <p><b style="color:var(--text)">Lectura:</b> ${esc(q.explain)}</p>
+          <div class="case-guide"><b>Para conversar</b><p>¿Qué Concepto está en juego, qué derecho se está protegiendo y qué harías distinto?</p></div>
+        </div>
+      </div>
+    </details>`).join('');
+}
+
+/* ============================================================
+   TENSIONES
+   ============================================================ */
+function renderTensions(){
+  const list = $('#tensionList'); if(!list) return;
+  list.innerHTML = DATA.tensions.map(t=>{
+    const a = byN(t.a), b = byN(t.b);
+    const val = Number.isFinite(Number(S.tensions[t.id])) ? Number(S.tensions[t.id]) : 50;
+    return `<article class="tension" data-tension="${t.id}">
+      <div class="tension-pair">
+        <span class="node a">${t.a} · ${esc(a.title)}</span>
+        <span class="line"></span>
+        <span class="node b">${t.b} · ${esc(b.title)}</span>
+      </div>
+      <h3>${esc(t.title)}</h3>
+      <p><b style="color:var(--text)">La tensión:</b> ${esc(t.tension)}</p>
+      <p class="balance">${esc(t.balance)}</p>
+      <p><b style="color:var(--text)">En tu grupo:</b> ${esc(t.group)}</p>
+      <p class="small" style="color:var(--text)"><em>${esc(t.question)}</em></p>
+      <div class="slider-wrap">
+        <label><span>Hacia ${t.a}</span><span>Equilibrio</span><span>Hacia ${t.b}</span></label>
+        <input class="slider" type="range" min="0" max="100" value="${val}" data-tension-range="${t.id}" aria-label="Dónde está tu grupo en la tensión ${t.title}">
+        <div class="slider-read" data-tension-read="${t.id}"></div>
+      </div>
+    </article>`;
+  }).join('');
+  $$('[data-tension-range]').forEach(r=>{
+    const upd = ()=>{
+      const id = r.dataset.tensionRange;
+      const v = Number(r.value);
+      S.tensions[id] = v; saveSoon();
+      const t = DATA.tensions.find(x=>x.id===id);
+      const label = v < 35 ? `Tu grupo está cargando hacia ${t.a}. Ojo: también necesita el otro lado.` : v > 65 ? `Tu grupo está cargando hacia ${t.b}. Ojo: también necesita el otro lado.` : 'Zona de equilibrio: estás sosteniendo los dos lados.';
+      const el = $(`[data-tension-read="${id}"]`); if(el) el.textContent = label;
+    };
+    r.addEventListener('input', upd); upd();
+  });
+}
+
+/* ============================================================
+   DIARIO
+   ============================================================ */
+function diaryPromptFor(w){
+  if(w === 'free') return 'Escribe libremente sobre tu servicio, tu grupo o tu Distrito. Lo que no se escribe, se olvida.';
+  const week = DATA.weeks.find(x=>x.n===Number(w));
+  if(!week) return '';
+  if(week.n===0) return '¿Qué te trajo a los Conceptos y qué quieres poder explicar al final de estas ocho semanas?';
+  return `Semana ${week.n}: ${week.subtitle}. ¿Qué viste, qué hiciste y qué te queda?`;
+}
+function renderDiary(){
+  const sel = $('#diaryWeek'); if(!sel) return;
+  if(!sel.options.length){
+    sel.innerHTML = DATA.weeks.map(w=>`<option value="${w.n}">Semana ${w.n} · ${esc(w.title)}</option>`).join('') + '<option value="free">Escritura libre</option>';
+    sel.value = String(currentWeek());
+  }
+  const w = sel.value;
+  $('#diaryPrompt').textContent = diaryPromptFor(w);
+  $('#diaryText').value = S.journal[`w${w}`] || '';
+  updateWordCount();
+  renderEntries();
+}
+function updateWordCount(){
+  const t = $('#diaryText')?.value || '';
+  const n = t.trim() ? t.trim().split(/\s+/).length : 0;
+  const el = $('#wordCount'); if(el) el.textContent = `${n} ${n===1?'palabra':'palabras'}`;
+  const cnt = $('#entryCount');
+  if(cnt) cnt.textContent = Object.keys(S.journal).filter(k=>k.startsWith('w') && String(S.journal[k]||'').trim()).length;
+}
+function renderEntries(){
+  const box = $('#entryList'); if(!box) return;
+  const items = Object.keys(S.journal).filter(k=>String(S.journal[k]||'').trim()).sort((a,b)=>{
+    const na = a.startsWith('w') ? Number(a.slice(1)) : 99;
+    const nb = b.startsWith('w') ? Number(b.slice(1)) : 99;
+    return na - nb;
+  });
+  const filtered = items.filter(k => k.startsWith('w'));
+  if(!filtered.length){ box.innerHTML = '<p class="tiny dim" style="margin:0">Todavía no hay entradas. Empieza con una línea.</p>'; return; }
+  box.innerHTML = filtered.map(k=>{
+    const label = k === 'wfree' ? 'Escritura libre' : `Semana ${k.slice(1)}`;
+    const txt = String(S.journal[k]);
+    return `<button class="entry" type="button" data-open-entry="${k}"><b>${label}</b><span>${esc(txt.slice(0,90))}${txt.length>90?'…':''}</span></button>`;
+  }).join('');
+  $$('[data-open-entry]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const k = b.dataset.openEntry;
+      $('#diaryWeek').value = k === 'wfree' ? 'free' : k.slice(1);
+      renderDiary();
+      $('#diaryText').focus();
+    });
+  });
+}
+function diaryMarkdown(){
+  const lines = ['# Bitácora de servicio — Doce Conceptos en sencillo',''];
+  DATA.weeks.forEach(w=>{
+    const k = `w${w.n}`;
+    const txt = String(S.journal[k]||'').trim();
+    if(txt){ lines.push(`## Semana ${w.n} — ${w.title}`); lines.push(''); lines.push(txt); lines.push(''); }
+  });
+  const free = String(S.journal.wfree||'').trim();
+  if(free){ lines.push('## Escritura libre'); lines.push(''); lines.push(free); lines.push(''); }
+  if(lines.length === 2) lines.push('_Todavía no hay entradas._');
+  return lines.join('\n');
+}
+
+/* ============================================================
+   MODAL / TIMER
+   ============================================================ */
+let timer = null;
+let timerState = {remaining:0, total:0, running:false, week:1, id:'w1a'};
+function openModal(html){
+  if(timer){ clearInterval(timer); timer = null; timerState.running = false; }
+  $('#modalBody').innerHTML = html;
+  $('#modal').classList.add('open');
+  $('#modal').setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  const first = $('#modalBody button, #modalBody input, #modalBody select');
+  if(first) setTimeout(()=>first.focus(),50);
+}
+function closeModal(){
+  $('#modal').classList.remove('open');
+  $('#modal').setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  if(timer){ clearInterval(timer); timer = null; }
+  timerState.running = false;
+}
+function openSettings(){
+  openModal(`<h2 id="modalTitle">Ajustes del cuaderno</h2>
+    <p class="modal-sub">Todo se guarda solo en este navegador. El nombre y el grupo no se publican.</p>
+    <div class="form-grid">
+      <label>Nombre <input id="setName" value="${esc(S.name||'')}" placeholder="Laura"></label>
+      <label>Grupo (opcional) <input id="setGroup" value="${esc(S.group||'')}" placeholder="Nombre del grupo"></label>
+      <label>Distrito <input id="setDistrict" value="${esc(S.district||'2')}" placeholder="2"></label>
+      <label>Área <input id="setArea" value="${esc(S.area||'C.3')}" placeholder="C.3"></label>
+      <label class="full">Padrino o madrina de servicio <input id="setSponsor" value="${esc(S.sponsor||'')}" placeholder="Nombre de pila"></label>
+      <label class="full">Fecha de inicio <input type="date" id="setStart" value="${esc(S.startDate||'')}"></label>
+    </div>
+    <div class="modal-actions"><button class="btn primary" type="button" id="saveSettings">Guardar</button><button class="btn" type="button" data-close-modal>Cancelar</button></div>`);
+  $('#saveSettings').addEventListener('click', ()=>{
+    S.name = $('#setName').value.trim() || 'Laura';
+    S.group = $('#setGroup').value.trim();
+    S.district = $('#setDistrict').value.trim() || '2';
+    S.area = $('#setArea').value.trim() || 'C.3';
+    S.sponsor = $('#setSponsor').value.trim();
+    S.startDate = $('#setStart').value;
+    saveState();
+    closeModal();
+    renderIdentity(); renderToday(); renderWeeks(); renderStats(); renderProgressCard();
+    toast('Ajustes guardados');
+  });
+}
+function openSession(weekN, sessionId){
+  const w = DATA.weeks.find(x=>x.n===Number(weekN)) || DATA.weeks[1];
+  const s = w.sessions.find(x=>x.id===sessionId) || w.sessions[0];
+  const mins = s.minutes || 35;
+  const total = mins*60;
+  const cuts = [0, Math.round(total*.15), Math.round(total*.45), Math.round(total*.70), Math.round(total*.90), total];
+  const minsCuts = cuts.map(c=>Math.round(c/60));
+  const range = i => `${minsCuts[i]}–${minsCuts[i+1]} min`;
+  const steps = [
+    {t:range(0), label:'Llegada', desc:'Lee la Forma corta en voz alta. Respira. Una intención.'},
+    {t:range(1), label:'Lectura activa', desc:'Lee el ensayo de Bill. Subraya solo tres frases.'},
+    {t:range(2), label:'Traducción', desc:'Explícalo en voz alta, sin jerga, como a alguien nuevo.'},
+    {t:range(3), label:'Ubicación', desc:'Un caso real de tu grupo. ¿Qué harías distinto?'},
+    {t:range(4), label:'Micro-acción', desc:'Una sola cosa para esta semana. Escríbela.'}
+  ];
+  openModal(`<h2 id="modalTitle">Semana ${w.n} · ${esc(s.label)}</h2>
+    <p class="modal-sub">${esc(s.desc)}</p>
+    <div class="timer">
+      <div><div class="timer-time" id="timerTime">${pad(Math.floor(mins))}:00</div><div class="timer-step" id="timerStep"><b>${steps[0].label}</b>${steps[0].desc}</div></div>
+      <div class="btn-row"><button class="btn primary small" type="button" id="timerStart">Iniciar</button><button class="btn small" type="button" id="timerReset">Reiniciar</button></div>
+    </div>
+    <ul class="timer-steps" id="timerSteps">${steps.map((st,i)=>`<li data-step="${i}" class="${i===0?'active':''}"><span class="t">${st.t}</span><span>${st.label}</span></li>`).join('')}</ul>
+    <div class="modal-actions">
+      <button class="btn small" type="button" id="timerDone">Marcar sesión como hecha</button>
+      <button class="btn small ghost" type="button" data-close-modal>Cerrar</button>
+    </div>`);
+  timerState = {remaining: total, total, running:false, week:w.n, id:s.id};
+  const tick = ()=>{
+    const m = Math.floor(timerState.remaining/60), sec = timerState.remaining%60;
+    const timeEl = $('#timerTime'); if(!timeEl) return;
+    timeEl.textContent = `${pad(m)}:${pad(sec)}`;
+    const elapsed = total - timerState.remaining;
+    const idx = elapsed < cuts[1] ? 0 : elapsed < cuts[2] ? 1 : elapsed < cuts[3] ? 2 : elapsed < cuts[4] ? 3 : 4;
+    $$('#timerSteps li').forEach((li,i)=>{ li.classList.toggle('active', i===idx); li.classList.toggle('done', i<idx); });
+    const st = $('#timerStep'); if(st){ st.innerHTML = `<b>${steps[idx].label}</b>${steps[idx].desc}`; }
+    if(timerState.remaining <= 0){
+      clearInterval(timer); timer = null; timerState.running = false;
+      const b = $('#timerStart'); if(b) b.textContent = 'Terminado';
+      toast('Tiempo cumplido. Escribe una línea en la bitácora.');
+    }
+  };
+  $('#timerStart').addEventListener('click', ()=>{
+    if(timerState.running){ clearInterval(timer); timer=null; timerState.running=false; $('#timerStart').textContent='Continuar'; return; }
+    if(timerState.remaining <= 0) return;
+    timerState.running = true; $('#timerStart').textContent = 'Pausar';
+    timer = setInterval(()=>{ if(timerState.remaining>0) timerState.remaining--; tick(); }, 1000);
+  });
+  $('#timerReset').addEventListener('click', ()=>{
+    if(timer) clearInterval(timer); timer=null;
+    timerState.remaining = total; timerState.running = false;
+    $('#timerStart').textContent='Iniciar'; tick();
+  });
+  $('#timerDone').addEventListener('click', ()=>{
+    S.tasks[s.id] = true; saveState();
+    closeModal(); renderWeeks(); renderStats(); renderToday(); renderProgressCard();
+    toast('Sesión marcada. Ahora escribe cinco líneas en la bitácora.');
+  });
+  tick();
+}
+
+/* ============================================================
+   EXPORTAR / IMPORTAR
+   ============================================================ */
+function download(filename, text, type='text/plain'){
+  const blob = new Blob([text], {type:type+';charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+function exportJSON(){
+  const payload = {app:'conceptos_dummis', version:1, exported:new Date().toISOString(), state:S};
+  download(`conceptos-dummis-progreso-${todayKey()}.json`, JSON.stringify(payload,null,2), 'application/json');
+  toast('Progreso exportado');
+}
+function importJSON(file){
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const parsed = JSON.parse(reader.result);
+      const st = parsed.state || parsed;
+      if(!st || typeof st !== 'object') throw new Error('Formato');
+      S = {...DEFAULT_STATE, ...st, status:{...(st.status||{})}, tasks:{...(st.tasks||{})}, journal:{...(st.journal||{})}, sparks:{...(st.sparks||{})}, tensions:{...(st.tensions||{})}, flashKnown:Array.isArray(st.flashKnown)?st.flashKnown:[]};
+      saveState(); location.reload();
+    }catch(e){ toast('No pude leer el archivo. Debe ser el JSON exportado.'); }
+  };
+  reader.readAsText(file);
+}
+function copyText(text, msg){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=>toast(msg||'Copiado')).catch(()=>fallbackCopy(text,msg));
+  }else fallbackCopy(text,msg);
+}
+function fallbackCopy(text,msg){
+  const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); toast(msg||'Copiado'); }catch(e){ toast('No se pudo copiar. Selecciona y copia a mano.'); }
+  ta.remove();
+}
+function toast(msg){
+  const t = $('#toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+/* ============================================================
+   PALETA
+   ============================================================ */
+let paletteItems = [];
+let paletteSel = 0;
+function paletteActions(){
+  return [
+    {label:'Ir a Inicio', kind:'vista', run:()=>location.hash='#/inicio'},
+    {label:'Ruta de 8 semanas', kind:'vista', run:()=>location.hash='#/ruta'},
+    {label:'Los 12 Conceptos', kind:'vista', run:()=>location.hash='#/conceptos'},
+    {label:'Modo repaso', kind:'vista', run:()=>location.hash='#/repaso'},
+    {label:'Casos del Distrito', kind:'vista', run:()=>location.hash='#/casos'},
+    {label:'Mapa de tensiones', kind:'vista', run:()=>location.hash='#/tensiones'},
+    {label:'Bitácora', kind:'vista', run:()=>location.hash='#/diario'},
+    {label:'Cómo usar y fuentes', kind:'vista', run:()=>location.hash='#/recursos'},
+    {label:'Empezar sesión guiada', kind:'acción', run:()=>{ closePalette(); const s=suggestedSession(); openSession(s.week.n,s.session.id); }},
+    {label:'Ajustes del cuaderno', kind:'acción', run:()=>{ closePalette(); openSettings(); }},
+    {label:'Exportar progreso', kind:'acción', run:()=>{ closePalette(); exportJSON(); }},
+    {label:'Cambiar tema', kind:'acción', run:()=>{ closePalette(); toggleTheme(); }},
+    ...DATA.concepts.map(c=>({label:`Concepto ${c.n} — ${c.title}`, kind:'concepto', keywords:`${c.title} ${c.essence} ${c.tags.join(' ')} ${c.official}`, run:()=>location.hash='#/concepto/'+c.n}))
+  ];
+}
+function openPalette(){
+  $('#palette').classList.add('open'); $('#palette').setAttribute('aria-hidden','false');
+  const input = $('#paletteInput'); input.value=''; renderPalette(''); setTimeout(()=>input.focus(),30);
+}
+function closePalette(){ $('#palette').classList.remove('open'); $('#palette').setAttribute('aria-hidden','true'); }
+function renderPalette(q){
+  const all = paletteActions();
+  const ql = q.toLowerCase().trim();
+  paletteItems = all.filter(x=>!ql || x.label.toLowerCase().includes(ql) || String(x.keywords||'').toLowerCase().includes(ql)).slice(0,30);
+  paletteSel = 0;
+  const list = $('#paletteList');
+  if(!paletteItems.length){ list.innerHTML = '<div class="palette-empty">Nada por aquí. Prueba “grupo”, “dinero” o “semana”.</div>'; return; }
+  list.innerHTML = paletteItems.map((x,i)=>`<div class="palette-item ${i===0?'sel':''}" data-pal="${i}"><span>${esc(x.label)}</span><span class="p-kind">${x.kind}</span></div>`).join('');
+  $$('.palette-item').forEach(el=>el.addEventListener('click', ()=>runPalette(Number(el.dataset.pal))));
+}
+function runPalette(i){
+  const item = paletteItems[i]; if(!item) return;
+  closePalette(); item.run();
+}
+function paletteKey(e){
+  if(!$('#palette').classList.contains('open')) return;
+  if(e.key === 'Escape'){ closePalette(); return; }
+  if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+    e.preventDefault();
+    if(!paletteItems.length) return;
+    paletteSel = (paletteSel + (e.key==='ArrowDown'?1:-1) + paletteItems.length) % paletteItems.length;
+    $$('.palette-item').forEach((el,i)=>el.classList.toggle('sel', i===paletteSel));
+    const sel = $('.palette-item.sel'); if(sel) sel.scrollIntoView({block:'nearest'});
+  }
+  if(e.key === 'Enter'){ e.preventDefault(); runPalette(paletteSel); }
+}
+
+/* ============================================================
+   TEMA / ROUTER / INIT
+   ============================================================ */
+function toggleTheme(){
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  S.theme = next; saveState();
+  $('#themeBtn').innerHTML = `<svg><use href="#${next==='dark'?'i-moon':'i-sun'}"/></svg>`;
+}
+function applyTheme(){
+  const t = S.theme || 'dark';
+  document.documentElement.dataset.theme = t;
+  $('#themeBtn').innerHTML = `<svg><use href="#${t==='dark'?'i-moon':'i-sun'}"/></svg>`;
+}
+const views = ['inicio','ruta','conceptos','concepto','repaso','casos','tensiones','diario','recursos'];
+function showView(name){
+  if(!views.includes(name)) name = 'inicio';
+  $$('.view').forEach(v=>v.classList.toggle('hidden', v.dataset.view !== name));
+  $$('#navMain a, .nav a').forEach(a=>a.classList.toggle('active', a.dataset.nav === name));
+  const crumbMap = {inicio:'inicio', ruta:'ruta de 8 semanas', conceptos:'los 12 conceptos', concepto:'concepto', repaso:'modo repaso', casos:'casos', tensiones:'mapa de tensiones', diario:'bitácora', recursos:'recursos'};
+  $('#crumb').textContent = crumbMap[name] || name;
+  window.scrollTo({top:0,behavior:'auto'});
+  $('#sidebar').classList.remove('open');
+  $('#menuBtn').setAttribute('aria-expanded','false');
+  if(name === 'repaso'){ renderFlash(); renderQuiz(); }
+  if(name === 'diario') renderDiary();
+  if(name === 'ruta') renderWeeks();
+  if(name === 'tensiones') renderTensions();
+  if(name === 'conceptos') renderConceptCards();
+  if(name === 'inicio'){ renderToday(); renderProgressCard(); renderSpark(); renderStart(); renderHomeGraph(); }
+}
+function route(){
+  const raw = location.hash.replace(/^#\/?/, '') || 'inicio';
+  const [view, param] = raw.split('/');
+  if(view === 'semana'){
+    showView('ruta');
+    const n = Number(param);
+    const el = document.querySelector(`[data-week="${n}"]`);
+    if(el){ el.open = true; setTimeout(()=>el.scrollIntoView({behavior:'smooth', block:'start'}), 80); }
+    $('#crumb').textContent = `semana ${n}`;
+    return;
+  }
+  if(view === 'concepto'){
+    showView('concepto');
+    renderConceptDetail(param || 'I');
+    const c = byN(param);
+    if(c) $('#crumb').textContent = `concepto ${c.n}`;
+    return;
+  }
+  showView(view);
+}
+function init(){
+  renderIdentity(); applyTheme(); renderStart(); renderToday(); renderProgressCard(); renderSpark();
+  renderWeeks(); renderConceptCards(); renderCases(); renderTensions(); renderFlashUI(); renderDiary(); resetFlash(); resetQuiz();
+  mountGraphs();
+  const sd = $('#startDate'); if(sd){ sd.value = S.startDate || ''; sd.addEventListener('change', ()=>{ S.startDate = sd.value; saveState(); renderWeeks(); renderToday(); toast(sd.value ? 'Fecha de inicio guardada' : 'Fecha borrada'); }); }
+  $('#themeBtn').addEventListener('click', toggleTheme);
+  $('#menuBtn').addEventListener('click', ()=>{
+    const open = $('#sidebar').classList.toggle('open');
+    $('#menuBtn').setAttribute('aria-expanded', String(open));
+  });
+  $('#openPalette').addEventListener('click', openPalette);
+  $('#paletteInput').addEventListener('input', e=>renderPalette(e.target.value));
+  $$('.nav a').forEach(a=>a.addEventListener('click', ()=>{
+    $('#sidebar').classList.remove('open');
+    $('#menuBtn').setAttribute('aria-expanded','false');
+  }));
+  document.addEventListener('keydown', e=>{
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); openPalette(); }
+    if(e.key === 'Escape'){ closePalette(); if($('#modal').classList.contains('open')) closeModal(); }
+    paletteKey(e);
+  });
+  document.addEventListener('click', e=>{
+    if(e.target.closest('[data-close-modal]')) closeModal();
+    if(e.target.closest('[data-close-palette]')) closePalette();
+    if(e.target.closest('[data-settings]')) openSettings();
+    if(e.target.closest('[data-export]')) exportJSON();
+    if(e.target.closest('[data-import]')) $('#importFile').click();
+    const start = e.target.closest('[data-start-session]');
+    if(start){
+      let [w,id] = (start.dataset.startSession || '').split(':');
+      if(!w){ const s = suggestedSession(); w=s.week.n; id=s.session.id; }
+      openSession(w, id);
+    }
+  });
+  $('#importFile').addEventListener('change', e=>{ const f=e.target.files[0]; if(f) importJSON(f); e.target.value=''; });
+  $('#conceptSearch').addEventListener('input', e=>{ conceptQuery = e.target.value; renderConceptCards(); });
+  $$('#conceptFilters button').forEach(b=>b.addEventListener('click', ()=>{
+    conceptFilter = b.dataset.filter;
+    $$('#conceptFilters button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+    renderConceptCards();
+  }));
+  $('#printPlan').addEventListener('click', ()=>window.print());
+  $('#resetPlan').addEventListener('click', ()=>{
+    if(!confirm('¿Borrar todo el progreso, las notas y la bitácora? Esta acción no se puede deshacer. Exporta primero si quieres conservarlo.')) return;
+    localStorage.removeItem(KEY); location.reload();
+  });
+  $('#saveDiary').addEventListener('click', ()=>{ saveDiaryNow(); toast('Bitácora guardada'); });
+  $('#diaryText').addEventListener('input', ()=>{ const sel=$('#diaryWeek').value; S.journal[`w${sel}`]=$('#diaryText').value; saveSoon(); updateWordCount(); });
+  $('#diaryWeek').addEventListener('change', renderDiary);
+  $('#copyDiary').addEventListener('click', ()=>copyText(diaryMarkdown(), 'Bitácora copiada en Markdown'));
+  $('#downloadMd').addEventListener('click', ()=>download(`bitacora-conceptos-${todayKey()}.md`, diaryMarkdown(), 'text/markdown'));
+  $$('#tabFlash, #tabQuiz, [data-rep]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const rep = b.dataset.rep;
+      $('#tabFlash').setAttribute('aria-selected', String(rep==='flash'));
+      $('#tabQuiz').setAttribute('aria-selected', String(rep==='quiz'));
+      $('#flashPanel').classList.toggle('hidden', rep!=='flash');
+      $('#quizPanel').classList.toggle('hidden', rep!=='quiz');
+      if(rep==='quiz') renderQuiz();
+    });
+  });
+  window.addEventListener('hashchange', route);
+  route();
+  if(!S.startDate){
+    setTimeout(()=>toast('Consejo: fija tu fecha de inicio en la ruta para ver el calendario.'), 1200);
+  }
+}
+function saveDiaryNow(){
+  const sel = $('#diaryWeek').value;
+  S.journal[`w${sel}`] = $('#diaryText').value;
+  saveState(); updateWordCount(); renderEntries();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
