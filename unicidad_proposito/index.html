@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Faro: Una Sola Misión</title>
+<meta name="description" content="Juego de estudio en 6 retos para comprender la unicidad de propósito de Alcohólicos Anónimos, basado en la literatura de A.A.">
+<meta name="theme-color" content="#7C3AED">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%BC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sol:#FFC93C; --naranja:#FF8C42; --coral:#FF5E7E; --violeta:#8B5CF6;
+  --turquesa:#14C8B8; --verde:#2FCB7E; --azul:#3B82F6;
+  --tinta:#1E1B4B; --suave:#5F5B82; --fondo:#FFF8EC; --carta:#FFFFFF; --borde:#F1E4CF;
+  --ok:#16A34A; --okfondo:#DCFCE7; --mal:#E11D48; --malfondo:#FFE4E6;
+  --radio:22px; --sombra:0 10px 30px -12px rgba(30,27,75,.25);
+  --c:var(--violeta);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:18px;line-height:1.55}
+h1,h2,h3,.baloo{font-family:"Baloo 2","Nunito",sans-serif;line-height:1.15;margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:4px solid var(--sol);outline-offset:3px}
+img,svg{display:block;max-width:100%}
+
+/* ---------- Encabezado ---------- */
+.cielo{position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(165deg,#2A1670 0%,#6D28D9 38%,#FF5E7E 74%,#FFC93C 100%);
+  padding:22px 16px 70px}
+.cielo .estrellas{position:absolute;inset:0;pointer-events:none}
+.cielo .estrellas i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.8;animation:titila 3s infinite ease-in-out}
+@keyframes titila{50%{opacity:.15}}
+.cab{position:relative;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.marca{font-size:15px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.cab h1{font-size:clamp(38px,7vw,68px);font-weight:800;margin:4px 0 6px;text-shadow:0 4px 0 rgba(0,0,0,.15)}
+.cab p.lema{font-size:clamp(17px,2.3vw,21px);max-width:560px;margin:0 0 16px;opacity:.95}
+.faro-box{width:clamp(130px,22vw,220px)}
+.marcador{display:flex;flex-wrap:wrap;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);
+  border:2px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;font-weight:800;font-size:16px}
+.olas{position:absolute;left:0;right:0;bottom:-2px;height:60px}
+
+/* ---------- Navegación ---------- */
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(255,248,236,.92);backdrop-filter:blur(8px);border-bottom:2px solid var(--borde)}
+nav.tabs .in{max-width:1100px;margin:0 auto;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:9px 16px;border-radius:999px;font-weight:800;font-size:16px;color:var(--suave);white-space:nowrap}
+.tab[aria-current="page"]{background:var(--tinta);color:#fff}
+.tab.sonido{margin-left:auto}
+
+main{max-width:1100px;margin:0 auto;padding:22px 16px 80px}
+.titulo-seccion{font-size:clamp(28px,4vw,38px);font-weight:800;margin:6px 0 6px}
+.sub{color:var(--suave);margin:0 0 20px;font-size:18px}
+
+/* ---------- Mapa de retos ---------- */
+.progreso{background:var(--carta);border-radius:var(--radio);box-shadow:var(--sombra);padding:16px 18px;margin:-48px auto 26px;position:relative;z-index:2;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.progreso .barra{flex:1 1 220px;height:18px;background:#F3EADB;border-radius:99px;overflow:hidden}
+.progreso .barra b{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--sol),var(--naranja),var(--coral),var(--violeta),var(--azul),var(--turquesa),var(--verde));transition:width .8s cubic-bezier(.2,.9,.3,1.2)}
+.progreso strong{font-family:"Baloo 2";font-size:22px}
+.mapa{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.isla{position:relative;text-align:left;background:var(--carta);border-radius:var(--radio);box-shadow:var(--sombra);overflow:hidden;
+  border:3px solid transparent;transition:transform .2s, border-color .2s;display:flex;flex-direction:column}
+.isla:not([disabled]):hover{transform:translateY(-4px) rotate(-.4deg);border-color:var(--c)}
+.isla .banda{background:var(--c);color:#fff;padding:16px 18px 14px;display:flex;align-items:center;gap:14px;position:relative}
+.isla .banda::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.18)}
+.isla .num{font-family:"Baloo 2";font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;opacity:.92}
+.isla .emo{font-size:44px;line-height:1;filter:drop-shadow(0 3px 0 rgba(0,0,0,.15))}
+.isla h3{font-size:26px;font-weight:800}
+.isla .cuerpo{padding:14px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.isla .cuerpo p{margin:0;color:var(--suave);font-size:17px}
+.isla .pie{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.estrellitas{font-size:22px;letter-spacing:2px}
+.estrellitas .off{filter:grayscale(1);opacity:.25}
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--c) 15%,#fff);color:color-mix(in srgb,var(--c) 70%,#000)}
+.isla[disabled]{cursor:not-allowed}
+.isla[disabled] .banda{background:#CFC8DA}
+.isla[disabled] .cuerpo{opacity:.6}
+
+/* ---------- Vista de reto ---------- */
+.reto-cab{background:var(--c);color:#fff;border-radius:var(--radio);padding:20px 22px;display:flex;gap:16px;align-items:center;box-shadow:var(--sombra);position:relative;overflow:hidden}
+.reto-cab::before{content:"";position:absolute;left:-40px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.14)}
+.reto-cab .emo{font-size:60px;line-height:1;position:relative}
+.reto-cab h2{font-size:clamp(28px,4.5vw,40px);font-weight:800}
+.reto-cab p{margin:2px 0 0;opacity:.95}
+.volver{display:inline-flex;align-items:center;gap:6px;font-weight:800;color:var(--suave);padding:8px 2px;margin-bottom:10px}
+.pasos{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}
+.paso{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#fff;border:2px solid var(--borde);font-weight:800;color:var(--suave);font-size:16px}
+.paso .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#F3EADB;font-size:14px}
+.paso.activo{border-color:var(--c);color:var(--tinta)}
+.paso.activo .n{background:var(--c);color:#fff}
+.paso.hecho .n{background:var(--ok);color:#fff}
+
+.tarjeta{background:var(--carta);border-radius:var(--radio);box-shadow:var(--sombra);padding:clamp(20px,4vw,34px);position:relative}
+.tarjeta h3{font-size:clamp(24px,3.4vw,32px);font-weight:800;margin-bottom:10px}
+.tarjeta .texto{font-size:19px}
+.cita{margin:18px 0 6px;padding:16px 20px;border-left:7px solid var(--c);background:color-mix(in srgb,var(--c) 9%,#fff);border-radius:0 16px 16px 0;font-size:20px;font-style:italic}
+.fuente{font-size:15px;color:var(--suave);font-weight:700}
+.fuente::before{content:"📖 "}
+.contador{position:absolute;top:18px;right:20px;font-weight:800;color:var(--suave);font-size:15px}
+.puntos-nav{display:flex;gap:8px;justify-content:center;margin:18px 0 4px}
+.puntos-nav i{width:11px;height:11px;border-radius:50%;background:#E6DBC8;transition:all .3s}
+.puntos-nav i.on{background:var(--c);width:30px;border-radius:99px}
+.acciones{display:flex;gap:12px;justify-content:space-between;margin-top:18px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:16px;font-weight:800;font-size:18px;
+  background:var(--c);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 70%,#000);transition:transform .1s, box-shadow .1s;min-height:52px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--c) 70%,#000)}
+.btn.sec{background:#fff;color:var(--tinta);box-shadow:0 5px 0 var(--borde);border:2px solid var(--borde)}
+.btn.grande{font-size:21px;padding:16px 30px}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* juego */
+.zona-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.etiqueta{font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--c)}
+.vidas{font-weight:800;color:var(--suave);font-size:16px}
+.instr{font-size:20px;font-weight:700;margin:0 0 14px}
+.frase{font-size:clamp(21px,3vw,26px);line-height:2.1;font-family:"Baloo 2";font-weight:600;background:#FFFCF6;border:2px dashed var(--borde);border-radius:18px;padding:16px 20px}
+.hueco{display:inline-block;min-width:110px;text-align:center;border-bottom:4px solid #D9CCB6;margin:0 4px;padding:0 8px;line-height:1.3;color:#B9AC98}
+.hueco.activo{border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border-radius:10px 10px 0 0;animation:late 1.2s infinite}
+.hueco.lleno{color:var(--ok);border-color:var(--ok);font-weight:800}
+@keyframes late{50%{background:color-mix(in srgb,var(--c) 26%,#fff)}}
+.fichas{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.ficha{padding:12px 18px;border-radius:14px;background:#fff;border:3px solid var(--c);font-weight:800;font-size:19px;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 40%,#fff);transition:transform .1s}
+.ficha:hover{transform:translateY(-2px)}
+.ficha.usada{visibility:hidden}
+.opciones{display:grid;gap:12px}
+.opcion{text-align:left;padding:16px 18px;border-radius:16px;background:#fff;border:3px solid var(--borde);font-size:19px;font-weight:700;display:flex;gap:12px;align-items:flex-start;transition:border-color .15s, transform .1s}
+.opcion:hover:not([disabled]){border-color:var(--c);transform:translateX(3px)}
+.opcion .letra{flex:0 0 34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 15%,#fff);color:color-mix(in srgb,var(--c) 70%,#000);font-family:"Baloo 2";font-weight:800}
+.opcion.bien{border-color:var(--ok);background:var(--okfondo)}
+.opcion.bien .letra{background:var(--ok);color:#fff}
+.opcion.malo{border-color:var(--mal);background:var(--malfondo)}
+.opcion.malo .letra{background:var(--mal);color:#fff}
+.opcion[disabled]{cursor:default}
+.escenario{font-size:20px;font-weight:700;background:#FFFCF6;border:2px dashed var(--borde);border-radius:18px;padding:16px 20px;margin-bottom:16px;display:flex;gap:14px;align-items:flex-start}
+.escenario .emo{font-size:36px;line-height:1}
+.retro{margin-top:16px;border-radius:16px;padding:16px 18px;font-size:18px;animation:aparece .35s ease}
+.retro.si{background:var(--okfondo);border:2px solid #86EFAC}
+.retro.no{background:var(--malfondo);border:2px solid #FDA4AF}
+.retro b.t{display:block;font-family:"Baloo 2";font-size:22px;margin-bottom:4px}
+@keyframes aparece{from{opacity:0;transform:translateY(8px)}}
+.botes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bote{padding:18px 12px;border-radius:18px;font-weight:800;font-size:19px;display:flex;flex-direction:column;align-items:center;gap:6px;border:3px solid;background:#fff;transition:transform .1s}
+.bote .emo{font-size:38px}
+.bote.a{border-color:var(--verde);box-shadow:0 5px 0 #A7F0CB}
+.bote.b{border-color:var(--coral);box-shadow:0 5px 0 #FFC2CF}
+.bote:active{transform:translateY(4px)}
+.bote[disabled]{opacity:.45}
+.cuenta-botes{display:flex;gap:12px;justify-content:center;margin-top:12px;font-weight:800;color:var(--suave);font-size:16px}
+.linea{position:relative;margin:4px 0 18px;padding-left:26px;min-height:30px}
+.linea::before{content:"";position:absolute;left:10px;top:6px;bottom:6px;width:4px;border-radius:4px;background:var(--borde)}
+.hito{position:relative;background:#fff;border:2px solid var(--ok);border-radius:14px;padding:10px 14px;margin-bottom:10px;animation:aparece .35s ease;font-size:17px}
+.hito::before{content:"";position:absolute;left:-23px;top:14px;width:16px;height:16px;border-radius:50%;background:var(--ok);border:3px solid #fff;box-shadow:0 0 0 2px var(--ok)}
+.hito b{font-family:"Baloo 2";font-size:20px;color:var(--ok);margin-right:6px}
+.hito.vacio{border:2px dashed var(--borde);color:#B9AC98;font-weight:700}
+.hito.vacio::before{background:#E6DBC8;box-shadow:0 0 0 2px #E6DBC8}
+.monton{display:grid;gap:10px}
+.monton .opcion{font-size:17px}
+.sacude{animation:sacude .4s}
+@keyframes sacude{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.reflexion label{display:block;font-weight:800;font-size:19px;margin:18px 0 8px}
+.reflexion textarea{width:100%;min-height:96px;border-radius:16px;border:2px solid var(--borde);padding:14px;font:inherit;font-size:17px;background:#FFFCF6;resize:vertical}
+.idea{margin-top:20px;background:linear-gradient(120deg,var(--c),color-mix(in srgb,var(--c) 60%,#FFC93C));color:#fff;border-radius:18px;padding:18px 20px;font-family:"Baloo 2";font-size:clamp(22px,3vw,28px);font-weight:700}
+.idea small{display:block;font-family:"Nunito";font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.9}
+.lecturas{margin:14px 0 0;padding-left:22px;color:var(--suave)}
+
+/* ---------- Modal ---------- */
+.velo{position:fixed;inset:0;background:rgba(30,27,75,.55);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:50;padding:16px;animation:aparece .3s}
+.modal{background:#fff;border-radius:28px;max-width:520px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 30px 60px -20px rgba(0,0,0,.4);max-height:92vh;overflow:auto}
+.modal h2{font-size:38px;font-weight:800;color:var(--c)}
+.modal .grandes{font-size:54px;letter-spacing:6px;margin:8px 0}
+.modal .grandes span{display:inline-block;animation:pop .5s backwards}
+.modal .grandes .off{filter:grayscale(1);opacity:.25}
+@keyframes pop{from{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.3)}}
+.modal .faro-mini{width:110px;margin:0 auto}
+.modal .acciones{justify-content:center}
+canvas#confeti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+/* ---------- Plan / Biblioteca ---------- */
+.sesiones{display:grid;gap:16px}
+.sesion{background:#fff;border-radius:var(--radio);box-shadow:var(--sombra);padding:18px 20px;border-left:10px solid var(--c);display:grid;grid-template-columns:auto 1fr;gap:6px 16px}
+.sesion .emo{font-size:42px;grid-row:span 3}
+.sesion h3{font-size:24px;font-weight:800}
+.sesion ul{margin:4px 0 0;padding-left:20px;color:var(--suave);font-size:17px}
+.sesion .preg{font-size:17px;font-style:italic}
+.guia{background:#fff;border-radius:var(--radio);box-shadow:var(--sombra);padding:18px 22px;margin-bottom:20px}
+.guia ol{margin:8px 0 0;padding-left:22px}
+.guia li{margin:4px 0}
+.glosario{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.termino{background:#fff;border-radius:var(--radio);box-shadow:var(--sombra);padding:18px 20px;border-top:8px solid var(--c)}
+.termino h3{font-size:22px;font-weight:800;margin-bottom:6px}
+.termino p{margin:0 0 6px;font-size:17px}
+.termino q{font-style:italic}
+.fuentes{columns:2 300px;font-size:16px;color:var(--suave)}
+.nota{font-size:15px;color:var(--suave);margin-top:28px;text-align:center}
+
+/* ---------- Certificado ---------- */
+.cert{background:#fff;border-radius:28px;box-shadow:var(--sombra);padding:clamp(24px,5vw,48px);text-align:center;position:relative;overflow:hidden;border:10px solid transparent;
+  background-image:linear-gradient(#fff,#fff),linear-gradient(120deg,var(--sol),var(--naranja),var(--coral),var(--violeta),var(--azul),var(--turquesa),var(--verde));
+  background-origin:border-box;background-clip:padding-box,border-box}
+.cert .faro-box{margin:0 auto 6px;width:150px}
+.cert h2{font-size:clamp(30px,5vw,46px);font-weight:800}
+.cert .nombre{font-family:"Baloo 2";font-size:clamp(30px,6vw,52px);font-weight:800;background:linear-gradient(90deg,var(--violeta),var(--coral));-webkit-background-clip:text;background-clip:text;color:transparent;margin:10px 0;min-height:1.2em}
+.cert input{font:inherit;font-size:20px;padding:12px 16px;border-radius:14px;border:2px solid var(--borde);width:min(420px,100%);text-align:center}
+.bloqueado{text-align:center;padding:40px 20px}
+.bloqueado .emo{font-size:70px}
+
+/* faro svg */
+.rayo{opacity:.75;transition:opacity .9s ease}
+.rayo.off{opacity:.07}
+.faro-gira .haz{transform-origin:100px 58px;animation:gira 6s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.luz{animation:brilla 2.4s infinite ease-in-out}
+@keyframes brilla{50%{opacity:.6}}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  .cab{grid-template-columns:1fr}
+  .faro-box.cab-faro{position:absolute;right:-6px;top:-4px;width:110px;opacity:.95}
+  .cab h1,.cab p.lema,.marca{padding-right:96px}
+  .cab p.lema{padding-right:70px}
+  .botes{grid-template-columns:1fr}
+  .reto-cab .emo{font-size:46px}
+  .acciones .btn{flex:1 1 auto}
+}
+@media print{
+  .cielo,nav.tabs,.no-imprimir,.nota{display:none!important}
+  body{background:#fff}
+  main{padding:0}
+  .cert{box-shadow:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="cielo">
+  <div class="estrellas" id="estrellas" aria-hidden="true"></div>
+  <div class="cab">
+    <div>
+      <div class="marca">Unicidad de propósito · 6 retos</div>
+      <h1>El Faro</h1>
+      <p class="lema">Una sola misión: llevar el mensaje al alcohólico que aún sufre. Completa los 6 retos y enciende cada rayo del faro.</p>
+      <div class="marcador">
+        <span class="pill">⭐ <span id="m-estrellas">0</span>/18</span>
+        <span class="pill">💎 <span id="m-puntos">0</span> pts</span>
+        <span class="pill">🗼 <span id="m-retos">0</span>/6 rayos</span>
+      </div>
+    </div>
+    <div class="faro-box cab-faro" id="faro-cab"></div>
+  </div>
+  <svg class="olas" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#FFF8EC" d="M0,30 C180,60 360,0 540,25 C720,50 900,5 1080,28 C1260,50 1350,20 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</header>
+
+<nav class="tabs" aria-label="Secciones">
+  <div class="in">
+    <button class="tab" data-vista="mapa">🗺️ Retos</button>
+    <button class="tab" data-vista="plan">📅 Plan de estudio</button>
+    <button class="tab" data-vista="biblio">📚 Biblioteca</button>
+    <button class="tab" data-vista="cert">🏅 Certificado</button>
+    <button class="tab sonido" id="btn-sonido" aria-pressed="true">🔊 Sonido</button>
+  </div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+<canvas id="confeti" aria-hidden="true"></canvas>
+<div id="vivo" class="sr" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></div>
+
+<script>
+/* =========================================================
+   CONTENIDO — basado en literatura de A.A. y documentos de servicio
+   ========================================================= */
+const COLORES = ["#FF9F1C","#14B8A6","#EC4899","#22B573","#F43F5E","#6366F1"];
+
+const RETOS = [
+/* ---------------- RETO 1 ---------------- */
+{
+  emo:"💡", titulo:"La luz del faro", sub:"¿Qué es la unicidad de propósito?",
+  resumen:"Descubre la idea central: A.A. hace una sola cosa, y por eso la hace bien.",
+  lecturas:["Doce Pasos y Doce Tradiciones — Quinta Tradición","Preámbulo de A.A.","A.A. Llega a su Mayoría de Edad — comentario a la Quinta Tradición"],
+  aprende:[
+    {t:"Una sola misión",
+     x:"<b>Unicidad de propósito</b> quiere decir que Alcohólicos Anónimos hace <b>una sola cosa</b>: llevar el mensaje de recuperación al alcohólico que aún sufre. No es una limitación: es nuestro centro, el punto alrededor del cual nos unimos.",
+     c:"Cada grupo tiene un solo objetivo primordial: llevar el mensaje al alcohólico que aún está sufriendo.",
+     f:"Quinta Tradición"},
+    {t:"Lo dice el Preámbulo",
+     x:"Son dos movimientos que en realidad son uno solo: <b>me mantengo sobrio</b> y <b>ayudo a otro</b>. Si falta uno, el otro se apaga.",
+     c:"Nuestro objetivo primordial es mantenernos sobrios y ayudar a otros alcohólicos a alcanzar el estado de sobriedad.",
+     f:"Preámbulo de A.A."},
+    {t:"Nuestra razón de existir",
+     x:"Bill W. lo dejó escrito sin rodeos cuando comentó la Quinta Tradición:",
+     c:"Afirmamos entonces enfáticamente que A.A. no tiene sino un solo propósito: llevar el mensaje al alcohólico que todavía sufre. Este es nuestro objetivo básico y nuestra razón de existir.",
+     f:"A.A. Llega a su Mayoría de Edad"},
+    {t:"La gran paradoja",
+     x:"La unicidad no es solo una norma de organización: es cuestión de vida para cada uno de nosotros. Si descuidamos al que sufre, <i>“nuestras vidas y nuestro sano juicio se ven grave e incesantemente amenazados”</i>.",
+     c:"La gran paradoja de A.A. es que sabemos que raras veces podemos conservar el precioso don de la sobriedad a menos que lo pasemos a otros.",
+     f:"Doce Pasos y Doce Tradiciones, Quinta Tradición"},
+    {t:"Enfocar no es excluir",
+     x:"La unicidad dice <b>qué hacemos</b>; la Tercera Tradición dice <b>a quién recibimos</b>: a todo el que quiera dejar de beber. Las dos van juntas.",
+     c:"Es posible que a algunas personas la unicidad del propósito de A.A. les parezca encaminada a excluir en vez de enfocar. Esto es un error.",
+     f:"George E. Vaillant, custodio Clase A — Acerca de A.A., verano 2001"}
+  ],
+  juego:[
+    {tipo:"fill", instruccion:"Completa la Quinta Tradición. Toca las palabras en orden.",
+     partes:["Cada grupo tiene un solo ",0," primordial: llevar el ",1," al ",2," que aún está ",3,"."],
+     respuestas:["objetivo","mensaje","alcohólico","sufriendo"], distractores:["negocio","dinero","bebiendo","club"],
+     f:"Quinta Tradición"},
+    {tipo:"fill", instruccion:"Ahora completa la Tercera Tradición.",
+     partes:["El único ",0," para ser miembro de A.A. es ",1," dejar de ",2,"."],
+     respuestas:["requisito","querer","beber"], distractores:["pago","poder","fumar"],
+     f:"Tercera Tradición"},
+    {tipo:"quiz", preguntas:[
+      {p:"¿Cuál es el objetivo primordial de cada grupo de A.A.?",
+       o:[{t:"Llevar el mensaje al alcohólico que aún sufre",ok:1},{t:"Ayudar con todos los problemas de sus miembros"},{t:"Reunir fondos para obras sociales"}],
+       e:"La Quinta Tradición habla de <b>un solo</b> objetivo primordial. Bill escribió en 1958: “Un grupo de AA, como tal, no puede asumir todos los problemas de sus miembros, aún menos los problemas del mundo entero”."},
+      {p:"¿Por qué la unicidad de propósito protege también a quien ya está sobrio?",
+       o:[{t:"Porque así el grupo tiene más influencia"},{t:"Porque raras veces conservamos la sobriedad si no la compartimos",ok:1},{t:"Porque lo exige la Oficina de Servicios Generales"}],
+       e:"Es “la gran paradoja de A.A.”: damos para conservar. Y ninguna oficina da órdenes: la Segunda Tradición dice que nuestros líderes “no gobiernan”."},
+      {p:"Unicidad de propósito significa…",
+       o:[{t:"Rechazar a quien tenga otros problemas además del alcohol"},{t:"Que cada miembro hace lo que le parezca"},{t:"Concentrar toda nuestra energía en el alcohólico que sufre",ok:1}],
+       e:"Enfocar, no excluir. Por eso Vaillant aclara que verla como exclusión “es un error”."}
+    ]}
+  ],
+  reflexion:["Con mis propias palabras, ¿cómo le explicaría a un recién llegado qué es la unicidad de propósito?","¿Cuándo fue la última vez que compartí mi experiencia con un alcohólico que aún sufre?"],
+  idea:"Una sola misión: llevar el mensaje. Al darlo, conservo mi propia sobriedad."
+},
+/* ---------------- RETO 2 ---------------- */
+{
+  emo:"👞", titulo:"Zapatero a tus zapatos", sub:"Hacer una cosa, y hacerla bien",
+  resumen:"Aprende a distinguir lo que es nuestra misión de lo que nos desvía.",
+  lecturas:["Doce Pasos y Doce Tradiciones — Quinta y Sexta Tradición","“Problemas diferentes del alcohol”, Bill W., Grapevine 1958 (El Lenguaje del Corazón)","Plan Nacional de Acción — Unicidad de Propósito (proyecto CSG Colombia)"],
+  aprende:[
+    {t:"¡Zapatero a tus zapatos!",
+     x:"Así abre Bill la Quinta Tradición: con un refrán sencillo que cualquiera entiende.",
+     c:"…más vale que hagas una cosa perfectamente bien que muchas mal hechas. Este es el tema central de esta tradición, el punto alrededor del cual toda nuestra Sociedad se congrega en unidad.",
+     f:"Doce Pasos y Doce Tradiciones, Quinta Tradición"},
+    {t:"Los médicos y el remedio",
+     x:"Bill imagina un grupo de médicos que encuentra el remedio para el cáncer. Aunque cada uno sepa de otras especialidades, todos se dedicarían solo a ese remedio, “sea cual fuere el sacrificio personal”. Así pasa con nosotros.",
+     c:"Nadie puede llegar a los alcohólicos como nosotros. Por consiguiente, sobre nosotros pesa la más fuerte compulsión moral y ética para que hagamos esto y nada más.",
+     f:"A.A. Llega a su Mayoría de Edad"},
+    {t:"Nuestro tesoro: la identificación",
+     x:"No hace falta ser elocuente ni culto para ayudar. Lo que tenemos es único:",
+     c:"Lo único que cuenta es que él es un alcohólico que ha encontrado la clave de la sobriedad. Estos legados de sufrimiento y de recuperación se pasan fácilmente entre los alcohólicos, de uno a otro.",
+     f:"Doce Pasos y Doce Tradiciones, Quinta Tradición"},
+    {t:"La Sexta Tradición nos cuida",
+     x:"<b>Dinero, propiedad y prestigio</b>: los tres desvíos clásicos. La Sexta Tradición es la consecuencia lógica de la Quinta.",
+     c:"Un grupo de A.A. nunca debe respaldar, financiar o prestar el nombre de A.A. a ninguna entidad allegada o empresa ajena, para evitar que los problemas de dinero, propiedad y prestigio nos desvíen de nuestro objetivo primordial.",
+     f:"Sexta Tradición"},
+    {t:"El grupo no puede con todo",
+     x:"Como <b>individuos</b> podemos servir en otros campos. Como <b>grupo</b>, nos ocupamos solo de nuestro objetivo.",
+     c:"Nuestra primera responsabilidad, como sociedad, es asegurar nuestra propia supervivencia. Por consiguiente, tenemos que evitar las distracciones y las actividades con objetivos múltiples.",
+     f:"Bill W., “Problemas diferentes del alcohol”, Grapevine, febrero de 1958"},
+    {t:"Una mirada desde Colombia",
+     x:"El proyecto de Plan Nacional para fortalecer la unicidad de propósito invita a los grupos a dejar a un lado actividades distractoras (rifas, paseos, bailes, concursos) y a no usar el compartimiento para expresar resentimiento ni buscar aplauso, fama o poder.",
+     c:"Tan solo compartiremos lo que éramos, lo que nos aconteció y lo que somos ahora.",
+     f:"Plan Nacional de Acción — proyecto de recomendación, CSG Colombia"}
+  ],
+  juego:[
+    {tipo:"sort", instruccion:"¿Esto le corresponde al grupo de A.A.? Toca la canasta correcta.",
+     botes:[{id:"si",emo:"🎯",t:"Es nuestra misión"},{id:"no",emo:"🌀",t:"Nos desvía"}],
+     items:[
+      {t:"Recibir con calidez al recién llegado y compartirle nuestra experiencia con el alcohol",b:"si",e:"Es el corazón de la Quinta Tradición: un alcohólico hablando con otro."},
+      {t:"Organizar una rifa para pagar el arriendo del salón",b:"no",e:"La Séptima Tradición: nos mantenemos con nuestras propias contribuciones. Y el Plan Nacional la señala como actividad distractora."},
+      {t:"Estudiar los Doce Pasos y el Libro Grande en las reuniones",b:"si",e:"Bill: la sobriedad “por medio de la enseñanza y de la práctica de los Doce Pasos, es el único propósito de un grupo de AA”."},
+      {t:"Prestar el nombre del grupo para apoyar una campaña política",b:"no",e:"Sexta y Décima Tradición: “A.A. no tiene opinión acerca de asuntos ajenos a sus actividades”."},
+      {t:"Visitar a un alcohólico que pidió ayuda (trabajo de Paso Doce)",b:"si",e:"“No hay nada que asegure tanto la inmunidad a la bebida como el trabajo intensivo con otros alcohólicos” — Libro Grande, capítulo 7."},
+      {t:"Usar el dinero del grupo para financiar un centro de desintoxicación",b:"no",e:"Sexta Tradición: un grupo nunca debe financiar ninguna entidad allegada. Como individuos, sí podemos colaborar fuera de A.A."},
+      {t:"Llevar una reunión de A.A. a una cárcel o institución",b:"si",e:"Es llevar el mensaje “dentro de los muros”, a donde está el alcohólico que sufre."},
+      {t:"Hacer un bazar y un baile en el grupo para “animar” la asistencia",b:"no",e:"A.A. atrae por la recuperación, no por el entretenimiento. Undécima Tradición: atracción, no promoción."},
+      {t:"Emitir como grupo una opinión pública sobre una ley de licores",b:"no",e:"Décima Tradición: el nombre de A.A. “nunca debe mezclarse en polémicas públicas”."},
+      {t:"Orientar a un adicto no alcohólico sobre dónde puede encontrar ayuda",b:"si",e:"“Si alguien necesita ayuda para resolver un problema diferente del alcohol, haremos lo que podamos para ayudarlo a conseguir esa ayuda” — Susan C., antigua delegada."},
+      {t:"Aprovechar la tribuna para desahogar resentimientos contra un compañero",b:"no",e:"Compartimos experiencia, fortaleza y esperanza: lo que éramos, lo que nos sucedió y lo que somos ahora."},
+      {t:"Explicar al público qué es y qué no es A.A. (Información Pública)",b:"si",e:"Informar bien es parte esencial de llevar el mensaje y de proteger la unicidad."}
+     ]}
+  ],
+  reflexion:["¿Hay alguna actividad en mi grupo que nos esté desviando del objetivo primordial? ¿Cómo podría plantearla con amor en la conciencia de grupo?","Como individuo, ¿en qué otros campos sirvo sin comprometer el nombre de A.A.?"],
+  idea:"Hacer una sola cosa, y hacerla bien. Esa es nuestra fuerza."
+},
+/* ---------------- RETO 3 ---------------- */
+{
+  emo:"🚪", titulo:"La puerta abierta", sub:"¿Quién puede ser miembro?",
+  resumen:"Tercera Tradición, reuniones abiertas y cerradas, y el caso del “doble estigma”.",
+  lecturas:["Doce Pasos y Doce Tradiciones — Tercera Tradición","“Problemas diferentes del alcohol” (folleto y artículo de 1958)","Acerca de A.A., verano 2001"],
+  aprende:[
+    {t:"Miembro, si tú lo dices",
+     x:"Nadie más decide si eres alcohólico. Ni el grupo, ni el padrino, ni la oficina.",
+     c:"Tú eres miembro de A.A., si tú lo dices. Puedes declararte a ti mismo miembro de la Sociedad; nadie puede prohibirte la entrada.",
+     f:"Doce Pasos y Doce Tradiciones, Tercera Tradición"},
+    {t:"Una cerca de más de una milla",
+     x:"En los primeros años cada grupo tenía reglamentos “protectores”. La lista completa medía <b>más de una milla</b>. Solo querían “alcohólicos puros”, sin otras complicaciones.",
+     c:"Al fin y al cabo, ¿no es el miedo la verdadera base de la intolerancia? Sí, éramos intolerantes.",
+     f:"Doce Pasos y Doce Tradiciones, Tercera Tradición"},
+    {t:"¿Qué haría el Maestro?",
+     x:"En el Año Dos de A.A., un recién llegado confesó tener “otro tipo de adicción aún más estigmatizada que el alcoholismo”. Los veteranos dudaron… hasta que uno preguntó: <b>“¿Qué haría el Maestro?”</b>. Lo recibieron. Llevó el mensaje a veintenas de personas y “nunca molestó a nadie con su otro problema”.",
+     c:"…quitarle en cualquier grado su oportunidad a cualquier alcohólico a veces equivalía a pronunciar su sentencia de muerte.",
+     f:"Doce Pasos y Doce Tradiciones, Tercera Tradición"},
+    {t:"El límite está claro",
+     x:"Un alcohólico que además tuvo problemas con otras drogas <b>sí</b> es miembro. Bill cuenta de “uno de los mejores miembros” que usó la aguja siete años, pero antes “había sido un alcohólico terrible”. En cambio:",
+     c:"Tenemos que reconocer el hecho de que ningún individuo no alcohólico, sea cual sea su aflicción, puede convertirse en miembro alcohólico de AA.",
+     f:"Bill W., “Problemas diferentes del alcohol”, 1958"},
+    {t:"Reuniones abiertas y cerradas",
+     x:"<b>Abiertas</b>: cualquier persona interesada puede asistir (familiares, amigos, estudiantes, visitantes). <b>Cerradas</b>: para quienes tienen un problema con la bebida y desean dejar de beber. Así se acoge a todos sin perder el enfoque.",
+     c:"…aunque todos pueden asistir a las reuniones abiertas de A.A., se invita únicamente a las personas que tienen un problema con la bebida a participar en las reuniones cerradas y hacerse miembros de A.A.",
+     f:"Acerca de A.A., verano 2001"}
+  ],
+  juego:[
+    {tipo:"quiz", titulo:"¿Qué le decimos?", preguntas:[
+      {emo:"🧔", p:"Carlos llega por primera vez y dice: “Creo que tengo un problema con la bebida y quiero dejar de beber”.",
+       o:[{t:"Ya es miembro de A.A., porque él lo dice",ok:1},{t:"Debe esperar a que el grupo lo apruebe"},{t:"Primero tiene que demostrar cuánto bebía"}],
+       e:"Tercera Tradición: “eres miembro de A.A. desde el momento en que lo digas”."},
+      {emo:"👩", p:"Ana bebió de forma desastrosa durante años y también abusó de pastillas.",
+       o:[{t:"No puede ser miembro: tiene otra adicción"},{t:"Es miembro: es alcohólica y quiere dejar de beber",ok:1},{t:"Solo puede ir a reuniones abiertas"}],
+       e:"Bill, 1958: el adicto que “ha tenido un verdadero problema con la bebida” tiene el requisito. Sus problemas con el alcohol son los que compartimos en el grupo."},
+      {emo:"🧑", p:"Pedro nunca tuvo problemas con el alcohol; su problema es solo la cocaína.",
+       o:[{t:"Es miembro si asiste a muchas reuniones"},{t:"Lo echamos para proteger al grupo"},{t:"Es bienvenido a reuniones abiertas y lo orientamos hacia una comunidad como C.A. o N.A.",ok:1}],
+       e:"Nunca lo rechazamos con dureza, pero tampoco lo engañamos: no puede hacerse miembro de A.A. Lo ayudamos a encontrar su lugar. Así nacieron N.A. y C.A., con los Pasos que A.A. ofreció."},
+      {emo:"👵", p:"La esposa de un compañero quiere asistir para entender la enfermedad de su esposo.",
+       o:[{t:"Puede asistir a reuniones abiertas, y conocer Al-Anon",ok:1},{t:"Puede ser miembro de A.A. porque sufre por el alcohol"},{t:"No debe acercarse a A.A."}],
+       e:"Bill recordó que en los comienzos quisieron hacer miembros a familiares y amigos, pero “sólo podíamos recibirlos en nuestras reuniones abiertas”."},
+      {emo:"🥴", p:"Un hombre llega con aliento a licor, mal vestido y con antecedentes penales. Dice que quiere dejar de beber.",
+       o:[{t:"Que vuelva cuando esté presentable"},{t:"Es miembro: el deseo de dejar de beber es el único requisito",ok:1},{t:"El grupo debe votar si lo acepta"}],
+       e:"“No importa quién seas; no importa lo bajo que hayas caído… ni incluso tus crímenes—no podemos impedirte que seas miembro de A.A.”"},
+      {emo:"🎓", p:"Una estudiante universitaria quiere ver cómo funciona una reunión para un trabajo de clase.",
+       o:[{t:"Puede asistir a una reunión cerrada"},{t:"Puede asistir a una reunión abierta",ok:1},{t:"A.A. no recibe visitantes"}],
+       e:"Las reuniones abiertas son una excelente forma de información pública: la gente conoce qué es A.A. y qué no es."}
+    ]}
+  ],
+  reflexion:["¿He juzgado alguna vez a un recién llegado por su apariencia, su historia o su manera de hablar?","¿Cómo puedo ayudar, con amor, a quien no es alcohólico a encontrar el lugar donde sí pueden ayudarle?"],
+  idea:"Puerta abierta para todo alcohólico; un solo propósito para todos."
+},
+/* ---------------- RETO 4 ---------------- */
+{
+  emo:"🧭", titulo:"El camino de la historia", sub:"Cómo aprendimos la unicidad",
+  resumen:"Ordena los grandes momentos y descubre que este tema es tan viejo como A.A.",
+  lecturas:["Box 4-5-9 — abril-mayo 1982: “Aquellas otras adicciones”","Box 4-5-9 — junio-julio 1988: 38ª Conferencia","Box 4-5-9 — abril-mayo 2004: “Unicidad de propósito”","Acciones Recomendables — Conferencia de Colombia"],
+  aprende:[
+    {t:"Todo lo viejo se vuelve nuevo",
+     x:"Hoy llegan a A.A. personas enviadas con muchos problemas distintos. Parece un problema nuevo… pero no lo es.",
+     c:"Muy a menudo en A.A. todo lo viejo se convierte en nuevo. […] Hace más de 40 años, la Comunidad se vio enfrentada a un conflicto parecido, y la respuesta de Bill W. iba dirigida directamente a la razón de ser de A.A.: su unicidad de propósito.",
+     f:"Acerca de A.A., verano 2001"},
+    {t:"Los cofundadores también",
+     x:"El Dr. Bob tomaba “grandes dosis de sedantes” en lugar del trago de la mañana. Y Bill escribió en 1945:",
+     c:"Y una vez casi me mato con el hidrato de cloral.",
+     f:"Box 4-5-9, abril-mayo 1982, citando el Grapevine de noviembre de 1945"},
+    {t:"Una solución con visión de futuro",
+     x:"Los custodios de Narcóticos Anónimos reconocieron cómo A.A. resolvió el dilema: no aceptar adictos no alcohólicos como miembros, pero ofrecer libremente sus Pasos y Tradiciones.",
+     c:"Esta solución con clara visión del futuro de un problema muy espinoso preparó el terreno para el desarrollo de la Comunidad de N.A.",
+     f:"Custodios de N.A., citados en Acerca de A.A., verano 2001"},
+    {t:"La “tarjeta azul”",
+     x:"En 1987 la Conferencia de EE.UU./Canadá debatió casi un día entero si aprobar un texto sobre reuniones abiertas y cerradas. Votó con unanimidad sustancial no aprobarlo como literatura, pero puso a disposición de los grupos un artículo de servicio: la famosa <b>“tarjeta azul”</b>. Cada grupo autónomo decide si la lee.",
+     c:"…hasta que todos estuvieron satisfechos de que se había llegado a una verdadera conciencia de grupo.",
+     f:"Box 4-5-9, abril-mayo 2004"}
+  ],
+  juego:[
+    {tipo:"order", instruccion:"Toca los acontecimientos del más antiguo al más reciente.",
+     items:[
+      {a:"1935",t:"Bill W. y el Dr. Bob se conocen en Akron: un alcohólico habla con otro."},
+      {a:"Año Dos",t:"Un grupo pionero recibe al recién llegado de “doble estigma”: ¿Qué haría el Maestro?"},
+      {a:"1953",t:"Nace Narcóticos Anónimos, inspirado en los Pasos y Tradiciones de A.A."},
+      {a:"1958",t:"Bill publica en el Grapevine “Problemas diferentes del alcohol”."},
+      {a:"1987",t:"La Conferencia debate casi un día entero y ofrece a los grupos la “tarjeta azul”."},
+      {a:"1988",t:"Lema de la 38ª Conferencia: “Nuestra Unicidad de Propósito — Clave de la Unidad”."},
+      {a:"2004",t:"Lema de la Conferencia: “Nuestra unicidad de propósito — la piedra angular de A.A.”"},
+      {a:"2018",t:"En Colombia se recomienda tratar “Problemas diferentes al alcoholismo” para mantener nuestra unicidad de propósito."}
+     ]},
+    {tipo:"quiz", preguntas:[
+      {p:"Entre 1977 y 1980, en las encuestas de EE.UU./Canadá, ¿cuántos miembros decían tener una adicción doble?",
+       o:[{t:"Del 5% al 8%"},{t:"Del 18% al 24%",ok:1},{t:"Del 50% al 70%"}],
+       e:"Box 4-5-9, 1982. Y entre los recién llegados de ese periodo, un 27%. El reto creció, pero los principios no cambiaron."},
+      {p:"¿Qué ofreció A.A. a los adictos no alcohólicos?",
+       o:[{t:"Hacerlos miembros con una tarjeta especial"},{t:"Nada: les cerró la puerta"},{t:"Sus Pasos y Tradiciones para adaptarlos, con cooperación sin afiliación",ok:1}],
+       e:"Así lo cuentan los propios custodios de N.A.: A.A. se comprometió a apoyar “con un espíritu de cooperación sin afiliación”."},
+      {p:"Según Box 4-5-9 (2004), ¿qué dio forma a las Tradiciones, más que la sabiduría de los fundadores?",
+       o:[{t:"La conciencia de que todos necesitábamos protección contra nuestros propios defectos de carácter",ok:1},{t:"Las leyes de cada país"},{t:"Las órdenes de la Junta de Custodios"}],
+       e:"Las Tradiciones “fueron martilladas a lo largo de años de experiencia”."}
+    ]}
+  ],
+  reflexion:["¿Qué me enseñan los miedos de los pioneros sobre mis propios miedos frente al recién llegado?","¿Qué momento de esta historia me gustaría compartir en mi grupo, y por qué?"],
+  idea:"La historia lo confirma: la unicidad de propósito nos ha mantenido vivos."
+},
+/* ---------------- RETO 5 ---------------- */
+{
+  emo:"🗣️", titulo:"¿Quién lo dijo?", sub:"Las voces de nuestra unicidad",
+  resumen:"Bill, custodios, delegados y hasta otras comunidades. Adivina quién habla.",
+  lecturas:["Acerca de A.A. — Boletín para Profesionales, verano 2001","Box 4-5-9 — febrero-marzo 2003 (George E. Vaillant)","Box 4-5-9 — abril-mayo 2004"],
+  aprende:[
+    {t:"Muchas voces, un mensaje",
+     x:"Sobre la unicidad han hablado cofundadores, custodios Clase A (no alcohólicos) y Clase B (alcohólicos), delegados, servidores de la OSG e incluso otras comunidades de Doce Pasos. Todos coinciden en lo esencial.",
+     c:"…la auténtica fuerza de A.A. reside en la capacidad de los miembros para comprender y aferrarse a su objetivo primordial.",
+     f:"Elaine McDowell, presidenta de la Junta de Servicios Generales — Acerca de A.A., 2001"},
+    {t:"La negación",
+     x:"George E. Vaillant, custodio Clase A, explica por qué hace falta un enfoque tan concentrado: la negación. Si se da la opción, nadie quiere hablar del alcoholismo.",
+     c:"La negación asociada con el alcoholismo es astuta, desconcertante y poderosa […]. A menos que el alcoholismo se mantenga incesantemente en primer plano, otros asuntos usurparán la atención de todos.",
+     f:"Box 4-5-9, febrero-marzo 2003 — citado en la Sugerencia 2019 de la Conferencia de Colombia"},
+    {t:"La identificación es la clave",
+     x:"Allan W., delegado, resume el equilibrio:",
+     c:"Damos la bienvenida a quienes hablan sobre cosas que pueden poner en peligro su sobriedad; pero el denominador común tiene que ser el alcoholismo.",
+     f:"Acerca de A.A., verano 2001"}
+  ],
+  juego:[
+    {tipo:"quiz", titulo:"¿Quién lo dijo?", preguntas:[
+      {cita:"Si no nos aferramos a estos principios, es casi cierto que fracasaremos. Y si fracasamos, no podremos ayudar a nadie.",
+       p:"¿Quién escribió esto en 1958?",
+       o:[{t:"Bill W., cofundador",ok:1},{t:"Los custodios de N.A."},{t:"Una estudiante universitaria"},{t:"Bob P., gerente de la OSG"}],
+       e:"Bill W., “Problemas diferentes del alcohol”, Grapevine, febrero de 1958."},
+      {cita:"Mi padrino me vendió una sola idea, la sobriedad. En aquel momento, no podría haber comprado ninguna otra cosa.",
+       p:"¿Quién lo decía años después?",
+       o:[{t:"El Dr. Bob"},{t:"El “rudo irlandés” de la Quinta Tradición",ok:1},{t:"George E. Vaillant"},{t:"Dyanne G., delegada"}],
+       e:"Es el hombre terco del Hospital Towns a quien un veterano le llevó solo el mensaje de A.A., sin religión, sin dinero, sin otros asuntos."},
+      {cita:"El día en que parezca que A.A. esté rechazando a gente que pueda ser alcohólica, empezaremos a perecer.",
+       p:"¿Quién lo dijo ante la Conferencia de 1983?",
+       o:[{t:"Bill W."},{t:"Susan C."},{t:"Dyanne G., delegada, que llegó con adicción doble",ok:1},{t:"Los custodios de C.A."}],
+       e:"Su presentación se tituló “¿Estamos ayudando a los dobleadictos?”. Su grupo le dio “la dignidad de decidir cambiar”."},
+      {cita:"…al limitar su objetivo primordial a llevar el mensaje a los alcohólicos y evitar otras actividades, A.A. está en la posibilidad de hacer esa única cosa sumamente bien.",
+       p:"¿Quién elogió así a A.A.?",
+       o:[{t:"Los custodios de Narcóticos Anónimos",ok:1},{t:"Bill W."},{t:"El Dr. Silkworth"},{t:"Un juez"}],
+       e:"Publicado en su boletín Newsline y citado en Acerca de A.A. (2001). Otra comunidad reconoce el valor de nuestra unicidad."},
+      {cita:"Si me preguntaras cuál es el peligro más grande con que A.A. tiene que enfrentarse hoy en día, yo no vacilaría en decirte: la rigidez cada vez más pronunciada.",
+       p:"¿Quién advirtió esto en 1986?",
+       o:[{t:"George E. Vaillant"},{t:"Bob P., gerente general de la OSG",ok:1},{t:"Bill W."},{t:"Allan W., delegado"}],
+       e:"En la charla de clausura de la Conferencia de 1986. Recordó que Bill repetía: “Todo grupo tiene derecho a equivocarse”."},
+      {cita:"Nadie ha dicho nunca que A.A. sea para todos; no obstante, si alguien necesita ayuda para resolver un problema diferente del alcohol, haremos lo que podamos para ayudarlo a conseguir esa ayuda.",
+       p:"¿Quién lo dijo?",
+       o:[{t:"Dyanne G."},{t:"Bob P."},{t:"Susan C., antigua delegada",ok:1},{t:"El Dr. Bob"}],
+       e:"Susan C., en Acerca de A.A. (2001), bajo el título “Hay que considerar al recién llegado”."},
+      {cita:"…los grupos de A.A. son el único lugar del mundo en que el enfoque es el alcoholismo y sólo el alcoholismo. Simplemente no hay otra manera de superar la negación.",
+       p:"¿Quién, siendo no alcohólico, lo afirmó?",
+       o:[{t:"George E. Vaillant, custodio Clase A",ok:1},{t:"Susan C."},{t:"Bill W."},{t:"Los custodios de N.A."}],
+       e:"Box 4-5-9, febrero-marzo 2003. Un custodio no alcohólico defendiendo la Quinta Tradición."}
+    ]}
+  ],
+  reflexion:["¿Cuál de estas voces me tocó más y por qué?","Si tuviera que decir una sola frase sobre la unicidad en mi grupo, ¿cuál sería?"],
+  idea:"Muchas voces, un solo mensaje: el alcoholismo siempre en primer plano."
+},
+/* ---------------- RETO 6 ---------------- */
+{
+  emo:"⚖️", titulo:"El equilibrio del faro", sub:"La unicidad en la vida del grupo",
+  resumen:"Dilemas reales del grupo: firmeza en el propósito, amor en el trato.",
+  lecturas:["Box 4-5-9 — abril-mayo 2004 (Dyanne G. y Bob P.)","Libro Grande — capítulo 7, “Trabajando con otros”","Plan Nacional de Acción — capítulo II, De la recuperación (proyecto)","Doce Pasos y Doce Tradiciones — Cuarta Tradición"],
+  aprende:[
+    {t:"Dos maneras de apagar el faro",
+     x:"Se puede perder la unicidad <b>diluyéndola</b> (“una droga es una droga”, el grupo se ocupa de todo) o <b>endureciéndola</b> (reglamentos, cribar, rechazar). El camino de A.A. está en el medio: <b>firmeza en el propósito, amor en el trato</b>.",
+     c:"Hay una diferencia importante entre adherirnos a nuestra tradición de unicidad de propósito y poner límites y restricciones a quien pueda hacerse miembro.",
+     f:"Dyanne G., delegada — Conferencia de 1983, citada en Box 4-5-9, 2004"},
+    {t:"Confianza, no control",
+     x:"Bob P. recordaba que Bill era “el hombre más permisivo” que conoció y que confiaba en que los defectos de A.A. eran autocorregibles. Cada grupo es autónomo (Cuarta Tradición) y su conciencia de grupo decide.",
+     c:"Uno de sus refranes predilectos era: ‘Todo grupo tiene derecho a equivocarse.’",
+     f:"Bob P., gerente general de la OSG — Box 4-5-9, 2004"},
+    {t:"Unicidad y recuperación",
+     x:"Nuestro único propósito no es solo “dejar de beber”: es la sobriedad <b>por medio de los Doce Pasos</b>. El proyecto de Plan Nacional lo dice así: “el alcohólico no soluciona el problema con la sola práctica del Paso Uno”. Padrino, estudio de los Pasos e inventario son parte de la misión.",
+     c:"La sobriedad —estar libre del alcohol— por medio de la enseñanza y de la práctica de los Doce Pasos, es el único propósito de un grupo de AA.",
+     f:"Bill W., “Problemas diferentes del alcohol”, 1958"},
+    {t:"Cooperar sin afiliarnos",
+     x:"Los comités de Información Pública, Cooperación con la Comunidad Profesional e Instituciones explican qué es y qué no es A.A., con gratitud hacia quienes también ayudan al alcohólico.",
+     c:"…la vigilancia eterna, que es el precio de nuestra sobriedad, debe ser también la consigna de nuestra cooperación sin afiliación.",
+     f:"Susan C. — Acerca de A.A., verano 2001"}
+  ],
+  juego:[
+    {tipo:"quiz", titulo:"Dilemas del grupo", preguntas:[
+      {emo:"💬", p:"Un recién llegado habla mucho de drogas y casi nada de alcohol en cada reunión. Algunos compañeros se incomodan.",
+       o:[{t:"Interrumpirlo en plena reunión y pedirle que se vaya",fb:"Eso es rigidez. “El día en que parezca que A.A. esté rechazando a gente que pueda ser alcohólica, empezaremos a perecer.”"},
+          {t:"Después de la reunión, un compañero conversa con él con amor, le comparte su experiencia con el alcohol y, si no es alcohólico, lo orienta hacia donde le pueden ayudar",ok:1,fb:"Firmeza y amor. Así se cuida el ambiente de identificación sin cerrar la puerta."},
+          {t:"No decir nada nunca y dejar que las reuniones giren en torno a las drogas",fb:"Eso es dilución: el alcohólico que llega ya no se identifica. “El denominador común tiene que ser el alcoholismo.”"}]},
+      {emo:"🏥", p:"Una institución pide al grupo que reciba como miembros a todas sus personas “químicamente dependientes”.",
+       o:[{t:"Aceptar a todos como miembros para no quedar mal"},
+          {t:"Romper toda relación con la institución"},
+          {t:"El comité de servicio explica con cordialidad qué es A.A.: reuniones abiertas para todos, membresía para quienes desean dejar de beber; cooperamos sin afiliarnos",ok:1,fb:"Así lo hizo el comité de Denver en 1989: “ayudar al personal… a comprender mejor el deseo que A.A. tiene de cooperar con ellos dentro del marco de nuestras Tradiciones”."}],
+       e:"Ni todo, ni nada: cooperación sin afiliación."},
+      {emo:"🎟️", p:"Un compañero propone una rifa y un bazar para pagar el arriendo atrasado del grupo.",
+       o:[{t:"Hacer la rifa: el fin justifica los medios"},
+          {t:"Llevarlo a la conciencia de grupo, recordar la Séptima Tradición y animar a cada miembro a contribuir",ok:1,fb:"“Cada grupo de A.A. debe mantenerse completamente a sí mismo.” Y la conciencia de grupo, informada, decide."},
+          {t:"Pedir una donación a la empresa de un amigo"}],
+       e:"La Séptima Tradición rechaza las contribuciones de afuera, y las actividades distractoras nos alejan del objetivo."},
+      {emo:"📜", p:"Alguien propone escribir un reglamento: “En este grupo solo se aceptan alcohólicos puros, sin otros problemas”.",
+       o:[{t:"Aprobarlo: así protegemos la unicidad"},
+          {t:"Recordar la Tercera Tradición: la lista de reglamentos “medía más de una milla” y nació del miedo; nadie puede ser juez de otro",ok:1,fb:"“¿Quién se atrevería a ser juez, jurado y verdugo de su propio hermano enfermo?”"},
+          {t:"Pedirle a la OSG que dicte una norma"}],
+       e:"La OSG no dicta “fallos”: las respuestas vienen de la experiencia de los grupos autónomos (Box 4-5-9, 1982)."},
+      {emo:"😠", p:"Un miembro lleva diez años sin beber, pero sigue amargado, resentido y crea discordia en el grupo.",
+       o:[{t:"No es asunto del grupo: ya no bebe"},
+          {t:"Ignorarlo hasta que se vaya"},
+          {t:"Animarlo con amor a profundizar en los Doce Pasos, con padrino, estudio e inventario: eso también es nuestro único propósito",ok:1,fb:"La unicidad incluye la recuperación completa. El proyecto de Plan Nacional advierte: “El alcohólico que tan solo deja de beber… sigue sufriendo.”"}]},
+      {emo:"🗳️", p:"Como RSG, te piden que el grupo firme un comunicado a favor de un candidato que “ayuda a los alcohólicos”.",
+       o:[{t:"Firmar: es por una buena causa"},
+          {t:"Explicar que A.A. no tiene opinión sobre asuntos ajenos; como ciudadano, cada uno es libre de votar",ok:1,fb:"Décima Tradición, y la Sexta: no prestar el nombre de A.A. a ninguna entidad ajena, “por buena que ésta fuera”."},
+          {t:"Firmar solo con los nombres de los miembros"}]},
+      {emo:"🩺", p:"Un amigo médico, con buena intención, te dice: “A.A. funciona para cualquier adicción; ábranla para todos”.",
+       o:[{t:"Agradecerle y explicarle que nuestra fuerza es la identificación de alcohólico a alcohólico; A.A. compartió sus Pasos con otras comunidades que sí reciben a esas personas",ok:1,fb:"Es la experiencia de N.A. y C.A.: “cada comunidad tiene su único objetivo primordial”. Así nos ayudamos unos a otros."},
+          {t:"Discutir con él hasta convencerlo"},
+          {t:"Darle la razón para no quedar mal"}],
+       e:"La buena información a la comunidad profesional es parte de la solución (Box 4-5-9, 2004)."}
+    ]}
+  ],
+  reflexion:["En mi grupo, ¿tendemos más a diluir la unicidad o a endurecerla? ¿Qué puedo aportar yo?","¿Qué compromiso personal hago hoy para proteger nuestra unicidad de propósito?"],
+  idea:"Firmeza en el propósito, amor en el trato."
+}
+];
+RETOS.forEach((r,i)=>r.color=COLORES[i]);
+
+const GLOSARIO = [
+  {t:"Unicidad de propósito",d:"Principio según el cual A.A. tiene un solo objetivo: llevar el mensaje al alcohólico que aún sufre. No hace otra cosa, para poder hacer bien esa.",f:"Quinta Tradición"},
+  {t:"Objetivo primordial",d:"“Mantenernos sobrios y ayudar a otros alcohólicos a alcanzar el estado de sobriedad.”",f:"Preámbulo de A.A."},
+  {t:"Tercera Tradición",d:"“El único requisito para ser miembro de A.A. es querer dejar de beber.” Define a quién recibimos; la Quinta define qué hacemos.",f:"Doce Pasos y Doce Tradiciones"},
+  {t:"Quinta Tradición",d:"“Cada grupo tiene un solo objetivo primordial: llevar el mensaje al alcohólico que aún está sufriendo.”",f:"Doce Pasos y Doce Tradiciones"},
+  {t:"Sexta Tradición",d:"No respaldar, financiar ni prestar el nombre de A.A. a ninguna entidad allegada o empresa ajena, para que el dinero, la propiedad y el prestigio no nos desvíen.",f:"Doce Pasos y Doce Tradiciones"},
+  {t:"Séptima Tradición",d:"“Cada grupo de A.A. debe mantenerse completamente a sí mismo, negándose a recibir contribuciones de afuera.”",f:"Doce Pasos y Doce Tradiciones"},
+  {t:"Décima Tradición",d:"“Alcohólicos Anónimos no tiene opinión acerca de asuntos ajenos a sus actividades; por consiguiente su nombre nunca debe mezclarse en polémicas públicas.”",f:"Doce Pasos y Doce Tradiciones"},
+  {t:"Cooperación sin afiliación",d:"A.A. coopera con gratitud con quienes ayudan al alcohólico, pero no se une ni respalda a ninguna entidad. Así se relaciona con N.A., C.A. y las instituciones.",f:"Acerca de A.A., 2001"},
+  {t:"Reunión abierta",d:"Puede asistir cualquier persona interesada: familiares, amigos, estudiantes, visitantes.",f:"Acerca de A.A., 2001"},
+  {t:"Reunión cerrada",d:"Para quienes tienen un problema con la bebida y desean dejar de beber.",f:"Acerca de A.A., 2001"},
+  {t:"Adicción doble",d:"Alcohólico que además ha tenido problemas con otras drogas. Es miembro de A.A. porque es alcohólico; en el grupo compartimos lo relacionado con el alcoholismo.",f:"Bill W., 1958"},
+  {t:"“Tarjeta azul”",d:"Artículo de servicio puesto a disposición de los grupos en EE.UU./Canadá tras la Conferencia de 1987. Sugiere limitar el compartimiento a los problemas en cuanto se relacionan con el alcoholismo. Cada grupo autónomo decide si la usa.",f:"Box 4-5-9, 2004"},
+  {t:"Identificación",d:"La clave de la recuperación en A.A.: un alcohólico que reconoce su historia en la de otro. Por eso el denominador común tiene que ser el alcoholismo.",f:"Acerca de A.A., 2001"},
+  {t:"Negación",d:"Lo que hace que, si se da la opción, nadie quiera hablar del alcoholismo. La unicidad mantiene el alcoholismo “incesantemente en primer plano”.",f:"G. E. Vaillant, Box 4-5-9, 2003"}
+];
+
+const FUENTES = [
+  "Doce Pasos y Doce Tradiciones — Tradiciones Tercera, Quinta, Sexta, Séptima y Décima",
+  "Alcohólicos Anónimos (Libro Grande) — capítulo 7, “Trabajando con otros”",
+  "A.A. Llega a su Mayoría de Edad — comentario a la Quinta Tradición",
+  "El Lenguaje del Corazón — “Problemas diferentes del alcohol” (Grapevine, febrero 1958)",
+  "Box 4-5-9, abril-mayo 1982 — “Aquellas otras adicciones”",
+  "Box 4-5-9, junio-julio 1988 — 38ª Conferencia de Servicios Generales",
+  "Box 4-5-9, abril-mayo 1989 — Seminario de Denver",
+  "Box 4-5-9, Navidad 1994 — “Crosstalk”",
+  "Acerca de A.A., verano 2001 — “La unicidad de propósito de A.A.”",
+  "Box 4-5-9, febrero-marzo 2003 — “Unicidad de propósito”, George E. Vaillant",
+  "Box 4-5-9, abril-mayo 2004 — “Unicidad de propósito”",
+  "Acciones Recomendables de la Conferencia (Colombia) — 2018 y 2019",
+  "Plan Nacional de Acción para Fortalecer la Unicidad de Propósito — proyecto de recomendación, CSG Colombia"
+];
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+const CLAVE = "faro-unicidad-v1";
+const leer = () => { try { return JSON.parse(localStorage.getItem(CLAVE)) || null; } catch(e){ return null; } };
+const guardar = () => { try { localStorage.setItem(CLAVE, JSON.stringify(S)); } catch(e){} };
+let S = Object.assign({hechos:{}, estrellas:{}, puntos:0, notas:{}, nombre:"", sonido:true}, leer() || {});
+
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const barajar = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const totalEstrellas = () => Object.values(S.estrellas).reduce((x,y)=>x+y,0);
+const totalHechos = () => RETOS.filter((_,i)=>S.hechos[i]).length;
+const anunciar = t => { $("#vivo").textContent = t; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* =========================================================
+   SONIDO (Web Audio, sin archivos)
+   ========================================================= */
+let ctx;
+function tono(frecs, dur=.12, tipo="sine", vol=.12){
+  if(!S.sonido) return;
+  try{
+    ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+    frecs.forEach((f,i)=>{
+      const o=ctx.createOscillator(), g=ctx.createGain(), t=ctx.currentTime+i*dur;
+      o.type=tipo; o.frequency.value=f;
+      g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.001,t+dur*1.8);
+      o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+dur*2);
+    });
+  }catch(e){}
+}
+const sBien = () => tono([660,880],.09,"triangle");
+const sMal  = () => tono([220,180],.12,"sawtooth",.05);
+const sGana = () => tono([523,659,784,1047,1319],.11,"triangle",.13);
+const sClic = () => tono([520],.05,"sine",.05);
+
+/* =========================================================
+   FARO SVG
+   ========================================================= */
+function faroSVG(lit, gira=false){
+  const rayos = RETOS.map((r,i)=>{
+    const ang = [-172,-146,-120,-60,-34,-8][i];    // 3 rayos a cada lado
+    const a1=(ang-9)*Math.PI/180, a2=(ang+9)*Math.PI/180, L=150;
+    const x1=100+L*Math.cos(a1), y1=58+L*Math.sin(a1), x2=100+L*Math.cos(a2), y2=58+L*Math.sin(a2);
+    return `<polygon class="rayo ${lit[i]?'':'off'}" points="100,58 ${x1.toFixed(1)},${y1.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="${r.color}"/>`;
+  }).join("");
+  const todos = lit.every(Boolean);
+  return `<svg viewBox="0 0 200 230" class="${gira&&todos?'faro-gira':''}" role="img" aria-label="Faro con ${lit.filter(Boolean).length} de 6 rayos encendidos">
+    <g class="haz">${rayos}</g>
+    <circle cx="100" cy="58" r="20" fill="#FFF7C2" class="luz" opacity="${lit.some(Boolean)?1:.35}"/>
+    <path d="M78 44 h44 l-4 -14 h-36z" fill="#EF4444"/>
+    <path d="M100 18 l14 12 h-28z" fill="#B91C1C"/>
+    <rect x="80" y="44" width="40" height="28" rx="4" fill="#FDE68A" stroke="#1E1B4B" stroke-width="3"/>
+    <line x1="100" y1="44" x2="100" y2="72" stroke="#1E1B4B" stroke-width="2.5"/>
+    <rect x="74" y="72" width="52" height="8" rx="3" fill="#1E1B4B"/>
+    <path d="M80 80 L120 80 L132 210 L68 210 Z" fill="#fff" stroke="#1E1B4B" stroke-width="3"/>
+    <path d="M78.5 100 L121.5 100 L124 126 L76 126 Z" fill="#EF4444"/>
+    <path d="M74.5 150 L125.5 150 L128 176 L72 176 Z" fill="#EF4444"/>
+    <rect x="92" y="180" width="16" height="30" rx="8" fill="#7C3AED"/>
+    <path d="M40 214 Q100 200 160 214 L170 226 L30 226 Z" fill="#1E1B4B" opacity=".9"/>
+  </svg>`;
+}
+function refrescarMarcador(){
+  $("#m-estrellas").textContent = totalEstrellas();
+  $("#m-puntos").textContent = S.puntos;
+  $("#m-retos").textContent = totalHechos();
+  $("#faro-cab").innerHTML = faroSVG(RETOS.map((_,i)=>!!S.hechos[i]), true);
+}
+function sumar(p){ S.puntos += p; guardar(); $("#m-puntos").textContent = S.puntos; }
+
+/* =========================================================
+   VISTAS
+   ========================================================= */
+function marcarTab(v){ document.querySelectorAll(".tab[data-vista]").forEach(b=>b.setAttribute("aria-current", b.dataset.vista===v?"page":"false")); }
+function estrellasHTML(n){ return [0,1,2].map(i=>`<span class="${i<n?'':'off'}">⭐</span>`).join(""); }
+const abierto = i => i===0 || !!S.hechos[i-1] || !!S.hechos[i];
+
+function vistaMapa(){
+  marcarTab("mapa");
+  const pct = Math.round(totalHechos()/6*100);
+  app.innerHTML = `
+    <div class="progreso">
+      <strong>Tu camino</strong>
+      <div class="barra" aria-label="Progreso ${pct}%"><b id="barra-b"></b></div>
+      <strong>${pct}%</strong>
+    </div>
+    <h2 class="titulo-seccion">Seis retos, un solo propósito</h2>
+    <p class="sub">Cada reto tiene tres pasos: <b>Aprende</b> con la literatura, <b>Juega</b> para fijarlo y <b>Reflexiona</b> para llevarlo a tu vida. Hazlos en orden, uno por sesión.</p>
+    <div class="mapa">
+      ${RETOS.map((r,i)=>{
+        const ok = abierto(i), hecho = !!S.hechos[i];
+        return `<button class="isla" style="--c:${r.color}" data-reto="${i}" ${ok?'':'disabled'} aria-label="Reto ${i+1}: ${esc(r.titulo)}${ok?'':' (bloqueado)'}">
+          <div class="banda"><span class="emo">${ok?r.emo:'🔒'}</span><div><div class="num">Reto ${i+1}</div><h3>${r.titulo}</h3></div></div>
+          <div class="cuerpo">
+            <p><b style="color:var(--tinta)">${r.sub}.</b> ${r.resumen}</p>
+            <div class="pie">
+              <span class="estrellitas">${estrellasHTML(S.estrellas[i]||0)}</span>
+              <span class="chip">${hecho?'✔ Repetir':ok?'▶ Empezar':'🔒 Completa el anterior'}</span>
+            </div>
+          </div>
+        </button>`;}).join("")}
+    </div>
+    ${totalHechos()===6?`<div style="text-align:center;margin-top:28px"><button class="btn grande" style="--c:#7C3AED" data-ir="cert">🏅 ¡Faro encendido! Recibe tu certificado</button></div>`:''}
+    <p class="nota">Material de estudio para miembros y grupos, preparado a partir de literatura aprobada por la Conferencia y documentos de servicio. No es publicación oficial de A.A.<br>Tu progreso se guarda solo en este dispositivo.
+      <button class="no-imprimir" id="reiniciar" style="text-decoration:underline;color:var(--suave);font-size:15px">Reiniciar progreso</button></p>`;
+  requestAnimationFrame(()=>{ const b=$("#barra-b"); if(b) b.style.width = pct+"%"; });
+  app.querySelectorAll("[data-reto]").forEach(b=>b.onclick=()=>{ sClic(); abrirReto(+b.dataset.reto); });
+  const ir = app.querySelector("[data-ir]"); if(ir) ir.onclick=()=>ir_a("cert");
+  $("#reiniciar").onclick=()=>{ if(confirm("¿Borrar todo tu progreso y empezar de nuevo?")){ S={hechos:{},estrellas:{},puntos:0,notas:{},nombre:"",sonido:S.sonido}; guardar(); refrescarMarcador(); vistaMapa(); } };
+}
+
+/* ---------- Reto ---------- */
+let R; // estado del reto en curso
+function abrirReto(i){
+  R = {i, r:RETOS[i], fase:"aprende", tarjeta:0, act:0, errores:0, aciertos:0};
+  document.documentElement.style.setProperty("--c", R.r.color);
+  pintarReto(); window.scrollTo({top:0,behavior:"smooth"});
+}
+function pintarReto(){
+  const r = R.r, fases=[["aprende","Aprende"],["juega","Juega"],["reflexiona","Reflexiona"]];
+  const idx = fases.findIndex(f=>f[0]===R.fase);
+  app.innerHTML = `
+    <button class="volver" id="volver">← Volver a los retos</button>
+    <div class="reto-cab" style="--c:${r.color}"><span class="emo">${r.emo}</span><div><div class="etiqueta" style="color:#fff;opacity:.9">Reto ${R.i+1} de 6</div><h2>${r.titulo}</h2><p>${r.sub}</p></div></div>
+    <div class="pasos">${fases.map((f,k)=>`<span class="paso ${k===idx?'activo':''} ${k<idx?'hecho':''}"><span class="n">${k<idx?'✓':k+1}</span>${f[1]}</span>`).join("")}</div>
+    <div id="zona"></div>`;
+  $("#volver").onclick = vistaMapa;
+  if(R.fase==="aprende") pintarAprende();
+  else if(R.fase==="juega") pintarActividad();
+  else pintarReflexion();
+}
+function pintarAprende(){
+  const r=R.r, k=R.tarjeta, c=r.aprende[k], n=r.aprende.length;
+  $("#zona").innerHTML = `
+    <article class="tarjeta" style="animation:aparece .35s">
+      <span class="contador">${k+1} / ${n}</span>
+      <h3>${c.t}</h3>
+      <div class="texto">${c.x}</div>
+      ${c.c?`<blockquote class="cita">“${c.c}”</blockquote>`:''}
+      ${c.f?`<div class="fuente">${c.f}</div>`:''}
+      ${k===0?`<details style="margin-top:16px"><summary style="cursor:pointer;font-weight:800;color:var(--suave)">📚 Lectura sugerida para esta sesión</summary><ul class="lecturas">${r.lecturas.map(l=>`<li>${l}</li>`).join("")}</ul></details>`:''}
+      <div class="puntos-nav">${r.aprende.map((_,j)=>`<i class="${j===k?'on':''}"></i>`).join("")}</div>
+      <div class="acciones">
+        <button class="btn sec" id="ant" ${k===0?'disabled':''}>← Anterior</button>
+        <button class="btn" id="sig">${k===n-1?'¡A jugar! 🎮':'Siguiente →'}</button>
+      </div>
+    </article>`;
+  $("#ant").onclick=()=>{ sClic(); R.tarjeta--; pintarAprende(); };
+  $("#sig").onclick=()=>{ sClic(); if(k===n-1){ R.fase="juega"; R.act=0; pintarReto(); } else { R.tarjeta++; pintarAprende(); } };
+}
+
+function pintarActividad(){
+  const a = R.r.juego[R.act];
+  const fin = () => { R.act++; if(R.act>=R.r.juego.length){ R.fase="reflexiona"; pintarReto(); } else pintarActividad(); window.scrollTo({top:0,behavior:"smooth"}); };
+  ({fill:actCompletar, quiz:actPreguntas, sort:actClasificar, order:actOrdenar})[a.tipo](a, fin);
+}
+function cabActividad(titulo, extra=""){
+  return `<div class="zona-cab"><span class="etiqueta">🎮 ${titulo}${R.r.juego.length>1?` · parte ${R.act+1} de ${R.r.juego.length}`:''}</span><span class="vidas">${extra}</span></div>`;
+}
+function acierto(){ R.aciertos++; sumar(10); sBien(); }
+function error(el){ R.errores++; sMal(); if(el){ el.classList.remove("sacude"); void el.offsetWidth; el.classList.add("sacude"); } }
+
+/* Completar la frase */
+function actCompletar(a, fin){
+  let pos=0; const usadas=new Set();
+  const fichas = barajar([...a.respuestas, ...a.distractores]);
+  const dibujar = () => {
+    const listo = pos===a.respuestas.length;
+    $("#zona").innerHTML = `<div class="tarjeta">${cabActividad("Completa la frase")}
+      <p class="instr">${a.instruccion}</p>
+      <div class="frase" id="frase">${a.partes.map(p=> typeof p==="number"
+          ? `<span class="hueco ${p<pos?'lleno':''} ${p===pos?'activo':''}">${p<pos?a.respuestas[p]:'?'}</span>` : esc(p)).join("")}</div>
+      ${listo?`<div class="retro si"><b class="t">¡Perfecto! 🎉</b><span class="fuente">${a.f}</span></div><div class="acciones"><span></span><button class="btn" id="cont">Continuar →</button></div>`
+        :`<div class="fichas">${fichas.map((w,j)=>`<button class="ficha ${usadas.has(j)?'usada':''}" data-j="${j}">${w}</button>`).join("")}</div>`}
+    </div>`;
+    if(listo){ $("#cont").onclick=fin; return; }
+    $("#zona").querySelectorAll(".ficha").forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j;
+      if(fichas[j]===a.respuestas[pos]){ usadas.add(j); pos++; acierto(); anunciar("Correcto: "+fichas[j]); dibujar(); }
+      else { error(b); anunciar("Esa no es. Intenta otra palabra."); }
+    });
+  };
+  dibujar();
+}
+
+/* Preguntas / escenarios / dilemas / ¿quién lo dijo? */
+function actPreguntas(a, fin){
+  let q=0;
+  const dibujar = () => {
+    const P=a.preguntas[q];
+    const ops = P._ops || (P._ops = barajar(P.o));
+    $("#zona").innerHTML = `<div class="tarjeta">${cabActividad(a.titulo||"Preguntas", `${q+1} / ${a.preguntas.length}`)}
+      ${P.cita?`<blockquote class="cita" style="margin-top:0">“${P.cita}”</blockquote>`:''}
+      ${P.emo?`<div class="escenario"><span class="emo">${P.emo}</span><span>${P.p}</span></div>`:`<p class="instr">${P.p}</p>`}
+      <div class="opciones">${ops.map((o,j)=>`<button class="opcion" data-j="${j}"><span class="letra">${"ABCD"[j]}</span><span>${o.t}</span></button>`).join("")}</div>
+      <div id="retro" aria-live="polite"></div>
+    </div>`;
+    const botones=[...$("#zona").querySelectorAll(".opcion")];
+    botones.forEach(b=>b.onclick=()=>{
+      const o=ops[+b.dataset.j], bien=!!o.ok;
+      botones.forEach(x=>x.disabled=true);
+      const buena = ops.findIndex(x=>x.ok);
+      botones[buena].classList.add("bien");
+      if(bien) acierto(); else { b.classList.add("malo"); error(b); }
+      const fbBuena = ops[buena].fb;
+      let txt = o.fb || "";
+      if(!bien && fbBuena) txt += (txt?"<br><br>":"") + "<b>La mejor respuesta:</b> " + fbBuena;
+      if(P.e) txt += (txt?"<br><br>":"") + P.e;
+      $("#retro").innerHTML = `<div class="retro ${bien?'si':'no'}"><b class="t">${bien?barajar(["¡Así es! ✨","¡Muy bien! 🎉","¡Exacto! 💡"])[0]:"Casi… 💭"}</b>${txt}</div>
+        <div class="acciones"><span></span><button class="btn" id="sig">${q===a.preguntas.length-1?'Continuar →':'Siguiente →'}</button></div>`;
+      $("#sig").focus({preventScroll:true});
+      $("#sig").onclick=()=>{ q++; if(q>=a.preguntas.length) fin(); else { dibujar(); } };
+    });
+  };
+  dibujar();
+}
+
+/* Clasificar en dos canastas */
+function actClasificar(a, fin){
+  const items = barajar(a.items); let k=0; const cuenta={};
+  a.botes.forEach(b=>cuenta[b.id]=0);
+  const dibujar = () => {
+    const it=items[k];
+    $("#zona").innerHTML = `<div class="tarjeta">${cabActividad("Clasifica", `${k+1} / ${items.length}`)}
+      <p class="instr">${a.instruccion}</p>
+      <div class="escenario" id="carta"><span class="emo">🃏</span><span>${it.t}</span></div>
+      <div class="botes">${a.botes.map((b,j)=>`<button class="bote ${j?'b':'a'}" data-b="${b.id}"><span class="emo">${b.emo}</span>${b.t}</button>`).join("")}</div>
+      <div class="cuenta-botes">${a.botes.map(b=>`<span>${b.emo} ${cuenta[b.id]}</span>`).join("")}</div>
+      <div id="retro" aria-live="polite"></div>
+    </div>`;
+    const bs=[...$("#zona").querySelectorAll(".bote")];
+    bs.forEach(b=>b.onclick=()=>{
+      bs.forEach(x=>x.disabled=true);
+      const bien = b.dataset.b===it.b;
+      cuenta[it.b]++;
+      if(bien) acierto(); else error($("#carta"));
+      const nombre = a.botes.find(x=>x.id===it.b);
+      $("#retro").innerHTML = `<div class="retro ${bien?'si':'no'}"><b class="t">${bien?'¡Correcto!':'Mira bien…'} ${nombre.emo} ${nombre.t}</b>${it.e}</div>
+        <div class="acciones"><span></span><button class="btn" id="sig">${k===items.length-1?'Continuar →':'Siguiente →'}</button></div>`;
+      $("#sig").focus({preventScroll:true});
+      $("#sig").onclick=()=>{ k++; if(k>=items.length) fin(); else dibujar(); };
+    });
+  };
+  dibujar();
+}
+
+/* Ordenar en la línea del tiempo */
+function actOrdenar(a, fin){
+  const monton = barajar(a.items.map((x,i)=>({...x,i}))); let pos=0;
+  const dibujar = () => {
+    const listo = pos===a.items.length;
+    $("#zona").innerHTML = `<div class="tarjeta">${cabActividad("Línea del tiempo", `${pos} / ${a.items.length}`)}
+      <p class="instr">${a.instruccion}</p>
+      <div class="linea">
+        ${a.items.slice(0,pos).map(x=>`<div class="hito"><b>${x.a}</b>${x.t}</div>`).join("")}
+        ${listo?'':`<div class="hito vacio">¿Qué pasó ${pos===0?'primero':'después'}?</div>`}
+      </div>
+      ${listo?`<div class="retro si"><b class="t">¡Línea completa! 🧭</b>Más de 90 años aprendiendo lo mismo: la unicidad de propósito nos mantiene unidos.</div><div class="acciones"><span></span><button class="btn" id="cont">Continuar →</button></div>`
+        :`<div class="monton">${monton.filter(x=>x.i>=pos).map(x=>`<button class="opcion" data-i="${x.i}"><span class="letra">?</span><span>${x.t}</span></button>`).join("")}</div>`}
+    </div>`;
+    if(listo){ $("#cont").onclick=fin; return; }
+    $("#zona").querySelectorAll(".monton .opcion").forEach(b=>b.onclick=()=>{
+      if(+b.dataset.i===pos){ pos++; acierto(); dibujar(); }
+      else { error(b); anunciar("Todavía no. Busca un acontecimiento más antiguo."); }
+    });
+  };
+  dibujar();
+}
+
+/* Reflexión y cierre */
+function pintarReflexion(){
+  const r=R.r, i=R.i; S.notas[i]=S.notas[i]||[];
+  $("#zona").innerHTML = `<div class="tarjeta reflexion">
+      <div class="etiqueta">🪞 Para compartir con tu padrino, tu madrina o en tu grupo</div>
+      ${r.reflexion.map((p,k)=>`<label for="n${k}">${k+1}. ${p}</label><textarea id="n${k}" data-k="${k}" placeholder="Escribe aquí si quieres (se guarda solo en tu dispositivo)…">${esc(S.notas[i][k]||"")}</textarea>`).join("")}
+      <div class="idea"><small>Idea para llevar</small>${r.idea}</div>
+      <div class="acciones"><button class="btn sec" id="repaso">↺ Repasar lectura</button><button class="btn grande" id="terminar">Encender mi rayo 🗼</button></div>
+    </div>`;
+  $("#zona").querySelectorAll("textarea").forEach(t=>t.oninput=()=>{ S.notas[i][+t.dataset.k]=t.value; guardar(); });
+  $("#repaso").onclick=()=>{ R.fase="aprende"; R.tarjeta=0; pintarReto(); };
+  $("#terminar").onclick=terminarReto;
+}
+function terminarReto(){
+  const i=R.i, e=R.errores, est = e<=1?3:e<=3?2:1;
+  const primera = !S.hechos[i];
+  S.hechos[i]=true; S.estrellas[i]=Math.max(S.estrellas[i]||0, est);
+  sumar(est*20 + (primera?50:0));
+  guardar(); refrescarMarcador(); sGana(); confeti();
+  const lit = RETOS.map((_,k)=>!!S.hechos[k]);
+  const ultimo = totalHechos()===6;
+  const velo=document.createElement("div"); velo.className="velo";
+  velo.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt" style="--c:${R.r.color}">
+    <div class="faro-mini">${faroSVG(lit, true)}</div>
+    <h2 id="mt">${ultimo?'¡Faro encendido!':'¡Rayo encendido!'}</h2>
+    <div class="grandes">${[0,1,2].map(k=>`<span class="${k<est?'':'off'}" style="animation-delay:${.2+k*.18}s">⭐</span>`).join("")}</div>
+    <p style="margin:0 0 6px"><b>${R.aciertos}</b> aciertos · <b>${e}</b> ${e===1?'tropiezo':'tropiezos'}${primera?' · <b>+50</b> pts de bono':''}</p>
+    <p style="color:var(--suave);margin:0 0 6px">${est===3?'¡Brillante! Dominas este reto.':est===2?'¡Muy bien! Puedes repetirlo para ganar 3 estrellas.':'Lo lograste. Repítelo cuando quieras para afianzarlo.'}</p>
+    <div class="idea" style="text-align:left"><small>Idea para llevar</small>${R.r.idea}</div>
+    <div class="acciones">
+      <button class="btn sec" id="m-mapa">🗺️ Ver retos</button>
+      ${ultimo?`<button class="btn" id="m-cert">🏅 Mi certificado</button>`: (i<5?`<button class="btn" id="m-sig">Reto ${i+2} →</button>`:'')}
+    </div></div>`;
+  document.body.appendChild(velo);
+  const cerrar=(fn)=>{ velo.remove(); fn(); };
+  velo.querySelector("#m-mapa").onclick=()=>cerrar(vistaMapa);
+  const s=velo.querySelector("#m-sig"); if(s) s.onclick=()=>cerrar(()=>abrirReto(i+1));
+  const c=velo.querySelector("#m-cert"); if(c) c.onclick=()=>cerrar(()=>ir_a("cert"));
+  (s||c||velo.querySelector("#m-mapa")).focus();
+}
+
+/* ---------- Plan de estudio ---------- */
+function vistaPlan(){
+  marcarTab("plan");
+  app.innerHTML = `
+    <h2 class="titulo-seccion" style="margin-top:4px">📅 Plan de estudio en 6 sesiones</h2>
+    <p class="sub">Para estudiar a solas, con tu padrino o madrina, o en una reunión de estudio del grupo. Una sesión por semana es un buen ritmo.</p>
+    <div class="guia">
+      <h3 class="baloo" style="font-size:24px">Cómo usarlo en el grupo (45–60 minutos)</h3>
+      <ol>
+        <li><b>Apertura</b> (5 min): Oración de la Serenidad y lectura del Preámbulo.</li>
+        <li><b>Aprende</b> (10–15 min): se leen en voz alta las tarjetas del reto y, si se puede, la lectura sugerida.</li>
+        <li><b>Juega</b> (10–15 min): proyecta el juego en una pantalla o que cada uno lo haga en su celular. Las respuestas se dicen en voz alta.</li>
+        <li><b>Compartimiento</b> (20 min): cada quien comparte sobre las preguntas de reflexión, desde su propia experiencia.</li>
+        <li><b>Cierre</b> (5 min): se lee la “idea para llevar”.</li>
+      </ol>
+    </div>
+    <div class="sesiones">
+      ${RETOS.map((r,i)=>`<div class="sesion" style="--c:${r.color}">
+        <span class="emo">${r.emo}</span>
+        <h3>Sesión ${i+1}: ${r.titulo} <span style="color:var(--suave);font-size:18px;font-weight:600">— ${r.sub}</span></h3>
+        <ul>${r.lecturas.map(l=>`<li>${l}</li>`).join("")}</ul>
+        <div class="preg">💬 ${r.reflexion.join(" · ")}</div>
+      </div>`).join("")}
+    </div>`;
+}
+
+/* ---------- Biblioteca ---------- */
+function vistaBiblio(){
+  marcarTab("biblio");
+  app.innerHTML = `
+    <h2 class="titulo-seccion" style="margin-top:4px">📚 Biblioteca de la unicidad</h2>
+    <p class="sub">Los conceptos clave en pocas palabras, con su fuente en la literatura.</p>
+    <div class="glosario">
+      ${GLOSARIO.map((g,i)=>`<div class="termino" style="--c:${COLORES[i%6]}"><h3>${g.t}</h3><p>${g.d}</p><div class="fuente">${g.f}</div></div>`).join("")}
+    </div>
+    <h2 class="titulo-seccion" style="margin-top:34px;font-size:28px">Fuentes consultadas</h2>
+    <ul class="fuentes">${FUENTES.map(f=>`<li>${f}</li>`).join("")}</ul>`;
+}
+
+/* ---------- Certificado ---------- */
+function vistaCert(){
+  marcarTab("cert");
+  if(totalHechos()<6){
+    app.innerHTML = `<div class="tarjeta bloqueado"><div class="emo">🗼</div>
+      <h2 class="titulo-seccion">Tu certificado te espera</h2>
+      <p class="sub">Llevas ${totalHechos()} de 6 rayos encendidos. Completa todos los retos para recibir el título de <b>Guardián del Faro</b>.</p>
+      <div style="max-width:200px;margin:0 auto 18px">${faroSVG(RETOS.map((_,i)=>!!S.hechos[i]))}</div>
+      <button class="btn" style="--c:#7C3AED" id="a-retos">🗺️ Ir a los retos</button></div>`;
+    $("#a-retos").onclick=vistaMapa; return;
+  }
+  const hoy = new Date().toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"});
+  app.innerHTML = `
+    <div class="no-imprimir" style="text-align:center;margin-bottom:18px">
+      <label for="nom" style="display:block;font-weight:800;margin-bottom:8px">Escribe tu nombre de pila (o como quieras que aparezca):</label>
+      <input id="nom" maxlength="40" value="${esc(S.nombre)}" placeholder="Tu nombre">
+    </div>
+    <div class="cert">
+      <div class="faro-box">${faroSVG(RETOS.map(()=>true), true)}</div>
+      <div class="etiqueta" style="color:var(--violeta)">Reconocimiento de estudio</div>
+      <h2>Guardián del Faro</h2>
+      <div class="nombre" id="nombre-c">${esc(S.nombre)||'&nbsp;'}</div>
+      <p style="font-size:19px;max-width:620px;margin:0 auto">completó los seis retos de estudio sobre la <b>unicidad de propósito</b> y encendió todos los rayos del faro, con <b>${totalEstrellas()}</b> de 18 estrellas.</p>
+      <div class="idea" style="--c:#7C3AED;max-width:620px;margin:22px auto 10px">“…tiene una sola y alta misión—la de llevar el mensaje de A.A. a aquellos que no saben que hay una salida.”<small style="margin-top:6px">Doce Pasos y Doce Tradiciones, Quinta Tradición</small></div>
+      <p class="fuente" style="margin-top:14px">${hoy}</p>
+    </div>
+    <div class="acciones no-imprimir" style="justify-content:center"><button class="btn" style="--c:#7C3AED" id="imprimir">🖨️ Imprimir o guardar en PDF</button></div>`;
+  $("#nom").oninput=e=>{ S.nombre=e.target.value; guardar(); $("#nombre-c").innerHTML = esc(S.nombre)||'&nbsp;'; };
+  $("#imprimir").onclick=()=>window.print();
+}
+
+function ir_a(v){
+  document.documentElement.style.removeProperty("--c");
+  ({mapa:vistaMapa, plan:vistaPlan, biblio:vistaBiblio, cert:vistaCert})[v]();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* =========================================================
+   CONFETI
+   ========================================================= */
+function confeti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv=$("#confeti"), cx=cv.getContext("2d");
+  cv.width=innerWidth; cv.height=innerHeight;
+  const piezas=Array.from({length:160},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,
+    vx:(Math.random()-.5)*4,vy:2+Math.random()*4,r:4+Math.random()*6,a:Math.random()*6,va:(Math.random()-.5)*.3,
+    c:COLORES[Math.floor(Math.random()*6)]}));
+  let t=0;
+  (function cuadro(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    piezas.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=.05; p.a+=p.va;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.a); cx.fillStyle=p.c; cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6); cx.restore(); });
+    if(++t<200) requestAnimationFrame(cuadro); else cx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+(function estrellas(){
+  const box=$("#estrellas");
+  box.innerHTML = Array.from({length:40},()=>`<i style="left:${Math.random()*100}%;top:${Math.random()*70}%;animation-delay:${(Math.random()*3).toFixed(2)}s"></i>`).join("");
+})();
+document.querySelectorAll(".tab[data-vista]").forEach(b=>b.onclick=()=>{ sClic(); ir_a(b.dataset.vista); });
+const bs=$("#btn-sonido");
+const pintarSonido=()=>{ bs.textContent = S.sonido?"🔊 Sonido":"🔇 Silencio"; bs.setAttribute("aria-pressed", S.sonido); };
+bs.onclick=()=>{ S.sonido=!S.sonido; guardar(); pintarSonido(); sClic(); };
+pintarSonido();
+refrescarMarcador();
+vistaMapa();
+</script>
+</body>
+</html>
