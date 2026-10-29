@@ -875,7 +875,7 @@ function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ S = Object
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
 /* ---------- Estadísticas anónimas (no se envía nombre, progreso exportado ni IP) ---------- */
-const ESTAD_URL = "";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
+const ESTAD_URL = "https://script.google.com/macros/s/AKfycbxzxj_Mkz9qY6u7cwYkLVh8t_UIhawiXDiDv49kBHdmuPIT8hwtjtoh1s5G0in4ynuz/exec";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
 const FASES = ["abrio","intento","aprobo"];
 const pasoDe = (nivel, fase) => nivel*3 + FASES.indexOf(fase) + 1;   // 1..24 (8 niveles × 3 fases)
 const pasoGuardado = () => Math.max(0, ...LEVELS.map(L => lv(L.id).best>=PASS ? pasoDe(L.id,"aprobo") : lv(L.id).attempts ? pasoDe(L.id,"intento") : 0));
