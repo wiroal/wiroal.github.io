@@ -657,7 +657,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 /* =========================================================
    ESTADÍSTICAS ANÓNIMAS (no se envía nombre, notas ni IP)
    ========================================================= */
-const ESTAD_URL = "";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
+const ESTAD_URL = "https://script.google.com/macros/s/AKfycbyy_QFkS05Q8Ou5s6n0kgTTZylqxJ_S3Nb5oySNqr5MtV-fD0CsxD6uiezh8siSrIhU9Q/exec";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
 const FASES = ["aprende","juega","reflexiona","completado"];
 const nivelDe = (i, fase) => i*4 + FASES.indexOf(fase) + 1;   // 1..24
 const idLocal = (alm, k) => { try { let v=alm.getItem(k); if(!v){ v=Date.now().toString(36)+Math.random().toString(36).slice(2,10); alm.setItem(k,v); } return v; } catch(e){ return "anon"; } };
