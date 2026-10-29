@@ -253,6 +253,30 @@ body::before {
 .hero-bio    { animation: fadeUp 0.9s ease 0.4s both; }
 
 ::selection { background: var(--accent); color: var(--bg); }
+
+/* Acceso rápido: índice compacto de todo el sitio */
+.quick {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+}
+.quick-group { background: var(--bg-elevated); padding: 1.25rem 1.25rem 1.1rem; }
+.quick-group h4 {
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.quick-group h4 a { color: inherit; text-decoration: none; }
+.quick-group ul { list-style: none; }
+.quick-group li + li { margin-top: 0.3rem; }
+.quick-group li a {
+  color: var(--ink); text-decoration: none; font-size: 0.95rem; line-height: 1.4;
+  border-bottom: 1px solid transparent; transition: border-color 0.2s ease, color 0.2s ease;
+}
+.quick-group li a:hover { color: var(--accent-deep); border-bottom-color: var(--rule-strong); }
+.quick-group .muted { color: var(--ink-muted); font-size: 0.8rem; }
+.card-extra { margin-top: 0.6rem; font-size: 0.85rem; }
+.card-extra a { color: var(--accent-deep); }
 </style>
 </head>
 
@@ -303,9 +327,67 @@ body::before {
 <main class="container">
 
   <!-- ============================================================
-       § I  SERVICIO  (enlaces externos: aabogota / racsg)
+       ACCESO RÁPIDO  (índice de todo lo publicado en el sitio)
        ============================================================ -->
   <div class="divider">
+    <span class="divider-num">§ 0</span>
+    <span class="divider-title">Acceso rápido</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <nav class="quick" aria-label="Acceso rápido">
+    <div class="quick-group">
+      <h4><a href="#servicio">Servicio AA</a></h4>
+      <ul>
+        <li><a href="biblioteca_aa_interactiva.html">Biblioteca AA interactiva</a></li>
+        <li><a href="unicidad_de_proposito.html">La unicidad de propósito</a></li>
+        <li><a href="doce_conceptos.html">Taller: los Doce Conceptos</a></li>
+        <li><a href="alcoholismo_bogota.html">Alcoholismo en Bogotá</a></li>
+        <li><a href="top12_sitios_aa.html">Los 12 mejores sitios de AA</a></li>
+        <li><a href="https://wiroal.github.io/racsg/">Documentos del Panel 62</a></li>
+      </ul>
+    </div>
+    <div class="quick-group">
+      <h4><a href="#juegos">Juegos de estudio</a></h4>
+      <ul>
+        <li><a href="conceptos_dummis/">Doce Conceptos en Juego</a></li>
+        <li><a href="unicidad_proposito/">El Faro · Unicidad de propósito</a></li>
+        <li><a href="juego_conceptos/">Juego de los Conceptos (en grupo)</a></li>
+        <li><a href="conceptos_dummis/cuaderno.html">Cuaderno de 8 semanas</a></li>
+      </ul>
+    </div>
+    <div class="quick-group">
+      <h4><a href="#servicio">Congresos y grupos</a></h4>
+      <ul>
+        <li><a href="https://www.aabogota.com/p/reset-local-y-tipografia.html">36.º Congreso · Bogotá 2027</a></li>
+        <li><a href="congreso-region-c-claro.html">35.º Congreso · Ubaté 2026</a></li>
+        <li><a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html">Directorio de grupos · Bogotá</a></li>
+        <li><a href="https://aabogota.com">AA Bogotá</a></li>
+      </ul>
+    </div>
+    <div class="quick-group">
+      <h4><a href="#radio">Radio</a> · <a href="#analisis">Análisis</a></h4>
+      <ul>
+        <li><a href="politica/dipolos-hf.html">Dipolos para HF</a></li>
+        <li><a href="politica/01_injerencia_electoral_latam.html">Injerencia electoral</a></li>
+        <li><a href="politica/02_comparativo-candidatos.html">Comparativo de candidatos</a></li>
+        <li><a href="politica/03_duenos-poder.html">Los dueños del poder</a></li>
+        <li><a href="politica/04_normalidad-psicologica-nuremberg.html">Núremberg</a></li>
+      </ul>
+    </div>
+    <div class="quick-group">
+      <h4>Estadísticas <span class="muted">· con clave</span></h4>
+      <ul>
+        <li><a href="conceptos_dummis/estadisticas.html">Doce Conceptos en Juego</a></li>
+        <li><a href="unicidad_proposito/estadisticas.html">El Faro</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       § I  SERVICIO  (enlaces externos: aabogota / racsg)
+       ============================================================ -->
+  <div class="divider" id="servicio">
     <span class="divider-num">§ I</span>
     <span class="divider-title">Servicio</span>
     <span class="divider-line"></span>
@@ -337,9 +419,9 @@ body::before {
       <p>Información del encuentro de Bogota D.C., agosto de 2027: programa, ubicación y materiales.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
-	 <a href="https://wiroal.github.io/alcoholismo_bogota.html" class="card card-link">
+    <a href="https://wiroal.github.io/alcoholismo_bogota.html" class="card card-link">
       <span class="card-num">004 / AA</span>
-      <h3>Alcoholismo en Bogotá (2023)C</h3>
+      <h3>Alcoholismo en Bogotá (2023)</h3>
       <p>Resumen del ESTUDIO DE CONSUMO DE SUSTANCIAS PSICOACTIVAS EN BOGOTÁ D.C. 2022</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
@@ -357,13 +439,79 @@ body::before {
       <p>Selección razonada de los sitios oficiales mejor construidos, con criterios explícitos, puntajes y ficha de cada uno.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
+
+    <a href="biblioteca_aa_interactiva.html" class="card card-link">
+      <span class="card-num">007 / AA</span>
+      <h3>Biblioteca AA interactiva</h3>
+      <p>Literatura de AA, documentos históricos y materiales de servicio: busca por título, tema o categoría y guarda tus favoritos.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
+    <a href="doce_conceptos.html" class="card card-link">
+      <span class="card-num">008 / AA</span>
+      <h3>Taller: los Doce Conceptos</h3>
+      <p>“Usted ya vive los Doce Conceptos; solo que nadie le había dicho cómo se llaman.” Taller de servicio para quien apenas empieza.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
+    <div class="card">
+      <span class="card-num">009 / AA</span>
+      <h3><a href="congreso-region-c-claro.html" style="color:inherit;text-decoration:none">35.º Congreso Región C · Ubaté 2026</a></h3>
+      <p>Página del encuentro del 15 al 17 de agosto de 2026 en Ubaté, Cundinamarca: programa, hoteles, restaurantes y turismo.</p>
+      <p class="card-extra"><a href="congreso-region-c-claro.html">Versión clara</a> · <a href="congreso-region-c.html">Versión oscura</a></p>
+      <div class="card-status">Evento realizado</div>
+    </div>
   </div>
 
   <!-- ============================================================
-       § II  RADIO  (artículo interno: /hj3raw/)
+       § II  JUEGOS DE ESTUDIO AA  (conceptos_dummis, unicidad_proposito, juego_conceptos)
        ============================================================ -->
-  <div class="divider">
+  <div class="divider" id="juegos">
     <span class="divider-num">§ II</span>
+    <span class="divider-title">Juegos de estudio</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <p class="section-intro">
+    Los Conceptos y la unicidad de propósito, explicados como juegos:
+    fichas cortas, retos y niveles para aprender a su propio ritmo o en grupo.
+  </p>
+
+  <div class="cards">
+    <a href="conceptos_dummis/" class="card card-link">
+      <span class="card-num">001 / JG</span>
+      <h3>Doce Conceptos en Juego</h3>
+      <p>Recorrido interactivo por los Doce Conceptos: qué decide cada instancia, cómo se reparte el servicio y cómo se relacionan con los Pasos, las Tradiciones y la vida del grupo.</p>
+      <div class="card-status active">Jugar →</div>
+    </a>
+
+    <a href="unicidad_proposito/" class="card card-link">
+      <span class="card-num">002 / JG</span>
+      <h3>El Faro · Unicidad de propósito</h3>
+      <p>Una sola misión: llevar el mensaje al alcohólico que aún sufre. Completa los 6 retos y enciende cada rayo del faro.</p>
+      <div class="card-status active">Jugar →</div>
+    </a>
+
+    <a href="juego_conceptos/" class="card card-link">
+      <span class="card-num">003 / JG</span>
+      <h3>Juego de los Conceptos · en grupo</h3>
+      <p>Test de entrada y de salida para una charla: la pantalla se proyecta en la sala y cada participante responde desde su celular.</p>
+      <div class="card-status active">Abrir →</div>
+    </a>
+
+    <a href="conceptos_dummis/cuaderno.html" class="card card-link">
+      <span class="card-num">004 / JG</span>
+      <h3>Cuaderno de 8 semanas</h3>
+      <p>Plan de estudio de los Doce Conceptos con ruta semanal, bitácora, tarjetas y casos para una RSG que empieza.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+  </div>
+
+  <!-- ============================================================
+       § III  RADIO  (artículo interno: /politica/dipolos-hf.html)
+       ============================================================ -->
+  <div class="divider" id="radio">
+    <span class="divider-num">§ III</span>
     <span class="divider-title">Radio · HJ3RAW</span>
     <span class="divider-line"></span>
   </div>
@@ -373,7 +521,7 @@ body::before {
   </p>
 
   <div class="cards">
-    <a href="hj3raw/dipolos-hf.html" class="card card-link">
+    <a href="politica/dipolos-hf.html" class="card card-link">
       <span class="card-num">001 / RF</span>
       <h3>Dipolos para HF</h3>
       <p>Cálculo, construcción y ajuste de antenas dipolo de media onda para las bandas de HF.</p>
@@ -396,10 +544,10 @@ body::before {
   </div>
 
   <!-- ============================================================
-       § III  ANÁLISIS  (artículos internos: /politica/)
+       § IV  ANÁLISIS  (artículos internos: /politica/)
        ============================================================ -->
-  <div class="divider">
-    <span class="divider-num">§ III</span>
+  <div class="divider" id="analisis">
+    <span class="divider-num">§ IV</span>
     <span class="divider-title">Análisis</span>
     <span class="divider-line"></span>
   </div>
@@ -423,6 +571,13 @@ body::before {
       <div class="card-status active">Ver aquí →</div>
     </a>
 
+    <a href="politica/02_comparativo-candidatos.html" class="card card-link">
+      <span class="card-num">005 / PL</span>
+      <h3>De la Espriella vs Cepeda</h3>
+      <p>Programas de gobierno 2026–2030 comparados sector por sector: qué ofrece cada uno al empresario, al campesino, al asalariado y al desempleado.</p>
+      <div class="card-status active">Ver aquí →</div>
+    </a>
+
     <a href="politica/03_duenos-poder.html" class="card card-link">
       <span class="card-num">003 / PL</span>
       <h3>Los dueños del poder</h3>
@@ -439,10 +594,10 @@ body::before {
       </div>
 
   <!-- ============================================================
-       § IV  NOTAS  (carpetas /linux y /python · pendientes)
+       § V  NOTAS  (carpetas /linux y /python · pendientes)
        ============================================================ -->
   <div class="divider">
-    <span class="divider-num">§ IV</span>
+    <span class="divider-num">§ V</span>
     <span class="divider-title">Notas</span>
     <span class="divider-line"></span>
   </div>
@@ -466,55 +621,6 @@ body::before {
       <div class="card-status">Pendiente publicar</div>
     </article>
   </div>
-
-  <!-- ============================================================
-       § V  CONCEPTOS  (página interna: /conceptos_dummis/)
-       ============================================================ -->
-  <div class="divider">
-    <span class="divider-num">§ V</span>
-    <span class="divider-title">Conceptos</span>
-    <span class="divider-line"></span>
-  </div>
-
-  <p class="section-intro">
-    Los Doce Conceptos para el Servicio Mundial, explicados como un juego:
-    fichas cortas, retos y niveles para aprenderlos desde cero.
-  </p>
-
-  <div class="cards">
-    <a href="https://wiroal.github.io/conceptos_dummis/" class="card card-link" style="grid-column: 1 / -1;">
-      <span class="card-num">001 / DC</span>
-      <h3>Doce Conceptos en Juego</h3>
-      <p>Recorrido interactivo por los Doce Conceptos: qué decide cada instancia, cómo se reparte el servicio y cómo se relacionan con los Pasos, las Tradiciones y la vida del grupo.</p>
-      <div class="card-status active">Ver aquí →</div>
-    </a>
-  </div>
-
-
-
-  <!-- ============================================================
-       § V  CONCEPTOS  (página interna: /conceptos_dummis/)
-       ============================================================ -->
-  <div class="divider">
-    <span class="divider-num">§ VI</span>
-    <span class="divider-title">unicidad</span>
-    <span class="divider-line"></span>
-  </div>
-
-  <p class="section-intro">
-    Unicidad de propósito, el faro que nos guia.
-  </p>
-
-  <div class="cards">
-    <a href="https://wiroal.github.io/unicidad_proposito/" class="card card-link" style="grid-column: 1 / -1;">
-      <span class="card-num">001 / DC</span>
-      <h3>Unicidad de propósito</h3>
-      <p>Una sola misión: llevar el mensaje al alcohólico que aún sufre. Completa los 6 retos y enciende cada rayo del faro.</p>
-      <div class="card-status active">Ver aquí →</div>
-    </a>
-  </div>
-
-
 
   <!-- ============================================================
        § VI  EN OTROS LUGARES
