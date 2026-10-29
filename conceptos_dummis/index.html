@@ -874,6 +874,40 @@ let S = fresh();
 function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ S = Object.assign(fresh(), JSON.parse(raw)); } }catch(e){} }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
+/* ---------- Estadísticas anónimas (no se envía nombre, progreso exportado ni IP) ---------- */
+const ESTAD_URL = "";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
+const FASES = ["abrio","intento","aprobo"];
+const pasoDe = (nivel, fase) => nivel*3 + FASES.indexOf(fase) + 1;   // 1..24 (8 niveles × 3 fases)
+const pasoGuardado = () => Math.max(0, ...LEVELS.map(L => lv(L.id).best>=PASS ? pasoDe(L.id,"aprobo") : lv(L.id).attempts ? pasoDe(L.id,"intento") : 0));
+const idLocal = (alm, k) => { try{ let v=alm.getItem(k); if(!v){ v=Date.now().toString(36)+Math.random().toString(36).slice(2,10); alm.setItem(k,v); } return v; }catch(e){ return "anon"; } };
+const UID = idLocal(localStorage, KEY+".uid"), SID = idLocal(sessionStorage, KEY+".sid");
+let geo = {};
+const geoListo = (async () => {
+  if(!ESTAD_URL) return;
+  try{ const g = JSON.parse(sessionStorage.getItem(KEY+".geo")); if(g){ geo = g; return; } }catch(e){}
+  try{
+    const d = await (await fetch("https://get.geojs.io/v1/ip/geo.json")).json();
+    geo = {ciudad:d.city||"", region:d.region||"", pais:d.country||"", codigo:d.country_code||""};   // la IP se descarta aquí
+    try{ sessionStorage.setItem(KEY+".geo", JSON.stringify(geo)); }catch(e){}
+  }catch(e){}
+})();
+async function registrar(evento, datos={}){
+  if(!ESTAD_URL) return;
+  await geoListo;
+  let origen = ""; try{ origen = document.referrer ? new URL(document.referrer).hostname : ""; }catch(e){}
+  const cuerpo = {evento, uid:UID, sid:SID, paso:S.paso||0, xp:S.xp, ...geo, ...datos, origen,
+    dispositivo: matchMedia("(pointer:coarse)").matches ? "móvil" : "computador", idioma: navigator.language};
+  try{ fetch(ESTAD_URL, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain"}, body:JSON.stringify(cuerpo)}); }catch(e){}
+}
+// Registra un paso nuevo del recorrido (solo cuando el usuario avanza más allá de lo que ya tenía)
+function avance(nivel, fase, extra={}){
+  const n = pasoDe(nivel, fase);
+  if(n <= (S.paso||0)) return false;
+  S.paso = n; save();
+  registrar(fase, {nivel, ...extra});
+  return true;
+}
+
 function lv(id){ return S.levels[id] || {best:0, stars:0, attempts:0}; }
 function starsFor(p){ return p>=STAR3?3 : p>=STAR2?2 : p>=PASS?1 : 0; }
 function unlocked(id){
@@ -1042,6 +1076,7 @@ function lessonCard(id){
 function vNivel(id){
   const L = LEVELS[id]; if(!L) return vMapa();
   if(!unlocked(id)) return `<div class="card"><h2>🔒 Nivel bloqueado</h2><p>Aprueba “${esc(LEVELS[id-1]?.name||"")}” con ${PASS}% o más para abrirlo.</p><button class="btn" onclick="go('mapa')">Volver al mapa</button></div>`;
+  avance(id, "abrio");
   const st = lv(id);
   const nq = L.boss ? BOSS_N : Q[id].length;
   const ready = L.boss || allRead(id);
@@ -1161,7 +1196,7 @@ function openSheet(html){
 function closeSheet(){ const m=$("#modal"); if(m){ m.remove(); document.body.style.overflow=""; } }
 function openLesson(id){ openSheet(C(id) ? conceptSheet(C(id)) : extraSheet(id)); }
 function markRead(id){
-  if(!S.read[id]){ S.read[id]=todayKey(); save(); addXP(10, "ficha leída"); checkBadges(); }
+  if(!S.read[id]){ S.read[id]=todayKey(); save(); addXP(10, "ficha leída"); checkBadges(); registrar("ficha", {ficha:id}); }
   closeSheet(); route();
 }
 function doMicro(n, el){ if(S.micro[n]) return; S.micro[n]=todayKey(); save(); el.disabled=true; addXP(15, "micro-reto cumplido"); }
@@ -1362,6 +1397,8 @@ function finish(){
     else msg = `Te faltó poco. Necesitas ${PASS}%: repasa las fichas y vuelve a intentarlo.`;
   }
   const rb = rank().r.name; S.xp += xpGain; save(); renderTop(); checkBadges();
+  if(!z.daily){ avance(id, "intento"); if(pct>=PASS) avance(id, "aprobo"); }
+  registrar("reto", {nivel: z.daily ? "diario" : id, puntaje:pct, estrellas:stars, errores:z.wrong.length});
   if(rank().r.name!==rb) setTimeout(()=>toast(`${rank().r.icon} ¡Creciste! Ahora eres ${rank().r.name}`), 900);
   if(pct>=PASS) confetti();
   const L = LEVELS[id];
@@ -1452,7 +1489,7 @@ function vMas(){
       <p style="margin-top:12px">¿Prefieres un plan de 8 semanas con diario y bitácora? Abre el <a href="cuaderno.html">cuaderno de estudio</a> (versión anterior), o el vault de Obsidian en la carpeta <span class="kbd">vault/</span>.</p>
     </section>
     <section class="card"><h2>💾 Tu progreso</h2>
-      <p>Tu avance se guarda solo en este navegador. Nada se envía a ningún servidor. Para pasarlo a otro equipo, expórtalo y luego impórtalo allá.</p>
+      <p>Tu avance se guarda solo en este navegador.${ESTAD_URL?" Al servidor solo llegan estadísticas anónimas (ver Anonimato).":" Nada se envía a ningún servidor."} Para pasarlo a otro equipo, expórtalo y luego impórtalo allá.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn sky sm" onclick="exportP()">⬇ Exportar</button>
         <label class="btn ghost sm" style="cursor:pointer">⬆ Importar<input type="file" accept="application/json" class="hidden" onchange="importP(this)"></label>
@@ -1464,7 +1501,7 @@ function vMas(){
         <button class="btn ghost sm" onclick="setTheme('')">⚙️ Automático</button></div>
     </section>
     <section class="card"><h2>🤫 Anonimato</h2>
-      <p style="margin:0">La página no pide nombres ni cuentas, no tiene analítica y está marcada para no aparecer en buscadores. Por la Undécima Tradición, comparte el enlace con discreción, de persona a persona.</p>
+      <p style="margin:0">La página no pide nombres ni cuentas y está marcada para no aparecer en buscadores.${ESTAD_URL?" Para mejorar el material se registran estadísticas anónimas de uso: hasta qué nivel llegas, tus resultados en los retos y tu ciudad aproximada. Nunca tu nombre ni tu dirección IP.":" No tiene analítica."} Por la Undécima Tradición, comparte el enlace con discreción, de persona a persona.</p>
     </section>
   </div>`;
 }
@@ -1495,6 +1532,8 @@ window.addEventListener("hashchange", route);
 (function init(){
   try{ const t = localStorage.getItem(KEY+".theme"); if(t) document.documentElement.setAttribute("data-theme", t); }catch(e){}
   load(); renderTop();
+  S.paso = Math.max(S.paso||0, pasoGuardado()); save();   // progreso previo a las estadísticas
+  registrar("visita", {fichas:Object.keys(S.read).length});
   document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click", ()=>go(b.dataset.v)));
   route();
 })();

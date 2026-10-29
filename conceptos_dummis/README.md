@@ -12,6 +12,8 @@ Cuaderno de estudio para los **Doce Conceptos para el Servicio Mundial de A.A.**
   - 99 retos de seis tipos (opción múltiple, verdadero/falso, casos, completar la Forma corta, emparejar y ordenar), con explicación y fuente;
   - XP, rachas, estrellas (★ 80 % · ★★ 90 % · ★★★ 100 %), rangos, insignias, metas y reto diario;
   - mapa de puentes Conceptos–Pasos–Tradiciones, glosario y exportación/importación del progreso (localStorage).
+- `estadisticas.html` — panel de estadísticas anónimas de uso (ver abajo).
+- `apps-script/Code.gs` — código para Google Apps Script que recibe y resume las estadísticas.
 - `cuaderno.html` — el cuaderno de 8 semanas anterior (ruta, bitácora, tarjetas y casos).
 - `vault/` — vault de Obsidian con notas enlazadas, plantillas, casos, glosario y MOC.
 - `README.md` — este archivo.
@@ -36,6 +38,8 @@ Abre la página publicada o `index.html` y empieza por el **Nivel 0**: lee las f
 ```
 conceptos_dummis/
 ├── index.html
+├── estadisticas.html
+├── apps-script/Code.gs   (se pega en Apps Script)
 ├── README.md
 └── vault/
     ├── 00 Inicio/          MOC, guía de uso y canvas
@@ -61,8 +65,36 @@ La sesión base dura 35 minutos y tiene cinco tramos: llegada, lectura, traducci
 
 - La página no incluye apellidos ni el nombre del grupo.
 - Está marcada con `noindex` para no aparecer en buscadores.
-- No hay servidor, cuentas ni analítica: el progreso vive en `localStorage`.
+- No hay cuentas: el progreso vive en `localStorage`.
+- Las estadísticas de uso son anónimas y opcionales (solo se activan si `ESTAD_URL` tiene valor). La IP se usa en el navegador para calcular la ciudad aproximada y **no se guarda**.
 - Por la Tradición 11, comparte el enlace con discreción; no lo publiques en redes abiertas.
+
+## Estadísticas de uso (opcional)
+
+El juego puede registrar estadísticas **anónimas**:
+
+- hasta qué paso llega cada visitante (24 pasos = 8 niveles × *abrió*, *intentó el reto*, *aprobó*);
+- el resultado de cada reto (puntaje, estrellas, errores), incluido el reto diario;
+- qué fichas se marcan como leídas;
+- ciudad, departamento y país aproximados, calculados a partir de la IP con [geojs.io](https://www.geojs.io/). **La IP no se guarda**; tampoco nombres ni el archivo de progreso.
+
+Cada navegador recibe un identificador aleatorio para contar usuarios únicos y visitas que regresan.
+
+**Instalación (una sola vez, gratis):**
+
+1. Crea una hoja de cálculo nueva en Google Sheets (por ejemplo, "Doce Conceptos – estadísticas").
+2. En la hoja: **Extensiones → Apps Script**. Borra lo que haya y pega el contenido de `apps-script/Code.gs`. Guarda.
+3. **Implementar → Nueva implementación → Tipo: Aplicación web.** Ejecutar como: *Yo*. Quién tiene acceso: *Cualquier usuario*. Autoriza los permisos.
+4. Copia la URL que termina en `/exec` y pégala en `index.html`, en la línea `const ESTAD_URL = "";`.
+5. (Opcional) Para que solo tú veas el resumen: en Apps Script, **Configuración del proyecto → Propiedades de la secuencia de comandos**, agrega `CLAVE` con la clave que quieras.
+
+**Ver los datos:**
+
+- Abre `https://wiroal.github.io/conceptos_dummis/estadisticas.html`, pega la URL `/exec` y la clave.
+  Muestra usuarios, visitas, avance promedio, el embudo por nivel, los resultados de los retos, las fichas más leídas y la distribución por país, departamento de Colombia y ciudad.
+- O en la hoja de cálculo: menú **📊 Estadísticas → Actualizar resumen** crea la pestaña `resumen`. Los eventos crudos quedan en la pestaña `eventos`.
+
+Si cambias `Code.gs` después, usa **Implementar → Administrar implementaciones → Editar → Nueva versión** para que la URL siga igual.
 
 ## Fuentes y derechos
 
