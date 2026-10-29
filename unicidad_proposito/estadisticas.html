@@ -45,7 +45,7 @@ th:not(:first-child),td:not(:first-child){text-align:right;font-variant-numeric:
 <header class="cab"><div><h1>📊 Estadísticas de El Faro</h1><p style="margin:4px 0 0;opacity:.9">Datos anónimos: avance de cada visitante y ciudad aproximada.</p></div></header>
 <main>
   <form id="f">
-    <input id="url" placeholder="URL de la aplicación web de Apps Script (https://script.google.com/macros/s/AKfycbyy_QFkS05Q8Ou5s6n0kgTTZylqxJ_S3Nb5oySNqr5MtV-fD0CsxD6uiezh8siSrIhU9Q/exec)" required>
+    <input id="url" placeholder="URL de la aplicación web de Apps Script (https://script.google.com/macros/s/…/exec)" required>
     <input id="clave" class="clave" placeholder="Clave" type="password">
     <button>Ver datos</button>
   </form>
@@ -104,7 +104,7 @@ async function cargar(){
   }catch(e){ $("#out").innerHTML = `<p class="msj">No se pudieron cargar los datos: ${esc(e.message)}</p>`; }
 }
 $("#f").onsubmit = e => { e.preventDefault(); cargar(); };
-$("#url").value = new URLSearchParams(location.search).get("url") || mem("faro-estad-url");
+$("#url").value = new URLSearchParams(location.search).get("url") || mem("faro-estad-url") || "https://script.google.com/macros/s/AKfycbyy_QFkS05Q8Ou5s6n0kgTTZylqxJ_S3Nb5oySNqr5MtV-fD0CsxD6uiezh8siSrIhU9Q/exec";
 if($("#url").value) cargar();
 </script>
 </body>
