@@ -25,6 +25,8 @@ Copia esta carpeta en el repositorio `wiroal.github.io`:
 wiroal.github.io/
 └── unicidad_proposito/
     ├── index.html
+    ├── estadisticas.html
+    ├── apps-script/Code.gs   (se pega en Apps Script; no hace falta publicarlo)
     └── README.md
 ```
 
@@ -36,8 +38,31 @@ Después de hacer `git push`, queda disponible en:
 - Un solo archivo HTML, sin dependencias (solo las fuentes de Google Fonts, con respaldo del sistema).
 - Funciona en celular, tableta y computador.
 - El progreso, las notas y el nombre se guardan solo en el navegador de cada persona (`localStorage`).
+- Estadísticas anónimas opcionales con Google Apps Script (ver abajo).
 - Sonidos generados con Web Audio (se pueden silenciar).
 - Respeta la preferencia de "reducir movimiento".
+
+## Estadísticas de uso (opcional)
+
+El juego puede registrar estadísticas **anónimas**: hasta qué paso llega cada visitante (24 pasos = 6 retos × Aprende, Juega, Reflexiona, Completó)
+y su ciudad aproximada. La ciudad se calcula a partir de la IP con [geojs.io](https://www.geojs.io/), pero **la IP no se guarda**; tampoco el nombre ni las notas.
+Cada navegador recibe un identificador aleatorio para contar usuarios únicos.
+
+**Instalación (una sola vez, gratis):**
+
+1. Crea una hoja de cálculo nueva en Google Sheets (por ejemplo, "El Faro – estadísticas").
+2. En la hoja: **Extensiones → Apps Script**. Borra lo que haya y pega el contenido de `apps-script/Code.gs`. Guarda.
+3. **Implementar → Nueva implementación → Tipo: Aplicación web.** Ejecutar como: *Yo*. Quién tiene acceso: *Cualquier usuario*. Autoriza los permisos.
+4. Copia la URL que termina en `/exec` y pégala en `index.html`, en la línea `const ESTAD_URL = "";`.
+5. (Opcional) Para que solo tú veas el resumen: en Apps Script, **Configuración del proyecto → Propiedades de la secuencia de comandos**, agrega `CLAVE` con la clave que quieras.
+
+**Ver los datos:**
+
+- Abre `estadisticas.html` (por ejemplo `https://wiroal.github.io/unicidad_proposito/estadisticas.html`), pega la URL `/exec` y la clave.
+  Muestra usuarios, visitas, avance promedio, el % que llega a cada paso, y la distribución por país, departamento de Colombia y ciudad.
+- O en la hoja de cálculo: menú **📊 Estadísticas → Actualizar resumen** crea la pestaña `resumen`. Los eventos crudos quedan en la pestaña `eventos`.
+
+Si cambias `Code.gs` después, usa **Implementar → Administrar implementaciones → Editar → Nueva versión** para que la URL siga igual.
 
 ## Fuentes
 
