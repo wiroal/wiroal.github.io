@@ -655,6 +655,38 @@ const anunciar = t => { $("#vivo").textContent = t; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* =========================================================
+   ESTADÍSTICAS ANÓNIMAS (no se envía nombre, notas ni IP)
+   ========================================================= */
+const ESTAD_URL = "";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
+const FASES = ["aprende","juega","reflexiona","completado"];
+const nivelDe = (i, fase) => i*4 + FASES.indexOf(fase) + 1;   // 1..24
+const idLocal = (alm, k) => { try { let v=alm.getItem(k); if(!v){ v=Date.now().toString(36)+Math.random().toString(36).slice(2,10); alm.setItem(k,v); } return v; } catch(e){ return "anon"; } };
+const UID = idLocal(localStorage, "faro-uid"), SID = idLocal(sessionStorage, "faro-sid");
+let geo = {};
+const geoListo = (async () => {
+  if(!ESTAD_URL) return;
+  try{ const g = JSON.parse(sessionStorage.getItem("faro-geo")); if(g){ geo = g; return; } }catch(e){}
+  try{
+    const d = await (await fetch("https://get.geojs.io/v1/ip/geo.json")).json();
+    geo = {ciudad:d.city||"", region:d.region||"", pais:d.country||"", codigo:d.country_code||""};   // la IP se descarta aquí
+    try{ sessionStorage.setItem("faro-geo", JSON.stringify(geo)); }catch(e){}
+  }catch(e){}
+})();
+async function registrar(evento, datos={}){
+  if(!ESTAD_URL) return;
+  await geoListo;
+  let origen = ""; try{ origen = document.referrer ? new URL(document.referrer).hostname : ""; }catch(e){}
+  const cuerpo = {evento, uid:UID, sid:SID, ...geo, ...datos, origen,
+    dispositivo: matchMedia("(pointer:coarse)").matches ? "móvil" : "computador", idioma: navigator.language};
+  try{ fetch(ESTAD_URL, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain"}, body:JSON.stringify(cuerpo)}); }catch(e){}
+}
+function avance(fase, extra={}){
+  const n = nivelDe(R.i, fase);
+  if(n > (S.nivel||0)){ S.nivel = n; guardar(); }
+  registrar(fase, {reto:R.i+1, nivel:n, ...extra});
+}
+
+/* =========================================================
    SONIDO (Web Audio, sin archivos)
    ========================================================= */
 let ctx;
@@ -742,7 +774,7 @@ function vistaMapa(){
         </button>`;}).join("")}
     </div>
     ${totalHechos()===6?`<div style="text-align:center;margin-top:28px"><button class="btn grande" style="--c:#7C3AED" data-ir="cert">🏅 ¡Faro encendido! Recibe tu certificado</button></div>`:''}
-    <p class="nota">Material de estudio para miembros y grupos, preparado a partir de literatura aprobada por la Conferencia y documentos de servicio. No es publicación oficial de A.A.<br>Tu progreso se guarda solo en este dispositivo.
+    <p class="nota">Material de estudio para miembros y grupos, preparado a partir de literatura aprobada por la Conferencia y documentos de servicio. No es publicación oficial de A.A.<br>Tu progreso se guarda solo en este dispositivo.${ESTAD_URL?' Para mejorar el material se registran estadísticas anónimas de uso (avance y ciudad aproximada); nunca tu nombre, tus notas ni tu IP.':''}
       <button class="no-imprimir" id="reiniciar" style="text-decoration:underline;color:var(--suave);font-size:15px">Reiniciar progreso</button></p>`;
   requestAnimationFrame(()=>{ const b=$("#barra-b"); if(b) b.style.width = pct+"%"; });
   app.querySelectorAll("[data-reto]").forEach(b=>b.onclick=()=>{ sClic(); abrirReto(+b.dataset.reto); });
@@ -754,6 +786,7 @@ function vistaMapa(){
 let R; // estado del reto en curso
 function abrirReto(i){
   R = {i, r:RETOS[i], fase:"aprende", tarjeta:0, act:0, errores:0, aciertos:0};
+  avance("aprende");
   document.documentElement.style.setProperty("--c", R.r.color);
   pintarReto(); window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -787,12 +820,12 @@ function pintarAprende(){
       </div>
     </article>`;
   $("#ant").onclick=()=>{ sClic(); R.tarjeta--; pintarAprende(); };
-  $("#sig").onclick=()=>{ sClic(); if(k===n-1){ R.fase="juega"; R.act=0; pintarReto(); } else { R.tarjeta++; pintarAprende(); } };
+  $("#sig").onclick=()=>{ sClic(); if(k===n-1){ R.fase="juega"; R.act=0; avance("juega"); pintarReto(); } else { R.tarjeta++; pintarAprende(); } };
 }
 
 function pintarActividad(){
   const a = R.r.juego[R.act];
-  const fin = () => { R.act++; if(R.act>=R.r.juego.length){ R.fase="reflexiona"; pintarReto(); } else pintarActividad(); window.scrollTo({top:0,behavior:"smooth"}); };
+  const fin = () => { R.act++; if(R.act>=R.r.juego.length){ R.fase="reflexiona"; avance("reflexiona"); pintarReto(); } else pintarActividad(); window.scrollTo({top:0,behavior:"smooth"}); };
   ({fill:actCompletar, quiz:actPreguntas, sort:actClasificar, order:actOrdenar})[a.tipo](a, fin);
 }
 function cabActividad(titulo, extra=""){
@@ -926,6 +959,7 @@ function terminarReto(){
   const primera = !S.hechos[i];
   S.hechos[i]=true; S.estrellas[i]=Math.max(S.estrellas[i]||0, est);
   sumar(est*20 + (primera?50:0));
+  avance("completado", {estrellas:est, errores:e});
   guardar(); refrescarMarcador(); sGana(); confeti();
   const lit = RETOS.map((_,k)=>!!S.hechos[k]);
   const ultimo = totalHechos()===6;
@@ -999,6 +1033,7 @@ function vistaCert(){
       <button class="btn" style="--c:#7C3AED" id="a-retos">🗺️ Ir a los retos</button></div>`;
     $("#a-retos").onclick=vistaMapa; return;
   }
+  registrar("certificado", {nivel:24});
   const hoy = new Date().toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"});
   app.innerHTML = `
     <div class="no-imprimir" style="text-align:center;margin-bottom:18px">
@@ -1057,6 +1092,8 @@ const pintarSonido=()=>{ bs.textContent = S.sonido?"🔊 Sonido":"🔇 Silencio"
 bs.onclick=()=>{ S.sonido=!S.sonido; guardar(); pintarSonido(); sClic(); };
 pintarSonido();
 refrescarMarcador();
+S.nivel = Math.max(S.nivel||0, ...RETOS.map((_,i)=>S.hechos[i]?(i+1)*4:0));   // progreso previo a las estadísticas
+registrar("visita", {nivel:S.nivel});
 vistaMapa();
 </script>
 </body>
