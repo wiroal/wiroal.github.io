@@ -131,6 +131,29 @@ footer{border-top:1px solid var(--line);margin-top:64px;padding:26px 0 60px;font
 </header>
 
 <section>
+  <div class="box calc" id="calc">
+    <h3>Su mercado del mes: lo que paga hoy y lo que pagaría con la ley</h3>
+    <p class="how">La cuenta es sencilla. Si un producto hoy no paga IVA y cuesta <b>$10.000</b>, con el IVA del 19% pasaría a costar <b>$11.900</b>. Si hoy paga el 5%, sube un 13,3%: de <b>$10.000</b> a <b>$11.333</b>.</p>
+    <p class="note" style="margin-bottom:4px">Abajo hay un mercado de ejemplo para un hogar de cuatro personas durante un mes. Con los botones <b>−</b> y <b>+</b> puede cambiar las cantidades para que se parezca a lo que usted compra.</p>
+    <div class="mk-head"><span>Producto</span><span>Cantidad</span><span>Hoy</span><span>Con la ley</span></div>
+    <div class="mk-group up">Lo que sube</div>
+    <div id="mk-up"></div>
+    <div class="mk-group same">Lo que queda igual</div>
+    <div id="mk-same"></div>
+    <div class="mk-sum">
+      <div class="mk-row"><span>Total del mercado</span><span class="mk-p" id="th">$0</span><span class="mk-p ley" id="tl">$0</span></div>
+    </div>
+    <div class="out">
+      <div><b id="om">$0</b><span>más al mes por el mismo mercado</span></div>
+      <div><b id="oy">$0</b><span>más al año</span></div>
+    </div>
+    <p class="equiv" id="eq"></p>
+    <button type="button" class="reset" id="mk-reset">Volver al mercado de ejemplo</button>
+    <p class="note" style="margin:14px 0 0">Los precios son de ejemplo y pueden variar según la tienda. El cálculo supone que el comerciante traslada todo el impuesto al precio, que es lo usual con el IVA. Rige desde el 1 de enero de 2028 si el Congreso aprueba el texto como fue radicado. Si su hogar está en el Sisbén como pobre o vulnerable, podría recibir una devolución parcial o total, pero solo del IVA que quede registrado en facturas electrónicas a su nombre (ver sección 3).</p>
+  </div>
+</section>
+
+<section>
   <p class="lead" style="margin-top:32px">El Gobierno radicó la <strong>Ley de Rescate Económico</strong> para cerrar el hueco fiscal. Promete que el 70% del ajuste saldrá de recortar gasto del Estado. Pero en la parte tributaria hay una decisión de fondo: <strong>bajarles la renta a las empresas</strong> y compensar ese recaudo cobrando más a los asalariados de ingreso medio y ampliando el IVA a buena parte del mercado.</p>
   <div class="kpis">
     <div class="kpi g"><div class="v">−$12 bill.</div><div class="l">al año deja de pagar el sector empresarial al bajar su renta del 35% al 31%</div></div>
@@ -165,26 +188,6 @@ footer{border-top:1px solid var(--line);margin-top:64px;padding:26px 0 60px;font
   <h3>Fuera del mercado, otros gastos de todos los días</h3>
   <p>También pasan a pagar IVA del 19% los <strong>computadores y celulares de gama baja</strong> (hoy excluidos), el <strong>internet de estratos 1, 2 y 3</strong>, las <strong>bicicletas</strong> y los carros eléctricos e híbridos, y las <strong>compras en plataformas como Temu o Shein</strong> sin importar el monto. La cerveza, el cigarrillo y los vapeadores también suben de impuesto.</p>
 
-  <div class="box calc" id="calc">
-    <h3>Su mercado del mes: lo que paga hoy y lo que pagaría con la ley</h3>
-    <p class="how">La cuenta es sencilla. Si un producto hoy no paga IVA y cuesta <b>$10.000</b>, con el IVA del 19% pasaría a costar <b>$11.900</b>. Si hoy paga el 5%, sube un 13,3%: de <b>$10.000</b> a <b>$11.333</b>.</p>
-    <p class="note" style="margin-bottom:4px">Abajo hay un mercado de ejemplo para un hogar de cuatro personas durante un mes. Con los botones <b>−</b> y <b>+</b> puede cambiar las cantidades para que se parezca a lo que usted compra.</p>
-    <div class="mk-head"><span>Producto</span><span>Cantidad</span><span>Hoy</span><span>Con la ley</span></div>
-    <div class="mk-group up">Lo que sube</div>
-    <div id="mk-up"></div>
-    <div class="mk-group same">Lo que queda igual</div>
-    <div id="mk-same"></div>
-    <div class="mk-sum">
-      <div class="mk-row"><span>Total del mercado</span><span class="mk-p" id="th">$0</span><span class="mk-p ley" id="tl">$0</span></div>
-    </div>
-    <div class="out">
-      <div><b id="om">$0</b><span>más al mes por el mismo mercado</span></div>
-      <div><b id="oy">$0</b><span>más al año</span></div>
-    </div>
-    <p class="equiv" id="eq"></p>
-    <button type="button" class="reset" id="mk-reset">Volver al mercado de ejemplo</button>
-    <p class="note" style="margin:14px 0 0">Los precios son de ejemplo y pueden variar según la tienda. El cálculo supone que el comerciante traslada todo el impuesto al precio, que es lo usual con el IVA. Rige desde el 1 de enero de 2028 si el Congreso aprueba el texto como fue radicado. Si su hogar está en el Sisbén como pobre o vulnerable, podría recibir una devolución parcial o total, pero solo del IVA que quede registrado en facturas electrónicas a su nombre (ver sección 3).</p>
-  </div>
 </section>
 
 <section>
