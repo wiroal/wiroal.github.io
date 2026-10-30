@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Ley de Rescate en tu mercado</title>
+<meta name="description" content="Qué implica el proyecto de Ley de Rescate Económico (PL 477/26) para la canasta familiar, por qué bajar impuestos a las empresas no garantiza empleo, y cómo está Colombia frente a América Latina en pobreza, desigualdad e impuestos.">
+<style>
+:root{
+  --bg:#f7f4ee; --paper:#fffdf8; --ink:#1d1b18; --ink2:#55504a; --muted:#8a837a;
+  --line:#e4ddd1; --red:#c2412d; --red-soft:#f6ddd6; --gold:#b7791f; --gold-soft:#f5e7cc;
+  --blue:#2f5d7c; --blue-soft:#dbe7ef; --green:#3d7a4f; --green-soft:#dcebdf;
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15140f; --paper:#1d1b16; --ink:#f1ece2; --ink2:#c9c1b4; --muted:#968e82;
+    --line:#35312a; --red:#ff7a63; --red-soft:#3d221c; --gold:#e8ad4c; --gold-soft:#3a2e18;
+    --blue:#7fb2d4; --blue-soft:#1d2c37; --green:#7cc392; --green-soft:#1d3024;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15140f; --paper:#1d1b16; --ink:#f1ece2; --ink2:#c9c1b4; --muted:#968e82;
+  --line:#35312a; --red:#ff7a63; --red-soft:#3d221c; --gold:#e8ad4c; --gold-soft:#3a2e18;
+  --blue:#7fb2d4; --blue-soft:#1d2c37; --green:#7cc392; --green-soft:#1d3024;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header.hero{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--serif);font-size:clamp(34px,6vw,54px);line-height:1.08;margin:14px 0 18px;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--red)}
+.dek{font-size:21px;color:var(--ink2);line-height:1.5;margin:0}
+.byline{margin-top:22px;font-size:14px;color:var(--muted)}
+h2{font-family:var(--serif);font-size:clamp(26px,4.2vw,34px);line-height:1.15;margin:64px 0 14px;letter-spacing:-.005em}
+h2 .num{display:block;font-family:var(--sans);font-size:13px;letter-spacing:.14em;color:var(--muted);font-weight:700;margin-bottom:8px}
+h3{font-size:19px;margin:34px 0 8px}
+p{margin:0 0 18px}
+.lead{font-size:20px}
+strong{font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:32px 0 8px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
+.kpi .v{font-family:var(--serif);font-size:clamp(28px,5vw,38px);line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:14.5px;color:var(--ink2);margin-top:10px;line-height:1.4}
+.kpi.r .v{color:var(--red)} .kpi.g .v{color:var(--gold)}
+table{width:100%;border-collapse:collapse;font-size:16px;margin:16px 0 8px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:13px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill.r{background:var(--red-soft);color:var(--red)} .pill.o{background:var(--gold-soft);color:var(--gold)} .pill.k{background:var(--green-soft);color:var(--green)}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px;margin:26px 0}
+.box h3{margin-top:0}
+.note{font-size:14.5px;color:var(--muted);line-height:1.5}
+.calc .how{background:var(--gold-soft);border-radius:10px;padding:14px 16px;margin:0 0 14px;font-size:17px}
+.calc .how b{font-variant-numeric:tabular-nums}
+.mk-head,.mk-row{display:grid;grid-template-columns:1fr 118px 92px 92px;gap:10px;align-items:center}
+.mk-head{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:12px 0 6px;border-bottom:2px solid var(--line)}
+.mk-head span:nth-child(n+3){text-align:right}
+.mk-group{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:16px 0 4px}
+.mk-group.up{color:var(--red)} .mk-group.same{color:var(--green)}
+.mk-row{padding:9px 0;border-bottom:1px solid var(--line)}
+.mk-name{font-size:16px;line-height:1.3}
+.mk-name small{display:block;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.mk-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:2px;background:var(--red-soft);color:var(--red)}
+.mk-row.same .mk-tag{background:var(--green-soft);color:var(--green)}
+.mk-qty{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:99px;background:var(--bg)}
+.mk-qty button{width:36px;height:36px;border:0;background:none;color:var(--ink);font-size:20px;line-height:1;cursor:pointer;border-radius:99px}
+.mk-qty button:hover{background:var(--line)}
+.mk-qty b{font-variant-numeric:tabular-nums;font-size:16px;min-width:2ch;text-align:center}
+.mk-p{text-align:right;font-variant-numeric:tabular-nums;font-size:16px}
+.mk-p.ley{font-weight:700}
+.mk-row.up .mk-p.ley{color:var(--red)}
+.mk-row.zero{opacity:.45}
+.mk-sum{margin-top:14px;border-top:2px solid var(--ink);padding-top:6px}
+.mk-sum .mk-row{border-bottom:0;padding:5px 0}
+.mk-sum .mk-row span:first-child{grid-column:1 / 3;font-weight:600}
+.calc .out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.calc .out div{background:var(--red-soft);border-radius:10px;padding:14px}
+.calc .out b{display:block;font-family:var(--serif);font-size:30px;color:var(--red);font-variant-numeric:tabular-nums;line-height:1.1}
+.calc .out span{font-size:14px;color:var(--ink2)}
+.calc .equiv{font-family:var(--serif);font-size:20px;margin:16px 0 0;line-height:1.4}
+.calc .reset{margin-top:12px;font:inherit;font-size:14px;color:var(--blue);background:none;border:1px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer}
+.bars{margin:18px 0 6px}
+.bar{display:grid;grid-template-columns:96px 1fr 56px;gap:10px;align-items:center;margin:9px 0;font-size:15px}
+.bar .t{height:22px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar .f{height:100%;background:var(--blue);border-radius:4px}
+.bar.hl .f{background:var(--red)} .bar.hl{font-weight:700}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums}
+.bar.ref .f{background:var(--muted)}
+figure{margin:28px 0}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.45}
+.chart{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--ink2);margin:8px 0 2px}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
+blockquote{margin:24px 0;padding:4px 0 4px 18px;border-left:4px solid var(--gold);font-family:var(--serif);font-size:21px;line-height:1.45;color:var(--ink)}
+.gov{border-left:4px solid var(--blue)}
+ol.src{font-size:14.5px;color:var(--ink2);padding-left:22px}
+ol.src li{margin-bottom:6px}
+footer{border-top:1px solid var(--line);margin-top:64px;padding:26px 0 60px;font-size:14px;color:var(--muted)}
+.tw{overflow-x:auto}
+@media (max-width:560px){
+  body{font-size:17px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .mk-head{display:none}
+  .mk-row{grid-template-columns:118px 1fr 1fr;row-gap:6px}
+  .mk-name{grid-column:1 / -1}
+  .mk-p::before{content:attr(data-l);display:block;font-size:11.5px;font-weight:400;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+  .mk-sum .mk-row span:first-child{grid-column:1 / 2}
+  .mk-sum .mk-p::before{content:none}
+  .calc .out{grid-template-columns:1fr}
+  .bar{grid-template-columns:82px 1fr 50px;font-size:14px}
+  table{font-size:14.5px}
+  td.d,th.d{display:none}
+  th,td{padding:8px 5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Análisis · Proyecto de Ley 477 de 2026</div>
+  <h1>La Ley de Rescate en tu mercado: <em>quién paga</em> y quién gana</h1>
+  <p class="dek">Qué cambia en la canasta familiar, por qué bajarles el impuesto a las empresas no garantiza un solo empleo, y dónde queda Colombia frente a América Latina en pobreza, desigualdad e impuestos.</p>
+  <div class="byline">wiroal · 30 de octubre de 2026</div>
+</header>
+
+<section>
+  <p class="lead" style="margin-top:32px">El Gobierno radicó la <strong>Ley de Rescate Económico</strong> para cerrar el hueco fiscal. Promete que el 70% del ajuste saldrá de recortar gasto del Estado. Pero en la parte tributaria hay una decisión de fondo: <strong>bajarles la renta a las empresas</strong> y compensar ese recaudo cobrando más a los asalariados de ingreso medio y ampliando el IVA a buena parte del mercado.</p>
+  <div class="kpis">
+    <div class="kpi g"><div class="v">−$12 bill.</div><div class="l">al año deja de pagar el sector empresarial al bajar su renta del 35% al 31%</div></div>
+    <div class="kpi r"><div class="v">+$12,8 bill.</div><div class="l">al año pagarán de más las personas naturales en impuesto de renta</div></div>
+    <div class="kpi r"><div class="v">19%</div><div class="l">de IVA para frutas, verduras, granos, café, azúcar, aceite y pasta desde 2028</div></div>
+    <div class="kpi r"><div class="v">4% → 8%</div><div class="l">sube el aporte a salud de quien gane más de 2 salarios mínimos</div></div>
+  </div>
+  <p class="note">Cifras de recaudo: Ministerio de Hacienda, según lo reportado por la prensa a partir de la exposición de motivos. Cambios normativos: articulado radicado.</p>
+</section>
+
+<section>
+  <h2><span class="num">1 · EL MERCADO</span>Lo que cambia en la canasta familiar</h2>
+  <p>Hoy buena parte de los alimentos básicos no paga IVA o paga una tarifa reducida del 5%. El proyecto reescribe las listas de bienes excluidos y exentos (artículos 42 a 46) y deroga la tarifa del 5% (artículo 106). El resultado, a partir del <strong>1 de enero de 2028</strong>:</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Producto</th><th>Hoy</th><th>Con el proyecto</th><th class="n">Alza máx. en precio*</th></tr></thead>
+    <tbody>
+      <tr><td>Tomate, cebolla, zanahoria, lechuga y demás verduras</td><td>Sin IVA</td><td><span class="pill r">19%</span></td><td class="n">+19%</td></tr>
+      <tr><td>Frutas frescas (banano, naranja, mango, manzana…)</td><td>Sin IVA</td><td><span class="pill r">19%</span></td><td class="n">+19%</td></tr>
+      <tr><td>Fríjol, lentejas, garbanzos y maíz en grano**</td><td>Sin IVA</td><td><span class="pill r">19%</span></td><td class="n">+19%</td></tr>
+      <tr><td>Café, azúcar, chocolate, aceite, pasta</td><td>5%</td><td><span class="pill r">19%</span></td><td class="n">+13,3%</td></tr>
+      <tr><td>Gaseosas, jugos y bebidas endulzadas</td><td>—</td><td><span class="pill o">$45 a $76 por 100 ml</span></td><td class="n">≈ +$1.500 por 2 L</td></tr>
+      <tr><td>Vino y licores</td><td>5%</td><td><span class="pill r">19%</span> + más impuesto al consumo</td><td class="n">+13,3% o más</td></tr>
+      <tr><td>Papa, yuca, arroz, pan, arepa, panela</td><td>Sin IVA</td><td><span class="pill k">Sigue sin IVA</span></td><td class="n">—</td></tr>
+      <tr><td>Carne, pollo, pescado, leche, huevos</td><td>Exentos</td><td><span class="pill k">Siguen exentos</span></td><td class="n">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">* Si el impuesto se traslada completo al precio final. Pasar de 0% a 19% encarece el producto 19%; pasar de 5% a 19% lo encarece 13,3% (1,19 ÷ 1,05). ** Estos productos no aparecen en las nuevas listas de excluidos ni de exentos del texto radicado.</p>
+
+  <h3>Fuera del mercado, otros gastos de todos los días</h3>
+  <p>También pasan a pagar IVA del 19% los <strong>computadores y celulares de gama baja</strong> (hoy excluidos), el <strong>internet de estratos 1, 2 y 3</strong>, las <strong>bicicletas</strong> y los carros eléctricos e híbridos, y las <strong>compras en plataformas como Temu o Shein</strong> sin importar el monto. La cerveza, el cigarrillo y los vapeadores también suben de impuesto.</p>
+
+  <div class="box calc" id="calc">
+    <h3>Su mercado del mes: lo que paga hoy y lo que pagaría con la ley</h3>
+    <p class="how">La cuenta es sencilla. Si un producto hoy no paga IVA y cuesta <b>$10.000</b>, con el IVA del 19% pasaría a costar <b>$11.900</b>. Si hoy paga el 5%, sube un 13,3%: de <b>$10.000</b> a <b>$11.333</b>.</p>
+    <p class="note" style="margin-bottom:4px">Abajo hay un mercado de ejemplo para un hogar de cuatro personas durante un mes. Con los botones <b>−</b> y <b>+</b> puede cambiar las cantidades para que se parezca a lo que usted compra.</p>
+    <div class="mk-head"><span>Producto</span><span>Cantidad</span><span>Hoy</span><span>Con la ley</span></div>
+    <div class="mk-group up">Lo que sube</div>
+    <div id="mk-up"></div>
+    <div class="mk-group same">Lo que queda igual</div>
+    <div id="mk-same"></div>
+    <div class="mk-sum">
+      <div class="mk-row"><span>Total del mercado</span><span class="mk-p" id="th">$0</span><span class="mk-p ley" id="tl">$0</span></div>
+    </div>
+    <div class="out">
+      <div><b id="om">$0</b><span>más al mes por el mismo mercado</span></div>
+      <div><b id="oy">$0</b><span>más al año</span></div>
+    </div>
+    <p class="equiv" id="eq"></p>
+    <button type="button" class="reset" id="mk-reset">Volver al mercado de ejemplo</button>
+    <p class="note" style="margin:14px 0 0">Los precios son de ejemplo y pueden variar según la tienda. El cálculo supone que el comerciante traslada todo el impuesto al precio, que es lo usual con el IVA. Rige desde el 1 de enero de 2028 si el Congreso aprueba el texto como fue radicado. Si su hogar está en el Sisbén como pobre o vulnerable, podría recibir una devolución parcial o total, pero solo del IVA que quede registrado en facturas electrónicas a su nombre (ver sección 3).</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">2 · EL SALARIO</span>Lo que cambia en la nómina</h2>
+  <p>El proyecto crea un nuevo tramo de renta del <strong>9%</strong> a partir de 720 UVT de renta gravable (hoy nadie paga por debajo de 1.090 UVT). En la práctica, empezaría a pagar renta quien gane alrededor de <strong>$4,6 a $5,5 millones al mes</strong>; hoy ese umbral está cerca de los $9 millones, según ANIF. Además se reduce la renta exenta laboral, se elimina la deducción por dependientes y sube el aporte del trabajador a salud.</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Salario mensual</th><th class="n d">Más renta / año</th><th class="n d">Más salud / año</th><th class="n">Total / año</th></tr></thead>
+    <tbody>
+      <tr><td>$3,5 millones (2 SM)</td><td class="n d">$0</td><td class="n d">$0</td><td class="n">$0</td></tr>
+      <tr><td>$4,4 millones</td><td class="n d">$0</td><td class="n d">$790 mil</td><td class="n"><b>$790 mil</b></td></tr>
+      <tr><td>$5,3 millones</td><td class="n d">$460 mil</td><td class="n d">$950 mil</td><td class="n"><b>$1,4 millones</b></td></tr>
+      <tr><td>$7 millones</td><td class="n d">$1,6 millones</td><td class="n d">$1,3 millones</td><td class="n"><b>$2,9 millones</b></td></tr>
+      <tr><td>$12,3 millones</td><td class="n d">$960 mil</td><td class="n d">$3,7 millones</td><td class="n"><b>$4,6 millones</b></td></tr>
+      <tr><td>$17,5 millones</td><td class="n d">$2,6 millones</td><td class="n d">$5,3 millones</td><td class="n"><b>$7,9 millones</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">En celular se muestra solo el total; en computador, el desglose. Cálculo propio con UVT ($52.374) y salario mínimo ($1.750.905) de 2026, para un asalariado sin dependientes ni otras deducciones. No incluye el IVA nuevo. No es asesoría tributaria.</p>
+
+  <p>El contraste es directo: la rebaja a las empresas le cuesta al fisco unos <strong>$12 billones al año</strong>, y lo que se cobra de más a las personas en renta suma <strong>$12,8 billones</strong>. Cerca del 70% de la renta empresarial la pagan unos 2.700 grandes contribuyentes; el nuevo tramo del 9%, que según Hacienda recauda $7,25 billones, lo pagarán <strong>al menos 4 millones de personas</strong>. Son unas 1.500 personas por cada gran empresa.</p>
+</section>
+
+<section>
+  <h2><span class="num">3 · LOS MÁS POBRES</span>La devolución del IVA: lo que sí hace y lo que no</h2>
+  <p>Hay que decirlo con claridad: el proyecto <strong>sí compensa a los hogares más pobres</strong>. Crea la devolución "EfectIVA" (artículos 38 a 40), que desde 2028 devolvería el 100% del IVA pagado a personas en pobreza y pobreza extrema, y entre el 30% y el 50% a la población vulnerable, con un tope de 5,5 UVT al mes por persona (unos $288.000). El Gobierno calcula unos 35 millones de beneficiarios.</p>
+  <p>Pero tiene tres límites:</p>
+  <p><strong>Depende de la factura electrónica.</strong> La DIAN calcula el IVA pagado con base en facturas a nombre del beneficiario. Muchos hogares pobres compran en la tienda del barrio o en la plaza, donde no hay factura. El IVA está en el precio, pero no queda registrado. Solo la pobreza extrema tiene un monto mínimo garantizado.</p>
+  <p><strong>Deja por fuera a la clase media.</strong> Quien no esté clasificado como pobre o vulnerable en el Sisbén no recibe nada. Paga el IVA nuevo completo, más renta y más salud.</p>
+  <p><strong>No compensa al productor.</strong> Como advirtió un exministro de Agricultura, el campesino paga más IVA en semillas, abonos y maquinaria, y esa devolución está pensada para el consumidor, no para quien produce.</p>
+</section>
+
+<section>
+  <h2><span class="num">4 · EL ARGUMENTO</span>¿Bajarles impuestos a las empresas genera empleo?</h2>
+  <p>Es la justificación de siempre: si las empresas pagan menos, invierten más y contratan más. La evidencia, en Colombia y afuera, no lo sostiene así de simple.</p>
+
+  <figure>
+    <div class="legend"><span><i style="background:var(--gold)"></i>Tarifa de renta empresarial (% máx., eje izq.)</span><span><i style="background:var(--red)"></i>Desempleo (% anual, eje der.)</span></div>
+    <svg class="chart" id="hist" viewBox="0 0 720 340" role="img" aria-label="Tarifa de renta empresarial y desempleo en Colombia 2012-2025"></svg>
+    <figcaption>Tarifa: renta general más CREE y sobretasas vigentes cada año (tope). Desempleo: promedio anual nacional, GEIH-DANE, compilado por el Banco de la República. El salto de 2020 corresponde a la pandemia.</figcaption>
+  </figure>
+
+  <p><strong>Lo que muestra la historia reciente.</strong> Entre 2019 y 2021 la Ley de Crecimiento bajó la tarifa del 33% al 31%, y el desempleo no bajó (la pandemia lo disparó, es cierto). Desde 2022 la tarifa subió al 35% y el desempleo cayó de 11,2% a 8,9% en 2025. Una gráfica no prueba causalidad en ninguna dirección, pero sí desmiente la idea simple de que "menos impuesto a las empresas = más empleo".</p>
+
+  <p><strong>Lo que dicen los estudios en Colombia.</strong> La reforma de 2012 (Ley 1607), que redujo los aportes a nómina, es la que mejor evidencia tiene: se le atribuyen unos 145.000 empleos formales, casi todos en micro y pequeñas empresas, muy por debajo del millón prometido. Sobre la rebaja de renta de 2019, el economista Stefano Farné concluyó que el efecto en empleo era "indeterminado" porque no estaba atada a compromisos de contratación.</p>
+
+  <p><strong>Lo que pasó en Estados Unidos.</strong> La rebaja de 2017 (del 35% al 21%) es la más estudiada del mundo. Un estudio publicado en la <em>American Economic Review</em> encontró que sí aumentó la inversión, pero los salarios del 90% de trabajadores <strong>no cambiaron</strong>. El 60% de la ganancia fue para los dueños, el 8% para los ejecutivos y el resto para el 10% mejor pagado.</p>
+
+  <blockquote>Este proyecto baja la renta a todas las empresas sin pedirles un solo empleo a cambio. Y en el régimen especial para grandes inversiones (RUGE), el empleo se reporta "con fines de seguimiento" y, dice el texto, "no constituye requisito de acceso ni de permanencia".</blockquote>
+
+  <p><strong>Y una contradicción.</strong> Si el objetivo fuera el empleo, la herramienta con mejor evidencia es abaratar la nómina. El proyecto hace lo contrario: hoy las empresas no pagan salud, SENA ni ICBF por los trabajadores que ganan menos de 10 salarios mínimos; con el proyecto, esa exoneración solo cubre hasta 2 mínimos. Por cada empleado de más de 3 salarios mínimos, la empresa vuelve a pagar el 13,5% del salario. Se encarece contratar justamente al trabajador calificado.</p>
+</section>
+
+<section>
+  <h2><span class="num">5 · EL CONTEXTO</span>Colombia frente a América Latina</h2>
+
+  <h3>Desigualdad: Colombia es de los países más desiguales de la región</h3>
+  <figure>
+    <div class="bars" id="gini"></div>
+    <figcaption>Índice de Gini (0 = igualdad total, 100 = un solo hogar con todo el ingreso). Banco Mundial, último dato disponible (2024).</figcaption>
+  </figure>
+
+  <h3>Recaudo: Colombia ya cobra poco, y cobra mal</h3>
+  <figure>
+    <div class="bars" id="tax"></div>
+    <figcaption>Ingresos tributarios como % del PIB, 2024. OCDE, <em>Estadísticas tributarias en América Latina y el Caribe 2026</em>.</figcaption>
+  </figure>
+  <p>En América Latina, los impuestos al consumo (como el IVA) aportan el 49% del recaudo; en la OCDE, el 31%. La región se financia sobre todo con el consumo, que pesa más en el bolsillo de quien gana menos. Este proyecto refuerza esa tendencia en lugar de corregirla.</p>
+
+  <h3>La tarifa a las empresas en la región</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>País</th><th class="n">Tarifa general</th><th>Nota</th></tr></thead>
+    <tbody>
+      <tr><td>Argentina</td><td class="n">25–35%</td><td>Escala según utilidad</td></tr>
+      <tr><td>Brasil</td><td class="n">34%</td><td>IRPJ + adicional + CSLL</td></tr>
+      <tr><td><b>Colombia hoy</b></td><td class="n"><b>35%</b></td><td>Más sobretasas sectoriales</td></tr>
+      <tr><td><b>Colombia con el proyecto</b></td><td class="n"><b>31%</b></td><td>Desde 2028; 20% en el RUGE</td></tr>
+      <tr><td>México</td><td class="n">30%</td><td></td></tr>
+      <tr><td>Perú</td><td class="n">29,5%</td><td></td></tr>
+      <tr><td>Chile</td><td class="n">27%</td><td>Reforma aprobada la baja a 23% en 2029</td></tr>
+      <tr><td>Promedio OCDE</td><td class="n">≈ 24%</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Es cierto que la tarifa colombiana está entre las más altas, y ese es el argumento más fuerte del Gobierno. Pero tarifa alta no es lo mismo que recaudo alto: Colombia recauda menos que el promedio regional porque tiene exenciones, regímenes especiales y evasión. Bajar la tarifa sin cerrar esos huecos reduce el recaudo de las empresas y obliga a buscarlo en otra parte, en este caso en el salario y el mercado.</p>
+
+  <h3>Pobreza: venía bajando</h3>
+  <figure>
+    <div class="legend"><span><i style="background:var(--red)"></i>Pobreza monetaria</span><span><i style="background:var(--blue)"></i>Pobreza extrema</span></div>
+    <svg class="chart" id="pov" viewBox="0 0 720 300" role="img" aria-label="Pobreza monetaria y extrema en Colombia 2018-2025"></svg>
+    <figcaption>% de la población. DANE, boletín de pobreza monetaria 2025 (valores leídos de sus gráficas). La línea de pobreza en 2025 fue de $482.041 por persona al mes.</figcaption>
+  </figure>
+  <p>La pobreza monetaria cayó del 43,1% en 2020 al <strong>28% en 2025</strong>, el nivel más bajo de la serie, y el Gini bajó de 0,551 a 0,531. Como referencia, la CEPAL estimó la pobreza de América Latina en 25,5% para 2024 (con metodología distinta, así que la comparación es solo indicativa). La pregunta es si encarecer frutas, verduras y granos —lo que más pesa en el gasto de los hogares de menores ingresos— pone en riesgo esa tendencia, sobre todo para los hogares vulnerables que solo recibirían una devolución parcial y para los que compran sin factura.</p>
+</section>
+
+<section>
+  <h2><span class="num">6 · LA OTRA VERSIÓN</span>Lo que dice el Gobierno</h2>
+  <blockquote class="gov">El vicepresidente José Manuel Restrepo sostiene que el 70% del ajuste sale del propio Estado, que "9 de cada 10 colombianos no se verán afectados" y que el 10% más rico aportará el 97% del esfuerzo tributario directo.</blockquote>
+  <p>Las dos cosas pueden ser ciertas a la vez. En Colombia, quien gana $5 millones al mes ya está en el 10% de mayores ingresos. Lo que el Gobierno llama "el 10% más rico" es, en buena parte, lo que la gente llama clase media profesional: el docente, la enfermera jefe, el ingeniero, el contador. Y el IVA a frutas y verduras lo pagan también los hogares que no son pobres ni ricos, y que no reciben devolución.</p>
+</section>
+
+<section>
+  <h2><span class="num">7 · CONCLUSIÓN</span>Quién pone la plata</h2>
+  <p>El proyecto tiene medidas razonables: recortar gasto, combatir el contrabando y la evasión, gravar las bebidas azucaradas y devolver el IVA a los más pobres. Pero en su núcleo tributario hace un traslado claro: <strong>de las empresas y el patrimonio hacia el salario medio y el mercado de la casa</strong>. Las empresas reciben una rebaja de $12 billones al año sin compromiso de empleo, el impuesto al patrimonio se acaba en 2030 y quienes escondieron activos pueden legalizarlos pagando el 15%. Mientras tanto, el trabajador que gana cinco millones empieza a pagar renta, aporta más a salud y paga IVA por el tomate.</p>
+  <p>El debate en el Congreso apenas empieza. Vale la pena darlo con las cifras sobre la mesa.</p>
+</section>
+
+<section>
+  <h2 style="font-size:24px"><span class="num">FUENTES</span>Datos y documentos consultados</h2>
+  <ol class="src">
+    <li>Proyecto de Ley 477 de 2026, "Ley de Rescate Económico", texto radicado por el Ministerio de Hacienda (arts. 20–21, 27–46, 47–50, 57, 66–71, 99–106).</li>
+    <li><a href="https://www.valoraanalitik.com/de-la-espriella-propone-bajar-impuesto-de-renta-a-empresas-y-eliminar-gravamen-a-plasticos-de-un-solo-uso/">Valora Analitik: costo de la rebaja de renta a empresas</a></li>
+    <li><a href="https://www.valoraanalitik.com/trabajadores-que-ganen-desde-55-millones-mensuales-entrarian-a-pagar-impuesto-de-renta-con-reforma-del-gobierno/">Valora Analitik: nuevo tramo de renta y recaudo por persona natural</a></li>
+    <li><a href="https://www.lafm.com.co/economia/ley-de-rescate-modificara-iva-de-los-alimentos-415656">La FM: alimentos que pagarían más IVA</a></li>
+    <li><a href="https://www.lasillavacia.com/en-vivo/gobierno-radica-ley-de-rescate-con-tributaria-de-petro-y-recorte-de-nomina/">La Silla Vacía: cifras del ajuste fiscal</a></li>
+    <li><a href="https://www.infobae.com/colombia/2026/10/30/entre-respaldos-y-advertencias-la-clase-politica-reacciona-a-la-ley-de-rescate-economico-emitida-por-el-gobierno-de-la-espriella/">Infobae: reacciones políticas y advertencia sobre insumos agrícolas</a></li>
+    <li><a href="https://www.elpais.com.co/economia/gobierno-radico-la-ley-de-rescate-habra-devolucion-de-iva-y-reduccion-de-impuestos-a-las-pequenas-empresas-2946.html">El País: declaraciones del Gobierno</a></li>
+    <li><a href="https://www.portafolio.co/economia/unas-3-000-firmas-pagan-el-70-de-la-renta-empresarial-533359">Portafolio: concentración de la renta empresarial (DIAN)</a> · <a href="https://siemprealdia.co/colombia/impuestos/listado-de-grandes-contribuyentes/">Listado de grandes contribuyentes 2025–2026</a></li>
+    <li><a href="https://www.banrep.gov.co/economia/pli/bie.pdf">Banco de la República: desempleo anual (GEIH)</a></li>
+    <li><a href="https://www.dane.gov.co/files/operaciones/PM/bol-PM-2025.pdf">DANE: boletín de pobreza monetaria 2025</a></li>
+    <li><a href="https://www.uexternado.edu.co/wp-content/uploads/2020/09/XLIV-Jornadas-Tributario-Stefano-Farne.pdf">Farné, S. (2020): ¿Menos impuestos a las empresas, más empleo formal?</a></li>
+    <li><a href="https://www.aeaweb.org/research/chart/corporate-tax-growth-earnings">Kennedy et al., American Economic Review: rebaja de 2017 en EE. UU. y salarios</a></li>
+    <li><a href="https://www.oecd.org/es/publications/estadisticas-tributarias-en-america-latina-y-el-caribe-2026_38649e87-es/full-report/tax-levels-and-tax-structures-1990-2024_2199eae3.html">OCDE: Estadísticas tributarias en América Latina y el Caribe 2026</a></li>
+    <li><a href="https://www.cepal.org/en/pressreleases/income-concentration-still-extreme-latin-america-wealthiest-10-obtains-342-total">CEPAL: Panorama Social 2025</a></li>
+    <li><a href="https://statisticsoftheworld.com/gini-index-by-country">Índice de Gini por país (datos del Banco Mundial)</a></li>
+    <li><a href="https://www.bloomberglinea.com/latinoamerica/chile/que-incluye-la-megarreforma-economica-de-kast-en-chile-los-principales-cambios/">Bloomberg Línea: reforma tributaria en Chile</a></li>
+  </ol>
+</section>
+
+<footer>
+  Análisis independiente con base en el texto radicado del proyecto y en fuentes públicas. Las cifras de recaudo son estimaciones oficiales citadas por la prensa; los cálculos por hogar y por salario son ilustrativos.
+</footer>
+</div>
+
+<script>
+(function(){
+  // ---------- Calculadora: mercado del mes ----------
+  // [producto, unidad, precio hoy, cantidad de ejemplo, IVA hoy, IVA con la ley, impuesto fijo por unidad]
+  var MK = [
+    ['Tomate','libra',3000,8,0,.19,0],
+    ['Cebolla cabezona','libra',2500,6,0,.19,0],
+    ['Zanahoria','libra',1800,4,0,.19,0],
+    ['Banano','libra',2000,8,0,.19,0],
+    ['Naranja','libra',2200,6,0,.19,0],
+    ['Fríjol','libra',7000,3,0,.19,0],
+    ['Lenteja','libra',4500,2,0,.19,0],
+    ['Café molido','libra',15000,2,.05,.19,0],
+    ['Azúcar','kilo',5000,3,.05,.19,0],
+    ['Aceite','litro',12000,2,.05,.19,0],
+    ['Pasta','paquete de 500 g',3000,4,.05,.19,0],
+    ['Chocolate de mesa','libra',9000,1,.05,.19,0],
+    ['Gaseosa','botella de 2 litros',6500,4,0,0,1520],
+    ['Arroz','libra',2800,12,0,0,0],
+    ['Papa','libra',1500,15,0,0,0],
+    ['Pollo','libra',9500,4,0,0,0],
+    ['Huevos','panal de 30',16000,1,0,0,0],
+    ['Leche','bolsa de 1 litro',4500,12,0,0,0],
+    ['Panela','unidad',3000,4,0,0,0]
+  ];
+  var ARROZ = 2800;
+  var fmt = function(n){ return '$' + Math.round(n).toLocaleString('es-CO'); };
+  var qty = MK.map(function(r){ return r[3]; });
+  var nuevo = function(r){ return r[2]/(1+r[4])*(1+r[5]) + r[6]; };
+  function tag(r){
+    if (r[6]) return '+' + fmt(r[6]);
+    if (r[5] === r[4]) return 'igual';
+    return '+' + String(Math.round(((1+r[5])/(1+r[4])-1)*1000)/10).replace('.',',') + '%';
+  }
+  function rows(){
+    var up = '', same = '';
+    MK.forEach(function(r,i){
+      var sube = nuevo(r) > r[2] + .5;
+      var h = '<div class="mk-row '+(sube?'up':'same')+'" id="mk'+i+'">'
+        + '<div class="mk-name">'+r[0]+'<span class="mk-tag">'+tag(r)+'</span>'
+        + '<small>'+r[1]+': '+fmt(r[2])+(sube?' → '+fmt(nuevo(r)):'')+'</small></div>'
+        + '<div class="mk-qty"><button type="button" data-i="'+i+'" data-d="-1" aria-label="Menos '+r[0]+'">−</button><b></b><button type="button" data-i="'+i+'" data-d="1" aria-label="Más '+r[0]+'">+</button></div>'
+        + '<span class="mk-p" data-l="Hoy"></span><span class="mk-p ley" data-l="Con la ley"></span></div>';
+      if (sube) up += h; else same += h;
+    });
+    document.getElementById('mk-up').innerHTML = up;
+    document.getElementById('mk-same').innerHTML = same;
+  }
+  function calc(){
+    var th = 0, tl = 0;
+    MK.forEach(function(r,i){
+      var q = qty[i], hoy = q*r[2], ley = q*nuevo(r), row = document.getElementById('mk'+i);
+      th += hoy; tl += ley;
+      row.querySelector('b').textContent = q;
+      row.querySelector('.mk-p').textContent = fmt(hoy);
+      row.querySelector('.mk-p.ley').textContent = fmt(ley);
+      row.classList.toggle('zero', q === 0);
+    });
+    var m = tl - th, lb = Math.round(m/ARROZ);
+    document.getElementById('th').textContent = fmt(th);
+    document.getElementById('tl').textContent = fmt(tl);
+    document.getElementById('om').textContent = fmt(m);
+    document.getElementById('oy').textContent = fmt(m*12);
+    document.getElementById('eq').innerHTML = m > 0
+      ? 'Por el <b>mismo mercado</b> pagaría <b>'+fmt(m)+'</b> más cada mes. Con esa plata hoy se compran <b>'+lb+' '+(lb===1?'libra':'libras')+' de arroz</b>.'
+      : 'Con estas cantidades, su mercado no cambiaría de precio.';
+  }
+  rows();
+  document.getElementById('calc').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    var i = +b.getAttribute('data-i');
+    qty[i] = Math.max(0, Math.min(99, qty[i] + (+b.getAttribute('data-d'))));
+    calc();
+  });
+  document.getElementById('mk-reset').addEventListener('click', function(){
+    qty = MK.map(function(r){ return r[3]; }); calc();
+  });
+  calc();
+
+  // ---------- Barras ----------
+  function bars(id, rows, max, suffix, dec){
+    var el = document.getElementById(id), h = '';
+    rows.forEach(function(r){
+      var cls = 'bar' + (r[2]==='hl' ? ' hl' : r[2]==='ref' ? ' ref' : '');
+      h += '<div class="'+cls+'"><span>'+r[0]+'</span><div class="t"><div class="f" style="width:'+(r[1]/max*100)+'%"></div></div><span class="v">'+r[1].toFixed(dec).replace('.',',')+suffix+'</span></div>';
+    });
+    el.innerHTML = h;
+  }
+  bars('gini', [['Colombia',54.4,'hl'],['Brasil',50.3],['Chile',43.0],['México',42.6],['Argentina',42.4],['Perú',40.1],['Uruguay',40.0]], 60, '', 1);
+  bars('tax', [['Brasil',33.7],['Argentina',27.6],['Prom. ALC',21.7,'ref'],['Chile',20.5],['Colombia',19.9,'hl'],['México',18.3],['Perú',16.3],['Prom. OCDE',34.1,'ref']], 36, '%', 1);
+
+  // ---------- Líneas (SVG) ----------
+  var css = getComputedStyle(document.documentElement);
+  var C = function(v){ return css.getPropertyValue(v).trim(); };
+  function line(svg, o){
+    var W=Math.max(320,Math.min(720,svg.clientWidth||720)),H=o.h,L=46,R=o.r2?46:16,T=16,B=34, pw=W-L-R, ph=H-T-B, s='';
+    var n=o.x.length, X=function(i){return L+pw*i/(n-1);};
+    var Y=function(v,a){return T+ph*(1-(v-a[0])/(a[1]-a[0]));};
+    o.ticks.forEach(function(t){ var y=Y(t,o.ax1); s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+C('--line')+'"/><text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="12" fill="'+C('--muted')+'">'+t+'</text>'; });
+    if(o.ticks2) o.ticks2.forEach(function(t){ var y=Y(t,o.ax2); s+='<text x="'+(W-R+8)+'" y="'+(y+4)+'" font-size="12" fill="'+C('--muted')+'">'+t+'</text>'; });
+    o.x.forEach(function(x,i){ var st=(n<10&&W>420)?1:(W<500?3:2); if(i===n-1 || (i%st===0 && (n-1-i)>=st)) s+='<text x="'+X(i)+'" y="'+(H-10)+'" text-anchor="middle" font-size="12" fill="'+C('--muted')+'">'+x+'</text>'; });
+    o.series.forEach(function(sr){
+      var a = sr.axis===2 ? o.ax2 : o.ax1, d='';
+      sr.v.forEach(function(v,i){ d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(v,a).toFixed(1); });
+      s+='<path d="'+d+'" fill="none" stroke="'+C(sr.c)+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" '+(sr.dash?'stroke-dasharray="2 0"':'')+'/>';
+      sr.v.forEach(function(v,i){
+        var x=X(i),y=Y(v,a);
+        s+='<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="'+C(sr.c)+'"><title>'+o.x[i]+': '+String(v).replace('.',',')+'%</title></circle>';
+        if(sr.labels && sr.labels.indexOf(i)>-1){ var dy=(sr.below&&sr.below.indexOf(i)>-1)?22:-10; s+='<text x="'+x+'" y="'+(y+dy)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+C(sr.c)+'">'+String(v).replace('.',',')+'</text>'; }
+      });
+    });
+    svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.innerHTML = s;
+  }
+  function draw(){
+    css = getComputedStyle(document.documentElement);
+    line(document.getElementById('hist'), {
+      h:340, r2:true,
+      x:[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
+      ax1:[25,45], ticks:[25,30,35,40,45], ax2:[0,20], ticks2:[0,5,10,15,20],
+      series:[
+        {v:[33,34,34,39,40,40,37,33,32,31,35,35,35,35], c:'--gold', labels:[4,9,13]},
+        {v:[10.6,9.9,9.4,9.2,9.5,9.7,10.0,10.9,16.7,13.8,11.2,10.2,10.2,8.9], c:'--red', axis:2, labels:[7,8,13], below:[7,13]}
+      ]
+    });
+    line(document.getElementById('pov'), {
+      h:300,
+      x:[2018,2019,2020,2021,2022,2023,2024,2025],
+      ax1:[0,50], ticks:[0,10,20,30,40,50],
+      series:[
+        {v:[35.5,36.5,43.1,39.7,36.6,34.6,31.8,28.0], c:'--red', labels:[0,2,7]},
+        {v:[10.4,12.0,17.3,13.7,13.8,12.6,11.7,9.6], c:'--blue', labels:[2,7]}
+      ]
+    });
+  }
+  draw();
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(draw,150);});
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', draw);
+  }
+})();
+</script>
+</body>
+</html>

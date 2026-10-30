@@ -277,6 +277,34 @@ body::before {
 .quick-group .muted { color: var(--ink-muted); font-size: 0.8rem; }
 .card-extra { margin-top: 0.6rem; font-size: 0.85rem; }
 .card-extra a { color: var(--accent-deep); }
+
+/* Ventana destacada: Ley de Rescate y la canasta */
+.feature {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center;
+}
+.feature h3 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.ticket {
+  background: #fffdf7; border: 1px dashed var(--rule-strong);
+  padding: 1.1rem 1.25rem; font-family: var(--font-mono); font-size: 0.82rem;
+  color: var(--ink-soft); box-shadow: 0 1px 0 var(--rule);
+}
+.ticket-title {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 0.6rem;
+}
+.ticket-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.15rem 0; }
+.ticket-row s { color: var(--ink-muted); }
+.ticket-row .up { color: var(--accent); font-weight: 600; }
+.ticket-total { border-top: 1px dashed var(--rule-strong); margin-top: 0.5rem; padding-top: 0.5rem; }
+.ticket-big {
+  margin-top: 0.75rem; padding: 0.7rem 0.8rem; background: rgba(168, 67, 26, 0.08);
+  font-family: var(--font-display); font-size: 1.05rem; color: var(--ink); line-height: 1.35;
+}
+.ticket-big b { color: var(--accent); font-size: 1.5rem; display: block; }
+@media (max-width: 720px) {
+  .feature { grid-template-columns: 1fr; gap: 1.25rem; }
+}
 </style>
 </head>
 
@@ -370,9 +398,9 @@ body::before {
       <ul>
         <li><a href="politica/dipolos-hf.html">Dipolos para HF</a></li>
         <li><a href="politica/01_injerencia_electoral_latam.html">Injerencia electoral</a></li>
-        <li><a href="politica/02_comparativo-candidatos.html">Comparativo de candidatos</a></li>
         <li><a href="politica/03_duenos-poder.html">Los dueños del poder</a></li>
         <li><a href="politica/04_normalidad-psicologica-nuremberg.html">Núremberg</a></li>
+        <li><a href="politica/ley-rescate-canasta.html">La Ley de Rescate en su mercado</a></li>
       </ul>
     </div>
     <div class="quick-group">
@@ -557,6 +585,25 @@ body::before {
   </p>
 
   <div class="cards">
+    <a href="politica/ley-rescate-canasta.html" class="card card-link feature">
+      <div>
+        <span class="card-num">006 / PL · NUEVO</span>
+        <h3>La Ley de Rescate en su mercado</h3>
+        <p>El proyecto de ley 477 de 2026 pone IVA del 19% a frutas, verduras, granos, café, azúcar, aceite y pasta desde 2028. Al mismo tiempo baja el impuesto de renta a las empresas. Haga la cuenta con su propio mercado: producto por producto, lo que paga hoy y lo que pagaría con la ley.</p>
+        <div class="card-status active">Hacer la cuenta y leer el análisis →</div>
+      </div>
+      <div class="ticket" aria-label="Ejemplo: mercado del mes de un hogar de cuatro personas">
+        <div class="ticket-title">Mercado del mes · hogar de 4 · ejemplo</div>
+        <div class="ticket-row"><span>Tomate, 8 lb</span><span><s>$24.000</s> <span class="up">$28.560</span></span></div>
+        <div class="ticket-row"><span>Fríjol, 3 lb</span><span><s>$21.000</s> <span class="up">$24.990</span></span></div>
+        <div class="ticket-row"><span>Café, 2 lb</span><span><s>$30.000</s> <span class="up">$34.000</span></span></div>
+        <div class="ticket-row"><span>Aceite, 2 L</span><span><s>$24.000</s> <span class="up">$27.200</span></span></div>
+        <div class="ticket-row"><span>Arroz, papa, pollo, huevos, leche</span><span>igual</span></div>
+        <div class="ticket-row ticket-total"><span>Total, 19 productos</span><span><s>$397.500</s> <span class="up">$435.606</span></span></div>
+        <div class="ticket-big"><b>+$38.106 al mes</b>Por el mismo mercado: unos $457.000 más al año.</div>
+      </div>
+    </a>
+
     <a href="politica/01_injerencia_electoral_latam.html" class="card card-link">
       <span class="card-num">001 / PL</span>
       <h3>Injerencia electoral en Latinoamérica</h3>
@@ -568,13 +615,6 @@ body::before {
       <span class="card-num">002 / PL</span>
       <h3>Desde los margenes</h3>
       <p> Legado del sacerdote Javier Giraldo Moreno S.J.</p>
-      <div class="card-status active">Ver aquí →</div>
-    </a>
-
-    <a href="politica/02_comparativo-candidatos.html" class="card card-link">
-      <span class="card-num">005 / PL</span>
-      <h3>De la Espriella vs Cepeda</h3>
-      <p>Programas de gobierno 2026–2030 comparados sector por sector: qué ofrece cada uno al empresario, al campesino, al asalariado y al desempleado.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
