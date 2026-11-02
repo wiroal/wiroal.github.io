@@ -286,7 +286,8 @@ function vLobby(){
       <span class="tenue">Escanea o entra con el código</span>
       <div id="qr"></div>
       <div class="codigo">${esc(E.sala)}</div>
-      <div class="enlace">${esc(urlJugar())}</div>
+      <a class="enlace" href="${esc(urlJugar())}" target="_blank" rel="noopener">${esc(urlJugar())}</a>
+      <a class="btn prim" href="${esc(urlJugar())}" target="_blank" rel="noopener" style="text-decoration:none">Entrar a jugar en este equipo</a>
     </div>
     <div class="tarjeta">
       <div class="titulo-vista"><h2>Inscripción</h2><span class="tenue">${lista.length} de ${NOMBRES.length} nombres tomados</span></div>
