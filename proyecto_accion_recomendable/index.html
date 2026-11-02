@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proyecto de Acción Recomendable</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9C%3C/text%3E%3C/svg%3E">
+<style>
+:root{--azul:#003087;--azul-suave:#E5ECF8;--oro:#9A6F00;--oro-suave:#F6EAD0;--papel:#F5F7FB;--carta:#fff;--tinta:#16213B;--tenue:#56607A;--linea:#D3DBEA;--ok:#1F6B3A;--ok-suave:#E3F2E8;--mal:#9A2B1F;--mal-suave:#F8E4E1;--marca:#FFE58A;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--azul:#8FB0F0;--azul-suave:#1C2A4C;--oro:#E2B04A;--oro-suave:#3A2E14;--papel:#0E1526;--carta:#16203A;--tinta:#E8ECF5;--tenue:#A5AEC4;--linea:#2C3A5C;--ok:#7CCB95;--ok-suave:#173826;--mal:#F09A8C;--mal-suave:#3D1F1B;--marca:#6B5310;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+header{background:#003087;color:#fff;padding:24px 16px 0}
+.ancho{max-width:900px;margin:0 auto}
+h1{font:600 clamp(1.6rem,5vw,2.3rem)/1.15 Georgia,"Times New Roman",serif;margin:0 0 6px}
+header p{margin:0 0 16px;opacity:.9}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{flex:none;font:inherit;font-weight:600;border:0;border-radius:10px 10px 0 0;padding:10px 14px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--papel);color:var(--tinta)}
+main{padding:20px 16px 60px}
+section[hidden]{display:none}
+h2{font:600 1.5rem/1.2 Georgia,"Times New Roman",serif;margin:0 0 10px}
+h3{font-size:1.05rem;margin:0 0 6px}
+.tarjeta{background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:16px;margin:0 0 14px}
+.fuente{color:var(--tenue);font-size:.86rem}
+.aviso{border-left:4px solid var(--oro);background:var(--oro-suave);padding:12px 14px;border-radius:0 10px 10px 0;margin:0 0 14px}
+.bien{border-left:4px solid var(--ok);background:var(--ok-suave);padding:12px 14px;border-radius:0 10px 10px 0;margin:0 0 14px}
+.mal{border-left:4px solid var(--mal);background:var(--mal-suave);padding:12px 14px;border-radius:0 10px 10px 0;margin:0 0 14px}
+.btn{font:inherit;font-weight:600;border:1px solid var(--linea);background:var(--carta);color:var(--tinta);padding:9px 14px;border-radius:9px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--azul)}
+.btn.prim{background:#003087;border-color:#003087;color:#fff}
+.btn.peq{padding:5px 10px;font-size:.86rem}
+:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+ol.pasos{list-style:none;margin:0;padding:0}
+ol.pasos>li{position:relative;padding:0 0 18px 44px}
+ol.pasos>li::before{content:counter(p);counter-increment:p;position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:#003087;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+ol.pasos>li:not(:last-child)::after{content:"";position:absolute;left:14px;top:30px;bottom:0;width:2px;background:var(--linea)}
+ol.pasos{counter-reset:p}
+ol.pasos p{margin:2px 0 4px}
+blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--linea);font-family:Georgia,"Times New Roman",serif}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-bottom:1px solid var(--linea)}
+label.cheq{display:flex;gap:10px;padding:8px 0;align-items:flex-start;border-bottom:1px solid var(--linea)}
+label.cheq:last-of-type{border-bottom:0}
+label.cheq input{margin-top:5px;flex:none;width:18px;height:18px}
+.buscar{display:flex;gap:8px;flex-wrap:wrap}
+input[type=search],input[type=text],input[type=number],select,textarea{font:inherit;color:var(--tinta);background:var(--carta);border:1px solid var(--linea);border-radius:9px;padding:9px 11px;width:100%}
+.buscar input{flex:1 1 240px;width:auto;min-width:0}
+.buscar select{flex:1 1 180px;width:auto;min-width:0;max-width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.res{background:var(--carta);border:1px solid var(--linea);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.res .cab{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin-bottom:4px}
+.res b.an{font-size:1.1rem}
+.et{font-size:.8rem;font-weight:600;background:var(--azul-suave);color:var(--azul);padding:1px 8px;border-radius:99px}
+.res p{margin:4px 0 8px}
+mark{background:var(--marca);color:inherit;border-radius:2px}
+.campo{margin:0 0 14px}
+.campo>label,.campo>.tit{display:block;font-weight:600;margin-bottom:4px}
+.ayuda{color:var(--tenue);font-size:.86rem;margin:3px 0 0}
+textarea{min-height:130px;resize:vertical}
+.fila3{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.comites{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px}
+.comites label{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--linea);border-radius:9px;padding:8px 10px;cursor:pointer}
+.comites input{margin-top:5px;flex:none}
+.acciones{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+ul.ants{list-style:none;padding:0;margin:0}
+ul.ants li{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--linea);font-size:.92rem}
+.cuenta{font-size:1.5rem;font-weight:700;color:var(--azul)}
+</style>
+</head>
+<body>
+<header><div class="ancho">
+  <h1>Proyecto de Acción Recomendable</h1>
+  <p>Cómo llevar una idea a la Conferencia de Servicios Generales de AA Colombia.</p>
+  <nav role="tablist">
+    <button role="tab" data-t="como">1. Cómo se hace</button>
+    <button role="tab" data-t="buscar">2. ¿Ya se trató?</button>
+    <button role="tab" data-t="tramite">3. El trámite</button>
+    <button role="tab" data-t="proyecto">4. Mi proyecto y PDF</button>
+  </nav>
+</div></header>
+<main class="ancho">
+
+<!-- ========== 1. CÓMO SE HACE ========== -->
+<section id="como" role="tabpanel">
+  <h2>Cómo se hace</h2>
+  <div class="aviso"><b>Dos niveles de autoridad.</b> Lo que lleva cita viene de la literatura y de las recomendaciones. Lo marcado como <i>sugerencia de redacción</i> es una ayuda práctica, no una norma de la Conferencia.</div>
+
+  <div class="tarjeta">
+    <h3>Antes de escribir</h3>
+    <label class="cheq"><input type="checkbox" data-c="a1"><span><b>¿Le corresponde a la Conferencia?</b> Sí, si es “importante para el futuro de Alcohólicos Anónimos”, una decisión de política, una solicitud para modificar literatura aprobada o algo que pueda requerir “la conciencia colectiva de la Comunidad”. <span class="fuente">Manual, p. 42.</span> Si no es política general, hay procedimientos para dirigirla a la parte más conveniente de la estructura. <span class="fuente">Manual, p. 41.</span></span></label>
+    <label class="cheq"><input type="checkbox" data-c="a2"><span><b>¿Ya se trató?</b> Búsquelo en <a href="#buscar">“¿Ya se trató?”</a>. La recomendación más reciente sobre un tema reemplaza a las anteriores que le sean contrarias. <span class="fuente">Recomendaciones Vigentes, Introducción, p. 2.</span></span></label>
+    <label class="cheq"><input type="checkbox" data-c="a3"><span><b>¿Ya lo conversó?</b> La experiencia sugiere hablarlo primero en el grupo y luego en las reuniones de Distrito o Área. <span class="fuente">Manual, p. 41.</span></span></label>
+    <label class="cheq"><input type="checkbox" data-c="a4"><span><b>¿Sabe a qué Comité va?</b> Vea la tabla de abajo.</span></label>
+    <label class="cheq"><input type="checkbox" data-c="a5"><span><b>¿Respeta las Garantías y las Tradiciones?</b> Las Garantías del Concepto XII son la guía de la Conferencia. <span class="fuente">Manual, p. 42.</span> Un cambio en el Artículo 12 de la Carta o en las Doce Tradiciones exige el consentimiento escrito de las tres cuartas partes de los grupos, con al menos seis meses para considerarlo. <span class="fuente">Carta Constitutiva de Colombia, Manual, p. 114.</span></span></label>
+  </div>
+
+  <div class="tarjeta">
+    <h3>Las partes del proyecto</h3>
+    <p>El formato usado para la 62.ª Reunión Anual en el Área 3 pide: Comité, propuesta, Territorio, Región y Área, justificación, nombre y grupo.</p>
+    <p class="fuente">“Propuestas a proyectos de recomendación”, 62.ª RAC.</p>
+    <h3 style="margin-top:14px">Sugerencias de redacción</h3>
+    <ul>
+      <li><b>Propuesta:</b> una sola acción, en una o dos frases. Diga a quién se dirige, qué debe hacer y, si aplica, para cuándo.</li>
+      <li><b>Justificación:</b> qué necesidad atiende, cómo ayuda a llevar el mensaje, qué principio la sustenta, qué antecedentes hay y qué costo o trabajo implica.</li>
+      <li><b>Si cambia algo que ya existe:</b> cite el año y el texto actual, y escriba el texto nuevo completo.</li>
+      <li><b>Principios antes que personalidades:</b> hable del asunto, no de personas ni de servidores.</li>
+    </ul>
+  </div>
+
+  <div class="tarjeta">
+    <h3>Tres modelos reales</h3>
+    <p><b>Acción directa:</b></p>
+    <blockquote>Se Recomienda: Dar respuesta a los proyectos de Recomendación por parte de cada comité con las razones por las cuales fueron rechazados.<br><span class="fuente">Agenda, 2015, p. 10.</span></blockquote>
+    <p><b>Dirigida a un responsable y con plazo:</b></p>
+    <blockquote>Se recomienda: […] la JSG recibirá sugerencias hasta el 31 de julio de 2026.<br><span class="fuente">Agenda, 2026, p. 12 (fragmento).</span></blockquote>
+    <p><b>Modifica una acción anterior:</b></p>
+    <blockquote>Se recomienda: modificar la Acción Recomendable del año 2002 del Comité de Agenda que dice: […] por la siguiente: […]<br><span class="fuente">Agenda, 2024, p. 11 (fragmento).</span></blockquote>
+  </div>
+
+  <div class="tarjeta">
+    <h3>¿A qué Comité va?</h3>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Comité</th><th>Le corresponde</th></tr></thead>
+      <tbody id="tablaComites"></tbody>
+    </table></div>
+    <p class="fuente" style="margin-top:8px">Manual, pp. 44-46. La casilla “Junta de Servicios Generales” viene del formato de la 62.ª RAC; el Manual no la describe como Comité de la Conferencia.</p>
+  </div>
+</section>
+
+<!-- ========== 2. BUSCADOR ========== -->
+<section id="buscar" role="tabpanel" hidden>
+  <h2>¿Ya se trató?</h2>
+  <p>Busque en las <span id="nTotal"></span> decisiones de <i>Recomendaciones Vigentes 1965-2026</i>.</p>
+  <div class="tarjeta">
+    <div class="buscar">
+      <input type="search" id="q" placeholder="Ejemplo: grupos virtuales" aria-label="Buscar un tema">
+      <select id="fCom" aria-label="Filtrar por Comité"><option value="">Todos los Comités</option></select>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p class="ayuda">No importan mayúsculas ni tildes. Escriba varias palabras para exigirlas todas, o use comillas para una frase exacta.</p>
+  </div>
+  <div id="veredicto"></div>
+  <div id="resultados"></div>
+  <div id="masBox" style="text-align:center"></div>
+  <p class="fuente"><b>Límites:</b> el documento reúne recomendaciones vigentes de los comités desde 1969. No incluye las actas de 1965 y 1966 ni los proyectos rechazados, que solo constan en los Informes Finales o en la OSG. El texto viene de una extracción automática del PDF: antes de citar, confírmelo en el documento original.</p>
+</section>
+
+<!-- ========== 3. TRÁMITE ========== -->
+<section id="tramite" role="tabpanel" hidden>
+  <h2>El trámite</h2>
+  <div class="tarjeta">
+    <h3 id="ttlFecha"></h3>
+    <div class="cuenta" id="cuenta"></div>
+    <p class="ayuda" id="notaFecha"></p>
+  </div>
+  <div class="tarjeta">
+  <ol class="pasos">
+    <li><b>Nace la idea</b><p>Puede venir de un miembro, un grupo, una o un RSG, un MCD, el Comité de Área, una Asamblea, un Delegado, un Custodio o el personal de la OSG.</p><span class="fuente">Manual, pp. 41 y 131.</span></li>
+    <li><b>Se conversa en la estructura</b><p>Se comparte en el grupo, el Distrito y la Asamblea de Área. Muchos puntos de agenda llegan así, por conducto del RSG.</p><span class="fuente">Manual, pp. 21 y 41.</span></li>
+    <li><b>Se envía a la OSG</b><p>El Distrito o el Área lo remite a quien sirva como Coordinador de la Conferencia en la OSG. Las propuestas deben enviarse <b>antes del 31 de enero de cada año</b>.</p><span class="fuente">Manual, p. 41; Agenda, 2018, p. 11.</span></li>
+    <li><b>La OSG lo estudia</b><p>El personal lo revisa a la luz de las acciones de Conferencias anteriores y lo deriva al Comité correspondiente.</p><span class="fuente">Manual, pp. 41 y 131.</span></li>
+    <li><b>Se decide cómo entra al programa</b><p>Usualmente el Comité sobre la Conferencia de los Custodios define si irá como mesa de trabajo, presentación, propuesta o asunto de Comité. La reunión conjunta con el Comité de Agenda aprueba la agenda en la <b>primera quincena de febrero</b>.</p><span class="fuente">Manual, p. 41; Agenda, 2024, p. 11.</span></li>
+    <li><b>El Comité lo estudia en la Reunión Anual</b><p>Puede recomendarlo al pleno, no hacer recomendación, dejar una sugerencia u observación, posponerlo o pedir más información. Si rechaza un proyecto, debe dar sus razones.</p><span class="fuente">Manual, p. 43; Agenda, 2015, p. 10.</span></li>
+    <li><b>El pleno vota</b><p>Hace falta unanimidad sustancial: <b>dos tercios</b>. Después, la minoría siempre puede hablar, y eso puede llevar a una nueva votación. Si el Comité no lo llevó al pleno, un Delegado puede proponerlo como “moción de piso”.</p><span class="fuente">Manual, pp. 40 y 47.</span></li>
+    <li><b>Se convierte en Acción Recomendable</b><p>Se remite a los Custodios para implementarla. Por tradición, se considera obligatoria para la Junta de Servicios Generales, que raramente la veta o anula.</p><span class="fuente">Manual, pp. 40, 42 y 131.</span></li>
+    <li><b>Se informa a la Comunidad</b><p>El Informe Final registra las decisiones, y cada Delegado informa a su Área.</p><span class="fuente">Manual, p. 41.</span></li>
+  </ol>
+  </div>
+  <div class="aviso"><b>Tenga en cuenta:</b> la mecánica de la Reunión Anual está en revisión y se presentará para aprobación en la RAC 63, así que este trámite podría cambiar. <span class="fuente">Agenda, 2026, p. 12.</span> Confirme fechas y formato vigente con su Delegado.</div>
+</section>
+
+<!-- ========== 4. PROYECTO ========== -->
+<section id="proyecto" role="tabpanel" hidden>
+  <h2>Mi proyecto y PDF</h2>
+  <p>Lo que escriba se guarda solo en este navegador. Esta página no lo envía a ningún servidor.</p>
+  <form id="f" class="tarjeta" novalidate>
+    <div class="fila3 campo">
+      <div><label for="nConf">Reunión Anual n.º</label><input type="number" id="nConf" min="1" max="200"></div>
+      <div><label for="terr">Territorio</label><input type="text" id="terr"></div>
+      <div><label for="reg">Región</label><input type="text" id="reg"></div>
+      <div><label for="area">Área</label><input type="text" id="area"></div>
+    </div>
+    <div class="campo"><span class="tit">Para el Comité de</span><div class="comites" id="fComites"></div></div>
+    <div class="campo"><label for="prop">Propuesta</label><textarea id="prop" placeholder="Se Recomienda: a … que …"></textarea><p class="ayuda">Una sola acción. Diga a quién se dirige y qué debe hacer.</p></div>
+    <div class="campo"><label for="just">Justificación</label><textarea id="just" style="min-height:190px" placeholder="Qué necesidad atiende, cómo ayuda a llevar el mensaje, qué principio la sustenta y qué implica."></textarea></div>
+    <div class="campo"><span class="tit">Antecedentes consultados</span><ul class="ants" id="ants"></ul><p class="ayuda" id="sinAnts">Agréguelos desde <a href="#buscar">“¿Ya se trató?”</a>, con el botón “Citar en mi proyecto”.</p></div>
+    <div class="campo"><label for="resp">Respaldo <span style="font-weight:400">(opcional)</span></label><input type="text" id="resp" placeholder="Ejemplo: conciencia de grupo del 5 de enero"></div>
+    <div class="campo"><label for="lema">Lema de la Conferencia</label><input type="text" id="lema"><p class="ayuda">Lema de la 63.ª Conferencia según el Informe Final de la 62.ª RAC. Cámbielo si es otra Reunión.</p></div>
+    <div class="fila3 campo">
+      <div><label for="nom">Nombre</label><input type="text" id="nom" placeholder="Nombre e inicial"></div>
+      <div><label for="grp">Grupo</label><input type="text" id="grp"></div>
+    </div>
+    <div id="errores"></div>
+    <div class="acciones">
+      <button type="submit" class="btn prim">Crear PDF</button>
+      <a class="btn" id="correo" href="#">Preparar correo a la OSG</a>
+      <button type="button" class="btn" id="borrar">Borrar borrador</button>
+    </div>
+    <p class="ayuda" id="estado" role="status"></p>
+  </form>
+  <div class="tarjeta">
+    <h3>A dónde enviarlo</h3>
+    <ul>
+      <li><b>Por su Área:</b> en el formato de la 62.ª RAC, el Área 3 pidió entregarlo a más tardar el 15 de enero al correo <b>aabogotaC3@gmail.com</b>. Confirme la fecha de este año.</li>
+      <li><b>A la OSG:</b> <b>serviciosgenerales@aacolombia.org</b> <span class="fuente">(Manual)</span>, a la atención de quien sirva como Coordinador de la Conferencia.</li>
+    </ul>
+    <p class="fuente">El correo se abre con el asunto listo, pero el PDF debe adjuntarlo usted.</p>
+  </div>
+  <div class="aviso"><b>Este PDF sigue el formato de la 62.ª RAC del Área 3,</b> el único disponible al preparar esta página. Antes de enviarlo, pregunte a su Delegado si hay un formato nuevo.</div>
+</section>
+</main>
+<script src="datos_acciones.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mem = { leer(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }, escribir(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }, borrar(k){ try{ localStorage.removeItem(k); }catch(e){} } };
+const CLAVE = "proyecto-accion-recomendable";
+
+/* Pestañas */
+const TABS = ["como","buscar","tramite","proyecto"];
+function abrir(t){
+  document.querySelectorAll("section[role=tabpanel]").forEach(s => s.hidden = s.id !== t);
+  document.querySelectorAll("nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.t === t));
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => { location.hash = b.dataset.t; });
+addEventListener("hashchange", () => abrir(TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "como"));
+
+/* Comités: nombre del formato, nombre en el buscador y a qué corresponde (Manual, pp. 44-46) */
+const COMITES = [
+  {f:"FINANZAS", b:"Finanzas", d:"Presupuesto, informes financieros y soluciones relacionadas con las finanzas."},
+  {f:"NOMINACIONES", b:"Custodios y Nominaciones", d:"Candidatos a la Junta de Servicios Generales y directores no Custodios."},
+  {f:"INFORME Y CARTA", b:"Informe y Carta", d:"Manual de Servicio, Informe Final, directorios, y cambios en la Carta Constitutiva y los Estatutos."},
+  {f:"ARCHIVO HISTÓRICO", b:"Archivo Histórico", d:"Funcionamiento y normas de los archivos históricos."},
+  {f:"LITERATURA", b:"Literatura", d:"Literatura de recuperación: folletos, libros, formatos nuevos y material audiovisual."},
+  {f:"INFORM. PÚBL.", b:"Información al Público", d:"Comprensión del programa en medios públicos y electrónicos, y ante grupos comunitarios."},
+  {f:"A.A. “EL MENSAJE”", b:"Revista AA El Mensaje", d:"Contenido, formato, política y circulación de la revista."},
+  {f:"C.C.P. E INST. DE TRATAMIENTO", b:"Cooperación con la Comunidad Profesional", d:"Compartir información sobre AA con profesionales y cooperar sin afiliarse."},
+  {f:"AGENDA", b:"Agenda y Políticas", d:"Formato y contenido del programa de la Reunión Anual; tema y orden del día."},
+  {f:"CORRECCION.", b:"Instituciones", d:"Llevar el mensaje a alcohólicos bajo custodia y grupos en centros penitenciarios."},
+  {f:"POLÍTICAS Y ADMIS.", b:"Política y Admisiones", d:"Política de la Conferencia, admisiones, cambios al plan de la Reunión, nuevas Áreas y gastos de la Conferencia."},
+  {f:"JUNTA DE SERVICIOS GENERALES", b:"", d:"Casilla del formato. Úsela si la propuesta se dirige a la Junta y no a un Comité específico."}
+];
+$("#tablaComites").innerHTML = COMITES.map(c => `<tr><td><b>${esc(c.f)}</b></td><td>${esc(c.d)}</td></tr>`).join("") +
+  `<tr><td><b>Congresos, Eventos y Foros</b></td><td>Convenciones y eventos nacionales, y fechas de congresos y foros regionales. No aparece en el formato de la 62.ª RAC: consulte con su Delegado cómo marcarlo.</td></tr>`;
+$("#fComites").innerHTML = COMITES.map(c => `<label><input type="radio" name="comite" value="${esc(c.f)}"><span>${esc(c.f)}</span></label>`).join("");
+
+/* Lista de chequeo */
+const cheq = mem.leer(CLAVE+"-cheq") || {};
+document.querySelectorAll("[data-c]").forEach(i => { i.checked = !!cheq[i.dataset.c]; i.onchange = () => { cheq[i.dataset.c] = i.checked; mem.escribir(CLAVE+"-cheq", cheq); }; });
+
+/* Buscador */
+const sinTilde = s => { let o = ""; for(const c of s) o += c.normalize("NFD")[0].toLowerCase(); return o; };
+ACCIONES.forEach((a,i) => { a.i = i; a.n = sinTilde(a.t); });
+$("#nTotal").textContent = ACCIONES.length;
+[...new Set(ACCIONES.map(a => a.c))].sort((a,b) => a.localeCompare(b,"es")).forEach(c => $("#fCom").insertAdjacentHTML("beforeend", `<option>${esc(c)}</option>`));
+["grupos virtuales","anonimato","literatura","delegados","reserva","internet"].forEach(t => $("#chips").insertAdjacentHTML("beforeend", `<button type="button" class="btn peq" data-q="${esc(t)}">${esc(t)}</button>`));
+$("#chips").onclick = e => { const b = e.target.closest("[data-q]"); if(b){ $("#q").value = b.dataset.q; buscar(); } };
+function terminos(q){
+  const out = []; const re = /"([^"]+)"|(\S+)/g; let m;
+  while((m = re.exec(sinTilde(q)))){
+    if(m[1]) out.push(m[1].trim());
+    else { const w = m[2].replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,""); if(w.length < 2) continue;
+      out.push(w.length > 4 ? w.replace(/(es|s)$/,"") : w); }
+  }
+  return out.filter(Boolean);
+}
+function resaltar(t, n, ts){
+  const r = []; ts.forEach(w => { let i = -1; while((i = n.indexOf(w, i+1)) >= 0) r.push([i, i+w.length]); });
+  r.sort((a,b) => a[0]-b[0]); let o = "", p = 0;
+  r.forEach(([a,b]) => { if(a < p) return; o += esc(t.slice(p,a)) + "<mark>" + esc(t.slice(a,b)) + "</mark>"; p = b; });
+  return o + esc(t.slice(p));
+}
+let lista = [], visibles = 0, terms = [];
+function buscar(){
+  terms = terminos($("#q").value); const com = $("#fCom").value;
+  lista = (!terms.length && !com) ? [] : ACCIONES.filter(a => (!com || a.c === com) && terms.every(w => a.n.includes(w))).sort((a,b) => b.a - a.a || a.i - b.i);
+  visibles = 0; $("#resultados").innerHTML = "";
+  const v = $("#veredicto");
+  if(!terms.length && !com){ v.innerHTML = ""; $("#masBox").innerHTML = ""; return; }
+  if(!lista.length) v.innerHTML = `<div class="mal"><b>No aparece con esas palabras.</b> Eso no prueba que nunca se haya tratado: pruebe con sinónimos y consulte a su Delegado o a la OSG, que tienen los Informes Finales.</div>`;
+  else { const u = lista[0];
+    v.innerHTML = `<div class="bien"><b>${lista.length} ${lista.length === 1 ? "resultado" : "resultados"}.</b> ${terms.length ? `El más reciente es de ${u.a}, Comité de ${esc(u.c)}.` : ""} Lea todos: la recomendación más reciente reemplaza a las anteriores que le sean contrarias.</div>`; }
+  mas();
+}
+function mas(){
+  const trozo = lista.slice(visibles, visibles + 30);
+  $("#resultados").insertAdjacentHTML("beforeend", trozo.map(a => `<article class="res">
+    <div class="cab"><b class="an">${a.a}</b><span class="et">${esc(a.k)}</span><span>Comité de ${esc(a.c)}</span></div>
+    <p>${resaltar(a.t, a.n, terms)}</p>
+    <div class="acciones"><span class="fuente">Recomendaciones Vigentes, p. ${a.p}</span><button type="button" class="btn peq" data-citar="${a.i}">Citar en mi proyecto</button></div>
+  </article>`).join(""));
+  visibles += trozo.length;
+  $("#masBox").innerHTML = visibles < lista.length ? `<button type="button" class="btn" id="verMas">Ver más (${lista.length - visibles})</button>` : "";
+  const b = $("#verMas"); if(b) b.onclick = mas;
+}
+let tq; $("#q").oninput = () => { clearTimeout(tq); tq = setTimeout(buscar, 150); };
+$("#fCom").onchange = buscar;
+
+/* Fechas: 2026 fue la 62.ª Reunión Anual; las propuestas se envían antes del 31 de enero (Agenda, 2018) */
+const hoy = new Date();
+function proximaRAC(){
+  let a = hoy.getFullYear();
+  if(hoy > new Date(a, 0, 31, 23, 59, 59)) a++;
+  return {anio:a, numero:a - 1964, limite:new Date(a, 0, 31)};
+}
+const RAC = proximaRAC();
+const dias = Math.ceil((RAC.limite - hoy) / 86400000);
+$("#ttlFecha").textContent = `Próxima: ${RAC.numero}.ª Reunión Anual (${RAC.anio})`;
+$("#cuenta").textContent = `Faltan ${dias} ${dias === 1 ? "día" : "días"} para el 31 de enero`;
+$("#notaFecha").textContent = "Fecha general de la Recomendación de 2018. Su Área puede pedirlo antes para alcanzar a consolidarlo.";
+
+/* Borrador */
+const CAMPOS = ["nConf","terr","reg","area","prop","just","resp","lema","nom","grp"];
+const INICIAL = {nConf:RAC.numero, terr:"SUR", reg:"C", area:"3", lema: RAC.numero === 63 ? "La Unidad, la Confianza y la Comunicación fortalecen nuestra Estructura" : "", comite:"", ants:[]};
+let D = Object.assign({}, INICIAL, mem.leer(CLAVE) || {});
+function pintarForm(){
+  CAMPOS.forEach(k => { $("#"+k).value = D[k] == null ? "" : D[k]; });
+  document.querySelectorAll("[name=comite]").forEach(r => r.checked = r.value === D.comite);
+  pintarAnts();
+}
+function pintarAnts(){
+  $("#ants").innerHTML = D.ants.map((a,i) => `<li><span><b>${a.a}</b> · Comité de ${esc(a.c)} · p. ${a.p}<br>${esc(corto(a.t))}</span><button type="button" class="btn peq" data-quitar="${i}">Quitar</button></li>`).join("");
+  $("#sinAnts").hidden = D.ants.length > 0;
+}
+const corto = t => t.length > 160 ? t.slice(0,158).replace(/\s+\S*$/,"") + "…" : t;
+const guardar = () => mem.escribir(CLAVE, D);
+$("#f").addEventListener("input", e => {
+  if(CAMPOS.includes(e.target.id)) D[e.target.id] = e.target.value;
+  if(e.target.name === "comite") D.comite = e.target.value;
+  guardar(); pintarCorreo();
+});
+$("#ants").onclick = e => { const b = e.target.closest("[data-quitar]"); if(b){ D.ants.splice(+b.dataset.quitar,1); guardar(); pintarAnts(); } };
+$("#resultados").onclick = e => {
+  const b = e.target.closest("[data-citar]"); if(!b) return;
+  const a = ACCIONES[+b.dataset.citar];
+  if(!D.ants.some(x => x.t === a.t)){ D.ants.push({a:a.a,c:a.c,p:a.p,t:a.t}); guardar(); pintarAnts(); }
+  b.textContent = "Citado ✓"; b.disabled = true;
+};
+$("#borrar").onclick = () => { if(confirm("¿Borrar el borrador de este navegador?")){ mem.borrar(CLAVE); D = Object.assign({}, INICIAL, {ants:[]}); pintarForm(); pintarCorreo(); $("#errores").innerHTML = ""; $("#estado").textContent = "Borrador borrado."; } };
+function pintarCorreo(){
+  const n = D.nConf || RAC.numero, asunto = `Propuesta a proyecto de recomendación, ${n}.ª RAC, Comité de ${D.comite || "(por definir)"}`;
+  $("#correo").href = "mailto:serviciosgenerales@aacolombia.org?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent("Atención: Coordinador de la Conferencia.\n\nAdjunto una propuesta para la Reunión Anual.\n");
+}
+
+/* PDF: sigue el formato “Propuestas a proyectos de recomendación” de la 62.ª RAC */
+function validar(){
+  const e = [];
+  if(!D.comite) e.push("Marque el Comité.");
+  if(!(D.prop||"").trim()) e.push("Escriba la propuesta.");
+  if(!(D.just||"").trim()) e.push("Escriba la justificación.");
+  if(!(D.nom||"").trim()) e.push("Escriba el nombre.");
+  if(!(D.grp||"").trim()) e.push("Escriba el grupo.");
+  return e;
+}
+const URLS_PDF = ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js","https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"];
+function cargarPDF(){
+  if(window.jspdf) return Promise.resolve();
+  return URLS_PDF.reduce((p,u) => p.catch(() => new Promise((ok,no) => { const s = document.createElement("script"); s.src = u; s.onload = ok; s.onerror = no; document.head.appendChild(s); })), Promise.reject());
+}
+function crearPDF(){
+  const doc = new window.jspdf.jsPDF({orientation:"landscape", unit:"pt", format:"a4"});
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 48, ANCHO = W - 2*M;
+  let y = 54;
+  const salto = n => { if(y + n > H - 46){ doc.addPage(); y = 54; } };
+  const txt = (t,{b=false,i=false,s=11,al="left",lh=1.35}={}) => {
+    doc.setFont("helvetica", b && i ? "bolditalic" : b ? "bold" : i ? "italic" : "normal"); doc.setFontSize(s);
+    doc.splitTextToSize(String(t), ANCHO).forEach(l => { salto(s*lh); doc.text(l, al === "center" ? W/2 : M, y, {align:al}); y += s*lh; });
+  };
+  const parrafos = t => String(t).trim().split(/\n+/).forEach(p => { txt(p); y += 3; });
+  txt(`${D.nConf}.ª REUNIÓN ANUAL DE LA CONFERENCIA DE SERVICIOS GENERALES`, {b:true,s:13,al:"center"});
+  txt("“PROPUESTAS A PROYECTOS DE RECOMENDACIÓN”", {b:true,i:true,s:11,al:"center"}); y += 8;
+  txt("Marque con una X — Para el Comité de:", {b:true,s:10}); y += 2;
+  const col = ANCHO/4, fila = 22;
+  COMITES.forEach((c,i) => {
+    const x = M + (i%4)*col, yy = y + Math.floor(i/4)*fila;
+    doc.setLineWidth(.8); doc.setDrawColor(0); doc.rect(x, yy-9, 12, 12);
+    if(c.f === D.comite){ doc.setFont("helvetica","bold"); doc.setFontSize(11); doc.text("X", x+6, yy+1, {align:"center"}); }
+    doc.setFont("helvetica", c.f === D.comite ? "bold" : "normal"); doc.setFontSize(8); doc.text(doc.splitTextToSize(c.f, col-22)[0], x+17, yy);
+  });
+  y += 3*fila + 8;
+  txt("PROPUESTA:", {b:true}); parrafos(D.prop); y += 8;
+  salto(40);
+  txt(`Territorio: ${D.terr || ""}     Región: ${D.reg || ""}     Área: ${D.area || ""}`, {b:true,s:10});
+  if((D.lema||"").trim()){ y += 2; txt(`“${D.lema.trim()}”`, {b:true,i:true,s:10,al:"center"}); }
+  y += 10;
+  txt("JUSTIFICACIÓN:", {b:true}); parrafos(D.just);
+  if(D.ants.length){ y += 6; txt("Antecedentes consultados (Recomendaciones Vigentes 1965-2026):", {b:true,s:10});
+    D.ants.forEach(a => txt(`• ${a.a}, Comité de ${a.c}, p. ${a.p}: ${corto(a.t)}`, {s:9.5})); }
+  if((D.resp||"").trim()){ y += 6; txt(`Respaldo: ${D.resp.trim()}`, {s:10}); }
+  y += 14; salto(50);
+  txt(`NOMBRE: ${D.nom.trim()}`, {b:true}); txt(`GRUPO: ${D.grp.trim()}`, {b:true});
+  const fecha = new Intl.DateTimeFormat("es-CO",{day:"numeric",month:"long",year:"numeric"}).format(hoy); txt(`Fecha: ${fecha}`, {s:10});
+  const total = doc.internal.getNumberOfPages();
+  for(let p = 1; p <= total; p++){ doc.setPage(p); doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.text(`Página ${p} de ${total}`, W-M, H-24, {align:"right"}); }
+  doc.setProperties({title:`Propuesta ${D.nConf}.ª RAC, Comité de ${D.comite}`});
+  return doc;
+}
+$("#f").onsubmit = async e => {
+  e.preventDefault();
+  const err = validar(), box = $("#errores"), est = $("#estado");
+  box.innerHTML = err.length ? `<div class="mal">${err.map(esc).join("<br>")}</div>` : ""; est.textContent = "";
+  if(err.length) return;
+  est.textContent = "Creando el PDF…";
+  try{ await cargarPDF(); }catch(x){ est.textContent = "No se pudo cargar el creador de PDF. Revise su conexión a internet e intente de nuevo."; return; }
+  const nombre = `propuesta_${D.nConf}RAC_${D.comite.toLowerCase().normalize("NFD").replace(/[^a-z]+/g,"_").replace(/^_|_$/g,"")}.pdf`;
+  crearPDF().save(nombre);
+  est.textContent = `PDF creado: ${nombre}. Revíselo antes de enviarlo.`;
+};
+
+pintarForm(); pintarCorreo();
+abrir(TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "como");
+</script>
+</body>
+</html>
