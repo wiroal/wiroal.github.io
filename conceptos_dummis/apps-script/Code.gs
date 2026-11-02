@@ -6,7 +6,8 @@
 
 const HOJA = "eventos";
 const COLUMNAS = ["fecha","uid","sesion","evento","nivel","paso","porcentaje","puntaje","estrellas","errores","ficha","fichas","xp",
-                  "ciudad","region","pais","codigo_pais","dispositivo","idioma","origen"];
+                  "ciudad","region","pais","codigo_pais","dispositivo","idioma","origen","nombre"];
+const EVENTOS = ["visita","abrio","intento","aprobo","reto","ficha"];
 const NIVELES = 8;            // niveles 0..7
 const PASOS = NIVELES * 3;    // 8 niveles × (abrió, intentó, aprobó)
 const FASES = ["abrio","intento","aprobo"];
@@ -19,22 +20,24 @@ function hoja_(){
   const ss = SpreadsheetApp.getActive();
   let h = ss.getSheetByName(HOJA);
   if(!h){ h = ss.insertSheet(HOJA); h.appendRow(COLUMNAS); h.setFrozenRows(1); }
+  else if(h.getRange(1, COLUMNAS.length).getValue() !== "nombre") h.getRange(1, COLUMNAS.length).setValue("nombre");   // hojas creadas antes de esta columna
   return h;
 }
-const txt_ = (v, n=60) => String(v == null ? "" : v).slice(0, n);
+const txt_ = (v, n=60) => String(v == null ? "" : v).replace(/^[=+\-@\s]+/, "").slice(0, n);   // sin = + - @ al inicio: Sheets no lo tomará como fórmula
 const num_ = (v, min, max) => { if(v === "" || v == null) return ""; const x = Math.round(Number(v)); return isFinite(x) ? Math.min(max, Math.max(min, x)) : ""; };
 
 /* ---------- Registro de eventos ---------- */
 function doPost(e){
   let d;
   try { d = JSON.parse(e.postData.contents); } catch(err){ return ContentService.createTextOutput("json inválido"); }
+  if(!d.uid || !EVENTOS.includes(d.evento)) return ContentService.createTextOutput("evento inválido");
   const paso = num_(d.paso, 0, PASOS) || 0;
   const nivel = d.nivel === "diario" ? "diario" : num_(d.nivel, 0, NIVELES - 1);
   const ficha = FICHAS.includes(d.ficha) ? d.ficha : "";
   const fila = [new Date(), txt_(d.uid,32), txt_(d.sid,32), txt_(d.evento,20), nivel,
     paso, Math.round(paso / PASOS * 100), num_(d.puntaje,0,100), num_(d.estrellas,0,3), num_(d.errores,0,99),
     ficha, num_(d.fichas,0,FICHAS.length), num_(d.xp,0,1e6),
-    txt_(d.ciudad), txt_(d.region), txt_(d.pais), txt_(d.codigo,4), txt_(d.dispositivo,12), txt_(d.idioma,12), txt_(d.origen,80)];
+    txt_(d.ciudad), txt_(d.region), txt_(d.pais), txt_(d.codigo,4), txt_(d.dispositivo,12), txt_(d.idioma,12), txt_(d.origen,80), txt_(d.nombre,30)];
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try { hoja_().appendRow(fila); } finally { lock.releaseLock(); }
@@ -56,6 +59,7 @@ function calcular_(){
     u.paso = Math.max(u.paso, Number(paso) || 0);
     u.xp = Math.max(u.xp, Number(xp) || 0);
     if(ciudad || pais){ u.ciudad = ciudad; u.region = region; u.pais = pais; }
+    if(f[COLUMNAS.indexOf("nombre")]) u.nombre = f[COLUMNAS.indexOf("nombre")];
     if(fecha > u.ultima) u.ultima = fecha;
     u.sesiones.add(sid);
     if(evento === "reto" && puntaje !== ""){
@@ -103,6 +107,8 @@ function calcular_(){
     terminaron: lista.filter(u => u.paso >= PASOS).length,
     xpPromedio: lista.length ? Math.round(lista.reduce((s,u) => s + u.xp, 0) / lista.length) : 0,
     embudo, aprobados, retos, fichas,
+    participantes: lista.map(u => ({nombre:u.nombre || "Sin nombre", lugar:u.ciudad ? `${u.ciudad} (${u.pais})` : u.pais || "Desconocido", avance:Math.round(u.paso / PASOS * 100),
+      ultima:Utilities.formatDate(new Date(u.ultima), "America/Bogota", "yyyy-MM-dd")})).sort((a,b) => b.avance - a.avance || a.nombre.localeCompare(b.nombre)),
     paises: agrupar(u => u.pais),
     ciudades: agrupar(u => u.ciudad ? `${u.ciudad}, ${u.region} (${u.pais})` : ""),
     colombia: agrupar(u => u.pais === "Colombia" ? u.region : null).filter(x => x.lugar !== "Desconocido"),
@@ -131,6 +137,7 @@ function actualizarResumen(){
     [["Niveles aprobados","Usuarios","%"], ...r.aprobados.map(x => [x.niveles, x.usuarios, x.porcentaje])],
     [["Nivel del reto","Intentos","Usuarios","Puntaje promedio (%)","% de intentos aprobados"], ...r.retos.map(x => [x.nivel, x.intentos, x.usuarios, x.promedio, x.aprobacion])],
     [["Ficha","Usuarios que la leyeron","%"], ...r.fichas.map(x => [x.ficha, x.usuarios, x.porcentaje])],
+    [["Participante","Lugar","Avance (%)","Última actividad"], ...r.participantes.map(x => [x.nombre, x.lugar, x.avance, x.ultima])],
     [["País","Usuarios","Avance promedio (%)"], ...r.paises.map(x => [x.lugar, x.usuarios, x.avance])],
     [["Departamento (Colombia)","Usuarios","Avance promedio (%)"], ...r.colombia.map(x => [x.lugar, x.usuarios, x.avance])],
     [["Ciudad","Usuarios","Avance promedio (%)"], ...r.ciudades.map(x => [x.lugar, x.usuarios, x.avance])]

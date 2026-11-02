@@ -38,14 +38,14 @@ Después de hacer `git push`, queda disponible en:
 - Un solo archivo HTML, sin dependencias (solo las fuentes de Google Fonts, con respaldo del sistema).
 - Funciona en celular, tableta y computador.
 - El progreso, las notas y el nombre se guardan solo en el navegador de cada persona (`localStorage`).
-- Estadísticas anónimas opcionales con Google Apps Script (ver abajo).
+- Estadísticas de uso opcionales con Google Apps Script, con un nombre de la literatura de AA (`../nombres_aa.js`).
 - Sonidos generados con Web Audio (se pueden silenciar).
 - Respeta la preferencia de "reducir movimiento".
 
 ## Estadísticas de uso (opcional)
 
-El juego puede registrar estadísticas **anónimas**: hasta qué paso llega cada visitante (24 pasos = 6 retos × Aprende, Juega, Reflexiona, Completó)
-y su ciudad aproximada. La ciudad se calcula a partir de la IP con [geojs.io](https://www.geojs.io/), pero **la IP no se guarda**; tampoco el nombre ni las notas.
+El juego puede registrar estadísticas de uso, con un nombre de la literatura de AA y nunca el real: hasta qué paso llega cada visitante (24 pasos = 6 retos × Aprende, Juega, Reflexiona, Completó)
+y su ciudad aproximada. La ciudad se calcula a partir de la IP con [geojs.io](https://www.geojs.io/), pero **la IP no se guarda**; tampoco el nombre real ni las notas.
 Cada navegador recibe un identificador aleatorio para contar usuarios únicos.
 
 **Instalación (una sola vez, gratis):**

@@ -66,17 +66,17 @@ La sesión base dura 35 minutos y tiene cinco tramos: llegada, lectura, traducci
 - La página no incluye apellidos ni el nombre del grupo.
 - Está marcada con `noindex` para no aparecer en buscadores.
 - No hay cuentas: el progreso vive en `localStorage`.
-- Las estadísticas de uso son anónimas y opcionales (solo se activan si `ESTAD_URL` tiene valor). La IP se usa en el navegador para calcular la ciudad aproximada y **no se guarda**.
+- Las estadísticas de uso son opcionales (solo se activan si `ESTAD_URL` tiene valor) y usan un nombre de la literatura de AA, nunca el real. La IP se usa para calcular ciudad y país aproximados y **no se guarda**.
 - Por la Tradición 11, comparte el enlace con discreción; no lo publiques en redes abiertas.
 
 ## Estadísticas de uso (opcional)
 
-El juego puede registrar estadísticas **anónimas**:
+El juego puede registrar estadísticas de uso, con un nombre de la literatura de AA (`../nombres_aa.js`) que se sortea en cada navegador y se puede cambiar en “Fuentes y progreso”:
 
 - hasta qué paso llega cada visitante (24 pasos = 8 niveles × *abrió*, *intentó el reto*, *aprobó*);
 - el resultado de cada reto (puntaje, estrellas, errores), incluido el reto diario;
 - qué fichas se marcan como leídas;
-- ciudad, departamento y país aproximados, calculados a partir de la IP con [geojs.io](https://www.geojs.io/). **La IP no se guarda**; tampoco nombres ni el archivo de progreso.
+- ciudad, departamento y país aproximados, calculados a partir de la IP con [geojs.io](https://www.geojs.io/). **La IP no se guarda**; tampoco nombres reales ni el archivo de progreso.
 
 Cada navegador recibe un identificador aleatorio para contar usuarios únicos y visitas que regresan.
 

@@ -298,6 +298,7 @@ footer{color:var(--muted); font-size:14px; padding:30px 0; text-align:center}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
+<script src="../nombres_aa.js"></script>
 <script>
 /* ============================================================
    DATOS — Doce Conceptos en Juego
@@ -875,13 +876,16 @@ let S = fresh();
 function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ S = Object.assign(fresh(), JSON.parse(raw)); } }catch(e){} }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
-/* ---------- Estadísticas anónimas (no se envía nombre, progreso exportado ni IP) ---------- */
+/* ---------- Estadísticas de uso: se envía un nombre de la literatura de AA, nunca el real. La IP solo sirve para calcular ciudad y país y no se guarda. ---------- */
 const ESTAD_URL = "https://script.google.com/macros/s/AKfycbxzxj_Mkz9qY6u7cwYkLVh8t_UIhawiXDiDv49kBHdmuPIT8hwtjtoh1s5G0in4ynuz/exec";   // URL de la aplicación web de Apps Script (ver apps-script/Code.gs). Vacío = desactivado.
 const FASES = ["abrio","intento","aprobo"];
 const pasoDe = (nivel, fase) => nivel*3 + FASES.indexOf(fase) + 1;   // 1..24 (8 niveles × 3 fases)
 const pasoGuardado = () => Math.max(0, ...LEVELS.map(L => lv(L.id).best>=PASS ? pasoDe(L.id,"aprobo") : lv(L.id).attempts ? pasoDe(L.id,"intento") : 0));
-const idLocal = (alm, k) => { try{ let v=alm.getItem(k); if(!v){ v=Date.now().toString(36)+Math.random().toString(36).slice(2,10); alm.setItem(k,v); } return v; }catch(e){ return "anon"; } };
-const UID = idLocal(localStorage, KEY+".uid"), SID = idLocal(sessionStorage, KEY+".sid");
+const idLocal = (alm, k) => { const nuevo = () => Date.now().toString(36)+Math.random().toString(36).slice(2,10); try{ const a = alm(); let v = a.getItem(k); if(!v){ v = nuevo(); a.setItem(k,v); } return v; }catch(e){ return nuevo(); } };
+const UID = idLocal(() => localStorage, KEY+".uid"), SID = idLocal(() => sessionStorage, KEY+".sid");
+const NOMBRES_AA = typeof NOMBRES === "undefined" ? [] : NOMBRES;
+let NOMBRE = typeof nombreAA === "function" ? nombreAA(KEY+".nombre") : "";
+function cambiarNombre(n){ NOMBRE = cambiarNombreAA(KEY+".nombre", n); toast(`Ahora participas como ${n}`); }
 let geo = {};
 const geoListo = (async () => {
   if(!ESTAD_URL) return;
@@ -896,7 +900,7 @@ async function registrar(evento, datos={}){
   if(!ESTAD_URL) return;
   await geoListo;
   let origen = ""; try{ origen = document.referrer ? new URL(document.referrer).hostname : ""; }catch(e){}
-  const cuerpo = {evento, uid:UID, sid:SID, paso:S.paso||0, xp:S.xp, ...geo, ...datos, origen,
+  const cuerpo = {evento, uid:UID, sid:SID, nombre:NOMBRE, paso:S.paso||0, xp:S.xp, ...geo, ...datos, origen,
     dispositivo: matchMedia("(pointer:coarse)").matches ? "móvil" : "computador", idioma: navigator.language};
   try{ fetch(ESTAD_URL, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain"}, body:JSON.stringify(cuerpo)}); }catch(e){}
 }
@@ -1490,19 +1494,22 @@ function vMas(){
       <p style="margin-top:12px">¿Prefieres un plan de 8 semanas con diario y bitácora? Abre el <a href="cuaderno.html">cuaderno de estudio</a> (versión anterior), o el vault de Obsidian en la carpeta <span class="kbd">vault/</span>.</p>
     </section>
     <section class="card"><h2>💾 Tu progreso</h2>
-      <p>Tu avance se guarda solo en este navegador.${ESTAD_URL?" Al servidor solo llegan estadísticas anónimas (ver Anonimato).":" Nada se envía a ningún servidor."} Para pasarlo a otro equipo, expórtalo y luego impórtalo allá.</p>
+      <p>Tu avance se guarda solo en este navegador.${ESTAD_URL?" Al servidor solo llegan estadísticas de uso (ver Anonimato).":" Nada se envía a ningún servidor."} Para pasarlo a otro equipo, expórtalo y luego impórtalo allá.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn sky sm" onclick="exportP()">⬇ Exportar</button>
         <label class="btn ghost sm" style="cursor:pointer">⬆ Importar<input type="file" accept="application/json" class="hidden" onchange="importP(this)"></label>
         <button class="btn ghost sm" onclick="resetAsk(this)">🗑 Reiniciar</button>
       </div>
+      ${NOMBRES_AA.length?`<div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label for="minombre"><b>Participas como:</b></label>
+        <select id="minombre" class="btn ghost sm" onchange="cambiarNombre(this.value)">${NOMBRES_AA.map(x=>`<option${x.n===NOMBRE?" selected":""}>${esc(x.n)}</option>`).join("")}</select>
+        <span>Un nombre de la literatura de AA, para no usar el tuyo.</span></div>`:""}
       <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>Tema:</b>
         <button class="btn ghost sm" onclick="setTheme('light')">☀️ Claro</button>
         <button class="btn ghost sm" onclick="setTheme('dark')">🌙 Oscuro</button>
         <button class="btn ghost sm" onclick="setTheme('')">⚙️ Automático</button></div>
     </section>
     <section class="card"><h2>🤫 Anonimato</h2>
-      <p style="margin:0">La página no pide nombres ni cuentas y está marcada para no aparecer en buscadores.${ESTAD_URL?" Para mejorar el material se registran estadísticas anónimas de uso: hasta qué nivel llegas, tus resultados en los retos y tu ciudad aproximada. Nunca tu nombre ni tu dirección IP.":" No tiene analítica."} Por la Undécima Tradición, comparte el enlace con discreción, de persona a persona.</p>
+      <p style="margin:0">La página no pide nombres ni cuentas y está marcada para no aparecer en buscadores.${ESTAD_URL?" Para mejorar el material se registran estadísticas de uso con un nombre de la literatura de AA, nunca el tuyo: hasta qué nivel llegas, tus resultados en los retos, y tu ciudad y país aproximados. Para calcular la ubicación, tu navegador consulta tu dirección IP en el servicio geojs.io; la IP no se guarda.":" No tiene analítica."} Por la Undécima Tradición, comparte el enlace con discreción, de persona a persona.</p>
     </section>
   </div>`;
 }

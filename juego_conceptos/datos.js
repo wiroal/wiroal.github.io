@@ -6,37 +6,6 @@
 const SALA_PREFIJO = 'aa-conceptos-wiroal-';
 const FUENTE_MANUAL = 'Manual de Servicio de AA 2025-2027';
 
-/* Nombres que aparecen en la literatura de AA cargada en el proyecto */
-const NOMBRES = [
-  { n: 'Bill W.', d: 'Cofundador de AA.', f: 'Manual de Servicio de AA 2025-2027' },
-  { n: 'Dr. Bob', d: 'Cofundador de AA.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Anne S.', d: 'Esposa del Dr. Bob.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Lois W.', d: 'Esposa de Bill W.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Ebby T.', d: 'Amigo de infancia de Bill que le llevó el mensaje.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Bill D.', d: 'Con él hubo tres recuperaciones.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Ernie G.', d: 'El cuarto miembro, a finales de julio de 1935.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Henrietta Seiberling', d: 'Reunió a Bill W. y al Dr. Bob.', f: 'AA llega a su mayoría de edad' },
-  { n: 'Hermana Ignacia', d: 'Hospital Santo Tomás, Akron.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Clarence S.', d: 'Veterano de Akron/Cleveland.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Rev. Walter Tunks', d: 'Le dio a Bill la lista de diez nombres en Akron.', f: 'AA llega a su mayoría de edad' },
-  { n: 'Norman Sheppard', d: 'Le dijo a Bill que llamara a Henrietta.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Delphine Weber', d: 'Amiga de Henrietta preocupada por Bob Smith.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'T. Henry', d: 'Del Grupo Oxford; prestó su casa para reuniones.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Clarace W.', d: 'Del Grupo Oxford; esposa de T. Henry.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Elgie', d: 'Veterana de Akron.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'John R.', d: 'Veterano de Akron.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Lloyd T.', d: 'Padrino de Clarence.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Rollie H.', d: 'El jugador de béisbol.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Eddie', d: 'La primera “falla”, luego sobrio.', f: 'AA llega a su mayoría de edad' },
-  { n: 'Mark Whalon', d: 'Amigo íntimo de Bill en Vermont.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Bernard Smith', d: 'Custodio no alcohólico, arquitecto de la estructura de la Conferencia.', f: 'Manual de Servicio de AA 2025-2027' },
-  { n: 'Jack Alexander', d: 'Periodista que se interesó en AA.', f: 'Manual de Servicio de AA 2025-2027' },
-  { n: 'Dr. Tom Scuderi', d: 'Joven médico del Santo Tomás.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Sue Windows', d: 'Amiga de la familia Smith.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Smitty', d: 'De la familia Smith, Akron.', f: 'El Dr. Bob y los Buenos Veteranos' },
-  { n: 'Bill J.', d: 'Veterano de Akron.', f: 'El Dr. Bob y los Buenos Veteranos' }
-];
-
 /* Aclaración que se muestra al revelar las preguntas del Concepto X. */
 const NOTA_CONCEPTO_X = {
   texto: 'El Concepto X ordena los cargos y las entidades de servicio; no es una prohibición para el miembro. Ni el Manual, ni los Conceptos, ni la Carta Constitutiva, ni los Estatutos prohíben servir en el grupo base y en otro grupo. “Ningún A.A. puede obligar a otro a hacer nada”. En el grupo, la autoridad fundamental es “un Dios amoroso tal como se exprese en la conciencia de nuestro grupo”, y cada grupo es autónomo, “excepto en asuntos que afecten a otros grupos o a Alcohólicos Anónimos considerado como un todo”.',

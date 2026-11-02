@@ -39,12 +39,12 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--borde)}
 th:not(:first-child),td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
 .dias{display:flex;align-items:flex-end;gap:2px;height:120px}
-.dias i{flex:1;background:var(--acento);border-radius:3px 3px 0 0;min-height:2px}
+.dias i{flex:1;max-width:32px;background:var(--acento);border-radius:3px 3px 0 0;min-height:2px}
 .msj{color:var(--suave)}
 </style>
 </head>
 <body>
-<header class="cab"><div><h1>📊 Estadísticas · Doce Conceptos en Juego</h1><p style="margin:4px 0 0;opacity:.9">Datos anónimos: avance de cada visitante, resultados de los retos y ciudad aproximada.</p></div></header>
+<header class="cab"><div><h1>📊 Estadísticas · Doce Conceptos en Juego</h1><p style="margin:4px 0 0;opacity:.9">Avance de cada visitante, con nombres de la literatura de AA, resultados de los retos y ciudad y país aproximados.</p></div></header>
 <main>
   <form id="f">
     <input id="url" placeholder="URL de la aplicación web de Apps Script (https://script.google.com/macros/s/…/exec)" required>
@@ -91,7 +91,7 @@ function pintar(r){
         ${r.retos.map(x => `<tr><td>${x.nivel === "diario" ? "Reto diario" : `${x.nivel} · ${esc(NIVELES[x.nivel][0])}`}</td><td>${x.intentos}</td><td>${x.usuarios}</td><td>${x.promedio}%</td><td>${x.aprobacion}%</td></tr>`).join("")}
         </tbody></table>
       </section>
-      <section class="caja"><h2>Visitas por día</h2><p class="sub">Últimos ${r.dias.length} días con actividad.</p>
+      <section class="caja"><h2>Visitas por día</h2><p class="sub">${r.dias.length === 1 ? "Único día" : `Últimos ${r.dias.length} días`} con actividad.</p>
         <div class="dias">${r.dias.map(d => `<i style="height:${d.visitas/maxDia*100}%" title="${d.dia}: ${d.visitas} visitas, ${d.usuarios} usuarios"></i>`).join("")}</div>
       </section>
     </div>
@@ -100,6 +100,10 @@ function pintar(r){
     </section>
     <section class="caja"><h2>Países</h2>${tabla("País", r.paises)}</section>
     <section class="caja"><h2>Colombia por departamento</h2>${tabla("Departamento", r.colombia)}</section>
+    ${r.participantes ? `<section class="caja"><h2>Participantes</h2><p class="sub">Nombres de la literatura de AA; dos personas pueden tener el mismo.</p>
+      <table><thead><tr><th>Nombre</th><th>Lugar</th><th>Avance</th><th>Última vez</th></tr></thead><tbody>
+      ${r.participantes.slice(0,100).map(x => `<tr><td>${esc(x.nombre)}</td><td>${esc(x.lugar)}</td><td>${x.avance}%</td><td>${esc(x.ultima)}</td></tr>`).join("") || '<tr><td colspan="4" class="msj">Sin datos todavía</td></tr>'}</tbody></table>
+    </section>` : ""}
     <section class="caja"><h2>Ciudades</h2><p class="sub">Aproximada según la red de conexión; puede marcar la ciudad del proveedor de internet.</p>${tabla("Ciudad", r.ciudades)}</section>
   </div>
   <p class="msj" style="margin-top:16px">Actualizado: ${new Date(r.actualizado).toLocaleString("es-CO")}</p>`;
@@ -113,7 +117,7 @@ async function cargar(){
     const r = await (await fetch(url + (clave ? (url.includes("?") ? "&" : "?") + "clave=" + encodeURIComponent(clave) : ""))).json();
     if(r.error) throw new Error(r.error);
     pintar(r);
-  }catch(e){ $("#out").innerHTML = `<p class="msj">No se pudieron cargar los datos: ${esc(e.message)}</p>`; }
+  }catch(e){ $("#out").innerHTML = `<p class="msj">${!clave && e.message === "clave incorrecta" ? "Escribe la clave y pulsa “Ver datos”." : "No se pudieron cargar los datos: " + esc(e.message)}</p>`; }
 }
 $("#f").onsubmit = e => { e.preventDefault(); cargar(); };
 $("#url").value = new URLSearchParams(location.search).get("url") || mem("conceptos-estad-url") || "";

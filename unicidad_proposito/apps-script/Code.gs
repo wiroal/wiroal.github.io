@@ -6,7 +6,8 @@
 
 const HOJA = "eventos";
 const COLUMNAS = ["fecha","uid","sesion","evento","reto","nivel","porcentaje","estrellas","errores",
-                  "ciudad","region","pais","codigo_pais","dispositivo","idioma","origen"];
+                  "ciudad","region","pais","codigo_pais","dispositivo","idioma","origen","nombre"];
+const EVENTOS = ["visita","aprende","juega","reflexiona","completado","certificado"];
 const NIVELES = 24;   // 6 retos × (aprende, juega, reflexiona, completado)
 
 // Clave opcional para leer el resumen: Configuración del proyecto → Propiedades de la secuencia de comandos → CLAVE
@@ -16,19 +17,21 @@ function hoja_(){
   const ss = SpreadsheetApp.getActive();
   let h = ss.getSheetByName(HOJA);
   if(!h){ h = ss.insertSheet(HOJA); h.appendRow(COLUMNAS); h.setFrozenRows(1); }
+  else if(h.getRange(1, COLUMNAS.length).getValue() !== "nombre") h.getRange(1, COLUMNAS.length).setValue("nombre");   // hojas creadas antes de esta columna
   return h;
 }
-const txt_ = (v, n=60) => String(v == null ? "" : v).slice(0, n);
-const num_ = (v, min, max) => { const x = Math.round(Number(v)); return isFinite(x) ? Math.min(max, Math.max(min, x)) : ""; };
+const txt_ = (v, n=60) => String(v == null ? "" : v).replace(/^[=+\-@\s]+/, "").slice(0, n);   // sin = + - @ al inicio: Sheets no lo tomará como fórmula
+const num_ = (v, min, max) => { if(v === "" || v == null) return ""; const x = Math.round(Number(v)); return isFinite(x) ? Math.min(max, Math.max(min, x)) : ""; };
 
 /* ---------- Registro de eventos ---------- */
 function doPost(e){
   let d;
   try { d = JSON.parse(e.postData.contents); } catch(err){ return ContentService.createTextOutput("json inválido"); }
+  if(!d.uid || !EVENTOS.includes(d.evento)) return ContentService.createTextOutput("evento inválido");
   const nivel = num_(d.nivel, 0, NIVELES) || 0;
   const fila = [new Date(), txt_(d.uid,32), txt_(d.sid,32), txt_(d.evento,20), num_(d.reto,1,6),
     nivel, Math.round(nivel / NIVELES * 100), num_(d.estrellas,1,3), num_(d.errores,0,999),
-    txt_(d.ciudad), txt_(d.region), txt_(d.pais), txt_(d.codigo,4), txt_(d.dispositivo,12), txt_(d.idioma,12), txt_(d.origen,80)];
+    txt_(d.ciudad), txt_(d.region), txt_(d.pais), txt_(d.codigo,4), txt_(d.dispositivo,12), txt_(d.idioma,12), txt_(d.origen,80), txt_(d.nombre,30)];
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try { hoja_().appendRow(fila); } finally { lock.releaseLock(); }
@@ -49,6 +52,7 @@ function calcular_(){
     const u = U[uid] = U[uid] || {nivel:0, ciudad:"", region:"", pais:"", primera:fecha, ultima:fecha, sesiones:new Set()};
     u.nivel = Math.max(u.nivel, Number(nivel) || 0);
     if(ciudad || pais){ u.ciudad = ciudad; u.region = region; u.pais = pais; }
+    if(f[COLUMNAS.indexOf("nombre")]) u.nombre = f[COLUMNAS.indexOf("nombre")];
     if(fecha > u.ultima) u.ultima = fecha;
     u.sesiones.add(sid);
   });
@@ -80,6 +84,8 @@ function calcular_(){
     avancePromedio: lista.length ? Math.round(lista.reduce((s,u) => s + u.nivel, 0) / lista.length / NIVELES * 100) : 0,
     terminaron: lista.filter(u => u.nivel >= NIVELES).length,
     embudo, retos,
+    participantes: lista.map(u => ({nombre:u.nombre || "Sin nombre", lugar:u.ciudad ? `${u.ciudad} (${u.pais})` : u.pais || "Desconocido", avance:Math.round(u.nivel / NIVELES * 100),
+      ultima:Utilities.formatDate(new Date(u.ultima), "America/Bogota", "yyyy-MM-dd")})).sort((a,b) => b.avance - a.avance || a.nombre.localeCompare(b.nombre)),
     paises: agrupar(u => u.pais),
     ciudades: agrupar(u => u.ciudad ? `${u.ciudad}, ${u.region} (${u.pais})` : ""),
     colombia: agrupar(u => u.pais === "Colombia" ? u.region : null).filter(x => x.lugar !== "Desconocido"),
@@ -106,6 +112,7 @@ function actualizarResumen(){
       ["Avance promedio (%)", r.avancePromedio], ["Completaron los 6 retos", r.terminaron]],
     [["Nivel","Reto","Fase","Usuarios","% que llegó"], ...r.embudo.map(x => [x.nivel, x.reto, x.fase, x.usuarios, x.porcentaje])],
     [["Retos completados","Usuarios","%"], ...r.retos.map(x => [x.retos, x.usuarios, x.porcentaje])],
+    [["Participante","Lugar","Avance (%)","Última actividad"], ...r.participantes.map(x => [x.nombre, x.lugar, x.avance, x.ultima])],
     [["País","Usuarios","Avance promedio (%)"], ...r.paises.map(x => [x.lugar, x.usuarios, x.avance])],
     [["Departamento (Colombia)","Usuarios","Avance promedio (%)"], ...r.colombia.map(x => [x.lugar, x.usuarios, x.avance])],
     [["Ciudad","Usuarios","Avance promedio (%)"], ...r.ciudades.map(x => [x.lugar, x.usuarios, x.avance])]
