@@ -183,6 +183,7 @@ function estadoPara(tk){
     correcta: E.fase === 'revelada' && preg ? preg.correcta : null,
     cita: E.fase === 'revelada' && preg ? preg.cita : null,
     pag: E.fase === 'revelada' && preg ? FUENTE_MANUAL + ', ' + preg.pag : null,
+    nota: E.fase === 'revelada' && preg ? preg.nota || null : null,
     misPts: tot.pts, misAciertos: tot.ac, puesto, jugadores: rk.length, resumen: res
   };
 }
@@ -316,7 +317,7 @@ function vPregunta(){
     ${revel ? '' : '<div class="tiempo" style="margin-top:12px"><i id="barra"></i></div>'}
     <h2>${esc(preg.texto)}</h2>
     <div class="ops">${ops}</div>
-    ${revel ? `<div class="cita" style="margin-top:20px">“${esc(preg.cita)}”<small>${esc(FUENTE_MANUAL)}, ${esc(preg.pag)}</small></div>` : ''}
+    ${revel ? `<div class="cita" style="margin-top:20px">“${esc(preg.cita)}”<small>${esc(FUENTE_MANUAL)}, ${esc(preg.pag)}</small></div>${preg.nota ? `<div class="nota"><b>Para tener claro</b>${esc(preg.nota.texto)}<small>${esc(preg.nota.fuente)}</small></div>` : ''}` : ''}
     <div class="mando">
       ${revel
         ? `<button class="btn" data-ir="tablero">Ver tablero</button><button class="btn prim" data-acc="sig">${ultima ? 'Resultados finales' : 'Siguiente pregunta'} →</button>`

@@ -37,6 +37,12 @@ const NOMBRES = [
   { n: 'Bill J.', d: 'Veterano de Akron.', f: 'El Dr. Bob y los Buenos Veteranos' }
 ];
 
+/* Aclaración que se muestra al revelar las preguntas del Concepto X. */
+const NOTA_CONCEPTO_X = {
+  texto: 'El Concepto X ordena los cargos y las entidades de servicio; no es una prohibición para el miembro. Ni el Manual, ni los Conceptos, ni la Carta Constitutiva, ni los Estatutos prohíben servir en el grupo base y en otro grupo. “Ningún A.A. puede obligar a otro a hacer nada”. En el grupo, la autoridad fundamental es “un Dios amoroso tal como se exprese en la conciencia de nuestro grupo”, y cada grupo es autónomo, “excepto en asuntos que afecten a otros grupos o a Alcohólicos Anónimos considerado como un todo”.',
+  fuente: 'Doce Pasos y Doce Tradiciones, pág. PDF 119; Tradiciones 2 y 4, Manual de Servicio de AA 2025-2027, Apéndice B, pág. PDF 105'
+};
+
 /* correcta = índice (0-3) de la opción correcta.
    cita = texto literal de la fuente; pag = ubicación exacta. */
 const TESTS = {
@@ -93,7 +99,8 @@ const TESTS = {
         op: ['…un servidor suplente”', '…un informe trimestral”', '…una autoridad de servicio equivalente, y el alcance de tal autoridad debe estar siempre bien definido”', '…una votación de la Asamblea”'],
         correcta: 2,
         cita: 'A cada responsabilidad de servicio, le debe corresponder una autoridad de servicio equivalente, y el alcance de tal autoridad debe estar siempre bien definido.',
-        pag: 'Los Doce Conceptos (forma corta), pág. PDF 152' },
+        pag: 'Los Doce Conceptos (forma corta), pág. PDF 152',
+        nota: NOTA_CONCEPTO_X },
       { c: 'XI', texto: 'Según el Concepto XI, los Custodios deben siempre contar con…',
         op: ['los mejores Comités permanentes y con directores de las corporaciones de servicio, ejecutivos, personal de oficina y consejeros bien capacitados', 'una mayoría de Custodios no alcohólicos', 'el aval previo de cada Área', 'un fondo de reserva ilimitado'],
         correcta: 0,
@@ -159,7 +166,8 @@ const TESTS = {
         op: ['Que los Custodios tomen decisiones', 'La “gestión bicéfala”', 'La rotación de servidores', 'Que los Comités deleguen tareas'],
         correcta: 1,
         cita: 'A cada responsabilidad de servicio le debe corresponder una autoridad ejecutiva de servicio equivalente: se debe evitar cuidadosamente la “gestión bicéfala”',
-        pag: 'Índice de los Doce Conceptos, pág. PDF 155' },
+        pag: 'Índice de los Doce Conceptos, pág. PDF 155',
+        nota: NOTA_CONCEPTO_X },
       { c: 'XI', texto: 'Según el título del Concepto XI, este Concepto ofrece…',
         op: ['una descripción de los principales Comités y corporaciones de servicio de la Junta, y el estatus personal de directores, ejecutivos y personal', 'el procedimiento del Tercer Legado', 'las reglas para formar nuevas Áreas', 'la historia de la Fundación Alcohólica'],
         correcta: 0,

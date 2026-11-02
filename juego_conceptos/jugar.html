@@ -176,7 +176,7 @@ function vPregunta(){
   let pie = '';
   if (revel) {
     const v = S.miResp == null ? ['nada', 'No alcanzaste a responder'] : (S.miResp === S.correcta ? ['bien', `¡Correcto! +${S.misPtsPregunta} puntos`] : ['mal', 'Esta vez no']);
-    pie = `<div class="veredicto ${v[0]}">${v[1]}</div><div class="cita">“${esc(S.cita)}”<small>${esc(S.pag)}</small></div>`;
+    pie = `<div class="veredicto ${v[0]}">${v[1]}</div><div class="cita">“${esc(S.cita)}”<small>${esc(S.pag)}</small></div>${S.nota ? `<div class="nota"><b>Para tener claro</b>${esc(S.nota.texto)}<small>${esc(S.nota.fuente)}</small></div>` : ''}`;
   } else if (mia != null) {
     pie = `<p class="tenue" style="margin-top:12px">Respuesta enviada (${LETRAS[mia]}). Espera a que se cierre la pregunta.</p>`;
   }
