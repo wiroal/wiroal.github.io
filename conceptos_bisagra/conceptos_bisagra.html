@@ -1,0 +1,555 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Los Doce Conceptos como bisagra</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Lienzo de proyección: Pasos · Conceptos · Tradiciones. La cámara recorre cada Concepto y luego viaja por cada vínculo hasta su Paso o Tradición */
+:root{
+  --bg:#0d1720; --grid:#15222c; --panel:#111d27; --raise:#172733; --line:#22313d;
+  --ink:#ece6d9; --soft:#d2ccbf; --muted:#8c9ba6; --dim:#4b5a65;
+  --paso:#d8a547; --paso-hi:#ffcf5c; --trad:#73a9d4; --trad-hi:#9fdcff; --serv:#e27b5a;
+  --display:"Bitter",Georgia,"Times New Roman",serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden;margin:0}
+#stage{position:fixed;inset:0;touch-action:none;cursor:grab}
+#stage.dragging{cursor:grabbing}
+svg#world{width:100%;height:100%;display:block}
+svg text{font-family:var(--body)}
+/* nodos */
+.n{transition:opacity .6s}
+.n rect{transition:stroke .4s,stroke-width .4s,fill .4s}
+.lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;fill:var(--muted)}
+.kw{font-family:var(--display);font-size:17px;fill:var(--ink)}
+.cnum{font-family:var(--display);font-weight:800;font-size:26px}
+.ckw{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.06em;fill:var(--ink)}
+.csub{font-size:13px;fill:var(--muted);font-style:italic}
+.colhead{font-family:var(--mono);font-size:13px;letter-spacing:.2em}
+.coltitle{font-family:var(--display);font-weight:800;font-size:34px;fill:var(--ink)}
+/* líneas */
+.e{fill:none;stroke-width:2;transition:opacity .6s,stroke-width .5s,stroke .5s}
+.e.a{stroke-dasharray:7 7}
+.e.p{stroke:var(--paso)} .e.t{stroke:var(--trad)}
+#world.focus .e{opacity:.06}
+#world.focus .n{opacity:.22}
+#world.focus .e.on{opacity:.55;stroke-width:3}
+#world.focus .n.on{opacity:.9}
+#world.focus .e.go{opacity:1;stroke-width:3.5}
+#world.focus .n.act{opacity:1}
+.n.act rect.bx{stroke-width:5!important;stroke-opacity:1!important}
+.n.act.pp rect.bx{stroke:var(--paso-hi)!important;fill:color-mix(in srgb,var(--paso) 22%,var(--bg))!important}
+.n.act.tt rect.bx{stroke:var(--trad-hi)!important;fill:color-mix(in srgb,var(--trad) 22%,var(--bg))!important}
+.n.act .kw{fill:#fff}
+.n.src rect.box{stroke-width:4;stroke-opacity:1}
+.ring{fill:none;stroke-width:3;opacity:0}
+.n.act .ring{animation:ring 1.8s ease-out .9s infinite}
+@keyframes ring{0%{opacity:.9;stroke-width:4}100%{opacity:0;stroke-width:22}}
+#fx path.glow{fill:none;stroke-width:16;opacity:.18;stroke-linecap:round}
+#fx path.core{fill:none;stroke-width:6;stroke-linecap:round}
+#fx path.flow{fill:none;stroke:#fff;stroke-width:2.5;stroke-dasharray:2 22;stroke-linecap:round;opacity:.9;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+#fx .call rect{fill:var(--raise);stroke-width:1.5}
+#fx .call .ck{font-family:var(--mono);font-size:12px;letter-spacing:.12em}
+#fx .call .cq{font-family:var(--display);font-size:18px;fill:var(--ink)}
+.cn{cursor:pointer}
+.cn:hover rect.box{stroke:var(--serv)}
+/* panel */
+#panel{position:fixed;z-index:5;background:color-mix(in srgb,var(--panel) 95%,transparent);backdrop-filter:blur(6px);
+  border-left:1px solid var(--line);right:0;top:0;bottom:0;width:min(460px,40vw);
+  padding:calc(26px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) 96px 28px;overflow-y:auto}
+#panel .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;line-height:1.5}
+#panel h1{font-family:var(--display);font-weight:800;font-size:clamp(27px,3vw,38px);line-height:1.08;margin:.35em 0 .2em;text-wrap:balance}
+#panel h1 .num{color:var(--serv);margin-right:.25em}
+#panel h1 .arrow{color:var(--muted);font-weight:400;margin:0 .2em}
+#panel h1.pp .tgt{color:var(--paso-hi)} #panel h1.tt .tgt{color:var(--trad-hi)}
+.kwline{font-family:var(--display);font-style:italic;color:var(--muted);font-size:17px;margin:0 0 .4em}
+.fuerza{font-family:var(--display);font-size:clamp(19px,1.7vw,23px);line-height:1.3;margin:.8em 0;padding-left:14px;border-left:3px solid var(--serv);text-wrap:balance}
+#panel p{font-size:16px;line-height:1.55;color:var(--soft);margin:.6em 0;max-width:62ch}
+#panel h2{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin:1.5em 0 .5em}
+.quote{font-family:var(--display);font-size:19px;line-height:1.4;margin:.4em 0;color:var(--ink)}
+.qsrc{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.04em}
+.kindbadge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:6px 10px;border:1px solid var(--line);border-radius:4px;color:var(--soft);margin-top:.6em}
+.kindbadge i{display:inline-block;width:30px;border-top:3px solid}
+.study{margin-top:1.2em;padding:14px 16px;background:var(--raise);border-radius:6px}
+.study h2{margin:0 0 .4em!important;color:var(--serv)!important}
+.study p{margin:0!important;font-size:16.5px!important;color:var(--ink)!important}
+.links{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.links li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:14.5px;line-height:1.45;color:var(--soft)}
+.links button{all:unset;cursor:pointer;display:contents}
+.links li:hover .tag{background:var(--raise)}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:3px;white-space:nowrap;border:1px solid}
+.tag.p{color:var(--paso);border-color:color-mix(in srgb,var(--paso) 50%,transparent)}
+.tag.t{color:var(--trad);border-color:color-mix(in srgb,var(--trad) 50%,transparent)}
+.tag.a{border-style:dashed}
+.kind{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;margin-top:2px}
+.src{color:var(--muted);font-size:13px}
+.legend{display:grid;gap:6px;font-size:14px;color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:10px}
+.legend i{display:inline-block;width:34px;height:0;border-top:2.5px solid}
+.qrbox{display:flex;gap:16px;align-items:center;margin-top:1.2em;padding:14px;border:1px solid var(--line);border-radius:6px}
+.qrbox img{width:132px;height:132px;background:#fff;border-radius:4px;padding:6px;flex:none}
+.qrbox p{margin:0!important;font-size:14px!important}
+.notes{display:grid;gap:8px;font-size:14.5px;line-height:1.45;color:var(--soft);padding:0;list-style:none}
+.notes b{font-family:var(--mono);font-weight:500;color:var(--serv);margin-right:6px}
+.next{margin-top:1.4em;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+/* navegación */
+#nav{position:fixed;z-index:7;right:0;bottom:0;width:min(460px,40vw);display:flex;align-items:center;gap:8px;
+  padding:12px max(20px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) 20px;
+  background:var(--panel);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+#nav button{font:500 14px var(--body);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:4px;padding:9px 13px;cursor:pointer}
+#nav button:hover{border-color:var(--muted)}
+button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-offset:2px}
+#nav .count{flex:1;min-width:0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1.3}
+#dots{display:flex;justify-content:center;gap:5px;margin-top:5px}
+#dots span{width:7px;height:7px;border-radius:50%;background:var(--line)}
+#dots span.on{background:var(--serv)}
+#dots span.done{background:var(--dim)}
+#prog{position:fixed;z-index:8;left:0;top:0;height:3px;background:var(--serv);transition:width .6s}
+#hint{position:fixed;z-index:4;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.06em}
+/* índice */
+#toc{position:fixed;z-index:9;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));width:min(460px,40vw);max-height:70%;overflow-y:auto;
+  background:var(--raise);border:1px solid var(--line);border-right:0;padding:14px 20px 16px}
+#toc h2{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--muted);margin:0 0 8px;font-weight:500}
+#toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+#toc button{all:unset;cursor:pointer;display:grid;grid-template-columns:44px 1fr auto;gap:8px;width:100%;padding:7px 6px;border-radius:4px;box-sizing:border-box;font-size:15px}
+#toc button:hover,#toc button:focus-visible{background:var(--panel)}
+#toc .r{font-family:var(--display);font-weight:800;color:var(--serv)}
+#toc .c{font-family:var(--mono);font-size:11px;color:var(--muted);align-self:center}
+@media (max-width:860px){
+  #panel{left:0;right:0;top:auto;width:auto;height:50%;border-left:0;border-top:1px solid var(--line);
+    padding:18px max(16px,env(safe-area-inset-right,0px)) 92px max(16px,env(safe-area-inset-left,0px))}
+  #nav,#toc{left:0;width:auto;border-left:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  #panel h1{font-size:26px}
+  .fuerza{font-size:19px}.quote{font-size:17.5px}
+  #hint{display:none}
+  .qrbox img{width:110px;height:110px}
+}
+@media (prefers-reduced-motion:reduce){.e,.n,.n rect,#prog{transition:none}#fx path.flow,.n.act .ring{animation:none}}
+</style>
+
+<div id="prog"></div>
+<div id="stage"><svg id="world" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama de vínculos entre Pasos, Conceptos y Tradiciones">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="var(--grid)" stroke-width="1"/></pattern>
+  </defs>
+  <g id="cam"><rect x="-1600" y="-1200" width="5600" height="4200" fill="url(#grid)"/><g id="edges"></g><g id="nodes"></g><g id="fx"></g></g>
+</svg></div>
+
+<aside id="panel" aria-live="polite"></aside>
+<div id="toc" hidden></div>
+<div id="nav">
+  <button id="prev" aria-label="Anterior">←</button>
+  <button id="tocb" aria-expanded="false">Índice</button>
+  <div class="count"><div id="count"></div><div id="dots"></div></div>
+  <button id="home" aria-label="Vista general">Mapa</button>
+  <button id="next" aria-label="Siguiente">→</button>
+</div>
+<div id="hint">← → avanzar · toque un Concepto o un vínculo · rueda o pellizco para acercar</div>
+
+<script>
+const QR_SRC = "data:image/png;base64,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";
+const P = ['impotentes ante el alcohol','llegamos a creer','decidimos','inventario moral','admitimos ante otro ser humano','enteramente dispuestos','humildemente le pedimos','hicimos una lista','reparamos el daño','lo admitíamos inmediatamente','conocer su voluntad','llevar el mensaje'];
+const T = ['bienestar común · unidad','conciencia de grupo · servidores de confianza','el único requisito','autonomía','un solo objetivo primordial','no respaldar ni financiar','mantenerse a sí mismo','no profesional · trabajadores especiales','nunca organizada · juntas responsables','sin opinión · sin polémica pública','atracción · anonimato ante el público','principios antes que personalidades'];
+const ROM = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+const NUM = ['Uno','Dos','Tres','Cuatro','Cinco','Seis','Siete','Ocho','Nueve','Diez','Once','Doce'];
+
+// Vínculos: [destino, 't' textual | 'a' analítico, cita o lectura, fuente, cómo explicarlo, pregunta de estudio]
+const C = [
+ {kw:'CONCIENCIA',sub:'la responsabilidad final reside en los grupos',ref:'Manual 2025 · C3',
+  sint:'La responsabilidad final y la autoridad suprema de los servicios mundiales están en la conciencia colectiva de toda la Comunidad.',
+  fuerza:'En AA nadie manda desde arriba. La autoridad sube desde los grupos.',
+  txt:'La estructura de servicio existe porque los grupos la delegan. Si un día deja de servirles, ellos tienen la última palabra.',
+  preg:'Si la autoridad final está en los grupos, ¿qué tan informado llega mi grupo a cada decisión?',
+  L:[['T2','t','«Tales razones están centradas en la Tradición Dos»','C4','La Tradición Dos dice que la única autoridad es un Dios amoroso que se expresa en la conciencia del grupo. El Concepto I lleva esa idea a toda la estructura: la suma de las conciencias de los grupos es la que manda.','¿Dónde se forma de verdad la conciencia de mi grupo: en la reunión de servicio o en los pasillos?'],
+     ['PALL','t','«La vida de cada individuo está basada en los Doce Pasos»','C5','El Manual recuerda de dónde sale esa conciencia: de miembros que practican los Pasos. Sin recuperación personal no hay conciencia de grupo sana. El servicio empieza en el Primer Legado.','¿Puede un grupo tener buena conciencia colectiva si sus miembros no trabajan los Pasos?'],
+     ['P11','a','conciencia de grupo ↔ conocer su voluntad','lectura del analista','El Paso Once busca conocer la voluntad de Dios para uno mismo. La conciencia de grupo es esa misma búsqueda hecha entre todos, antes de votar.','¿Hacemos un momento de silencio o de oración antes de decidir? ¿Cambia algo?']]},
+ {kw:'DELEGACIÓN',sub:'la Conferencia, voz activa y conciencia efectiva',ref:'Manual 2025 · C6',
+  sint:'La Conferencia de Servicios Generales es la voz activa y la conciencia efectiva de la Comunidad en sus asuntos de servicio.',
+  fuerza:'Los grupos delegan, pero no abdican.',
+  txt:'Todos no caben en una sala. Por eso eligen delegados que llevan la conciencia del Área a la Conferencia y traen de vuelta lo que allí se decide.',
+  preg:'¿Qué llevó nuestro delegado a la última Conferencia y cómo se enteró mi grupo de lo que se decidió?',
+  L:[['T2','t','«Es esta la clara deducción de la Tradición Dos»','C6','La Conferencia no es una autoridad nueva. Es la forma práctica de que la conciencia de los grupos hable cuando no pueden reunirse todos en un mismo lugar.','Si la Conferencia es la voz de los grupos, ¿qué pasa cuando el grupo no le habla a su RSG?'],
+     ['T5','t','servicios «que pudieran difundir el mensaje de AA»','C6','La Conferencia existe para sostener servicios que llevan el mensaje: literatura, información pública, instituciones. Su razón de ser es el objetivo primordial.','¿Qué servicio de la Conferencia ayudó a que yo, o alguien que conozco, llegara a AA?'],
+     ['T9','a','juntas o comités directamente responsables','lectura del analista','La Tradición Nueve permite crear juntas y comités que respondan ante quienes sirven. La Conferencia es el mayor de ellos y responde ante los grupos.','¿Ante quién responde el comité de nuestro Distrito? ¿Le pedimos cuentas?'],
+     ['P12','a','llevar el mensaje','lectura del analista','Delegar es hacer el Paso Doce a escala: llevar el mensaje más lejos de lo que un grupo podría llevarlo solo.','¿Llega mi aporte de la Séptima al Paso Doce de alguien que nunca voy a conocer?']]},
+ {kw:'DECISIÓN',sub:'«Derecho de Decisión» tradicional',ref:'Manual 2025 · C8',
+  sint:'Cada nivel de servicio recibe un Derecho de Decisión tradicional para que su liderazgo sea eficaz.',
+  fuerza:'Confiar es dejar decidir. Sin margen de juicio, el servidor es solo un mensajero.',
+  txt:'Si todo se consulta, nada se hace. El servidor decide dentro de su encargo y después rinde cuentas de lo que decidió.',
+  preg:'¿Le damos a nuestro RSG libertad para votar según lo que escuche en la Asamblea, o lo mandamos atado?',
+  L:[['T2','t','la estipulación de la Tradición Dos sobre los «servidores de confianza»','C8','Servidor de confianza quiere decir que se le confía algo. Si no puede decidir nada, en realidad no se le está confiando nada.','¿Qué decisión de mi cargo de servicio puedo tomar sin consultar a nadie?'],
+     ['T4','a','cada nivel decide lo propio','lectura del analista','Así como cada grupo es autónomo en sus asuntos, cada nivel de servicio decide lo que le corresponde dentro de su encargo.','¿Qué asuntos son del grupo y cuáles le tocan al Área?'],
+     ['P3','a','«Decidimos»','12×12, p. 32','El Paso Tres empieza con la palabra Decidimos. Decidir con fe y soltar el resultado es la misma actitud que pide el Derecho de Decisión.','¿En qué se parece entregar mi voluntad en el Paso Tres a confiar en un servidor elegido?']]},
+ {kw:'PARTICIPACIÓN',sub:'«la clave de la armonía»',ref:'Manual 2025 · C11',
+  sint:'En todos los niveles se mantiene un Derecho de Participación: voto en proporción razonable a la responsabilidad de cada uno.',
+  fuerza:'Quien carga la responsabilidad tiene voz y voto. De ahí nace la armonía.',
+  txt:'Nadie es servidor de segunda. Participar da pertenencia, y quien sabe que pertenece no necesita pelear por un lugar.',
+  preg:'¿Quién tiene voto en nuestras reuniones de servicio, y está bien que sea así?',
+  L:[['T2','t','los «servidores de confianza» de quienes habla la Tradición Dos','C14','Si los servidores son de confianza, deben participar con voz y voto en lo que se les encarga. Dejarlos por fuera rompe esa confianza.','¿Hay alguien que hace el trabajo pero no tiene voto en nuestra estructura?'],
+     ['T1','a','armonía y bienestar común','lectura del analista','La unidad que protege la Tradición Uno se cuida cuando todos los responsables tienen lugar en la mesa.','¿Recuerdo una decisión que dividió al grupo porque alguien no fue escuchado?'],
+     ['P5','a','«cuando estamos seguros de que pertenecemos»','C14 ↔ 12×12, p. 54','El 12×12 describe que, al hablar con otro ser humano, empezamos a sentir que pertenecemos. El Concepto IV produce esa misma pertenencia dentro del servicio.','¿Cómo hacemos sentir parte al servidor que acaba de llegar?']]},
+ {kw:'APELACIÓN',sub:'y petición: se escucha a la minoría',ref:'Manual 2025 · C15',
+  sint:'Un Derecho de Apelación y Petición garantiza que la opinión minoritaria se escuche y que las quejas se consideren con cuidado.',
+  fuerza:'La mayoría decide. La minoría puede tener la razón. Por eso siempre se la escucha.',
+  txt:'El informe de minoría es la alarma del sistema. Cuando suena a tiempo, la conciencia de grupo puede corregir su propio error.',
+  preg:'¿Pedimos la opinión de la minoría antes de cerrar una votación, o pasamos al siguiente punto?',
+  L:[['T2','t','«la conciencia de grupo es la autoridad final»','C15','Si la conciencia de grupo es la autoridad final, hay que oírla completa, incluida la parte que perdió la votación.','¿Por qué una conciencia de grupo sin minoría escuchada no es completa?'],
+     ['T3','t','«cualquier alcohólico es miembro de AA en el instante en que lo diga»','C15','Así como nadie puede sacar a quien dice ser miembro, nadie puede callar a quien piensa distinto. La apelación protege a la persona frente al grupo.','¿Qué hacemos cuando un miembro siente que lo trataron injustamente en el servicio?'],
+     ['P10','a','la minoría que corrige ↔ admitir el error','lectura del analista','El Paso Diez pide admitir rápido cuando nos equivocamos. La minoría le da a la mayoría la oportunidad de hacerlo.','¿Recuerdo una decisión que el grupo tuvo que corregir después?']]},
+ {kw:'INICIATIVA',sub:'responsabilidad administrativa de los custodios',ref:'Manual 2025 · C18',
+  sint:'La Conferencia reconoce que la iniciativa principal y la responsabilidad activa en la mayoría de los asuntos corresponden a los custodios.',
+  fuerza:'La Conferencia orienta; los custodios actúan.',
+  txt:'Una Junta que espera a la próxima Conferencia para todo deja a la Comunidad quieta un año. La iniciativa va unida a la obligación de responder por ella.',
+  preg:'¿Sabemos qué hace la Junta de Custodios entre una Conferencia y la siguiente?',
+  L:[['T9','a','juntas directamente responsables','lectura del analista','Los custodios son la junta directamente responsable de la que habla la Tradición Nueve: actúan y luego rinden cuentas ante la Conferencia.','¿Cómo le rinde cuentas la Junta a la Conferencia?'],
+     ['P9','a','«responsabilidad por el bienestar de los demás»','12×12, p. 8','Tomar la iniciativa es asumir responsabilidad por el bienestar de otros sin esperar a que alguien más lo haga.','¿Hay tareas en mi grupo que nadie hace porque «no le tocan a nadie»?']],nota:'Este Concepto solo tiene vínculos analíticos en las fuentes.'},
+ {kw:'CARTA',sub:'derechos legales y derechos tradicionales',ref:'Manual 2025 · C20',
+  sint:'La Carta Constitutiva y los Estatutos dan a los custodios derechos legales. Los de la Conferencia son tradicionales.',
+  fuerza:'La ley da poder a la Junta. La tradición y el bolsillo de los grupos le dan dirección.',
+  txt:'El equilibrio no se sostiene con un papel jurídico, sino con la confianza mutua y con quienes financian la obra.',
+  preg:'¿Por qué funciona algo que ninguna ley obliga a cumplir?',
+  L:[['T7','a','la Carta se apoya «en las finanzas de AA»','forma corta','La Conferencia no tiene poder legal sobre la Junta, pero los grupos sostienen la obra con sus aportes. Ese respaldo económico le da peso real.','¿Qué le pasaría a la voz de los grupos si dejaran de aportar?'],
+     ['T9','a','«en la fuerza de la tradición»','forma corta','La tradición mantiene a la Junta unida a la Conferencia aunque la ley no lo exija. Es organización mínima con responsabilidad real.','¿Qué tradición de servicio cumplimos en el grupo sin que esté escrita en ningún reglamento?']],nota:'Sin vínculo identificable con los Pasos en las fuentes.'},
+ {kw:'SUPERVISIÓN',sub:'custodios: finanzas y política generales',ref:'Manual 2025 · C23',
+  sint:'Los custodios planifican y administran la política y las finanzas generales, y supervisan las entidades de servicio que tienen personal propio.',
+  fuerza:'La Junta cuida las grandes líneas. El trabajo diario lo hacen quienes lo conocen.',
+  txt:'Entregar la operación a corporaciones con personal evita que los custodios se ahoguen en detalles y pierdan el rumbo.',
+  preg:'¿Cuál es la diferencia entre supervisar y administrar?',
+  L:[['T7','a','finanzas generales','lectura del analista','Los custodios cuidan que la Comunidad se mantenga a sí misma: presupuesto, reserva prudente, venta de literatura.','¿Conocemos el último informe financiero de nuestra Oficina?'],
+     ['T8','a','corporaciones con personal','lectura del analista','Las corporaciones de servicio tienen trabajadores especiales. Los custodios los supervisan sin hacer su trabajo.','¿Por qué no conviene que un custodio haga el trabajo del personal?']],nota:'Sin vínculo identificable con los Pasos en las fuentes.'},
+ {kw:'LIDERAZGO',sub:'buenos líderes a todos los niveles',ref:'Manual 2025 · C25',
+  sint:'Buenos líderes de servicio, y métodos sanos para elegirlos, son indispensables en todos los niveles.',
+  fuerza:'En AA el líder va adelante con el ejemplo, no con órdenes. Todo padrino ya es un líder.',
+  txt:'Es el único Concepto que enlaza por texto con un Paso concreto, el Doce. Y el Informe de la 62.ª RAC lo presenta como antídoto contra el ego.',
+  preg:'¿Elijo a los servidores por simpatía o por cómo practican los principios?',
+  L:[['T12','t','«anteponer los principios a las personalidades»','C26','El buen líder pone los principios por encima de su personalidad. Esa es la prueba de cualquier servidor.','¿Cuándo he votado por alguien por quién es y no por cómo sirve?'],
+     ['P12','t','«Todo padrino es necesariamente un líder»','C29','El Manual dice que esto es especialmente cierto en el trabajo de Paso Doce. El liderazgo en AA empieza en el apadrinamiento.','¿Qué tipo de líder soy con mis ahijados?'],
+     ['T2','t','servidor de confianza · «el antídoto contra las fuerzas del ego»','Inf. 62.ª RAC, p. 39','El líder de AA es un servidor de confianza: sirve, no gobierna. Cuando lo olvida, aparece el ego.','¿Cómo noto que el ego se metió en mi servicio?']]},
+ {kw:'EQUIVALENCIA',sub:'autoridad igual a responsabilidad',ref:'Manual 2025 · C30',
+  sint:'Toda responsabilidad de servicio debe tener una autoridad equivalente, con un alcance bien definido.',
+  fuerza:'Responsabilidad sin autoridad frustra. Autoridad sin responsabilidad se desborda.',
+  txt:'Cada cargo sabe hasta dónde llega. Así no hay dos cabezas sobre el mismo asunto ni tareas que nadie puede cumplir.',
+  preg:'¿Tengo claro hasta dónde llega la autoridad de mi cargo?',
+  L:[['T2','t','autoridad usada «como servidores de confianza»','C30','La autoridad delegada se usa como la usa un servidor de confianza: con medida y solo para lo que se le encargó.','¿Me han dado alguna vez una tarea sin la autoridad para cumplirla?'],
+     ['T9','a','evitar la «gestión bicéfala»','índice, C30','Dos cabezas sobre el mismo asunto generan choques. Definir alcances mantiene la organización mínima que pide la Tradición Nueve.','¿Hay comités en nuestra estructura con funciones repetidas?']]},
+ {kw:'PERSONAL',sub:'comités, directores y trabajadores',ref:'Manual 2025 · C34',
+  sint:'Los custodios deben contar siempre con los mejores comités, directores, personal y asesores.',
+  fuerza:'El trabajador especial no es un extraño en AA. Es parte del servicio y merece un pago justo.',
+  txt:'Elegir bien al personal y pagarle con justicia protege el mensaje tanto como un buen delegado.',
+  preg:'¿Por qué pagarle a un empleado de la Oficina no viola la Tradición Ocho?',
+  L:[['T8','t','«Trabajadores a sueldo, manera de remunerarlos»','C40','La Tradición Ocho dice que AA no es profesional, pero permite trabajadores especiales. El Paso Doce no se cobra; el trabajo técnico de oficina sí se paga.','¿Qué diferencia hay entre pasar el mensaje y hacer el trabajo de la Oficina?'],
+     ['P12','a','«Ayudamos a los demás porque de esa forma nos ayudamos a nosotros mismos»','C41','Ayudar a otros nos ayuda a nosotros. Los comités y el personal son ese mismo principio, organizado.','¿Cómo me ha ayudado a mí servir en un comité?']]},
+ {kw:'GARANTÍAS',sub:'Artículo 12 · prudencia',ref:'Manual 2025 · C44',
+  sint:'La Conferencia respeta el espíritu de las Tradiciones: no acumula riqueza ni poder peligrosos, guarda una reserva prudente, no da autoridad absoluta a nadie, decide por discusión y unanimidad sustancial, no castiga ni entra en polémicas públicas, no gobierna y es siempre democrática.',
+  fuerza:'Seis garantías que protegen a AA de sí misma.',
+  txt:'Están a la altura de las Doce Tradiciones. Son el freno que impide que el servicio se convierta en gobierno.',
+  preg:'¿Puedo nombrar las seis Garantías sin mirar el Manual?',
+  L:[['TALL','t','«las hemos puesto a la misma altura que las Doce Tradiciones»','C44','Las Garantías tienen el mismo rango que las Tradiciones. Quien las conoce entiende el límite del poder de la Conferencia.','¿Por qué hacía falta escribir límites para la propia Conferencia?'],
+     ['T7','t','«rehúse aceptar contribuciones de fuentes ajenas»','C45','No aceptar dinero de fuera protege la independencia de AA. Quien paga, termina opinando.','¿Qué haríamos si una entidad nos ofrece pagar el arriendo del grupo?'],
+     ['T9','a','«ninguna acción de gobierno»','C44','La Conferencia sirve; no manda ni sanciona a nadie. Es la Tradición Nueve llevada al nivel más alto.','¿Puede la Conferencia castigar a un grupo? ¿Por qué no?'],
+     ['T10','a','«controversia pública»','C44','AA no entra en polémicas públicas, ni siquiera para defenderse. La Conferencia tampoco.','¿Cómo respondemos como grupo a una crítica pública contra AA?'],
+     ['P9','a','«prudencia»','C44','Reparar sin causar más daño exige prudencia, igual que manejar una reserva sin acumular de más.','¿Por qué una reserva demasiado grande también sería un riesgo?']]}
+];
+
+// geometría del mundo
+const PX=290,CX=1200,TX=2110,NW=330,NH=70,CW=380,CH=86;
+const py=i=>290+i*108, cy=i=>250+i*115;
+const pos={PALL:[PX,165],TALL:[TX,165]};
+P.forEach((_,i)=>pos['P'+(i+1)]=[PX,py(i)]);
+T.forEach((_,i)=>pos['T'+(i+1)]=[TX,py(i)]);
+const WORLD={x:60,y:-20,w:2280,h:1640};
+
+const NS='http://www.w3.org/2000/svg';
+const el=(tag,a,parent)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);parent&&parent.appendChild(e);return e};
+const $n=document.getElementById('nodes'),$e=document.getElementById('edges'),$fx=document.getElementById('fx');
+const tgtCount={};C.forEach(c=>c.L.forEach(l=>tgtCount[l[0]]=(tgtCount[l[0]]||0)+1));
+const tname=t=>t==='PALL'?'Los Doce Pasos':t==='TALL'?'Todas las Tradiciones':(t[0]==='P'?'Paso ':'Tradición ')+NUM[+t.slice(1)-1];
+const tkw=t=>t==='PALL'?'en conjunto':t==='TALL'?'el espíritu de las Tradiciones':(t[0]==='P'?P:T)[+t.slice(1)-1];
+
+[[PX,'PRIMER LEGADO · RECUPERACIÓN','Los Doce Pasos','var(--paso)'],[CX,'TERCER LEGADO · SERVICIO','Los Doce Conceptos','var(--serv)'],[TX,'SEGUNDO LEGADO · UNIDAD','Las Doce Tradiciones','var(--trad)']].forEach(([x,a,b,col])=>{
+  const g=el('g',{class:'n hd'},$n);
+  el('text',{x,y:40,'text-anchor':'middle',class:'colhead',fill:col},g).textContent=a;
+  el('text',{x,y:84,'text-anchor':'middle',class:'coltitle'},g).textContent=b;
+});
+
+function sideNode(id,label,kw){
+  const [x,y]=pos[id];const isP=id[0]==='P',col=isP?'var(--paso)':'var(--trad)';
+  const g=el('g',{class:'n '+(isP?'pp':'tt'),id:'n-'+id},$n);
+  const hot=(tgtCount[id]||0)>=3;
+  el('rect',{class:'ring',x:x-NW/2,y:y-NH/2,width:NW,height:NH,rx:5,stroke:isP?'var(--paso-hi)':'var(--trad-hi)'},g);
+  el('rect',{class:'bx',x:x-NW/2,y:y-NH/2,width:NW,height:NH,rx:5,fill:'var(--bg)',stroke:col,'stroke-width':hot?3:1.2,'stroke-opacity':hot?1:.6},g);
+  el('text',{x:x-NW/2+16,y:y-8,class:'lab'},g).textContent=label+(tgtCount[id]?'  ·  '+tgtCount[id]+(tgtCount[id]>1?' vínculos':' vínculo'):'');
+  const t=el('text',{x:x-NW/2+16,y:y+17,class:'kw','data-fit':NW-30,'data-min':13.5},g);t.textContent=kw;
+}
+sideNode('PALL','LOS DOCE PASOS','en conjunto');
+sideNode('TALL','TODAS','el espíritu de las Tradiciones');
+P.forEach((k,i)=>sideNode('P'+(i+1),'PASO '+(i+1),k));
+T.forEach((k,i)=>sideNode('T'+(i+1),'TRADICIÓN '+(i+1),k));
+
+const EDGE={};
+C.forEach((c,i)=>{
+  const y=cy(i);
+  c.L.forEach(([to,k],j)=>{
+    const [x2,y2]=pos[to];const isP=to[0]==='P';
+    const x1=isP?CX-CW/2:CX+CW/2, xe=isP?x2+NW/2:x2-NW/2, mx=(x1+xe)/2;
+    const d=`M${x1},${y} C${mx},${y} ${mx},${y2} ${xe},${y2}`;
+    EDGE[i+'-'+j]=el('path',{d,class:`e ${isP?'p':'t'} ${k}`,'data-c':i,'data-to':to},$e);
+  });
+  const g=el('g',{class:'n cn',id:'n-c'+i,tabindex:0,role:'button','aria-label':'Concepto '+ROM[i]+', '+c.kw},$n);
+  el('rect',{class:'box',x:CX-CW/2,y:y-CH/2,width:CW,height:CH,rx:6,fill:'var(--panel)',stroke:'var(--ink)','stroke-opacity':.55,'stroke-width':1.4},g);
+  el('text',{x:CX-CW/2+20,y:y+10,class:'cnum',fill:'var(--serv)'},g).textContent=ROM[i];
+  el('text',{x:CX-CW/2+92,y:y-4,class:'ckw','data-fit':CW-108,'data-min':15},g).textContent=c.kw;
+  el('text',{x:CX-CW/2+92,y:y+20,class:'csub','data-fit':CW-108,'data-min':11},g).textContent=c.sub;
+  g.addEventListener('click',()=>goId('c'+(i+1)));
+  g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();goId('c'+(i+1))}});
+});
+
+
+/* ---------- ajuste de texto dentro de los recuadros ---------- */
+function fitAll(){
+  document.querySelectorAll('text[data-fit]').forEach(t=>{
+    const max=+t.dataset.fit,min=+t.dataset.min;
+    if(!t.dataset.orig){t.dataset.orig=t.textContent;t.dataset.y=t.getAttribute('y');t.dataset.fs=parseFloat(getComputedStyle(t).fontSize)}
+    t.textContent=t.dataset.orig;t.setAttribute('y',t.dataset.y);t.style.fontSize='';
+    let fs=+t.dataset.fs,w=t.getComputedTextLength();
+    if(w<=max)return;
+    fs=fs*max/w;
+    if(fs>=min){t.style.fontSize=fs+'px';return}
+    // dos líneas: corta en « · » si existe, si no en el espacio más cercano al centro
+    const s=t.dataset.orig;let cut=s.indexOf(' · ');let a,b;
+    if(cut>0){a=s.slice(0,cut);b=s.slice(cut+3)}
+    else{const mid=s.length/2;let best=-1;for(let i=0;i<s.length;i++)if(s[i]===' '&&(best<0||Math.abs(i-mid)<Math.abs(best-mid)))best=i;a=s.slice(0,best);b=s.slice(best+1)}
+    const x=t.getAttribute('x'),y0=+t.dataset.y;t.textContent='';
+    const lh=fs<min?min*1.15:fs*1.15;let f=Math.max(min,Math.min(+t.dataset.fs,+t.dataset.fs*max/Math.max(1,
+      (()=>{const p=el('tspan',{},t);p.textContent=a.length>b.length?a:b;const L=t.getComputedTextLength();t.textContent='';return L})())));
+    t.style.fontSize=f+'px';
+    const l1=el('tspan',{x,y:y0-f*0.45},t);l1.textContent=a;
+    const l2=el('tspan',{x,y:y0-f*0.45+f*1.15},t);l2.textContent=b;
+  });
+}
+fitAll();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+
+/* ---------- guion de la presentación ---------- */
+const qrHTML=msg=>QR_SRC.startsWith('data:')?`<div class="qrbox"><img src="${QR_SRC}" alt="Código QR de esta presentación"><p>${msg}</p></div>`:'';
+const kindTxt=k=>k==='t'?'Textual · la fuente lo dice':'Analítico · lectura del analista';
+const box=(pts,px,py)=>{const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const x0=Math.min(...xs)-px,x1=Math.max(...xs)+px,y0=Math.min(...ys)-py,y1=Math.max(...ys)+py;return{x:x0,y:y0,w:x1-x0,h:y1-y0}};
+const STEPS=[{id:'inicio',rect:WORLD,html:`
+  <div class="eyebrow">Caso AA-CON/02 · Área 3 · Región C · Panel 62</div>
+  <h1>Los Doce Conceptos como bisagra</h1>
+  <div class="fuerza">Los Pasos me recuperan. Las Tradiciones nos unen. Los Conceptos hacen que el servicio funcione sin romper ninguno de los dos.</div>
+  <p>Cada Concepto está en el centro. Primero lo vemos solo; después la cámara viaja por cada una de sus líneas hasta el Paso o la Tradición con que se conecta, y explicamos por qué.</p>
+  <h2>Cómo leer las líneas</h2>
+  <div class="legend">
+   <span><i style="border-color:var(--trad)"></i>Tradición · la fuente lo dice</span>
+   <span><i style="border-color:var(--trad);border-top-style:dashed"></i>Tradición · lectura del analista</span>
+   <span><i style="border-color:var(--paso)"></i>Paso · la fuente lo dice</span>
+   <span><i style="border-color:var(--paso);border-top-style:dashed"></i>Paso · lectura del analista</span>
+  </div>
+  <p class="src">Cada vínculo trae una pregunta para estudiar en el grupo o con el padrino.</p>
+  ${qrHTML('Escanee para seguir la charla en su celular. Avance con las flechas o use el Índice.')}`}];
+
+C.forEach((c,i)=>{
+  const y=cy(i),cpt=[[CX-CW/2,y-CH/2],[CX+CW/2,y+CH/2]];
+  const tg=c.L.map(l=>pos[l[0]]);
+  STEPS.push({id:'c'+(i+1),c:i,group:i,sub:0,rect:box([...cpt,...tg.map(([x,yy])=>[x,yy])],80,90),html:`
+   <div class="eyebrow">Concepto ${i+1} de 12 · ${c.ref}</div>
+   <h1><span class="num">${ROM[i]}</span>${c.kw[0]+c.kw.slice(1).toLowerCase()}</h1>
+   <div class="fuerza">${c.fuerza}</div>
+   <p>${c.sint}</p>
+   <p>${c.txt}</p>
+   <h2>Sus ${c.L.length} vínculos</h2>
+   <ul class="links">${c.L.map(([to,k,q],j)=>`<li><button data-go="c${i+1}-${j+1}"><span class="tag ${to[0]==='P'?'p':'t'} ${k}">${to.replace('ALL','·todos')}</span><span>${tname(to)}<span class="kind">${k==='t'?'textual':'analítico'} · ${q}</span></span></button></li>`).join('')}</ul>
+   ${c.nota?`<p class="src">${c.nota}</p>`:''}
+   <div class="study"><h2>Para estudiar</h2><p>${c.preg}</p></div>
+   <div class="next">→ Siguiente: recorrer el vínculo con ${tname(c.L[0][0])}</div>`});
+  c.L.forEach(([to,k,q,s,exp,preg],j)=>{
+    const isP=to[0]==='P',[tx,ty]=pos[to];
+    const nearX=isP?CX-CW/2:CX+CW/2;
+    STEPS.push({id:`c${i+1}-${j+1}`,c:i,j,group:i,sub:j+1,to,rect:box([[nearX-(isP?0:0),y],[CX,y],[tx,ty]],220,170),html:`
+     <div class="eyebrow">Concepto ${ROM[i]} · vínculo ${j+1} de ${c.L.length}</div>
+     <h1 class="${isP?'pp':'tt'}"><span class="num">${ROM[i]}</span><span class="arrow">→</span><span class="tgt">${tname(to)}</span></h1>
+     <div class="kwline">${c.kw[0]+c.kw.slice(1).toLowerCase()} · ${tkw(to)}</div>
+     <div class="kindbadge"><i style="border-color:${isP?'var(--paso-hi)':'var(--trad-hi)'};${k==='a'?'border-top-style:dashed':''}"></i>${kindTxt(k)}</div>
+     <h2>${k==='t'?'Lo que dice la fuente':'La conexión'}</h2>
+     <div class="quote">${q}<div class="qsrc">${s}</div></div>
+     <h2>Para explicarlo</h2>
+     <p>${exp}</p>
+     <div class="study"><h2>Para estudiar</h2><p>${preg}</p></div>
+     <div class="next">${j+1<c.L.length?'→ Siguiente vínculo: '+tname(c.L[j+1][0]):i<11?'→ Siguiente: Concepto '+ROM[i+1]:'→ Siguiente: el gran nudo'}</div>`});
+  });
+});
+STEPS.push({id:'nudo',t2:true,rect:{x:CX-CW/2-40,y:150,w:(TX+NW/2)-(CX-CW/2)+80,h:1450},html:`
+  <div class="eyebrow">El gran nudo</div>
+  <h1 class="tt"><span class="tgt">Tradición Dos</span></h1>
+  <div class="fuerza">Siete de los doce Conceptos la tocan, y los siete por texto expreso.</div>
+  <p>Conciencia de grupo y servidores de confianza: los Conceptos I, II, III, IV, V, IX y X son la Tradición Dos puesta a funcionar en una estructura real.</p>
+  <p>Le siguen la Tradición Nueve con 5 vínculos, la Siete con 3 y la Ocho con 2.</p>
+  <div class="study"><h2>Para estudiar</h2><p>Si tuviera que explicar los Doce Conceptos usando solo la Tradición Dos, ¿qué diría?</p></div>`});
+STEPS.push({id:'cierre',rect:WORLD,html:`
+  <div class="eyebrow">Notas del analista</div>
+  <h1>Lo que muestra el mapa</h1>
+  <ul class="notes">
+   <li><b>N-1</b>Las palabras clave salen del índice y la forma corta (Manual 2025, p. VIII). No hay una lista oficial.</li>
+   <li><b>N-2</b>La Tradición Dos es el nudo: 7 de 12 Conceptos, todos con vínculo textual.</li>
+   <li><b>N-3</b>Solo el Concepto IX enlaza por texto con un Paso concreto, el Doce. El I enlaza con los Pasos en conjunto.</li>
+   <li><b>N-4</b>Los Conceptos VII y VIII, legales y administrativos, no muestran vínculo con los Pasos.</li>
+   <li><b>N-5</b>El índice ubica el Concepto XII en C42; en esta edición empieza en C44.</li>
+  </ul>
+  <p class="src">Fuentes: El Manual de Servicio de AA y Doce Conceptos para el Servicio Mundial, ed. 2025 (Colombia) · Doce Pasos y Doce Tradiciones · Informe Final 62.ª RAC (2026). Las síntesis y explicaciones son paráfrasis para estudio, no la forma literal.</p>
+  ${qrHTML('Llévese el mapa: escanee y vuelva a recorrerlo cuando quiera.')}`});
+
+/* ---------- índice ---------- */
+const toc=document.getElementById('toc');
+toc.innerHTML=`<h2>ÍNDICE</h2><ol>
+ <li><button data-go="inicio"><span class="r">·</span><span>Portada</span><span class="c"></span></button></li>
+ ${C.map((c,i)=>`<li><button data-go="c${i+1}"><span class="r">${ROM[i]}</span><span>${c.kw[0]+c.kw.slice(1).toLowerCase()}</span><span class="c">${c.L.length} vínc.</span></button></li>`).join('')}
+ <li><button data-go="nudo"><span class="r">T2</span><span>El gran nudo</span><span class="c"></span></button></li>
+ <li><button data-go="cierre"><span class="r">·</span><span>Notas y fuentes</span><span class="c"></span></button></li></ol>`;
+const tocb=document.getElementById('tocb');
+function showToc(v){toc.hidden=!v;tocb.setAttribute('aria-expanded',v)}
+tocb.onclick=()=>showToc(toc.hidden);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){showToc(false);goId(b.dataset.go)}});
+
+/* ---------- cámara ---------- */
+const cam=document.getElementById('cam'),world=document.getElementById('world'),stage=document.getElementById('stage');
+let view={x:0,y:0,s:1},anim=null,onArrive=null;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function area(){const W=innerWidth,H=innerHeight;
+  if(W>860){const pw=Math.min(460,W*.4);return{x:0,y:0,w:W-pw,h:H}}
+  return{x:0,y:0,w:W,h:H*.5}}
+function fit(r){const a=area();const s=Math.min(2.2,Math.min(a.w/r.w,a.h/r.h)*.94);
+  return{s,x:a.x+a.w/2-(r.x+r.w/2)*s,y:a.y+a.h/2-(r.y+r.h/2)*s}}
+function apply(v){view=v;cam.setAttribute('transform',`translate(${v.x},${v.y}) scale(${v.s})`)}
+function center(v){const a=area();return{cx:(a.x+a.w/2-v.x)/v.s,cy:(a.y+a.h/2-v.y)/v.s}}
+function fly(to,done){
+  cancelAnimationFrame(anim);
+  if(reduce){apply(to);done&&done();return}
+  const a=area(),c0=center(view),c1=center(to),s0=view.s,s1=to.s;
+  const dist=Math.hypot(c1.cx-c0.cx,c1.cy-c0.cy);
+  const span=Math.max(a.w/Math.min(s0,s1),a.h/Math.min(s0,s1));
+  const bump=Math.min(.5,dist/(span*1.4));
+  const dur=1150+Math.min(600,dist*.4),t0=performance.now();
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  (function f(now){let t=Math.min(1,(now-t0)/dur),e=ease(t);
+    let s=Math.exp(Math.log(s0)+(Math.log(s1)-Math.log(s0))*e)*(1-bump*Math.sin(Math.PI*e));
+    const cx=c0.cx+(c1.cx-c0.cx)*e,cy=c0.cy+(c1.cy-c0.cy)*e;
+    apply({s,x:a.x+a.w/2-cx*s,y:a.y+a.h/2-cy*s});
+    if(t<1)anim=requestAnimationFrame(f);else done&&done()})(t0);
+}
+
+/* ---------- efecto de vínculo: la línea se dibuja, fluye y aparece el rótulo ---------- */
+let dotRAF=null;
+function clearFx(){$fx.innerHTML='';cancelAnimationFrame(dotRAF)}
+function drawLink(st){
+  clearFx();
+  const [to,k,q,s]=C[st.c].L[st.j];const isP=to[0]==='P';const col=isP?'var(--paso-hi)':'var(--trad-hi)';
+  const base=EDGE[st.c+'-'+st.j],d=base.getAttribute('d');
+  const glow=el('path',{d,class:'glow',stroke:col},$fx);
+  const core=el('path',{d,class:'core',stroke:col},$fx);
+  const L=core.getTotalLength();
+  if(k==='a'){core.setAttribute('stroke-dasharray','14 10')}
+  // se dibuja desde el Concepto hacia el destino
+  const mask=el('path',{d,fill:'none',stroke:'var(--bg)','stroke-width':22,'stroke-dasharray':`${L} ${L}`,'stroke-dashoffset':0},$fx);
+  const flow=el('path',{d,class:'flow'},$fx);flow.style.opacity=0;
+  const dot=el('circle',{r:9,fill:col},$fx);
+  // rótulo en el punto medio
+  const mid=core.getPointAtLength(L*.5);
+  const g=el('g',{class:'call',opacity:0},$fx);
+  const r=el('rect',{rx:6,stroke:col},g);
+  const t1=el('text',{class:'ck',fill:col},g);t1.textContent=(k==='t'?'TEXTUAL':'ANALÍTICO')+'  ·  '+s.toUpperCase();
+  const short=q.length>48?q.slice(0,46).replace(/\s+\S*$/,'')+'…':q;
+  const t2=el('text',{class:'cq'},g);t2.textContent=short;
+  const w=Math.max(t1.getComputedTextLength(),t2.getComputedTextLength())+32;
+  const bx=mid.x-w/2,by=mid.y-78;
+  r.setAttribute('x',bx);r.setAttribute('y',by);r.setAttribute('width',w);r.setAttribute('height',62);
+  t1.setAttribute('x',bx+16);t1.setAttribute('y',by+22);t2.setAttribute('x',bx+16);t2.setAttribute('y',by+48);
+  if(reduce){mask.remove();flow.style.opacity=.9;g.setAttribute('opacity',1);dot.remove();return}
+  const t0=performance.now(),D=900;
+  (function f(now){const t=Math.min(1,(now-t0)/D),e=1-Math.pow(1-t,3);
+    mask.setAttribute('stroke-dashoffset',-L*e);
+    const p=core.getPointAtLength(L*e);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);
+    g.setAttribute('opacity',Math.max(0,(t-.4)/.6));
+    if(t<1)dotRAF=requestAnimationFrame(f);
+    else{mask.remove();flow.style.transition='opacity .4s';flow.style.opacity=.9;
+      // pulso viajero continuo
+      const t1s=performance.now();(function loop(n){const u=((n-t1s)/1800)%1;const pp=core.getPointAtLength(L*u);dot.setAttribute('cx',pp.x);dot.setAttribute('cy',pp.y);dot.setAttribute('opacity',Math.sin(Math.PI*u));dotRAF=requestAnimationFrame(loop)})(t1s)}
+  })(t0);
+}
+
+/* ---------- estado ---------- */
+let cur=0;
+const panel=document.getElementById('panel');
+function highlight(st){
+  const focus=st.c!==undefined||!!st.t2;
+  world.classList.toggle('focus',focus);
+  document.querySelectorAll('.on,.go,.act,.src').forEach(x=>x.classList.remove('on','go','act','src'));
+  document.querySelectorAll('.hd').forEach(x=>x.classList.add('on'));
+  if(st.c!==undefined){
+    const cn=document.getElementById('n-c'+st.c);cn.classList.add('on','src');
+    document.querySelectorAll(`.e[data-c="${st.c}"]`).forEach(e=>{e.classList.add(st.j===undefined?'go':'on');document.getElementById('n-'+e.dataset.to).classList.add('on')});
+    if(st.j!==undefined){const to=C[st.c].L[st.j][0];document.getElementById('n-'+to).classList.add('act')}
+  }
+  if(st.t2){document.getElementById('n-T2').classList.add('act');
+    document.querySelectorAll('.e[data-to="T2"]').forEach(e=>{e.classList.add('go');document.getElementById('n-c'+e.dataset.c).classList.add('on')})}
+}
+function go(i,fromHash){
+  cur=Math.max(0,Math.min(STEPS.length-1,i));const st=STEPS[cur];
+  panel.innerHTML=st.html;panel.scrollTop=0;
+  clearFx();highlight(st);
+  fly(fit(st.rect),st.j!==undefined?()=>{if(STEPS[cur]===st)drawLink(st)}:null);
+  const cnt=document.getElementById('count'),dots=document.getElementById('dots');
+  if(st.group!==undefined){const c=C[st.group];
+    cnt.textContent=`Concepto ${ROM[st.group]}`+(st.sub?` · vínculo ${st.sub}/${c.L.length}`:'');
+    dots.innerHTML=Array.from({length:c.L.length+1},(_,k)=>`<span class="${k===st.sub?'on':k<st.sub?'done':''}"></span>`).join('');
+  }else{cnt.textContent=(cur+1)+' / '+STEPS.length;dots.innerHTML=''}
+  document.getElementById('prog').style.width=(cur/(STEPS.length-1)*100)+'%';
+  if(!fromHash&&location.hash!=='#'+st.id)history.replaceState(null,'','#'+st.id);
+}
+function goId(id){const i=STEPS.findIndex(s=>s.id===id);if(i>=0)go(i)}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('home').onclick=()=>go(0);
+addEventListener('keydown',e=>{
+  if(e.target.closest('#toc'))return;
+  if(['ArrowRight','PageDown'].includes(e.key)||(e.key===' '&&!e.target.closest('.cn,button'))){e.preventDefault();go(cur+1)}
+  else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+  else if(e.key==='Escape'){showToc(false)}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(STEPS.length-1);
+});
+function fromHash(){const h=location.hash.slice(1);const i=STEPS.findIndex(s=>s.id===h);go(i<0?0:i,true)}
+addEventListener('hashchange',fromHash);
+addEventListener('resize',()=>{cancelAnimationFrame(anim);apply(fit(STEPS[cur].rect))});
+
+// tocar una línea o un nodo de destino lleva al vínculo
+$e.addEventListener('click',e=>{const p=e.target.closest('.e');if(!p)return;const c=+p.dataset.c,j=C[c].L.findIndex(l=>l[0]===p.dataset.to);goId(`c${c+1}-${j+1}`)});
+$e.querySelectorAll('.e').forEach(p=>{p.style.cursor='pointer';p.style.pointerEvents='stroke'});
+
+/* ---------- exploración libre ---------- */
+const pts=new Map();let last=null,pinch=null,moved=0;
+stage.addEventListener('pointerdown',e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=0;
+  if(pts.size===1)last={x:e.clientX,y:e.clientY};
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y),s:view.s}}});
+stage.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===2&&pinch){const [a,b]=[...pts.values()];const d=Math.hypot(a.x-b.x,a.y-b.y);zoomAt((a.x+b.x)/2,(a.y+b.y)/2,pinch.s*d/pinch.d/view.s);moved=99;return}
+  if(last){const dx=e.clientX-last.x,dy=e.clientY-last.y;moved+=Math.abs(dx)+Math.abs(dy);
+    if(moved>6){if(!stage.classList.contains('dragging')){stage.classList.add('dragging');stage.setPointerCapture(e.pointerId)}
+      cancelAnimationFrame(anim);apply({s:view.s,x:view.x+dx,y:view.y+dy})}
+    last={x:e.clientX,y:e.clientY}}});
+const up=e=>{pts.delete(e.pointerId);if(pts.size<2)pinch=null;if(!pts.size){last=null;stage.classList.remove('dragging')}};
+stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+stage.addEventListener('click',e=>{if(moved>6)e.stopPropagation()},true);
+function zoomAt(px,py,k){const s=Math.max(.15,Math.min(6,view.s*k));k=s/view.s;
+  cancelAnimationFrame(anim);apply({s,x:px-(px-view.x)*k,y:py-(py-view.y)*k})}
+stage.addEventListener('wheel',e=>{e.preventDefault();zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*.0015))},{passive:false});
+
+apply(fit(WORLD));
+fromHash();
+</script>
+
+</body></html>

@@ -205,7 +205,7 @@ function vTablero(){
     <p class="tenue">de ${S.jugadores} participantes · ${S.misAciertos} aciertos</p>
     ${final ? `<div class="minis">
       <div class="dato"><b>${r.entrada.n ? r.entrada.ac + '/' + r.entrada.total : '—'}</b><span>Test de entrada</span></div>
-      <div class="dato"><b style="color:var(--oro)">${r.salida.n ? r.salida.ac + '/' + r.salida.total : '—'}</b><span>Test de salida</span></div></div>` : '<p class="tenue">Mira el tablero en la pantalla.</p>'}
+      <div class="dato"><b style="color:var(--oro)">${r.salida.n ? r.salida.ac + '/' + r.salida.total : '—'}</b><span>Test de salida</span></div></div>${r.salida.n ? '' : '<p class="tenue" style="margin-top:12px">Después de la exposición viene el test de salida. Vuelve a esta página cuando lo anuncien.</p>'}` : '<p class="tenue">Mira el tablero en la pantalla.</p>'}
   </div>`;
 }
 function vComparativo(){
