@@ -156,7 +156,7 @@ const TESTS = {
         cita: 'pero si con exagerada docilidad se convierte en un mero recadero, sin nunca ejercer su propio criterio, pues, no es en realidad un líder.',
         pag: 'Capítulo 5, El liderazgo en AA, pág. 36 (PDF 51)' },
       { c: 'X', texto: 'Según el título del Concepto X, ¿qué se debe evitar cuidadosamente?',
-        op: ['Que un miembro sirva en más de un grupo', 'La “gestión bicéfala”', 'La rotación de servidores', 'Que los Comités deleguen tareas'],
+        op: ['Que los Custodios tomen decisiones', 'La “gestión bicéfala”', 'La rotación de servidores', 'Que los Comités deleguen tareas'],
         correcta: 1,
         cita: 'A cada responsabilidad de servicio le debe corresponder una autoridad ejecutiva de servicio equivalente: se debe evitar cuidadosamente la “gestión bicéfala”',
         pag: 'Índice de los Doce Conceptos, pág. PDF 155' },
