@@ -90,9 +90,9 @@ svg text{font-family:var(--body)}
 .legend{display:grid;gap:6px;font-size:14px;color:var(--soft)}
 .legend span{display:inline-flex;align-items:center;gap:10px}
 .legend i{display:inline-block;width:34px;height:0;border-top:2.5px solid}
-.qrbox{display:flex;gap:16px;align-items:center;margin-top:1.2em;padding:14px;border:1px solid var(--line);border-radius:6px}
-.qrbox img{width:132px;height:132px;background:#fff;border-radius:4px;padding:6px;flex:none}
-.qrbox p{margin:0!important;font-size:14px!important}
+.qrbox{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:1em 0;padding:14px;border:1px solid var(--line);border-radius:6px}
+.qrbox img{width:clamp(190px,15vw,260px);height:clamp(190px,15vw,260px);background:#fff;border-radius:4px;padding:6px;flex:none}
+.qrbox p{flex:1 1 120px;margin:0!important;font-size:14px!important}
 .notes{display:grid;gap:8px;font-size:14.5px;line-height:1.45;color:var(--soft);padding:0;list-style:none}
 .notes b{font-family:var(--mono);font-weight:500;color:var(--serv);margin-right:6px}
 .next{margin-top:1.4em;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
@@ -126,7 +126,8 @@ button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-off
   #panel h1{font-size:26px}
   .fuerza{font-size:19px}.quote{font-size:17.5px}
   #hint{display:none}
-  .qrbox img{width:110px;height:110px}
+  .qrbox{flex-wrap:nowrap;padding:10px;margin:.6em 0}
+  .qrbox img{width:120px;height:120px}
 }
 @media (prefers-reduced-motion:reduce){.e,.n,.n rect,#prog{transition:none}#fx path.flow,.n.act .ring{animation:none}}
 </style>
@@ -151,7 +152,7 @@ button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-off
 <div id="hint">← → avanzar · toque un Concepto o un vínculo · rueda o pellizco para acercar</div>
 
 <script>
-const QR_SRC = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD8ElEQVR42u3d247cIBCEYYjy/q9MLrPSCFQNPoySj6vV2IO9vxpqyg3tPpr2t/2CAA444IADDjjggAMOOOCAAw444IADDjjg0OCAA460/Z4d6HEX60xN/3HOM3+f3LPogAMOOOC4T1ly1VirSYt7WH9rTM6/6p5FBxxwwAHHM8oym43HUk3GQQ+JWiU+Jbmi6IADDjjgeEtZqm3tPnow289UI/c4ogMOOOCA499Qltlsv5cTGYESXasvogMOOOCA4xllyeftsZzzR6BHa1cyeyZ2cs+iAw444IDjSWXpW50m67ju67OLDoMFDjjgeLP1q54jfT6zqubQe+x9WnxUdMABBxxwfI+y5DmR6qx+lctIVqBV71N0wAEHHHAct3KepS9n9XWmfgQOJb/K2it9npO4G9EBBxxwwHG3suTz/zqTkudEEu1Yf7eqTaLDYIEDDjje8iz5XpLcR4zgWonf6VvfFR0GCxxwwPGksozgk5mbyLMzub4kuZgefCI64IADDjhubr1a3SvRlx7oSHWn5DOrxUQHHHDAAcfdyrK3QqzHSrGXDWlLxWmBA5JnMVjggAOO55Ul8R3tIvdxld9JVqNZG2awwAEHHO8qy55rGEXVqHql/IlctQ6A6IADDjjgeNKzJIqwVockb1JVhOQtLT2+c9EBBxxwwHHcNndKVp1FstZr731hiffJryI64IADDjju9ix7dYbXTqGaqblDayiLwQIHHHC85VnWu+z33hc8053ZJ1XdWXsoT8MMFjjggOMbPEuSl0/y+C1WqNwrXfteMNEBBxxwwPGkZ+nx0bwWZYt1Id+P32OXJDoMFjjggON5ZWnBbFwwSIHutMATJao369nTMIMFDjjguLn1PAs/cx/nlfOrVV+qamjVscECBxxwfIOyVFd2VXfW5z4i3wuTnC86DBY44IDj5vY7+c0/8y8na48T7fjsv3o/1b3/ogMOOOCA427Pkv/ar9aWPK9XvHeHlMVggQMOON71LG3pEX7O0vmbhdfvoKxWV87zMsn5ogMOOOCA4z7PUu5oohd5Nr8faEf+VjLRYbDAAQccb3mWqhfIVSCvgd+W7uazt3WeRa1jgwUOOOB4V1mSX/vJ7sXEp1TrGFedS656ogMOOOCA425laUsf0Q7cx0xN1vmXHt/h2rOIDoMFDjjgeFdZTtpeZbCZx0mcSHV3pOiAAw444PhmZclrfFV3x6yPJlVcPA0zWOCAA47vUZZRPOekLnFe/T6pkJnsmhQdcMABBxxPKkueQ9+byfNd9kmuZxz/F6IDDjjggOO4XbafRXTAAQcccGhwwAEHHHDAAQcccMABBxxwwAEHHHDA8Z+1P9jzO0UFzeO5AAAAAElFTkSuQmCC";
+const QR_SRC = "data:image/png;base64,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";
 const P = ['impotentes ante el alcohol','llegamos a creer','decidimos','inventario moral','admitimos ante otro ser humano','enteramente dispuestos','humildemente le pedimos','hicimos una lista','reparamos el daño','lo admitíamos inmediatamente','conocer su voluntad','llevar el mensaje'];
 const T = ['bienestar común · unidad','conciencia de grupo · servidores de confianza','el único requisito','autonomía','un solo objetivo primordial','no respaldar ni financiar','mantenerse a sí mismo','no profesional · trabajadores especiales','nunca organizada · juntas responsables','sin opinión · sin polémica pública','atracción · anonimato ante el público','principios antes que personalidades'];
 const ROM = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
@@ -341,6 +342,7 @@ const box=(pts,px,py)=>{const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);const x0=M
 const STEPS=[{id:'inicio',rect:WORLD,html:`
   <div class="eyebrow">Caso AA-CON/02 · Área 3 · Región C · Panel 62</div>
   <h1>Los Doce Conceptos como bisagra</h1>
+  ${qrHTML('Escanee para seguir la charla en su celular. Avance con las flechas o use el Índice.')}
   <div class="fuerza">Los Pasos me recuperan. Las Tradiciones nos unen. Los Conceptos hacen que el servicio funcione sin romper ninguno de los dos.</div>
   <p>Cada Concepto está en el centro. Primero lo vemos solo; después la cámara viaja por cada una de sus líneas hasta el Paso o la Tradición con que se conecta, y explicamos por qué.</p>
   <h2>Cómo leer las líneas</h2>
@@ -350,8 +352,7 @@ const STEPS=[{id:'inicio',rect:WORLD,html:`
    <span><i style="border-color:var(--paso)"></i>Paso · la fuente lo dice</span>
    <span><i style="border-color:var(--paso);border-top-style:dashed"></i>Paso · lectura del analista</span>
   </div>
-  <p class="src">Cada vínculo trae una pregunta para estudiar en el grupo o con el padrino.</p>
-  ${qrHTML('Escanee para seguir la charla en su celular. Avance con las flechas o use el Índice.')}`}];
+  <p class="src">Cada vínculo trae una pregunta para estudiar en el grupo o con el padrino.</p>`}];
 
 C.forEach((c,i)=>{
   const y=cy(i),cpt=[[CX-CW/2,y-CH/2],[CX+CW/2,y+CH/2]];
@@ -393,6 +394,7 @@ STEPS.push({id:'nudo',t2:true,rect:{x:CX-CW/2-40,y:150,w:(TX+NW/2)-(CX-CW/2)+80,
 STEPS.push({id:'cierre',rect:WORLD,html:`
   <div class="eyebrow">Notas del analista</div>
   <h1>Lo que muestra el mapa</h1>
+  ${qrHTML('Llévese el mapa: escanee y vuelva a recorrerlo cuando quiera.')}
   <ul class="notes">
    <li><b>N-1</b>Las palabras clave salen del índice y la forma corta (Manual 2025, p. VIII). No hay una lista oficial.</li>
    <li><b>N-2</b>La Tradición Dos es el nudo: 7 de 12 Conceptos, todos con vínculo textual.</li>
@@ -400,8 +402,7 @@ STEPS.push({id:'cierre',rect:WORLD,html:`
    <li><b>N-4</b>Los Conceptos VII y VIII, legales y administrativos, no muestran vínculo con los Pasos.</li>
    <li><b>N-5</b>El índice ubica el Concepto XII en C42; en esta edición empieza en C44.</li>
   </ul>
-  <p class="src">Fuentes: El Manual de Servicio de AA y Doce Conceptos para el Servicio Mundial, ed. 2025 (Colombia) · Doce Pasos y Doce Tradiciones · Informe Final 62.ª RAC (2026). Las síntesis y explicaciones son paráfrasis para estudio, no la forma literal.</p>
-  ${qrHTML('Llévese el mapa: escanee y vuelva a recorrerlo cuando quiera.')}`});
+  <p class="src">Fuentes: El Manual de Servicio de AA y Doce Conceptos para el Servicio Mundial, ed. 2025 (Colombia) · Doce Pasos y Doce Tradiciones · Informe Final 62.ª RAC (2026). Las síntesis y explicaciones son paráfrasis para estudio, no la forma literal.</p>`});
 
 /* ---------- índice ---------- */
 const toc=document.getElementById('toc');
