@@ -60,7 +60,6 @@ const FASE = {abrio:"Abrió", intento:"Intentó el reto", aprobo:"Aprobó"};
 const FICHA = {L0a:"Nivel 0 · a", L0b:"Nivel 0 · b", L0c:"Nivel 0 · c", L0d:"Nivel 0 · d", L6a:"Tejido · a", L6b:"Tejido · b", L6c:"Tejido · c"};
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const mem = (k, v) => { try { if(v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch(e){ return ""; } };
 
 const barra = (et, pct, valor, c) => `<div class="fila"><span class="et" title="${esc(et)}">${esc(et)}</span><div class="pista"><i style="width:${pct}%;${c?`--c:${c}`:''}"></i></div><span class="v">${valor}</span></div>`;
 const tabla = (titulo, filas) => `<table><thead><tr><th>${titulo}</th><th>Usuarios</th><th>Avance prom.</th></tr></thead><tbody>
@@ -111,7 +110,6 @@ function pintar(r){
 
 async function cargar(){
   const url = $("#url").value.trim(), clave = $("#clave").value;
-  mem("conceptos-estad-url", url);
   $("#out").innerHTML = '<p class="msj">Cargando…</p>';
   try{
     const r = await (await fetch(url + (clave ? (url.includes("?") ? "&" : "?") + "clave=" + encodeURIComponent(clave) : ""))).json();
@@ -120,7 +118,7 @@ async function cargar(){
   }catch(e){ $("#out").innerHTML = `<p class="msj">${!clave && e.message === "clave incorrecta" ? "Escribe la clave y pulsa “Ver datos”." : "No se pudieron cargar los datos: " + esc(e.message)}</p>`; }
 }
 $("#f").onsubmit = e => { e.preventDefault(); cargar(); };
-$("#url").value = new URLSearchParams(location.search).get("url") || mem("conceptos-estad-url") || "";
+$("#url").value = new URLSearchParams(location.search).get("url") || "https://script.google.com/macros/s/AKfycbw-Fufu00NyipewFDGUh0tiFDL-wurPh75FxBnLI_Da9KJvrITqkzXbVqnrLcbuadzJ/exec";
 if($("#url").value) cargar();
 </script>
 </body>
