@@ -38,6 +38,9 @@ Antes de aceptar un encargo, pregunta: ¿qué decido yo, qué consulto, qué dec
 > [!warning] Ojo con esto
 > Dar responsabilidad sin autoridad (y luego culpar) o autoridad sin responsabilidad (y luego no rendir cuentas).
 
+> [!note] Para tener claro
+> El Concepto X ordena los cargos y las entidades de servicio; no es una prohibición para el miembro. Ni el Manual, ni los Conceptos, ni la Carta Constitutiva, ni los Estatutos prohíben servir en el grupo base y en otro grupo. “Ningún A.A. puede obligar a otro a hacer nada” (*Doce Pasos y Doce Tradiciones*, p. 125). En el grupo, la autoridad fundamental es “un Dios amoroso tal como se exprese en la conciencia de nuestro grupo” (Segunda Tradición), y cada grupo es autónomo, “excepto en asuntos que afecten a otros grupos o a Alcohólicos Anónimos considerado como un todo” (Cuarta Tradición).
+
 ## Bill dice
 
 > “La autoridad nunca puede dividirse en dos partes iguales.”
