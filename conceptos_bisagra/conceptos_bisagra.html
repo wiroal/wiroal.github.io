@@ -108,6 +108,7 @@ button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-off
 #dots span{width:7px;height:7px;border-radius:50%;background:var(--line)}
 #dots span.on{background:var(--serv)}
 #dots span.done{background:var(--dim)}
+#verTexto{display:none;position:fixed;z-index:6;top:calc(10px + env(safe-area-inset-top,0px));right:max(10px,env(safe-area-inset-right,0px));font:500 14px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:9px 13px;cursor:pointer}
 #prog{position:fixed;z-index:8;left:0;top:0;height:3px;background:var(--serv);transition:width .6s}
 #hint{position:fixed;z-index:4;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.06em}
 /* índice */
@@ -120,9 +121,14 @@ button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-off
 #toc .r{font-family:var(--display);font-weight:800;color:var(--serv)}
 #toc .c{font-family:var(--mono);font-size:11px;color:var(--muted);align-self:center}
 @media (max-width:860px){
-  #panel{left:0;right:0;top:auto;width:auto;height:50%;border-left:0;border-top:1px solid var(--line);
+  #panel{left:0;right:0;top:auto;width:auto;height:46%;box-sizing:border-box;border-left:0;border-top:1px solid var(--line);
     padding:18px max(16px,env(safe-area-inset-right,0px)) 92px max(16px,env(safe-area-inset-left,0px))}
   #nav,#toc{left:0;width:auto;border-left:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  #panel.conqr{height:calc(50% + 110px)}
+  #panel.oculto{display:none}
+  #verTexto{display:block}
+  .kw{font-size:26px}.lab{font-size:14px}.ckw{font-size:26px}.csub{font-size:16px}.cnum{font-size:28px}.coltitle{font-size:28px}.colhead{font-size:11px;letter-spacing:.1em}
+  #fx .call .ck{font-size:14px}#fx .call .cq{font-size:22px}
   #panel h1{font-size:26px}
   .fuerza{font-size:19px}.quote{font-size:17.5px}
   #hint{display:none}
@@ -141,6 +147,7 @@ button:focus-visible,.cn:focus-visible{outline:2px solid var(--serv);outline-off
 </svg></div>
 
 <aside id="panel" aria-live="polite"></aside>
+<button id="verTexto" aria-pressed="false">Ocultar texto</button>
 <div id="toc" hidden></div>
 <div id="nav">
   <button id="prev" aria-label="Anterior">←</button>
@@ -257,12 +264,13 @@ const C = [
 ];
 
 // geometría del mundo
-const PX=290,CX=1200,TX=2110,NW=330,NH=70,CW=380,CH=86;
+const MOVIL=matchMedia('(max-width:860px)').matches;
+const PX=MOVIL?170:290,CX=MOVIL?540:1200,TX=MOVIL?910:2110,NW=MOVIL?300:330,NH=70,CW=MOVIL?300:380,CH=86;
 const py=i=>290+i*108, cy=i=>250+i*115;
 const pos={PALL:[PX,165],TALL:[TX,165]};
 P.forEach((_,i)=>pos['P'+(i+1)]=[PX,py(i)]);
 T.forEach((_,i)=>pos['T'+(i+1)]=[TX,py(i)]);
-const WORLD={x:60,y:-20,w:2280,h:1640};
+const WORLD=MOVIL?{x:0,y:-20,w:1080,h:1640}:{x:60,y:-20,w:2280,h:1640};
 
 const NS='http://www.w3.org/2000/svg';
 const el=(tag,a,parent)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);parent&&parent.appendChild(e);return e};
@@ -283,8 +291,8 @@ function sideNode(id,label,kw){
   const hot=(tgtCount[id]||0)>=3;
   el('rect',{class:'ring',x:x-NW/2,y:y-NH/2,width:NW,height:NH,rx:5,stroke:isP?'var(--paso-hi)':'var(--trad-hi)'},g);
   el('rect',{class:'bx',x:x-NW/2,y:y-NH/2,width:NW,height:NH,rx:5,fill:'var(--bg)',stroke:col,'stroke-width':hot?3:1.2,'stroke-opacity':hot?1:.6},g);
-  el('text',{x:x-NW/2+16,y:y-8,class:'lab'},g).textContent=label+(tgtCount[id]?'  ·  '+tgtCount[id]+(tgtCount[id]>1?' vínculos':' vínculo'):'');
-  const t=el('text',{x:x-NW/2+16,y:y+17,class:'kw','data-fit':NW-30,'data-min':13.5},g);t.textContent=kw;
+  el('text',{x:x-NW/2+16,y:MOVIL?y-20:y-8,class:'lab'},g).textContent=label+(tgtCount[id]?'  ·  '+tgtCount[id]+(tgtCount[id]>1?' vínculos':' vínculo'):'');
+  const t=el('text',{x:x-NW/2+16,y:MOVIL?y+12:y+17,class:'kw','data-fit':NW-30,'data-min':MOVIL?20:13.5},g);t.textContent=kw;
 }
 sideNode('PALL','LOS DOCE PASOS','en conjunto');
 sideNode('TALL','TODAS','el espíritu de las Tradiciones');
@@ -303,8 +311,8 @@ C.forEach((c,i)=>{
   const g=el('g',{class:'n cn',id:'n-c'+i,tabindex:0,role:'button','aria-label':'Concepto '+ROM[i]+', '+c.kw},$n);
   el('rect',{class:'box',x:CX-CW/2,y:y-CH/2,width:CW,height:CH,rx:6,fill:'var(--panel)',stroke:'var(--ink)','stroke-opacity':.55,'stroke-width':1.4},g);
   el('text',{x:CX-CW/2+20,y:y+10,class:'cnum',fill:'var(--serv)'},g).textContent=ROM[i];
-  el('text',{x:CX-CW/2+92,y:y-4,class:'ckw','data-fit':CW-108,'data-min':15},g).textContent=c.kw;
-  el('text',{x:CX-CW/2+92,y:y+20,class:'csub','data-fit':CW-108,'data-min':11},g).textContent=c.sub;
+  el('text',{x:CX-CW/2+92,y:MOVIL?y-12:y-4,class:'ckw','data-fit':CW-108,'data-min':MOVIL?18:15},g).textContent=c.kw;
+  el('text',{x:CX-CW/2+92,y:y+20,class:'csub','data-fit':CW-108,'data-min':MOVIL?13:11},g).textContent=c.sub;
   g.addEventListener('click',()=>goId('c'+(i+1)));
   g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();goId('c'+(i+1))}});
 });
@@ -357,7 +365,7 @@ const STEPS=[{id:'inicio',rect:WORLD,html:`
 C.forEach((c,i)=>{
   const y=cy(i),cpt=[[CX-CW/2,y-CH/2],[CX+CW/2,y+CH/2]];
   const tg=c.L.map(l=>pos[l[0]]);
-  STEPS.push({id:'c'+(i+1),c:i,group:i,sub:0,rect:box([...cpt,...tg.map(([x,yy])=>[x,yy])],80,90),html:`
+  STEPS.push({id:'c'+(i+1),c:i,group:i,sub:0,rect:MOVIL?box(cpt,30,130):box([...cpt,...tg.map(([x,yy])=>[x,yy])],80,90),html:`
    <div class="eyebrow">Concepto ${i+1} de 12 · ${c.ref}</div>
    <h1><span class="num">${ROM[i]}</span>${c.kw[0]+c.kw.slice(1).toLowerCase()}</h1>
    <div class="fuerza">${c.fuerza}</div>
@@ -371,7 +379,7 @@ C.forEach((c,i)=>{
   c.L.forEach(([to,k,q,s,exp,preg],j)=>{
     const isP=to[0]==='P',[tx,ty]=pos[to];
     const nearX=isP?CX-CW/2:CX+CW/2;
-    STEPS.push({id:`c${i+1}-${j+1}`,c:i,j,group:i,sub:j+1,to,rect:box([[nearX-(isP?0:0),y],[CX,y],[tx,ty]],220,170),html:`
+    STEPS.push({id:`c${i+1}-${j+1}`,c:i,j,group:i,sub:j+1,to,rect:MOVIL?box([[CX-CW/2,y],[CX+CW/2,y],[tx-NW/2,ty],[tx+NW/2,ty]],24,90):box([[nearX-(isP?0:0),y],[CX,y],[tx,ty]],220,170),html:`
      <div class="eyebrow">Concepto ${ROM[i]} · vínculo ${j+1} de ${c.L.length}</div>
      <h1 class="${isP?'pp':'tt'}"><span class="num">${ROM[i]}</span><span class="arrow">→</span><span class="tgt">${tname(to)}</span></h1>
      <div class="kwline">${c.kw[0]+c.kw.slice(1).toLowerCase()} · ${tkw(to)}</div>
@@ -422,7 +430,8 @@ let view={x:0,y:0,s:1},anim=null,onArrive=null;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function area(){const W=innerWidth,H=innerHeight;
   if(W>860){const pw=Math.min(460,W*.4);return{x:0,y:0,w:W-pw,h:H}}
-  return{x:0,y:0,w:W,h:H*.5}}
+  const p=document.getElementById('panel');
+  return{x:0,y:0,w:W,h:H-(p.classList.contains('oculto')?document.getElementById('nav').offsetHeight:p.offsetHeight)}}
 function fit(r){const a=area();const s=Math.min(2.2,Math.min(a.w/r.w,a.h/r.h)*.94);
   return{s,x:a.x+a.w/2-(r.x+r.w/2)*s,y:a.y+a.h/2-(r.y+r.h/2)*s}}
 function apply(v){view=v;cam.setAttribute('transform',`translate(${v.x},${v.y}) scale(${v.s})`)}
@@ -463,10 +472,12 @@ function drawLink(st){
   const g=el('g',{class:'call',opacity:0},$fx);
   const r=el('rect',{rx:6,stroke:col},g);
   const t1=el('text',{class:'ck',fill:col},g);t1.textContent=(k==='t'?'TEXTUAL':'ANALÍTICO')+'  ·  '+s.toUpperCase();
-  const short=q.length>48?q.slice(0,46).replace(/\s+\S*$/,'')+'…':q;
+  const tope=MOVIL?30:48;const short=q.length>tope?q.slice(0,tope-2).replace(/\s+\S*$/,'')+'…':q;
   const t2=el('text',{class:'cq'},g);t2.textContent=short;
   const w=Math.max(t1.getComputedTextLength(),t2.getComputedTextLength())+32;
-  const bx=mid.x-w/2,by=mid.y-78;
+  // en celular el rótulo va sobre los recuadros, para no tapar el Concepto
+  const bx=MOVIL?Math.max(st.rect.x+8,Math.min(st.rect.x+st.rect.w-w-8,mid.x-w/2)):mid.x-w/2;
+  const by=MOVIL?Math.min(cy(st.c)-CH/2,pos[to][1]-NH/2)-72:mid.y-78;
   r.setAttribute('x',bx);r.setAttribute('y',by);r.setAttribute('width',w);r.setAttribute('height',62);
   t1.setAttribute('x',bx+16);t1.setAttribute('y',by+22);t2.setAttribute('x',bx+16);t2.setAttribute('y',by+48);
   if(reduce){mask.remove();flow.style.opacity=.9;g.setAttribute('opacity',1);dot.remove();return}
@@ -501,6 +512,7 @@ function highlight(st){
 function go(i,fromHash){
   cur=Math.max(0,Math.min(STEPS.length-1,i));const st=STEPS[cur];
   panel.innerHTML=st.html;panel.scrollTop=0;
+  panel.classList.toggle('conqr',st.html.includes('qrbox'));
   clearFx();highlight(st);
   fly(fit(st.rect),st.j!==undefined?()=>{if(STEPS[cur]===st)drawLink(st)}:null);
   const cnt=document.getElementById('count'),dots=document.getElementById('dots');
@@ -515,6 +527,9 @@ function goId(id){const i=STEPS.findIndex(s=>s.id===id);if(i>=0)go(i)}
 document.getElementById('prev').onclick=()=>go(cur-1);
 document.getElementById('next').onclick=()=>go(cur+1);
 document.getElementById('home').onclick=()=>go(0);
+const verTexto=document.getElementById('verTexto');
+verTexto.onclick=()=>{const o=panel.classList.toggle('oculto');verTexto.textContent=o?'Mostrar texto':'Ocultar texto';verTexto.setAttribute('aria-pressed',o);fly(fit(STEPS[cur].rect))};
+matchMedia('(max-width:860px)').addEventListener('change',()=>location.reload());
 addEventListener('keydown',e=>{
   if(e.target.closest('#toc'))return;
   if(['ArrowRight','PageDown'].includes(e.key)||(e.key===' '&&!e.target.closest('.cn,button'))){e.preventDefault();go(cur+1)}
