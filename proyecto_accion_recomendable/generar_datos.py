@@ -14,7 +14,8 @@ def tipo(t):
     if re.match(r'(?i)se recuerda',t): return 'Recordatorio'
     if re.match(r'(?i)(se recomienda|recomienda|recomendaci[oó]n:|recomendamos)',t): return 'Recomendación'
     return 'Nota'
-OMITIR={'[nombre omitido]':'[nombre omitido]','[nombre omitido]':'[nombre omitido]'}
+# Nombres a omitir: lista local en fuentes_AA_md/ (carpeta fuera del repositorio).
+OMITIR={n:'[nombre omitido]' for n in json.load(open(R+'/fuentes_AA_md/nombres_omitir.json',encoding='utf-8'))}
 recs=[];com=None;an=None;pag=None;cur=None;fin=None
 def cerrar():
     global cur
@@ -46,6 +47,6 @@ for r in lg: print('LARGO',len(r['t']),r['c'],r['a'],r['t'][:90],'...',r['t'][-7
 for r in [x for x in recs if x['k']=='Nota'][:8]: print('NOTA',r['c'],r['a'],r['p'],r['t'][:110])
 for q in ('primera quincena de febrero','antes del 31 de enero','razones por las cuales fueron rechazados'):
     hit=[(r['c'],r['a'],r['p']) for r in recs if q in r['t']]; print(q,hit)
-print('nombres residuales',[r['a'] for r in recs if re.search(r'nombre_omitido',r['t'])], 'omitidos',sum('[nombre omitido]' in r['t'] for r in recs))
+print('nombres residuales',[r['a'] for r in recs if any(n.split()[1] in r['t'] for n in OMITIR)], 'omitidos',sum('[nombre omitido]' in r['t'] for r in recs))
 js="/* Generado a partir de “Recomendaciones Vigentes 1965-2026”, Oficina de Servicios Generales de AA Colombia.\n   c = comité · a = año · k = tipo · t = texto · p = página impresa del documento. */\nconst ACCIONES = "+json.dumps(recs,ensure_ascii=False,separators=(',',':'))+";\n"
 open(R+'/proyecto_accion_recomendable/datos_acciones.js','w',encoding='utf-8').write(js); print('bytes',len(js.encode()))
