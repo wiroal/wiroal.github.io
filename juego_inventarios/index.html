@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<!-- Aislamiento: el navegador no deja salir ninguna petición desde esta página. Sin fuentes, scripts ni imágenes externas. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Bodega</title>
+<meta name="description" content="Juego y cuaderno privado para escribir la historia y los inventarios del Cuarto Paso. Lo escrito no sale de tu equipo.">
+<style>
+:root{
+  --bg:#f4efe3; --hoja:#fbf8f0; --ink:#1c1a17; --ink-2:#4a453c; --ink-3:#6f695c;
+  --rule:#d9d2c1; --rule-2:#b8ae96; --accent:#a8431a; --accent-2:#6b2a0f; --gold:#8a6b2e;
+  --suave:#f3e6d8; --ok:#2c6a43; --ok-s:#e2efe5; --mal:#9a2b1f; --mal-s:#f8e4e1; --azul:#2d5a7a; --azul-s:#e3edf3;
+  --renglon:#c9d8e4; --margen:#d98f7b;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){
+  --bg:#17130e; --hoja:#211b14; --ink:#efe7d8; --ink-2:#cfc5b2; --ink-3:#a69c89;
+  --rule:#3a3126; --rule-2:#57493a; --accent:#e58a5c; --accent-2:#f0a97f; --gold:#d3ae62;
+  --suave:#33241a; --ok:#7fcb99; --ok-s:#17301f; --mal:#f09a8c; --mal-s:#3a1e19; --azul:#8fbdd9; --azul-s:#172a36;
+  --renglon:#2c3640; --margen:#6b3a2c;
+}}
+:root[data-tema="oscuro"]{
+  --bg:#17130e; --hoja:#211b14; --ink:#efe7d8; --ink-2:#cfc5b2; --ink-3:#a69c89;
+  --rule:#3a3126; --rule-2:#57493a; --accent:#e58a5c; --accent-2:#f0a97f; --gold:#d3ae62;
+  --suave:#33241a; --ok:#7fcb99; --ok-s:#17301f; --mal:#f09a8c; --mal-s:#3a1e19; --azul:#8fbdd9; --azul-s:#172a36;
+  --renglon:#2c3640; --margen:#6b3a2c;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);overflow-wrap:break-word}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.18;margin:0}
+p{margin:0 0 .8em}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+a{color:var(--accent)}
+.oculto{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.tenue{color:var(--ink-3)}
+.peq{font-size:.88rem}
+.ancho{max-width:860px;margin:0 auto;padding:0 16px}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45em;min-height:44px;padding:.45em 1em;border:1px solid var(--rule-2);border-radius:8px;background:var(--hoja);font-weight:600;text-decoration:none;color:var(--ink);text-align:center}
+.btn:hover{border-color:var(--accent)}
+.btn.prim{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-tema="oscuro"] .btn.prim{color:#1c120b}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .btn.prim{color:#1c120b}}
+.btn.chico{min-height:36px;padding:.2em .7em;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.peligro{color:var(--mal);border-color:var(--mal)}
+
+/* Barra superior */
+.barra{position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:8px 12px;background:#1b150f;color:#f2e8d6;border-bottom:2px solid #6b2a0f}
+.barra .marca{background:none;border:0;color:#f6d38b;font-family:var(--serif);font-size:1.15rem;font-weight:600;padding:4px 6px;min-height:36px}
+.barra .estado{font-size:.78rem;color:#cdbfa8;flex:1 1 140px;min-width:0}
+.barra button.b{background:transparent;border:1px solid #6d5b45;color:#f2e8d6;border-radius:7px;min-height:36px;padding:.1em .65em;font-size:.84rem;font-weight:600}
+.barra button.b:hover{border-color:#f6d38b}
+.barra button.pausa{border-color:#f6d38b;color:#f6d38b}
+.sprint{font-family:var(--mono);font-size:.9rem;color:#f6d38b;font-weight:700}
+
+/* Portada / puerta */
+.puerta{min-height:100vh;background:radial-gradient(1000px 500px at 50% -10%,#4b331d 0,#1b150f 62%);color:#f2e8d6;padding:32px 0 56px}
+.puerta h1{font-size:clamp(2.3rem,8vw,3.8rem);color:#f6d38b;letter-spacing:-.01em}
+.puerta .sub{font-family:var(--serif);font-size:1.2rem;margin:.4em 0 1.2em;color:#ecdfc9}
+.puerta .cita{background:rgba(255,255,255,.05);color:#f2e8d6;border-left-color:#f6d38b}
+.puerta .cita small{color:#cdbfa8}
+.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin:18px 0}
+.opcion{background:#2a2017;border:1px solid #5a4935;border-radius:12px;padding:18px}
+.opcion h3{color:#f6d38b;font-size:1.2rem;margin-bottom:.35em}
+.opcion p{font-size:.95rem;color:#e0d3bc}
+.opcion label{display:block;font-size:.88rem;margin:.55em 0 .2em;color:#ecdfc9}
+.opcion input{width:100%;min-height:44px;padding:.4em .6em;border-radius:7px;border:1px solid #6d5b45;background:#17120c;color:#f6efe2}
+.opcion .btn{width:100%;margin-top:.8em}
+.puerta .btn{background:#2a2017;color:#f2e8d6;border-color:#6d5b45}
+.puerta .btn.prim{background:#f6d38b;border-color:#f6d38b;color:#21170c}
+.puerta .btn.peligro{color:#f09a8c;border-color:#8a4a3e}
+.aviso-puerta{font-size:.92rem;color:#d9ccb5;border-top:1px solid #4c3d2c;margin-top:22px;padding-top:14px}
+.aviso-puerta strong{color:#f6d38b}
+.error{color:#ffb4a4;font-size:.9rem;margin:.4em 0 0;min-height:1.2em}
+.prueba{margin-top:10px;font-size:.92rem;min-height:1.4em}
+.lista-suave{margin:.4em 0 .8em;padding-left:1.2em}
+.lista-suave li{margin-bottom:.35em}
+
+/* Mapa */
+.mapa{position:relative;background:linear-gradient(#19130d,#241a11 45%,#19130d);color:#f2e8d6;padding:20px 0 44px;overflow:hidden;min-height:calc(100vh - 54px)}
+.mapa h1{font-size:clamp(1.8rem,6vw,2.8rem);color:#f6d38b}
+.mapa .ancho{position:relative;z-index:3}
+.mapa .intro{font-family:var(--serif);font-size:1.08rem;color:#e7dac3;max-width:42em}
+.escena{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin:12px 0 2px;min-height:120px}
+.espantajo-box{text-align:center;width:128px;flex:none}
+.espantajo-box svg{display:block;margin:0 auto;transform-origin:bottom center;transition:transform .8s ease,opacity .8s ease}
+.espantajo-box .quien{font-family:var(--serif);font-weight:600;color:#f6d38b}
+.bocadillo{font:italic 1rem/1.3 var(--serif);color:#e7dac3;text-align:center;flex:1;padding:0 2px;align-self:center}
+.progreso{height:10px;border-radius:99px;background:#3a2c1e;overflow:hidden;margin:12px 0 4px}
+.progreso i{display:block;height:100%;background:linear-gradient(90deg,#c88a2f,#f6d38b);transition:width .7s}
+.niebla{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:var(--niebla,.6);background:
+  radial-gradient(520px 170px at 18% 34%,rgba(214,206,190,.2),transparent 70%),
+  radial-gradient(640px 210px at 78% 54%,rgba(214,206,190,.2),transparent 70%),
+  radial-gradient(520px 180px at 40% 84%,rgba(214,206,190,.17),transparent 70%);
+  animation:deriva 26s ease-in-out infinite alternate;transition:opacity 1s}
+@keyframes deriva{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+.estantes{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px;margin-top:18px}
+.estante{position:relative;display:flex;gap:12px;text-align:left;width:100%;padding:13px;border:1px solid #574532;border-bottom:6px solid #5c3f24;border-radius:9px 9px 3px 3px;background:#2a2017;color:#e7dac3;transition:transform .15s,box-shadow .3s,border-color .3s}
+.estante:hover{transform:translateY(-2px);border-color:#c79a54}
+.estante .num{font:600 .74rem var(--mono);color:#cdb58e;letter-spacing:.06em}
+.estante h3{font-size:1.1rem;color:#f4e8d3;margin:.1em 0 .2em}
+.estante p{font-size:.86rem;margin:0;line-height:1.38;color:#d6c8b0}
+.estante .marcas{font-size:.74rem;margin-top:.45em;color:#cdb58e}
+.estante svg{flex:none}
+.estante.lit{background:#3b2a18;border-color:#d7a650;box-shadow:0 0 28px rgba(246,190,90,.28)}
+.farol .llama{opacity:0}
+.lit .farol .llama{opacity:1;animation:titila 2.4s infinite}
+@keyframes titila{0%,100%{opacity:1}45%{opacity:.8}60%{opacity:.95}}
+.sellos{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.sello{font:600 .72rem/1.15 var(--sans);text-transform:uppercase;letter-spacing:.03em;padding:7px 9px;border:2px dashed #6d5b45;border-radius:8px;color:#8f8069;max-width:124px;text-align:center}
+.sello.si{border:2px solid #d7a650;color:#f6d38b;transform:rotate(-2deg)}
+.herramientas-mapa{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.mapa .btn{background:#2a2017;color:#f2e8d6;border-color:#6d5b45}
+.mapa .btn.prim{background:#f6d38b;border-color:#f6d38b;color:#21170c}
+
+/* Estante abierto */
+.cab{padding:22px 0 8px}
+.cab .num{font:600 .78rem var(--mono);letter-spacing:.08em;color:var(--accent)}
+.cab h1{font-size:clamp(1.7rem,5.5vw,2.5rem);margin:.1em 0 .25em}
+.cab .lema{font-family:var(--serif);font-size:1.1rem;color:var(--ink-2)}
+.pestanas{display:flex;gap:6px;border-bottom:2px solid var(--rule-2);margin:14px 0 18px;position:sticky;top:53px;background:var(--bg);z-index:10;padding-top:6px}
+.pestana{flex:1;background:none;border:1px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;padding:.5em .3em;min-height:44px;font-weight:600;color:var(--ink-2)}
+.pestana[aria-selected="true"]{background:var(--hoja);border-color:var(--rule-2);color:var(--accent);margin-bottom:-2px;border-bottom:2px solid var(--hoja)}
+.pestana .ok{color:var(--ok)}
+.cita{border-left:4px solid var(--gold);background:var(--suave);padding:10px 14px;border-radius:0 8px 8px 0;font-family:var(--serif);font-size:1.03rem;margin:0 0 12px}
+.cita small{display:block;font-family:var(--sans);color:var(--ink-3);font-size:.78rem;margin-top:4px}
+.nota{background:var(--azul-s);border-left:4px solid var(--azul);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.94rem;margin:0 0 12px}
+.nota.cuidado{background:var(--mal-s);border-left-color:var(--mal)}
+.bloque{background:var(--hoja);border:1px solid var(--rule);border-radius:10px;padding:16px;margin-bottom:16px}
+.bloque h2{font-size:1.35rem;margin-bottom:.35em}
+.bloque h3{font-size:1.1rem;margin-bottom:.3em}
+.navega{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin:20px 0 48px}
+.encender{background:var(--suave);border:1px dashed var(--gold);border-radius:10px;padding:16px;margin:20px 0;text-align:center}
+
+/* Retos */
+.reto{background:var(--hoja);border:1px solid var(--rule-2);border-radius:12px;padding:16px;margin-bottom:16px}
+.reto h3{font-size:1.2rem}
+.reto .instr{color:var(--ink-2);font-size:.95rem;margin:.25em 0 .7em}
+.ronda{font:600 .76rem var(--mono);color:var(--ink-3)}
+.carta{font-family:var(--serif);font-size:1.16rem;line-height:1.4;padding:16px;border:1px solid var(--rule-2);border-radius:10px;background:var(--bg);margin:8px 0 12px}
+.botes{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.opt{width:100%;text-align:left;min-height:44px;padding:.55em .8em;border:1px solid var(--rule-2);border-radius:8px;background:var(--bg);line-height:1.35}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.bien{background:var(--ok-s);border-color:var(--ok)}
+.opt.mal{background:var(--mal-s);border-color:var(--mal)}
+.opt.sel{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.lista-op{display:grid;gap:8px}
+.retro{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:.95rem}
+.retro.bien{background:var(--ok-s)}.retro.mal{background:var(--mal-s)}
+.retro .cita{background:transparent;margin:.5em 0 0;padding:0 0 0 10px;font-size:.97rem}
+.acciones{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hecho{color:var(--ok);font-weight:700}
+.parejas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.parejas .col{display:grid;gap:8px;align-content:start}
+.parejas .opt{font-size:.9rem}
+@media (max-width:520px){.parejas .opt{font-size:.82rem;padding:.45em .5em}}
+.orden li{margin-bottom:6px}
+.orden{padding-left:1.4em;margin:.5em 0}
+.jefe{display:flex;align-items:flex-end;gap:12px;background:#231a12;color:#f2e8d6;border-radius:10px;padding:12px;margin:8px 0}
+.jefe svg{flex:none;transform-origin:bottom center;transition:transform .5s}
+.jefe .dice{font:italic 1.15rem/1.35 var(--serif)}
+.jefe .quien{color:#f6d38b;font:600 .8rem var(--mono);display:block;margin-bottom:.25em}
+
+/* Hoja de libro contable */
+.form-bloque{margin-bottom:22px}
+.form-bloque>h2{font-size:1.32rem;margin-bottom:.25em}
+.origen{display:inline-block;font:600 .68rem var(--sans);text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:5px;background:var(--suave);color:var(--accent-2);margin-right:.4em}
+.origen.h{background:var(--azul-s);color:var(--azul)}
+.campo{margin-bottom:12px}
+.campo>label,.campo>.et{display:block;font-weight:600;font-size:.94rem;margin-bottom:.2em}
+.campo .ay{display:block;font-size:.82rem;color:var(--ink-3);margin-bottom:.25em;font-weight:400}
+input[type=text],textarea{width:100%;border:1px solid var(--rule-2);border-radius:6px;padding:.45em .6em;background:var(--hoja);min-height:44px}
+textarea{resize:vertical;min-height:88px;font-family:var(--serif);font-size:1.03rem;line-height:28px;padding:0 .6em 0 26px;
+  background-image:linear-gradient(90deg,transparent 17px,var(--margen) 17px,var(--margen) 18px,transparent 18px),repeating-linear-gradient(transparent,transparent 27px,var(--renglon) 27px,var(--renglon) 28px);background-attachment:local}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--rule-2);background:var(--bg);border-radius:99px;padding:.2em .8em;min-height:38px;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+:root[data-tema="oscuro"] .chip[aria-pressed="true"]{color:#1c120b}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .chip[aria-pressed="true"]{color:#1c120b}}
+input[type=range]{width:100%;min-height:36px;accent-color:var(--accent)}
+.rango-val{font:600 .88rem var(--mono);color:var(--accent)}
+.fila{border:1px solid var(--rule-2);border-left:5px solid var(--accent);border-radius:8px;background:var(--hoja);margin-bottom:10px}
+.fila>summary{display:flex;align-items:center;gap:8px;padding:10px 12px;min-height:44px;cursor:pointer;font-weight:600;list-style:none}
+.fila>summary::-webkit-details-marker{display:none}
+.fila>summary::before{content:"▸";color:var(--accent)}
+.fila[open]>summary::before{content:"▾"}
+.fila .resumen-txt{flex:1;min-width:0}
+.fila .cuerpo{padding:2px 12px 12px;border-top:1px solid var(--rule)}
+.fila .cuerpo .campo:first-child{margin-top:10px}
+.pregunta{padding:12px 0;border-top:1px solid var(--rule)}
+.pregunta label{display:block;font-family:var(--serif);font-size:1.04rem;font-weight:600;line-height:1.35;margin-bottom:.4em}
+.pregunta.foco{background:var(--suave);box-shadow:0 0 0 8px var(--suave)}
+.cada{padding:12px 0;border-top:1px solid var(--rule)}
+.cada h3{font-size:1.15rem}
+.sugeridos{display:flex;flex-wrap:wrap;gap:5px;margin:.3em 0 .8em}
+.sugeridos button{border:1px dashed var(--rule-2);background:none;border-radius:99px;padding:.1em .7em;min-height:34px;font-size:.84rem;color:var(--ink-2)}
+.vigia{font-size:.9rem;border-radius:7px;padding:8px 11px;margin-top:6px;background:var(--suave);border-left:3px solid var(--gold)}
+.vigia.grave{background:var(--mal-s);border-left-color:var(--mal)}
+.vigia strong{display:block}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+
+/* Línea de vida, balance */
+.graf{width:100%;height:auto;display:block}
+.graf text{font:12px var(--sans);fill:var(--ink-2)}
+.barras{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(100px,170px) 1fr 34px;gap:8px;align-items:center;font-size:.9rem}
+.bar .pista{height:14px;background:var(--rule);border-radius:4px;overflow:hidden}
+.bar .pista i{display:block;height:100%;background:var(--accent)}
+.bar .v{text-align:right;font-family:var(--mono);font-size:.85rem}
+.etiquetas{display:flex;flex-wrap:wrap;gap:6px}
+.etiqueta{padding:.1em .6em;border:1px solid var(--rule-2);border-radius:6px;font-size:.92rem}
+.etiqueta b{color:var(--accent);margin-left:.25em}
+.rejilla2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.selector label{display:flex;gap:9px;align-items:center;min-height:36px;font-size:.95rem}
+.selector input{width:18px;height:18px;accent-color:var(--accent)}
+
+/* Capas */
+.capa{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,10,6,.78);overflow:auto}
+.modal{background:var(--hoja);color:var(--ink);border-radius:14px;padding:22px;max-width:560px;width:100%;max-height:92vh;overflow:auto}
+.modal h2{font-size:1.5rem;margin-bottom:.35em}
+.respira{width:120px;height:120px;border-radius:50%;margin:10px auto 14px;background:radial-gradient(circle,#f6d38b,#c88a2f);animation:respira 10s ease-in-out infinite}
+@keyframes respira{0%,100%{transform:scale(.55)}40%{transform:scale(1)}50%{transform:scale(1)}}
+.cortina{position:fixed;inset:0;z-index:90;background:#fff;color:#999;display:flex;align-items:flex-end;justify-content:center;padding:24px;font:13px var(--sans);border:0;width:100%;cursor:default}
+.tostadas{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:70;display:grid;gap:8px;width:max-content;max-width:calc(100vw - 32px);pointer-events:none}
+.tostada{background:#21170c;color:#f6d38b;border:1px solid #d7a650;border-radius:10px;padding:10px 16px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+@media (max-width:640px){.pestanas{position:static}.barra .estado{order:9;flex-basis:100%;font-size:.72rem}.barra{gap:3px 4px;padding:6px 8px}.barra .marca{flex:1;text-align:left;font-size:1rem;padding:4px 2px;white-space:nowrap}.barra button.b{padding:.1em .45em}.barra .largo{display:none}.barra .estado{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.barra,.navega,.tools{display:none}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px">Esta herramienta necesita JavaScript, pero nada de lo que escribas sale de tu equipo.</p></noscript>
+<div id="app"></div>
+<script>
+"use strict";
+/* ===== Contenido =====
+   Cada cita de la literatura se declara con cita(texto, fuente) y queda en CITAS.
+   LG = Alcohólicos Anónimos (Libro Grande); DD = Doce Pasos y Doce Tradiciones.
+   Las páginas siguen la numeración impresa de las ediciones en español usadas. */
+const CITAS = [];
+const FUENTES = { LG: "Alcohólicos Anónimos (Libro Grande)", DD: "Doce Pasos y Doce Tradiciones" };
+function cita(t, f){ const c = { t, f }; CITAS.push(c); return c; }
+function refCita(f){ const [l, p] = f.split(" "); return FUENTES[l] + ", " + (p.includes("-") ? "pp. " : "p. ") + p; }
+function refCorta(f){ const [l, p] = f.split(" "); return (l === "LG" ? "Libro Grande" : "Doce y Doce") + ", " + (p.includes("-") ? "pp. " : "p. ") + p; }
+const q = (t, f) => ({ q: t, f });
+const pH = t => ({ q: t });
+
+const CITA_PASO = cita("Sin miedo hicimos un minucioso inventario moral de nosotros mismos.", "DD 39");
+
+const OP_AFECTA = ["Amor propio", "Seguridad", "Ambiciones", "Relaciones personales", "Relaciones sexuales"];
+const OP_PARTE = ["Egoísta", "Falto de honradez", "Con miedo"];
+
+const ESTANTES = [
+{
+  id: "puerta", titulo: "La puerta", lema: "Antes de contar la mercancía, saber qué se viene a hacer.",
+  breve: "Para qué sirve un inventario y las tres trampas que lo arruinan.",
+  aprende: [
+    { c: cita("Un negocio del cual no se hace inventario con regularidad, va generalmente a la quiebra.", "LG 60") },
+    { p: "El Libro Grande compara el Cuarto Paso con la revisión de una bodega. El dueño cuenta lo que hay: lo que sirve y lo que está dañado. No lo hace para castigarse, sino para saber con qué negocio cuenta." },
+    { c: cita("Si ha de tener éxito el propietario del negocio, no podrá engañarse acerca del valor de su mercancía.", "LG 60") },
+    { p: "El Doce y Doce advierte de tres maneras de dañar el inventario: hundirse en la culpa, ofenderse porque «yo no necesito esto», o hacer el inventario de los demás." },
+    { c: cita("Porque esto es la otra cara del orgullo.", "DD 42"), nota: "Sobre la culpa y el odio hacia uno mismo." },
+    { c: cita("Nosotros no somos los culpables. Son ellos.", "DD 43"), nota: "La excusa favorita para evitar el inventario." },
+  ],
+  retos: [
+    { id: "negocio", tipo: "elige", titulo: "El dueño honrado", instr: "Tres preguntas sobre la comparación con el negocio.", rondas: [
+      { t: "Según el Libro Grande, ¿qué es un inventario comercial?", ops: ["Un proceso para encontrar y encarar los hechos", "Una forma de saber a quién cobrarle", "Una lista de lo que uno quisiera tener"], ok: 0,
+        por: cita("El inventario comercial es un proceso para encontrar y encarar los hechos.", "LG 60") },
+      { t: "Uno de los fines es encontrar la mercancía deteriorada. ¿Para qué?", ops: ["Para esconderla detrás de la buena", "Para deshacerse prontamente de ella sin lamentarlo", "Para culpar al proveedor"], ok: 1,
+        por: cita("Uno de los fines es encontrar cuál es la mercancía deteriorada o inservible que hay para deshacerse prontamente de ella sin lamentarlo.", "LG 60") },
+      { t: "Según el Libro Grande, ¿qué era el licor que bebíamos?", ops: ["La causa de todos los problemas", "Un síntoma", "Un asunto ajeno al inventario"], ok: 1,
+        por: cita("El licor que bebíamos no era más que un síntoma; por lo tanto teníamos que ir a las causas y las condiciones.", "LG 60") },
+    ]},
+    { id: "trampas", tipo: "clasifica", titulo: "¿Inventario o trampa?", instr: "Las frases son inventadas para el juego. Decide qué está haciendo quien las escribió.",
+      botes: ["Inventario", "Culpa melancólica", "Grandiosidad", "«Son ellos»"], items: [
+      { t: "Soy lo peor que existe. No hay nadie tan dañado como yo.", ok: 1, por: "Parece humildad, pero sigue girando alrededor de uno mismo. El padrino le muestra a esta persona que no es un caso extraño." },
+      { t: "Yo siempre fui buena persona. Mi único problema era el trago.", ok: 2, por: "Es la postura de quien cree que basta con dejar de beber para que renazca su buen carácter." },
+      { t: "Si mi jefe me hubiera tratado con respeto, nada de esto habría pasado.", ok: 3, por: "Este es el inventario del jefe, no el propio." },
+      { t: "Le mentí a mi hermana sobre el préstamo porque me daba miedo que me viera como un fracasado.", ok: 0, por: "Es concreto: dice qué hizo, a quién y qué temor había debajo." },
+      { t: "Me gusta cuidar a mis hijos. También les grito cuando me siento impotente.", ok: 0, por: "Anota lo bueno y lo malo. Eso fomenta el equilibrio." },
+      { t: "Aquí nadie me entiende. Tengo más estudios que todos los del grupo.", ok: 2, por: "Es el orgullo diciendo que uno es la excepción." },
+      { t: "Todo lo arruino; no vale la pena ni seguir escribiendo.", ok: 1, por: "Esta reacción es la que describe el Doce y Doce. Si llegas aquí, para y llama a tu padrino." },
+      { t: "Ella me hizo beber; con una esposa así, cualquiera toma.", ok: 3, por: "Las «circunstancias» y «ellos» otra vez como causa." },
+    ]},
+  ],
+  formas: [
+    { id: "pacto", tipo: "libre", titulo: "Mi punto de partida", origen: "h", ayuda: "Solo para ti. Puedes dejarlo en blanco.", campos: [
+      { k: "iniciales", et: "Iniciales o apodo para la portada del PDF", tipo: "texto" },
+      { k: "padrino", et: "Mi padrino, madrina o persona de confianza (iniciales)", tipo: "texto" },
+      { k: "telefono", et: "Teléfono al que puedo llamar si esto se pone pesado", tipo: "texto", ayuda: "Aparece en el botón «Pausa»." },
+      { k: "cuando", et: "¿Cuándo y dónde me voy a sentar a escribir?", tipo: "area" },
+      { k: "miedo", et: "¿Qué me dice mi miedo sobre hacer este inventario?", tipo: "area", vigila: true },
+      { k: "orgullo", et: "¿Qué me dice mi orgullo sobre hacerlo?", tipo: "area", vigila: true },
+    ]},
+  ],
+},
+{
+  id: "historia", titulo: "Mi historia", lema: "Cómo era, qué pasó, cómo soy ahora.",
+  breve: "Línea de vida con altibajos y tu historia contada en tres tiempos.",
+  aprende: [
+    { c: cita("Nuestras historias expresan de un modo general cómo éramos, lo que nos aconteció y cómo somos ahora.", "LG 54") },
+    { c: cita("Miramos en retrospectiva nuestras vidas. Solamente contaban la entereza y la honradez.", "LG 61") },
+    { p: "Los libros no piden escribir una autobiografía como parte del Cuarto Paso. Este estante es una ayuda de la herramienta: tener la vida a la vista ayuda a recordar nombres, lugares y momentos para los otros inventarios. Pregúntale a tu padrino cómo te conviene usarlo." },
+  ],
+  retos: [
+    { id: "tiempos", tipo: "clasifica", titulo: "Los tres tiempos", instr: "Una historia de ejemplo, inventada. ¿A qué parte pertenece cada frase?",
+      botes: ["Cómo era", "Lo que me aconteció", "Cómo soy ahora"], items: [
+      { t: "Bebía a escondidas desde los 17 años y decía que lo controlaba.", ok: 0, por: "Describe cómo era la vida antes." },
+      { t: "Un compañero del trabajo me llevó a una reunión después de un choque.", ok: 1, por: "Es el punto de cambio." },
+      { t: "Hoy llamo a mi hija los domingos y le digo cómo estoy de verdad.", ok: 2, por: "Es la vida de hoy." },
+      { t: "Me prestaba plata y no la devolvía. Perdí a mis amigos.", ok: 0, por: "Es parte del «cómo era»." },
+      { t: "Admití por primera vez ante un grupo que no podía parar.", ok: 1, por: "Es lo que aconteció." },
+      { t: "Todavía me da miedo el silencio, pero ya sé a quién llamar.", ok: 2, por: "«Cómo soy ahora» no significa perfecto. También aquí cabe la honradez." },
+    ]},
+  ],
+  formas: [
+    { id: "hitos", tipo: "filas", titulo: "Mi línea de vida", origen: "h", grafica: true, resumen: "hecho", boton: "Agregar un momento",
+      ayuda: "Anota momentos que te marcaron, buenos y malos. Con la edad y el ánimo se dibuja tu línea.", campos: [
+      { k: "edad", et: "Edad o año", tipo: "texto" },
+      { k: "hecho", et: "¿Qué pasó?", tipo: "texto" },
+      { k: "animo", et: "¿Cómo estaba mi vida en ese momento?", tipo: "rango", min: -5, max: 5, ini: 0 },
+      { k: "nota", et: "¿Quiénes estaban? ¿Qué sentí? ¿Qué hice yo?", tipo: "area" },
+    ]},
+    { id: "etapas", tipo: "preguntas", titulo: "Repaso por etapas", origen: "h", ayuda: "Sirve como pista de memoria. Escribe hechos, no literatura.", items: [
+      pH("Niñez: ¿quiénes vivían conmigo? ¿Qué aprendí a temer o a esconder?"),
+      pH("Adolescencia: ¿cómo quería que me vieran? ¿Cuándo fue mi primer trago y qué me dio?"),
+      pH("Juventud: estudio, trabajo, amigos. ¿Qué empecé a perder o a descuidar?"),
+      pH("Pareja y familia: ¿a quiénes amé? ¿Cómo los traté cuando bebía?"),
+      pH("Trabajo y dinero: ¿qué conseguí, qué perdí, qué oculté?"),
+      pH("Los peores días: ¿qué pasó? ¿Qué me decía a mí mismo para seguir?"),
+      pH("La llegada a A.A.: ¿qué me trajo? ¿Qué creía que iba a encontrar?"),
+    ]},
+    { id: "tres", tipo: "libre", titulo: "Mi historia en tres tiempos", origen: "l", ayuda: "Con base en Libro Grande, p. 54.", campos: [
+      { k: "como", et: "Cómo era", tipo: "area", filas: 6 },
+      { k: "paso", et: "Lo que me aconteció", tipo: "area", filas: 6 },
+      { k: "ahora", et: "Cómo soy ahora", tipo: "area", filas: 6 },
+    ]},
+  ],
+},
+{
+  id: "instintos", titulo: "Los tres instintos", lema: "Buenos de origen, peligrosos cuando se desbocan.",
+  breve: "Sexo, seguridad y relaciones: dónde se te han salido de cauce.",
+  aprende: [
+    { c: cita("Por lo tanto, estos deseos—de relaciones sexuales, de seguridad material y emocional, y de compañerismo—son perfectamente necesarios y apropiados", "DD 39") },
+    { c: cita("Casi todo grave problema emocional se puede considerar como un caso del instinto descarriado.", "DD 39") },
+    { p: "El inventario no parte de que seas una mala persona. Parte de que algo necesario se salió de su cauce y hoy se quiere saber cómo, cuándo y dónde." },
+    { c: cita("Siempre que un ser humano se convierta en un campo de batalla de sus propios instintos, no podrá conocer la paz.", "DD 41") },
+  ],
+  retos: [
+    { id: "instinto", tipo: "clasifica", titulo: "¿Qué instinto está mandando?", instr: "Casos inventados, inspirados en los ejemplos del Doce y Doce, pp. 40-41.",
+      botes: ["Sexo", "Seguridad", "Social y prestigio"], items: [
+      { t: "Lleva años acumulando dinero; ya casi no ve a su familia ni a sus amigos.", ok: 1, por: "El libro habla de quien solo quiere acumular dinero hasta aislarse." },
+      { t: "Pone en riesgo su hogar y su nombre por una aventura tras otra.", ok: 0, por: "El deseo sexual puesto por encima de todo puede destruir la seguridad y la posición social." },
+      { t: "No toma ninguna decisión sin que su hermano mayor le diga qué hacer.", ok: 1, por: "La búsqueda de seguridad no siempre es de dinero: también es depender totalmente de alguien más fuerte." },
+      { t: "Necesita que en cada reunión todos sepan quién es y cuánto sabe.", ok: 2, por: "El deseo de prestigio personal se vuelve incontrolable." },
+      { t: "Cuando no le hacen caso, busca la forma de mandar sobre todos.", ok: 2, por: "Es la locura del poder: intentar dominar a los semejantes." },
+      { t: "Se aferra a cada ahorro por miedo a que un día no alcance y niega lo básico a los suyos.", ok: 1, por: "Temor y avaricia: la seguridad se vuelve el único tema." },
+    ]},
+  ],
+  formas: [
+    { id: "pulso", tipo: "cada", titulo: "Mi primer vistazo", origen: "l", ayuda: "Del 0 al 5: ¿cuánto te ha gobernado? No hay puntaje bueno ni malo; es solo un mapa para empezar.",
+      items: [ { k: "sexo", t: "Sexo y pareja" }, { k: "seguridad", t: "Seguridad material y emocional" }, { k: "social", t: "Relaciones, prestigio y poder" } ],
+      campos: [
+        { k: "nivel", et: "¿Cuánto me ha gobernado?", tipo: "rango", min: 0, max: 5, ini: 0 },
+        { k: "txt", et: "¿Cómo, cuándo y dónde me ha torcido?", tipo: "area", vigila: true },
+      ]},
+    { id: "saltan", tipo: "libre", titulo: "Lo que más me salta a la vista", origen: "l", ayuda: "«Podemos sugerirle que lo empiece examinando aquellos defectos que más le molestan y que más le saltan a la vista.» Doce y Doce, p. 47.",
+      citaOculta: cita("podemos sugerirle que lo empiece examinando aquellos defectos que más le molestan y que más le saltan a la vista.", "DD 47"),
+      campos: [ { k: "txt", et: "Sin pensarlo mucho: tres o cuatro cosas de mí que ya sé que me hacen daño", tipo: "area", filas: 5, vigila: true } ]},
+  ],
+},
+{
+  id: "resentimientos", titulo: "Resentimientos", lema: "El ofensor número uno.",
+  breve: "El inventario en columnas del Libro Grande, con la parte que te toca.",
+  aprende: [
+    { c: cita("El resentimiento es el ofensor número uno. Destruye más alcohólicos que cualquiera otra cosa.", "LG 60") },
+    { c: cita("Hicimos una lista de personas, instituciones o principios con los que estábamos molestos, y nos preguntamos el por qué.", "LG 60") },
+    { p: "El libro trae un cuadro con tres columnas: con quién, la causa y qué me afecta. Sus ejemplos usan «El Sr. B.» y «La Sra. C.». Haz lo mismo: escribe iniciales, no nombres completos." },
+    { p: "Después viene el giro. Se vuelve a la lista quitando de la mente lo que hicieron los demás:" },
+    { c: cita("¿Cuándo habíamos sido egoístas, faltos de honradez y habíamos tenido miedo?", "LG 63") },
+    { c: cita("El inventario era nuestro inventario y no del otro.", "LG 63") },
+    { c: cita("Está enfermo ¿Cómo ayudarlo? Dios me libre de enojarme. Hágase Tu Voluntad", "LG 63"), nota: "Lo que el Libro Grande sugiere decirse cuando alguien ofende." },
+  ],
+  retos: [
+    { id: "columnas", tipo: "marca", titulo: "Las columnas del Sr. B.", instr: "Estos casos están en el cuadro del Libro Grande, p. 61. Marca lo que el libro anota en «Afecta mi(s)».", rondas: [
+      { t: "El Sr. B.: «Contó a mi esposa lo de mi querida.»", ops: ["Relaciones sexuales", "Amor propio", "Ambiciones", "Seguridad"], ok: [0, 1], por: "El libro anota: relaciones sexuales y amor propio, con temor entre paréntesis." },
+      { t: "El Sr. B.: «El señor B. puede ocupar mi puesto en la oficina.»", ops: ["Seguridad", "Amor propio", "Relaciones sexuales", "Relaciones personales"], ok: [0, 1], por: "El libro anota: seguridad y amor propio, con temor." },
+      { t: "Mi patrón: «Me amenaza con despedirme por beber e inflar mi cuenta de gastos.»", ops: ["Amor propio", "Seguridad", "Relaciones sexuales", "Relaciones personales"], ok: [0, 1], por: "El libro anota: amor propio y seguridad, con temor. El patrón no inventó la bebida ni la cuenta inflada, y eso pasa a la columna de «mi parte»." },
+    ]},
+    { id: "curso", tipo: "ordena", titulo: "El orden del trabajo", instr: "Toca los pasos en el orden en que los describe el Libro Grande, pp. 60-63.",
+      pasos: ["Escribir la lista de personas, instituciones o principios", "Preguntarme el porqué de cada uno", "Anotar qué me lastimaron o amenazaron", "Reconocer que quienes fueron injustos tal vez estén enfermos", "Quitar de mi mente los errores de los demás", "Buscar mis propias faltas y apuntarlas"],
+      por: cita("Cuando nos dábamos cuenta de nuestras faltas, las apuntábamos.", "LG 63") },
+    { id: "miparte", tipo: "elige", titulo: "La lupa de mi parte", instr: "Casos inventados. ¿Cuál frase está mirando la parte propia?", rondas: [
+      { t: "Mi hermana me dejó de hablar por la herencia.", ops: ["Ella siempre fue interesada.", "Le oculté las cuentas porque temía quedarme sin nada.", "Con una familia así, cualquiera bebe."], ok: 1, por: "Se hace a un lado a la otra persona y queda lo propio: lo que hice y el temor debajo." },
+      { t: "El banco me embargó.", ops: ["Los bancos son unos ladrones.", "Tuve mala suerte en la vida.", "Firmé sin leer, escondí las cartas y gasté lo de las cuotas."], ok: 2, por: "Aunque no seamos enteramente culpables, la pregunta sigue siendo dónde está la parte propia." },
+      { t: "En el trabajo ascendieron a un compañero y no a mí.", ops: ["Quería el puesto para que me admiraran y hablé mal de él.", "Le lamen las botas al jefe.", "No me valoran."], ok: 0, por: "Aparecen el amor propio, las ambiciones y una conducta concreta." },
+    ]},
+  ],
+  formas: [
+    { id: "resent", tipo: "filas", titulo: "Mi cuadro de resentimientos", origen: "l", resumen: "quien", boton: "Agregar un renglón", abrir: true,
+      ayuda: "Primero haz la lista completa de nombres sin detenerte. Luego vuelve a cada renglón. Con base en Libro Grande, pp. 60-63.",
+      sugeridos: ["Mamá", "Papá", "Pareja", "Expareja", "Hijos", "Hermanos", "Jefe", "Compañeros", "Amigos", "Vecinos", "El banco", "La policía", "La iglesia", "Dios", "El gobierno", "A.A. o mi grupo", "Yo mismo", "Una creencia"],
+      campos: [
+      { k: "quien", et: "Estoy resentido con", tipo: "texto", ayuda: "Persona, institución o principio. Usa iniciales." },
+      { k: "causa", et: "La causa", tipo: "area", ayuda: "Solo los hechos. Aquí sí se vale decir lo que hizo el otro." },
+      { k: "afecta", et: "Afecta mi(s)", tipo: "chips", ops: OP_AFECTA },
+      { k: "temor", et: "¿Hay temor debajo?", tipo: "chips", ops: ["(Temor)"], ayuda: "El libro pone «temor» entre paréntesis casi en todos sus ejemplos." },
+      { k: "parte", et: "Mi parte: ¿dónde fui…?", tipo: "chips", ops: OP_PARTE },
+      { k: "culpa", et: "¿En qué estaba mi culpabilidad?", tipo: "area", vigila: true, ayuda: "Haz a un lado a la otra persona, aunque no seas enteramente responsable." },
+      { k: "enfermo", et: "Si esa persona fuera un amigo enfermo, ¿cómo la miraría?", tipo: "area", ayuda: "Con base en Libro Grande, pp. 62-63." },
+      { k: "dispuesto", et: "¿Estoy dispuesto a enmendar mi parte?", tipo: "opcion", ops: ["Sí", "Todavía no", "No sé"] },
+    ]},
+  ],
+  nota: "Si en la lista hay un abuso o una violencia que sufriste, lo que te hicieron no es defecto tuyo ni «tu parte». No tienes que buscar culpa propia ahí. Háblalo con tu padrino y, si puedes, con un profesional.",
+},
+{
+  id: "temores", titulo: "Temores", lema: "La hebra que atraviesa todo el tejido.",
+  breve: "Tu lista de miedos y el combate contra Orgullo y Temor, los dos espantajos.",
+  aprende: [
+    { c: cita("Era una hebra maligna y corrosiva; la trama de nuestra existencia la llevaba entrecruzada.", "LG 63") },
+    { c: cita("Los escribimos en el papel aunque no tuviésemos resentimientos relacionados con ellos. Nos preguntamos por qué los teníamos.", "LG 63") },
+    { c: cita("¿No era porque la confianza en nosotros mismos nos había fallado?", "LG 63") },
+    { c: cita("El Orgullo le dice, “No hace falta que te molestes en hacerlo,” y el Temor le dice, “No te atrevas a hacerlo.”", "DD 46") },
+  ],
+  retos: [
+    { id: "espantajos", tipo: "espantajo", titulo: "Derriba los espantajos", instr: "Orgullo y Temor hablan. Las frases son inventadas, salvo las dos primeras. Elige la respuesta que los desarma.",
+      rondas: [
+      { quien: "Orgullo", dice: "No hace falta que te molestes en hacerlo.", ops: ["Tienes razón: ya llevo meses sin beber.", "Sin inventario, la fe que obra en lo cotidiano sigue fuera de mi alcance.", "Lo hago cuando me sienta mejor."], ok: 1,
+        por: cita("La mayoría de nosotros nos hemos dado cuenta de que, sin hacer sin miedo un minucioso inventario moral, la fe que realmente obra en la vida cotidiana se encuentra todavía fuera de nuestro alcance.", "DD 40") },
+      { quien: "Temor", dice: "No te atrevas a hacerlo.", ops: ["Mejor no remuevo eso.", "Lo hago de una vez, solo y sin hablarlo con nadie.", "Otros A.A. que lo intentaron de verdad dicen que hay alivio al otro lado."], ok: 2,
+        por: cita("el alivio que sentimos al enfrentarnos por fin con nosotros mismos es indescriptible.", "DD 47") },
+      { quien: "Orgullo", dice: "Tus defectos los causó el trago. Sin trago, eres una gran persona.", ops: ["La sobriedad es lo único que necesito.", "Esa es justamente la excusa que describe el libro.", "Solo voy a anotar lo que hice borracho."], ok: 1,
+        por: cita("Insistiremos que nuestros graves defectos de carácter, si es que creemos tener alguno, han sido causados principalmente por haber bebido en exceso.", "DD 42") },
+      { quien: "Temor", dice: "Eres un caso especial. Lo tuyo no lo ha hecho nadie.", ops: ["Es cierto: mejor lo callo.", "Lo mío es peor; me lo merezco.", "Mi padrino puede mostrarme que no soy un caso extraño ni diferente."], ok: 2,
+        por: cita("Consuelan a la persona melancólica, primero mostrándole que no es un caso extraño ni diferente", "DD 43") },
+      { quien: "Orgullo", dice: "Lo tuyo no fue tan grave. Esas preguntas no son para ti.", ops: ["Un examen concienzudo puede sacar lo que está enterrado bajo la autojustificación.", "Paso esas preguntas y sigo.", "Las contesto, pero solo en la cabeza."], ok: 0,
+        por: cita("hemos enterrado estos defectos de carácter bajo gruesas capas de autojustificación.", "DD 51") },
+      { quien: "Temor", dice: "Si lo escribes, será real.", ops: ["Lo dejo en mi cabeza, donde nadie lo ve.", "Escribirlo me ayuda a pensar con claridad y es la primera muestra de que estoy dispuesto.", "Escribo una versión suave por si acaso."], ok: 1,
+        por: cita("Nos ayudará a pensar con claridad y a evaluar nuestra conducta con sinceridad.", "DD 51") },
+      ],
+      fin: cita("el orgullo y el miedo en estos momentos no son sino espantajos.", "DD 46") },
+  ],
+  formas: [
+    { id: "miedos", tipo: "filas", titulo: "Mi lista de temores", origen: "l", resumen: "temor", boton: "Agregar un temor", abrir: true, ayuda: "Con base en Libro Grande, pp. 63-64.",
+      sugeridos: ["A la soledad", "A la pobreza", "A perder el trabajo", "A la muerte", "A la enfermedad", "Al rechazo", "A que descubran…", "A recaer", "A la autoridad", "A la intimidad", "Al qué dirán", "A fracasar", "A tener éxito", "A mi pasado"],
+      campos: [
+      { k: "temor", et: "Le tengo miedo a", tipo: "texto" },
+      { k: "porque", et: "¿Por qué lo tengo?", tipo: "area", vigila: true },
+      { k: "confianza", et: "¿En qué me falló la confianza en mí mismo?", tipo: "area", vigila: true },
+      { k: "hecho", et: "¿Qué he hecho, o dejado de hacer, por este miedo?", tipo: "area", vigila: true },
+      { k: "pedir", et: "¿Qué quiero pedirle a mi Poder Superior respecto a este miedo?", tipo: "area" },
+    ]},
+  ],
+},
+{
+  id: "sexo", titulo: "Sexo y pareja", lema: "Sin árbitros. Con una sola prueba.",
+  breve: "Las preguntas de ambos libros y un ideal escrito por ti.",
+  aprende: [
+    { c: cita("No queremos ser árbitros de la conducta sexual de nadie.", "LG 65") },
+    { c: cita("Pusimos cada relación a esta prueba: ¿Era egoísta o no?", "LG 65") },
+    { c: cita("eran buenos, no para ser usados a la ligera o egoístamente, ni para ser menospreciados o aborrecidos.", "LG 65"), nota: "Sobre los poderes sexuales." },
+    { p: "Este estante es delicado por ti y por otras personas. Usa solo iniciales y piensa con cuidado si quieres incluirlo en un PDF." },
+  ],
+  retos: [
+    { id: "sensatez", tipo: "elige", titulo: "Ni extremos ni árbitros", instr: "¿Qué dice en realidad el Libro Grande?", rondas: [
+      { t: "¿Cuál es la postura del libro sobre las opiniones que van a los extremos?", ops: ["Hay que escoger la más estricta", "Hay que estar fuera de la controversia y ser sensatos", "El tema no hace parte del inventario"], ok: 1, por: cita("Nosotros queremos estar fuera de la controversia.", "LG 64-65") },
+      { t: "¿Con qué fin se examina la conducta pasada?", ops: ["Formarse un ideal cuerdo y sólido", "Saber a quién denunciar", "Tener material para confesarlo todo a todos"], ok: 0, por: cita("De esta manera tratamos de formarnos un ideal cuerdo y sólido de nuestra futura vida sexual.", "LG 65") },
+      { t: "¿Cuál es el límite a la disposición de reparar?", ops: ["Que la otra persona lo pida", "Que haya pasado poco tiempo", "Que al hacerlo no causemos más daño aún"], ok: 2, por: cita("siempre y cuando al hacerlo no causemos más daño aún.", "LG 65") },
+      { t: "Si se falta al ideal y se tropieza, ¿quiere decir que uno va a emborracharse?", ops: ["Sí, es seguro", "Es una verdad a medias: depende de nosotros y de nuestros motivos", "No importa lo que se haga"], ok: 1, por: cita("Pero esto solamente es una verdad a medias.", "LG 65") },
+    ]},
+  ],
+  formas: [
+    { id: "relaciones_sex", tipo: "filas", titulo: "Revisión de mis relaciones", origen: "l", resumen: "quien", boton: "Agregar una relación", ayuda: "Con base en Libro Grande, p. 65.", campos: [
+      { k: "quien", et: "Relación (iniciales)", tipo: "texto" },
+      { k: "fui", et: "¿En qué fui…?", tipo: "chips", ops: ["Egoísta", "Falto de honradez", "Desconsiderado"] },
+      { k: "herido", et: "¿A quiénes herí?", tipo: "area" },
+      { k: "desperte", et: "¿Desperté injustificadamente…?", tipo: "chips", ops: ["Celos", "Sospechas", "Resentimientos"] },
+      { k: "culpa", et: "¿En qué fui culpable?", tipo: "area", vigila: true },
+      { k: "evitar", et: "¿Qué pude haber hecho para evitarlo?", tipo: "area", vigila: true },
+      { k: "prueba", et: "La prueba: ¿era egoísta o no?", tipo: "opcion", ops: ["Sí", "En parte", "No"] },
+    ]},
+    { id: "preg_sexo", tipo: "preguntas", titulo: "Preguntas del Doce y Doce", origen: "l", items: [
+      q("¿Cuándo, cómo, y en cuáles circunstancias he hecho daño a otras personas y a mí mismo insistiendo en satisfacer mi deseo egoísta de relaciones sexuales?", "DD 47"),
+      q("¿Quiénes se vieron lastimados, y cuál fue el daño que les hice?", "DD 47"),
+      q("¿Llegué a arruinar mi matrimonio y a herir a mis hijos?", "DD 47"),
+      q("¿Puse en peligro mi reputación en la comunidad?", "DD 47"),
+      q("¿Precisamente cómo reaccioné ante estas situaciones en el momento en que ocurrieron?", "DD 47"),
+      q("¿Me sentía consumido de un sentimiento de culpabilidad que nada podría aliviar?", "DD 47"),
+      q("O, ¿insistí que era yo la presa y no el depredador, intentando así absolverme?", "DD 47"),
+      q("¿Cómo he reaccionado ante la frustración en cuestiones sexuales?", "DD 47-48"),
+      q("Al verme rechazado, ¿me he vuelto vengativo o deprimido?", "DD 48"),
+      q("¿Me he desquitado con terceras personas?", "DD 48"),
+      q("Si he encontrado un rechazo o frialdad en casa, ¿lo he aprovechado como un pretexto para tener aventuras amorosas?", "DD 48"),
+    ]},
+    { id: "ideal", tipo: "libre", titulo: "Mi ideal", origen: "l", ayuda: "Con base en Libro Grande, p. 65.", campos: [
+      { k: "txt", et: "¿Cómo quisiera vivir esta parte de mi vida de hoy en adelante?", tipo: "area", filas: 5 },
+    ]},
+  ],
+  nota: "Si sufriste abuso sexual, esto no es tu inventario de esa experiencia: no fue conducta tuya. Busca apoyo con alguien de confianza o con un profesional.",
+},
+{
+  id: "seguridad", titulo: "Dinero y emociones", lema: "La seguridad económica y la emocional.",
+  breve: "Las preguntas sobre trabajo, plata y los cuatro síntomas de la inseguridad.",
+  aprende: [
+    { c: cita("el temor, la avaricia, los celos y el orgullo suelen tener el peor efecto.", "DD 48") },
+    { c: cita("Los síntomas más comunes de la inseguridad emocional son la ansiedad, la ira, la autoconmiseración y la depresión.", "DD 49") },
+    { c: cita("¿por qué carezco de la capacidad para aceptar las circunstancias que no puedo cambiar?", "DD 49") },
+  ],
+  retos: [
+    { id: "hechos", tipo: "clasifica", titulo: "Encarar o escurrir el bulto", instr: "Frases inventadas sobre el mismo despido. ¿Cuál encara los hechos?",
+      botes: ["Encara los hechos", "Escurre el bulto"], items: [
+      { t: "Me echaron porque el jefe me tenía entre ojos.", ok: 1, por: "Puede ser cierto, pero no dice nada de la parte propia." },
+      { t: "Llegaba tarde los lunes y mentía sobre la razón.", ok: 0, por: "Es concreto y verificable." },
+      { t: "Nadie reconoció nunca todo lo que yo sabía.", ok: 1, por: "Es la queja del libro: «otras personas no reconocían mis talentos extraordinarios»." },
+      { t: "Pedí plata a tres compañeros y no se la devolví.", ok: 0, por: "Nombra la conducta y a las personas." },
+      { t: "Así está el país; no se podía hacer nada.", ok: 1, por: "Las circunstancias otra vez como explicación total." },
+      { t: "Me daba miedo no ser capaz y por eso exageraba mis resultados.", ok: 0, por: "Une la conducta con el temor que tenía debajo." },
+    ]},
+  ],
+  formas: [
+    { id: "preg_dinero", tipo: "preguntas", titulo: "Trabajo y dinero", origen: "l", items: [
+      q("Además de mi problema con la bebida, ¿qué defectos de carácter contribuyeron a mi inestabilidad económica?", "DD 48"),
+      q("¿Destruyeron la confianza que tenía en mí mismo y me llenaron de conflictos el temor y la inseguridad que sentía acerca de mi aptitud para hacer mis trabajos?", "DD 48"),
+      q("¿Intenté ocultar estos sentimientos de insuficiencia con fanfarronadas, engaños, mentiras o escurriendo el bulto?", "DD 48"),
+      q("O, ¿me quejaba de que otras personas no reconocían mis talentos extraordinarios?", "DD 48"),
+      q("¿Me sobrestimaba a mí mismo y hacía el papel de personaje importante?", "DD 48"),
+      q("¿Traicionaba a mis colegas y compañeros de trabajo a causa de mi ambición tan desmedida y mi falta de principios?", "DD 48"),
+      q("¿Derrochaba el dinero para aparentar?", "DD 48"),
+      q("¿Pedía dinero prestado imprudentemente, sin importarme si lo podía devolver o no?", "DD 48"),
+      q("¿Era tacaño, negándome a mantener a mi familia debidamente?", "DD 48"),
+      q("¿Escatimaba gastos en mis tratos comerciales de forma poco honrada?", "DD 48"),
+      q("¿Y los intentos para ganar dinero fácil y rápidamente, en el mercado de valores y las carreras de caballos?", "DD 48"),
+    ]},
+    { id: "sintomas", tipo: "libre", titulo: "Mis síntomas hoy", origen: "l", campos: [
+      { k: "marca", et: "¿Cuáles me visitan con más frecuencia?", tipo: "chips", ops: ["Ansiedad", "Ira", "Autoconmiseración", "Depresión"] },
+    ]},
+    { id: "preg_emoc", tipo: "preguntas", titulo: "Inseguridad emocional", origen: "l", items: [
+      q("Fijándome tanto en el pasado como en el presente, ¿cuáles situaciones sexuales me han producido sensaciones de inquietud, amargura, frustración o depresión?", "DD 49"),
+      q("Considerando imparcialmente cada situación, ¿puedo ver dónde yo he tenido la culpa?", "DD 49"),
+      q("¿Me asediaban estas perplejidades debido a mi egoísmo y mis exigencias exageradas?", "DD 49"),
+      q("O, si mi trastorno parecía ser provocado por el comportamiento de otras personas, ¿por qué carezco de la capacidad para aceptar las circunstancias que no puedo cambiar?", "DD 49"),
+      q("Puedo preguntarme a mí mismo hasta qué punto mis propios errores han nutrido las inquietudes que me van carcomiendo.", "DD 49"),
+      q("Y si las acciones de otra gente forman parte de la causa, ¿qué puedo hacer al respecto?", "DD 49"),
+      q("Y si no puedo cambiar las circunstancias actuales, ¿estoy dispuesto a tomar las medidas necesarias para adaptar mi vida a estas circunstancias?", "DD 49"),
+    ]},
+  ],
+},
+{
+  id: "relaciones", titulo: "Dominar o depender", lema: "Los dos escollos de la egomanía.",
+  breve: "Familia, amigos y sociedad: dónde mandas, dónde te cuelgas.",
+  aprende: [
+    { c: cita("O bien insistimos en dominar a la gente que conocemos, o dependemos excesivamente de ellos.", "DD 50") },
+    { c: cita("Siempre hemos luchado por destacarnos del montón o por escondernos.", "DD 50") },
+    { c: cita("Nunca hemos intentado ser un miembro de la familia, un amigo entre amigos, un trabajador entre otros trabajadores, y un miembro útil de la sociedad.", "DD 50") },
+  ],
+  retos: [
+    { id: "escollos", tipo: "clasifica", titulo: "¿Cuál escollo?", instr: "Conductas inventadas. ¿Dominar o depender?", botes: ["Dominar", "Depender"], items: [
+      { t: "Reviso el celular de mi pareja para que haga lo que yo digo.", ok: 0, por: "Es manipular para que los demás se adapten a nuestro deseo." },
+      { t: "Si mi amigo no me contesta enseguida, se me daña el día.", ok: 1, por: "Nos apoyamos tanto que tarde o temprano nos fallarán." },
+      { t: "En el grupo, si no se hace a mi manera, dejo de ir.", ok: 0, por: "Es la voluntad obstinada: mandar o marcharse." },
+      { t: "No sé qué pienso hasta que mi mamá me dice qué piensa.", ok: 1, por: "Se elude cumplir las responsabilidades con recursos propios." },
+      { t: "Doy plata a mis hijos y luego les cobro con obediencia.", ok: 0, por: "Es usar los recursos para controlar." },
+      { t: "Necesito que me digan cada semana que valgo.", ok: 1, por: "Son exigencias continuas que ningún ser humano puede satisfacer." },
+    ]},
+  ],
+  formas: [
+    { id: "vinculos", tipo: "filas", titulo: "Mis relaciones", origen: "l", resumen: "quien", boton: "Agregar a alguien", ayuda: "Con base en Doce y Doce, p. 50.", campos: [
+      { k: "quien", et: "Persona o grupo (iniciales)", tipo: "texto" },
+      { k: "rol", et: "¿Qué he intentado?", tipo: "chips", ops: ["Dominar", "Depender", "Destacarme", "Esconderme"] },
+      { k: "como", et: "¿Cómo lo hago, en concreto?", tipo: "area", vigila: true },
+      { k: "exijo", et: "¿Qué le exijo que no puede darme?", tipo: "area", vigila: true },
+      { k: "reaccion", et: "¿Qué ha pasado con esa relación?", tipo: "area" },
+      { k: "equilibrio", et: "Si fuera solo «uno entre otros», ¿qué haría distinto?", tipo: "area" },
+    ]},
+  ],
+},
+{
+  id: "flaquezas", titulo: "Las siete flaquezas", lema: "Y el libro de los pretextos.",
+  breve: "Los siete pecados capitales según el Doce y Doce, y tus excusas favoritas.",
+  aprende: [
+    { c: cita("utilicemos una lista universalmente aceptada de las principales flaquezas humanas—los Siete Pecados Capitales: soberbia, avaricia, lujuria, ira, gula, envidia y pereza.", "DD 45") },
+    { c: cita("No es casualidad que la soberbia encabece la lista.", "DD 45") },
+    { c: cita("Eramos artistas en la invención de pretextos.", "DD 43") },
+    { p: "El libro usa esta lista para no enredarse discutiendo nombres. Si «pecado» no te dice nada, llámalo defecto o inadaptación: el mismo libro lo permite." },
+  ],
+  retos: [
+    { id: "raiz", tipo: "parejas", titulo: "El miedo debajo de cada flaqueza", instr: "Según el Doce y Doce, pp. 45-46, cada flaqueza se conecta con el temor. Une cada una con su descripción.",
+      pares: [
+      ["Soberbia", "Conduce a la autojustificación"],
+      ["Avaricia", "Codiciar los bienes de otros"],
+      ["Lujuria", "Tener avidez de sexo y de poder"],
+      ["Ira", "Enfurecernos al ver amenazadas nuestras exigencias"],
+      ["Envidia", "Ver realizadas las ambiciones de otros y las nuestras frustradas"],
+      ["Gula", "Coger más de lo que necesitamos, por temor a que no alcance"],
+      ["Pereza", "La perspectiva de trabajar nos asusta tan profundamente"],
+      ], por: cita("Todas estas flaquezas generan el miedo que es, en sí mismo, una enfermedad del alma.", "DD 46") },
+    { id: "pretextos", tipo: "elige", titulo: "Fábrica de pretextos", instr: "Completa los pretextos que el Doce y Doce pone como ejemplo. Fíjate en que sirve cualquier razón y también la contraria.", rondas: [
+      { t: "«Teníamos que beber porque estábamos pasándolo muy mal, o…»", ops: ["…muy solos.", "…muy bien.", "…sin trabajo."], ok: 1, por: cita("Teníamos que beber porque estábamos pasándolo muy mal, o muy bien.", "DD 43") },
+      { t: "«Teníamos que beber porque en nuestros hogares nos agobiaban con amor, o…»", ops: ["…porque no recibíamos amor alguno.", "…porque nos pedían dinero.", "…porque no había nadie en casa."], ok: 0, por: cita("Teníamos que beber porque en nuestros hogares nos agobiaban con amor, o porque no recibíamos amor alguno.", "DD 43") },
+      { t: "«Teníamos que beber porque nuestro país había ganado una guerra o…»", ops: ["…porque iba a empezar otra.", "…porque era día de fiesta.", "…perdido la paz."], ok: 2, por: cita("Teníamos que beber porque nuestro país había ganado una guerra o perdido la paz.", "DD 44") },
+    ]},
+  ],
+  formas: [
+    { id: "siete", tipo: "cada", titulo: "Mis siete flaquezas", origen: "l", ayuda: "Del 0 al 5, y un ejemplo concreto. Con base en Doce y Doce, pp. 45-46.",
+      items: [ { k: "soberbia", t: "Soberbia" }, { k: "avaricia", t: "Avaricia" }, { k: "lujuria", t: "Lujuria" }, { k: "ira", t: "Ira" }, { k: "gula", t: "Gula" }, { k: "envidia", t: "Envidia" }, { k: "pereza", t: "Pereza" } ],
+      campos: [
+        { k: "nivel", et: "¿Cuánto pesa en mí?", tipo: "rango", min: 0, max: 5, ini: 0 },
+        { k: "ej", et: "¿Dónde la veo? Un ejemplo con hechos", tipo: "area", vigila: true },
+        { k: "miedo", et: "¿Qué temor hay debajo?", tipo: "area" },
+      ]},
+    { id: "excusas", tipo: "filas", titulo: "Mi libro de pretextos", origen: "l", resumen: "excusa", boton: "Agregar un pretexto", ayuda: "Con base en Doce y Doce, pp. 43-44.", campos: [
+      { k: "excusa", et: "Tenía que beber (o hacer aquello) porque…", tipo: "texto" },
+      { k: "verdad", et: "¿Qué hay de cierto en eso, y qué estaba evitando ver?", tipo: "area", vigila: true },
+    ]},
+  ],
+},
+{
+  id: "virtudes", titulo: "Mercancía buena", lema: "Un inventario también cuenta lo que sirve.",
+  breve: "Tus virtudes, con evidencia. Anotarlas también es honradez.",
+  aprende: [
+    { c: cita("Probablemente el padrino le indica al recién llegado que junto con sus defectos puede anotar algunas virtudes.", "DD 43") },
+    { c: cita("Esto contribuye a disipar el pesimismo y fomentar el equilibrio.", "DD 43") },
+    { p: "Si este estante te cuesta más que el de los resentimientos, no eres la excepción. Una virtud no se declara: se muestra con un ejemplo." },
+  ],
+  retos: [
+    { id: "evidencia", tipo: "elige", titulo: "Con evidencia", instr: "Frases inventadas. ¿Cuál anota una virtud como se anota mercancía, con algo verificable?", rondas: [
+      { t: "Tres formas de escribir la misma virtud:", ops: ["Soy muy responsable.", "Esta semana hice la llamada que venía evitando.", "Soy mejor que antes."], ok: 1, por: "Un hecho se puede comprobar; un adjetivo se puede discutir." },
+      { t: "¿Cuál de estas frases mantiene el equilibrio?", ops: ["No tengo nada bueno.", "Soy el que más le ha servido a este grupo.", "Soy impaciente con mi hijo, y también lo acompañé a todas sus citas médicas."], ok: 2, por: "Las dos cosas son ciertas y las dos van en el inventario." },
+      { t: "¿Por qué anotar virtudes no es vanidad?", ops: ["Porque disipa el pesimismo y fomenta el equilibrio", "Porque compensa los defectos", "Porque así queda mejor el inventario"], ok: 0, por: "No se restan defectos con virtudes: se ve el cuadro completo." },
+    ]},
+  ],
+  formas: [
+    { id: "buenas", tipo: "filas", titulo: "Mi mercancía buena", origen: "l", resumen: "virtud", boton: "Agregar una virtud", abrir: true, ayuda: "Con base en Doce y Doce, p. 43.",
+      sugeridos: ["Honradez", "Paciencia", "Tolerancia", "Humor", "Lealtad", "Constancia", "Generosidad", "Valentía", "Ternura", "Buena voluntad", "Disposición", "Sé pedir ayuda"],
+      campos: [
+      { k: "virtud", et: "Virtud o punto fuerte", tipo: "texto" },
+      { k: "ej", et: "Un hecho reciente que la muestra", tipo: "area" },
+    ]},
+  ],
+},
+{
+  id: "danos", titulo: "A quiénes he herido", lema: "La relación que después abre el Octavo Paso.",
+  breve: "Tu lista de personas ofendidas, sin correr a reparar todavía.",
+  aprende: [
+    { c: cita("Hemos hecho una relación de las personas a quienes hemos ofendido con nuestro comportamiento y estamos dispuestos a reparar el pasado si podemos.", "LG 66") },
+    { p: "Por ahora solo se trata de ver y escribir. Las reparaciones corresponden a pasos posteriores y se hablan con el padrino: no salgas a reparar hoy por el alivio de sacártelo de encima." },
+  ],
+  retos: [
+    { id: "lista", tipo: "elige", titulo: "¿Y ahora qué hago con esta lista?", instr: "Situaciones inventadas. ¿Qué es lo sensato en esta etapa?", rondas: [
+      { t: "Terminas de escribir y te dan ganas de llamar ya a tu ex para pedirle perdón por todo.", ops: ["Llamar ya, antes de que se pase el impulso", "Anotarlo y hablarlo con el padrino antes de actuar", "Borrarlo: no vale la pena"], ok: 1, por: "Reparar puede afectar a otros. La cautela de no causar más daño también viene en el libro." },
+      { t: "Tu lista tiene a alguien que también te dañó mucho.", ops: ["Se queda en la lista solo si anotas lo que tú hiciste", "Se borra: ya están a mano", "Se escribe lo que esa persona te debe"], ok: 0, por: cita("Aunque no enteramente culpables de una situación, tratamos de hacer a un lado completamente a la otra persona involucrada en ella.", "LG 63") },
+      { t: "Mirar la lista te deja sin aire y solo piensas que no tienes remedio.", ops: ["Seguir hasta terminar, cueste lo que cueste", "Parar y llamar a alguien de confianza", "Quemarla y no volver a pensar en eso"], ok: 1, por: "Hundirse no es inventario. Tomar una pausa y llamar es parte de hacerlo bien." },
+    ]},
+  ],
+  formas: [
+    { id: "heridos", tipo: "filas", titulo: "Mi relación de personas", origen: "l", resumen: "quien", boton: "Agregar una persona", traer: true, ayuda: "Con base en Libro Grande, p. 66.", campos: [
+      { k: "quien", et: "Persona (iniciales)", tipo: "texto" },
+      { k: "hice", et: "¿Qué hice o dejé de hacer?", tipo: "area" },
+      { k: "dano", et: "¿Qué daño le causó?", tipo: "area" },
+      { k: "dispuesto", et: "¿Estoy dispuesto a reparar, si puedo?", tipo: "opcion", ops: ["Sí", "Todavía no", "No sé"] },
+    ]},
+  ],
+},
+];
+
+const ESTANTE = Object.fromEntries(ESTANTES.map(e => [e.id, e]));
+
+/* Reto final del mostrador: las frases verdaderas son citas verificadas; las otras se inventaron. */
+const RETO_FINAL = { id: "final", tipo: "clasifica", titulo: "¿Lo dice el libro?", instr: "Algunas frases son citas exactas. Otras las inventamos nosotros. ¿Cuáles están en los libros?",
+  botes: ["Sí está", "Es invento"], items: [
+  { t: "Por lo tanto, al hacer nuestro inventario la palabra clave es minuciosidad.", ok: 0, por: cita("Por lo tanto, al hacer nuestro inventario la palabra clave es minuciosidad.", "DD 51") },
+  { t: "El inventario se hace una sola vez y queda terminado para siempre.", ok: 1, por: cita("el Cuarto Paso no es sino el mero comienzo de una práctica que nos habrá de durar toda la vida", "DD 47") },
+  { t: "Para tal fin, es aconsejable poner por escrito nuestras preguntas y respuestas.", ok: 0, por: cita("Para tal fin, es aconsejable poner por escrito nuestras preguntas y respuestas.", "DD 51") },
+  { t: "Un buen inventario anota solo los defectos, porque las virtudes alimentan el ego.", ok: 1, por: "Lo contrario: el padrino sugiere anotar también algunas virtudes." },
+  { t: "Mientras más culpable se sienta uno, mejor está haciendo el inventario.", ok: 1, por: cita("No es en absoluto un inventario moral", "DD 42") },
+  { t: "En lo que respecta a otra gente, teníamos que eliminar la palabra “culpa” de nuestro vocabulario y de nuestros pensamientos.", ok: 0, por: cita("En lo que respecta a otra gente, teníamos que eliminar la palabra “culpa” de nuestro vocabulario y de nuestros pensamientos.", "DD 44") },
+  { t: "Si tenemos razón en un resentimiento, ese no hay que escribirlo.", ok: 1, por: cita("nuestros resentimientos son “bien apropiados.”", "DD 43") },
+  { t: "Siendo así, ya has tragado y digerido grandes trozos de la verdad sobre ti mismo.", ok: 0, por: cita("Siendo así, ya has tragado y digerido grandes trozos de la verdad sobre ti mismo.", "LG 66") },
+]};
+
+const SELLOS = {
+  puerta: "Abrí la puerta", papel: "Lo puse por escrito", virtud: "Anoté una virtud", pausa: "Me di una pausa",
+  sprint: "Cinco minutos sin parar", dado: "Tiré el dado", espantajos: "Derribé los espantajos", faroles: "Todos los faroles",
+};
+
+/* Vigía: revisa lo escrito aquí mismo en el navegador. Ningún texto sale de la página. */
+const VIGIA = [
+  { id: "crisis", grave: true, todos: true, re: /(me quiero morir|quiero morirme|quitarme la vida|matarme|suicid|no quiero (seguir )?viv|mejor muert|acabar con mi vida|acabar con todo)/,
+    tit: "Esto importa más que el inventario.",
+    txt: "Si lo que escribiste es lo que sientes hoy, deja esto un momento y habla ya con alguien: tu padrino, un compañero, la Línea 106 en Bogotá o el 123. Si es un recuerdo, qué bueno que ya esté en el papel. Háblalo también.", pausa: true },
+  { id: "melancolia", re: /(soy (lo peor|una basura|un desastre|una mierda|un asco)|no sirvo|no valgo|no merezco|no tengo remedio|todo lo arruino|nadie tan (malo|dañado)|me odio)/,
+    tit: "Eso se parece a la trampa de la culpa.",
+    txt: "El Doce y Doce la llama «la otra cara del orgullo». Prueba a cambiar el juicio por un hecho: ¿qué hiciste, a quién, cuándo? Y llama a tu padrino si pesa mucho.", pausa: true },
+  { id: "ellos", re: /(por su culpa|por culpa de|es culpa de|tiene la culpa|tienen la culpa|me hizo|me obligo|me obligaron|si (el|ella|ellos|ellas) no|si no fuera por|el siempre|ella siempre|ellos siempre)/,
+    tit: "¿De quién es este inventario?",
+    txt: "Aquí el otro se está colando en tu columna. Sácalo un momento y pregúntate: ¿y yo qué hice?" },
+  { id: "pretexto", re: /(no tuve opcion|no tuve otra|no me quedo de otra|todo el mundo lo hace|todos lo hacen|cualquiera (habria|hubiera|bebe|toma)|no fue para tanto|no fue tan grave|era normal|fue el trago|estaba borracho)/,
+    tit: "Suena a pretexto.",
+    txt: "Quizá sea cierto, y aun así queda la pregunta: además del trago y de las circunstancias, ¿qué hice yo?" },
+];
+const ANCHOS={"Helvetica":[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,350,556,350,222,556,333,1000,556,556,333,1000,667,333,1000,350,611,350,350,222,222,333,333,350,556,1000,333,1000,500,333,944,350,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],"Helvetica-Bold":[278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,350,556,350,278,556,500,1000,556,556,333,1000,667,333,1000,350,611,350,350,278,278,500,500,350,556,1000,333,1000,556,333,944,350,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556],"Times-Roman":[250,333,408,500,500,833,778,180,333,333,500,564,250,333,250,278,500,500,500,500,500,500,500,500,500,500,278,278,564,564,564,444,921,722,667,667,722,611,556,722,722,333,389,722,611,889,722,722,556,722,667,556,611,722,722,944,722,722,611,333,278,333,469,500,333,444,500,444,500,444,333,500,500,278,278,500,278,778,500,500,500,500,333,389,278,500,500,722,500,500,444,480,200,480,541,350,500,350,333,500,444,1000,500,500,333,1000,556,333,889,350,611,350,350,333,333,444,444,350,500,1000,333,980,389,333,722,350,444,722,250,333,500,500,500,500,200,500,333,760,276,500,564,333,760,333,400,564,300,300,333,500,453,250,333,300,310,500,750,750,750,444,722,722,722,722,722,722,889,667,611,611,611,611,333,333,333,333,722,722,722,722,722,722,722,564,722,722,722,722,722,722,556,500,444,444,444,444,444,444,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,564,500,500,500,500,500,500,500,500],"Times-Italic":[250,333,420,500,500,833,778,214,333,333,500,675,250,333,250,278,500,500,500,500,500,500,500,500,500,500,333,333,675,675,675,500,920,611,611,667,722,611,611,722,722,333,444,667,556,833,667,722,611,722,611,500,556,722,611,833,611,556,556,389,278,389,422,500,333,500,500,444,500,444,278,500,500,278,278,444,278,722,500,500,500,500,389,389,278,500,444,667,444,444,389,400,275,400,541,350,500,350,333,500,556,889,500,500,333,1000,500,333,944,350,556,350,350,333,333,556,556,350,500,889,333,980,389,333,667,350,389,556,250,389,500,500,500,500,275,500,333,760,276,500,675,333,760,333,400,675,300,300,333,500,523,250,333,300,310,500,750,750,750,500,611,611,611,611,611,611,889,667,611,611,611,611,333,333,333,333,722,667,722,722,722,722,722,675,722,722,722,722,722,556,611,500,500,500,500,500,500,500,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,675,500,500,500,500,500,444,500,444]};
+
+/* ===== PDF =====
+   Generador propio, sin librerías: arma los bytes en el navegador y no toca la red.
+   Usa las fuentes base de PDF con codificación WinAnsi, que cubre el español. */
+const CP1252_EXT = { "€":128,"‚":130,"ƒ":131,"„":132,"…":133,"†":134,"‡":135,"ˆ":136,"‰":137,"Š":138,"‹":139,"Œ":140,"Ž":142,"‘":145,"’":146,"“":147,"”":148,"•":149,"–":150,"—":151,"˜":152,"™":153,"š":154,"›":155,"œ":156,"ž":158,"Ÿ":159 };
+function aByte(ch){
+  const c = ch.codePointAt(0);
+  if (c >= 32 && c < 127) return c;
+  if (c >= 160 && c <= 255) return c;
+  if (CP1252_EXT[ch]) return CP1252_EXT[ch];
+  if (ch === "‑" || ch === "‐") return 45;
+  return 63;
+}
+function limpiarPDF(s){
+  return String(s == null ? "" : s).normalize("NFC").replace(/\t/g, "    ").replace(/\r/g, "")
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}️​-‍]/gu, "");
+}
+const F_SANS = "Helvetica", F_NEG = "Helvetica-Bold", F_SERIF = "Times-Roman", F_ITA = "Times-Italic";
+const FUENTE_ID = { [F_SANS]: "F1", [F_NEG]: "F2", [F_SERIF]: "F3", [F_ITA]: "F4" };
+const TINTA = "0.11 0.10 0.09", OCRE = "0.66 0.26 0.10", GRIS = "0.40 0.38 0.34", REGLA = "0.72 0.68 0.59", ORO = "0.54 0.42 0.18";
+
+class HojaPDF {
+  constructor(){ this.W = 612; this.H = 792; this.M = 54; this.pags = []; this.nueva(); }
+  get ancho(){ return this.W - this.M * 2; }
+  nueva(){ this.cur = []; this.pags.push(this.cur); this.y = this.H - this.M; }
+  espacio(alto){ if (this.y - alto < this.M + 16) this.nueva(); }
+  medir(s, f, z){
+    let a = 0; const t = ANCHOS[f];
+    for (const ch of s) a += t[aByte(ch) - 32] || 500;
+    return a * z / 1000;
+  }
+  partir(texto, f, z, ancho){
+    const out = [];
+    for (const par of limpiarPDF(texto).split("\n")) {
+      if (!par.trim()) { out.push(""); continue; }
+      let lin = "";
+      for (let pal of par.split(/ +/)) {
+        while (this.medir(pal, f, z) > ancho) {
+          let n = pal.length; while (n > 1 && this.medir(pal.slice(0, n), f, z) > ancho) n--;
+          if (lin) { out.push(lin); lin = ""; }
+          out.push(pal.slice(0, n)); pal = pal.slice(n);
+        }
+        const prueba = lin ? lin + " " + pal : pal;
+        if (this.medir(prueba, f, z) > ancho && lin) { out.push(lin); lin = pal; } else lin = prueba;
+      }
+      out.push(lin);
+    }
+    return out;
+  }
+  hex(s){ let o = ""; for (const ch of s) o += aByte(ch).toString(16).padStart(2, "0"); return o; }
+  escribir(x, y, s, f = F_SANS, z = 10.5, color = TINTA){
+    if (!s) return;
+    this.cur.push(`BT ${color} rg /${FUENTE_ID[f]} ${z} Tf ${x.toFixed(2)} ${y.toFixed(2)} Td <${this.hex(s)}> Tj ET`);
+  }
+  linea(x1, y1, x2, y2, color = REGLA, grueso = .6){
+    this.cur.push(`${color} RG ${grueso} w ${x1.toFixed(2)} ${y1.toFixed(2)} m ${x2.toFixed(2)} ${y2.toFixed(2)} l S`);
+  }
+  rect(x, y, w, h, color){ this.cur.push(`${color} rg ${x.toFixed(2)} ${y.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re f`); }
+  parrafo(s, o = {}){
+    const f = o.f || F_SANS, z = o.z || 10.5, lead = o.lead || z * 1.38, x = this.M + (o.x || 0), w = o.w || this.ancho - (o.x || 0);
+    for (const l of this.partir(s, f, z, w)) {
+      if (this.y - lead < this.M + 16) this.nueva();
+      this.y -= lead;
+      this.escribir(x, this.y, l, f, z, o.color || TINTA);
+    }
+    this.y -= o.tras == null ? 4 : o.tras;
+  }
+  titulo(s, nivel = 1){
+    const z = nivel === 0 ? 30 : nivel === 1 ? 19 : nivel === 2 ? 13.5 : 11.5;
+    this.espacio(z * 3.4);
+    this.y -= nivel === 1 ? 10 : 6;
+    this.parrafo(s, { f: nivel < 3 ? F_SERIF : F_NEG, z, lead: z * 1.2, color: nivel === 1 ? OCRE : TINTA, tras: nivel === 1 ? 7 : 2 });
+    if (nivel === 1) { this.linea(this.M, this.y, this.W - this.M, this.y, OCRE, 1); this.y -= 8; }
+  }
+  citaP(c){
+    const x = 12;
+    this.espacio(30);
+    const pag = this.cur, y0 = this.y;
+    this.parrafo("«" + c.t + "»", { f: F_ITA, z: 10.5, x, tras: 1, color: GRIS });
+    this.parrafo(refCorta(c.f), { z: 7.8, x, tras: 7, color: GRIS });
+    if (pag === this.cur) this.linea(this.M + 4, y0 - 2, this.M + 4, this.y + 8, ORO, 2);
+  }
+  renglones(n, x = 0){
+    for (let i = 0; i < n; i++) {
+      this.espacio(21);
+      this.y -= 20;
+      this.linea(this.M + x, this.y, this.W - this.M, this.y);
+    }
+    this.y -= 6;
+  }
+  /* Cuadro de varias columnas que se puede partir entre páginas. */
+  tabla(cols, filas, blanco = 0){
+    const z = 8.8, lead = 11.4, pad = 4;
+    const anchoT = this.ancho, wTotal = cols.reduce((a, c) => a + c.w, 0);
+    const anchos = cols.map(c => c.w / wTotal * anchoT);
+    const cabecera = () => {
+      this.espacio(lead * 3);
+      this.y -= 3;
+      this.rect(this.M, this.y - 16, anchoT, 16, "0.93 0.89 0.81");
+      let x = this.M;
+      cols.forEach((c, i) => { this.escribir(x + pad, this.y - 11.5, c.et, F_NEG, 8.2, OCRE); x += anchos[i]; });
+      this.y -= 16;
+    };
+    cabecera();
+    for (const fila of filas) {
+      const celdas = cols.map((c, i) => this.partir(c.v(fila), c.f || F_SANS, z, anchos[i] - pad * 2));
+      const n = Math.max(1, ...celdas.map(l => l.length));
+      for (let l = 0; l < n; l++) {
+        if (this.y - lead < this.M + 16) { this.nueva(); cabecera(); }
+        this.y -= lead;
+        let x = this.M;
+        cols.forEach((c, i) => { this.escribir(x + pad, this.y + 2, (celdas[i][l] || ""), c.f || F_SANS, z); x += anchos[i]; });
+      }
+      this.y -= 4;
+      this.linea(this.M, this.y, this.W - this.M, this.y);
+    }
+    for (let b = 0; b < blanco; b++) {
+      if (this.y - 90 < this.M + 16) { this.nueva(); cabecera(); }
+      this.y -= 90;
+      this.linea(this.M, this.y, this.W - this.M, this.y);
+      let x = this.M;
+      anchos.slice(0, -1).forEach(a => { x += a; this.linea(x, this.y, x, this.y + 90, "0.86 0.82 0.74"); });
+    }
+    this.y -= 8;
+  }
+  barras(items, max){
+    const et = 150, ancho = this.ancho - et - 34;
+    for (const [nom, v] of items) {
+      this.espacio(16);
+      this.y -= 15;
+      this.escribir(this.M, this.y + 2, limpiarPDF(nom), F_SANS, 9.5);
+      this.rect(this.M + et, this.y + 1, ancho, 8, "0.90 0.87 0.79");
+      if (v > 0) this.rect(this.M + et, this.y + 1, ancho * v / (max || 1), 8, OCRE);
+      this.escribir(this.M + et + ancho + 8, this.y + 2, String(v), F_NEG, 9.5);
+    }
+    this.y -= 8;
+  }
+  lineaVida(puntos){
+    const alto = 130; this.espacio(alto + 26);
+    const x0 = this.M + 14, ancho = this.ancho - 28, yMedio = this.y - alto / 2 - 6, esc = (alto / 2 - 8) / 5;
+    this.linea(x0, yMedio, x0 + ancho, yMedio, GRIS, .6);
+    const n = puntos.length;
+    const pos = puntos.map((p, i) => [x0 + (n > 1 ? ancho * i / (n - 1) : ancho / 2), yMedio + p.v * esc, p]);
+    for (let i = 1; i < n; i++) this.linea(pos[i - 1][0], pos[i - 1][1], pos[i][0], pos[i][1], OCRE, 1.4);
+    pos.forEach(([x, y, p]) => {
+      this.rect(x - 2, y - 2, 4, 4, OCRE);
+      const et = limpiarPDF(p.e || "");
+      if (et) this.escribir(Math.min(x - this.medir(et, F_SANS, 7.5) / 2, this.W - this.M - 24), this.y - alto - 12, et, F_SANS, 7.5, GRIS);
+    });
+    this.y -= alto + 26;
+  }
+  terminar(pie){
+    const total = this.pags.length;
+    this.pags.forEach((p, i) => {
+      this.cur = p;
+      this.linea(this.M, this.M + 8, this.W - this.M, this.M + 8);
+      this.escribir(this.M, this.M - 4, limpiarPDF(pie), F_SANS, 7.5, GRIS);
+      const t = `Hoja ${i + 1} de ${total}`;
+      this.escribir(this.W - this.M - this.medir(t, F_SANS, 7.5), this.M - 4, t, F_SANS, 7.5, GRIS);
+    });
+    const objs = [];
+    const ponerObj = cuerpo => { objs.push(cuerpo); return objs.length; };
+    const catalogo = ponerObj(""), arbol = ponerObj("");
+    const fuentes = Object.entries(FUENTE_ID).map(([nom, id]) => [id, ponerObj(`<< /Type /Font /Subtype /Type1 /BaseFont /${nom} /Encoding /WinAnsiEncoding >>`)]);
+    const recursos = `<< /Font << ${fuentes.map(([id, n]) => `/${id} ${n} 0 R`).join(" ")} >> >>`;
+    const hijos = this.pags.map(p => {
+      const cont = p.join("\n");
+      const c = ponerObj(`<< /Length ${cont.length} >>\nstream\n${cont}\nendstream`);
+      return ponerObj(`<< /Type /Page /Parent ${arbol} 0 R /MediaBox [0 0 ${this.W} ${this.H}] /Resources ${recursos} /Contents ${c} 0 R >>`);
+    });
+    objs[catalogo - 1] = `<< /Type /Catalog /Pages ${arbol} 0 R >>`;
+    objs[arbol - 1] = `<< /Type /Pages /Kids [${hijos.map(n => n + " 0 R").join(" ")}] /Count ${hijos.length} >>`;
+    const info = ponerObj(`<< /Producer (La Bodega) /Title (Cuaderno personal) >>`);
+    let doc = "%PDF-1.4\n"; const ofs = [];
+    objs.forEach((o, i) => { ofs.push(doc.length); doc += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+    const xref = doc.length;
+    doc += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + ofs.map(n => String(n).padStart(10, "0") + " 00000 n \n").join("");
+    doc += `trailer\n<< /Size ${objs.length + 1} /Root ${catalogo} 0 R /Info ${info} 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+    return new Blob([doc], { type: "application/pdf" });
+  }
+}
+
+/* ===== Utilidades ===== */
+function h(tag, attrs, ...hijos){
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else if (k === "class") e.className = v;
+    else if (k === "value") e.value = v;
+    else e.setAttribute(k, v === true ? "" : v);
+  }
+  hijos.flat(Infinity).forEach(c => { if (c != null && c !== false) e.append(c.nodeType ? c : String(c)); });
+  return e;
+}
+/* Los correctores en la nube del navegador y extensiones como Grammarly pueden leer lo que se escribe. */
+const ATR_PRIVADO = { spellcheck: "false", autocomplete: "off", autocapitalize: "sentences", "data-gramm": "false", "data-gramm_editor": "false", "data-enable-grammarly": "false", "data-lpignore": "true" };
+const sinTildes = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const barajar = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const hoyISO = () => new Date().toISOString().slice(0, 10);
+const num2 = n => String(n).padStart(2, "0");
+const $app = document.getElementById("app");
+function citaH(c){
+  return h("blockquote", { class: "cita" }, "«" + c.t + "»", h("small", {}, refCita(c.f)));
+}
+
+/* ===== Estado y cifrado ===== */
+const CLAVE = "la-bodega-cuarto-paso:v1", ITER = 600000;
+const nuevoEstado = () => ({ v: 1, creado: hoyISO(), faroles: {}, retos: {}, sellos: {}, datos: {}, tema: null });
+let S = nuevoEstado();
+let modo = null;          // "candado" | "rastro"
+let llave = null, sal = null;
+let sucio = false, timerGuardar = null, colaGuardar = Promise.resolve(), ultimoGuardado = null;
+
+const hayCripto = () => !!(window.crypto && crypto.subtle);
+const b64 = u8 => { let s = ""; for (let i = 0; i < u8.length; i += 8192) s += String.fromCharCode(...u8.subarray(i, i + 8192)); return btoa(s); };
+const deB64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function derivar(clave, salBytes, iter = ITER){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(clave), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: salBytes, iterations: iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+async function cifrar(obj, k, salBytes){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, k, new TextEncoder().encode(JSON.stringify(obj)));
+  return JSON.stringify({ app: "la-bodega", v: 1, iter: ITER, sal: b64(salBytes), iv: b64(iv), ct: b64(new Uint8Array(ct)) });
+}
+async function descifrar(texto, clave){
+  const env = JSON.parse(texto);
+  if (env.app !== "la-bodega") throw new Error("formato");
+  const salBytes = deB64(env.sal), k = await derivar(clave, salBytes, env.iter || ITER);
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: deB64(env.iv) }, k, deB64(env.ct));
+  return { obj: JSON.parse(new TextDecoder().decode(pt)), k, salBytes };
+}
+const leerGuardado = () => { try { return localStorage.getItem(CLAVE); } catch (e) { return null; } };
+function sanear(o){
+  const n = nuevoEstado();
+  if (!o || typeof o !== "object") return n;
+  for (const k of ["faroles", "retos", "sellos", "datos"]) if (o[k] && typeof o[k] === "object" && !Array.isArray(o[k])) n[k] = o[k];
+  if (typeof o.creado === "string") n.creado = o.creado;
+  if (o.tema === "claro" || o.tema === "oscuro") n.tema = o.tema;
+  return n;
+}
+function marcarCambio(){
+  sucio = true;
+  if (modo !== "candado") return;
+  clearTimeout(timerGuardar);
+  timerGuardar = setTimeout(guardarAhora, 700);
+}
+function guardarAhora(){
+  clearTimeout(timerGuardar);
+  if (modo !== "candado" || !llave) return Promise.resolve();
+  colaGuardar = colaGuardar.then(async () => {
+    const texto = await cifrar(S, llave, sal);
+    try {
+      localStorage.setItem(CLAVE, texto);
+      sucio = false; ultimoGuardado = new Date(); pintarEstado();
+    } catch (e) {
+      pintarEstado("No se pudo guardar en este navegador. Saca una copia antes de cerrar.");
+    }
+  });
+  return colaGuardar;
+}
+window.addEventListener("beforeunload", ev => {
+  if ((modo === "rastro" && hayDatos()) || (modo === "candado" && sucio)) { ev.preventDefault(); ev.returnValue = ""; }
+});
+function hayDatos(){ return JSON.stringify(S.datos) !== "{}" && contarEscrito() > 0; }
+function aplicarTema(){ if (S.tema) document.documentElement.dataset.tema = S.tema; else delete document.documentElement.dataset.tema; }
+
+/* ===== Acceso a las formas ===== */
+const todasFormas = () => ESTANTES.flatMap(e => e.formas.map(f => [e, f]));
+const forma = id => todasFormas().find(([, f]) => f.id === id)[1];
+function valor(v){ return Array.isArray(v) ? v.length > 0 : typeof v === "string" ? v.trim() !== "" : false; }
+function filasDe(id){
+  const d = S.datos[id];
+  return Array.isArray(d) ? d.filter(x => x && typeof x === "object") : [];
+}
+function objDe(id){
+  const d = S.datos[id];
+  if (d && typeof d === "object" && !Array.isArray(d)) return d;
+  return (S.datos[id] = {});
+}
+function verObj(id){ const d = S.datos[id]; return d && typeof d === "object" && !Array.isArray(d) ? d : {}; }
+function formaTieneDatos(f){
+  const conTexto = o => Object.values(o || {}).some(valor);
+  if (f.tipo === "filas") return filasDe(f.id).some(conTexto);
+  if (f.tipo === "cada") return Object.values(verObj(f.id)).some(o => o && (conTexto(o) || Number(o.nivel) > 0));
+  return conTexto(verObj(f.id));
+}
+function contarEscrito(){ return todasFormas().filter(([, f]) => formaTieneDatos(f)).length; }
+const estanteTieneDatos = e => e.formas.some(formaTieneDatos);
+
+/* ===== Vigía ===== */
+function revisarTexto(texto, soloTodos){
+  const t = sinTildes(texto);
+  return VIGIA.find(v => (!soloTodos || v.todos) && v.re.test(t)) || null;
+}
+function vigiaEn(ta, def){
+  const caja = h("div", { "aria-live": "polite" });
+  const pintar = () => {
+    const v = revisarTexto(ta.value, !def.vigila);
+    caja.replaceChildren();
+    if (!v) return;
+    caja.append(h("div", { class: "vigia" + (v.grave ? " grave" : "") }, h("strong", {}, v.tit), v.txt, " ",
+      v.pausa ? h("button", { class: "btn chico", type: "button", onclick: abrirPausa }, "Abrir pausa") : null));
+  };
+  ta.addEventListener("input", pintar);
+  pintar();
+  return caja;
+}
+
+/* ===== Campos ===== */
+function campoH(def, obj, idBase, alCambiar){
+  const id = idBase + "-" + def.k;
+  const avisar = () => { marcarCambio(); if (alCambiar) alCambiar(); };
+  const ay = def.ayuda ? h("span", { class: "ay" }, def.ayuda) : null;
+  if (def.tipo === "texto") {
+    return h("div", { class: "campo" }, h("label", { for: id }, def.et), ay,
+      h("input", { type: "text", id, value: typeof obj[def.k] === "string" ? obj[def.k] : "", ...ATR_PRIVADO, oninput: e => { obj[def.k] = e.target.value; avisar(); } }));
+  }
+  if (def.tipo === "area") {
+    const ta = h("textarea", { id, rows: def.filas || 3, ...ATR_PRIVADO, oninput: e => { obj[def.k] = e.target.value; avisar(); } });
+    ta.value = typeof obj[def.k] === "string" ? obj[def.k] : "";
+    return h("div", { class: "campo" }, h("label", { for: id }, def.et), ay, ta, vigiaEn(ta, def));
+  }
+  if (def.tipo === "chips" || def.tipo === "opcion") {
+    const multi = def.tipo === "chips";
+    const actual = () => multi ? (Array.isArray(obj[def.k]) ? obj[def.k] : []) : obj[def.k];
+    const caja = h("div", { class: "chips", role: "group", "aria-label": def.et });
+    const pintar = () => {
+      caja.replaceChildren(...def.ops.map(op => {
+        const on = multi ? actual().includes(op) : actual() === op;
+        return h("button", { type: "button", class: "chip", "aria-pressed": on ? "true" : "false", onclick: () => {
+          if (multi) { const a = actual(); obj[def.k] = a.includes(op) ? a.filter(x => x !== op) : [...a, op]; }
+          else obj[def.k] = obj[def.k] === op ? "" : op;
+          pintar(); avisar();
+        } }, op);
+      }));
+    };
+    pintar();
+    return h("div", { class: "campo" }, h("span", { class: "et" }, def.et), ay, caja);
+  }
+  if (def.tipo === "rango") {
+    const leer = () => { const n = Number(obj[def.k]); return Number.isFinite(n) ? n : def.ini; };
+    const salida = h("span", { class: "rango-val" }, (def.min < 0 && leer() > 0 ? "+" : "") + leer());
+    return h("div", { class: "campo" }, h("label", { for: id }, def.et, " ", salida), ay,
+      h("input", { type: "range", id, min: def.min, max: def.max, step: 1, value: leer(), oninput: e => {
+        obj[def.k] = Number(e.target.value);
+        salida.textContent = (def.min < 0 && obj[def.k] > 0 ? "+" : "") + obj[def.k];
+        avisar();
+      } }));
+  }
+}
+function origenH(f){
+  return f.origen === "h" ? h("span", { class: "origen h", title: "Sugerencia de esta herramienta; no viene de los libros" }, "Ayuda de la herramienta")
+    : h("span", { class: "origen" }, "De la literatura");
+}
+function formaH(f, estante){
+  const cont = h("section", { class: "form-bloque bloque", id: "forma-" + f.id },
+    h("h2", {}, f.titulo), h("p", { class: "peq tenue" }, origenH(f), f.ayuda || ""));
+  if (f.tipo === "libre") {
+    const o = objDe(f.id);
+    f.campos.forEach(c => cont.append(campoH(c, o, f.id)));
+  }
+  if (f.tipo === "preguntas") {
+    const o = objDe(f.id);
+    f.items.forEach((it, i) => {
+      const id = `q-${f.id}-${i}`;
+      const ta = h("textarea", { id, rows: 3, ...ATR_PRIVADO, oninput: e => { o[i] = e.target.value; marcarCambio(); } });
+      ta.value = typeof o[i] === "string" ? o[i] : "";
+      cont.append(h("div", { class: "pregunta", id: "caja-" + id },
+        h("label", { for: id }, it.q, it.f ? h("span", { class: "tenue peq", style: "font-weight:400;font-family:var(--sans)" }, " · " + refCorta(it.f).replace("Doce y Doce, ", "")) : null),
+        ta, vigiaEn(ta, { vigila: true })));
+    });
+  }
+  if (f.tipo === "cada") {
+    const o = objDe(f.id);
+    f.items.forEach(it => {
+      if (!o[it.k] || typeof o[it.k] !== "object") o[it.k] = {};
+      cont.append(h("div", { class: "cada" }, h("h3", {}, it.t), f.campos.map(c => campoH(c, o[it.k], `${f.id}-${it.k}`))));
+    });
+  }
+  if (f.tipo === "filas") cont.append(filasH(f));
+  return cont;
+}
+function filasH(f){
+  const filas = S.datos[f.id] = filasDe(f.id);
+  const lista = h("div", {});
+  const grafica = f.grafica ? h("div", {}) : null;
+  const redibujarGraf = () => { if (grafica) grafica.replaceChildren(graficaVida()); };
+  const filaH = (fila, abierta) => {
+    const titulo = () => {
+      const t = typeof fila[f.resumen] === "string" ? fila[f.resumen].trim() : "";
+      return t || "(sin título)";
+    };
+    const res = h("span", { class: "resumen-txt" }, titulo());
+    const det = h("details", { class: "fila", open: abierta ? true : null },
+      h("summary", {}, res, h("button", { type: "button", class: "btn chico", onclick: ev => {
+        ev.preventDefault(); ev.stopPropagation();
+        if (!confirm("¿Borrar este renglón?")) return;
+        filas.splice(filas.indexOf(fila), 1); det.remove(); marcarCambio(); redibujarGraf();
+      } }, "Borrar")),
+      h("div", { class: "cuerpo" }, f.campos.map(c => campoH(c, fila, `${f.id}-${filas.indexOf(fila)}`, () => { res.textContent = titulo(); redibujarGraf(); }))));
+    return det;
+  };
+  const agregar = (ini, enfocar) => {
+    const fila = {}; if (ini) fila[f.campos[0].k] = ini;
+    filas.push(fila); marcarCambio();
+    const d = filaH(fila, true); lista.append(d); redibujarGraf();
+    if (enfocar) { const c = d.querySelector(ini ? "textarea" : "input,textarea"); if (c) c.focus(); }
+  };
+  filas.forEach(fl => lista.append(filaH(fl, false)));
+  const bloque = h("div", {});
+  if (grafica) { bloque.append(grafica); redibujarGraf(); }
+  if (f.sugeridos) {
+    const suger = h("div", { class: "sugeridos", "aria-label": "Sugerencias para empezar" }, f.sugeridos.map(n => h("button", { type: "button", onclick: ev => { agregar(n, false); ev.target.remove(); } }, "+ " + n)));
+    bloque.append(h("p", { class: "peq tenue", style: "margin-bottom:0" }, "¿Bloqueado? Toca uno para abrir un renglón:"), suger);
+  }
+  if (f.traer) bloque.append(h("div", { class: "tools" }, h("button", { type: "button", class: "btn chico", onclick: () => {
+    const hay = new Set(filas.map(x => sinTildes(x.quien)));
+    let n = 0;
+    for (const id of ["resent", "relaciones_sex", "vinculos"]) for (const fl of filasDe(id)) {
+      const nom = (fl.quien || "").trim();
+      if (nom && !hay.has(sinTildes(nom))) { hay.add(sinTildes(nom)); agregar(nom, false); n++; }
+    }
+    tostada(n ? `Traje ${n} ${n === 1 ? "nombre" : "nombres"}. Deja solo a quienes de verdad heriste.` : "No hay nombres nuevos para traer.");
+  } }, "Traer nombres de mis otras listas")));
+  bloque.append(lista, h("button", { type: "button", class: "btn", onclick: () => agregar("", true) }, "+ " + f.boton));
+  return bloque;
+}
+function puntosVida(){
+  return filasDe("hitos").filter(x => valor(x.hecho) || valor(x.edad))
+    .map((x, i) => ({ orden: parseFloat(String(x.edad || "").replace(/[^\d.]/g, "")), i, v: Number.isFinite(Number(x.animo)) ? Number(x.animo) : 0, e: String(x.edad || "").slice(0, 8), h: String(x.hecho || "") }))
+    .sort((a, b) => (isNaN(a.orden) ? 1e9 + a.i : a.orden) - (isNaN(b.orden) ? 1e9 + b.i : b.orden));
+}
+function graficaVida(){
+  const pts = puntosVida();
+  if (!pts.length) return h("p", { class: "peq tenue" }, "Cuando agregues momentos, aquí aparecerá tu línea de vida.");
+  const W = 640, H = 190, m = 22, yM = 86, esc = 14;
+  const ns = "http://www.w3.org/2000/svg";
+  const s = (t, a, txt) => { const e = document.createElementNS(ns, t); Object.entries(a).forEach(([k, v]) => e.setAttribute(k, v)); if (txt != null) e.textContent = txt; return e; };
+  const svg = s("svg", { viewBox: `0 0 ${W} ${H}`, class: "graf", role: "img", "aria-label": "Línea de vida" });
+  const X = i => pts.length > 1 ? m + (W - 2 * m) * i / (pts.length - 1) : W / 2;
+  svg.append(s("line", { x1: m, x2: W - m, y1: yM, y2: yM, stroke: "currentColor", "stroke-opacity": ".35", "stroke-dasharray": "4 4" }));
+  svg.append(s("polyline", { fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, points: pts.map((p, i) => `${X(i)},${yM - p.v * esc}`).join(" ") }));
+  pts.forEach((p, i) => {
+    const c = s("circle", { cx: X(i), cy: yM - p.v * esc, r: 5, fill: "var(--accent)" });
+    c.append(s("title", {}, p.h)); svg.append(c);
+    if (pts.length <= 14 || i % 2 === 0) svg.append(s("text", { x: X(i), y: H - 6, "text-anchor": "middle" }, p.e));
+  });
+  return svg;
+}
+
+/* ===== Retos ===== */
+function retoH(reto, alFin){
+  const caja = h("section", { class: "reto", id: "reto-" + reto.id });
+  const fin = () => {
+    S.retos[reto.id] = true; marcarCambio();
+    if (reto.tipo === "espantajo") ponerSello("espantajos");
+    caja.replaceChildren(h("h3", {}, reto.titulo), h("p", { class: "hecho" }, "✓ Reto completado"),
+      reto.fin ? citaH(reto.fin) : null,
+      h("button", { type: "button", class: "btn chico", onclick: () => { motor(); } }, "Jugar otra vez"));
+    if (alFin) alFin();
+  };
+  const cab = () => [h("h3", {}, reto.titulo), h("p", { class: "instr" }, reto.instr)];
+  const retro = (bien, por) => h("div", { class: "retro " + (bien ? "bien" : "mal"), role: "status" },
+    h("strong", {}, bien ? "Así es. " : "Mira de nuevo. "),
+    por && typeof por === "object" ? citaH(por) : por);
+  const motores = {
+    clasifica(){
+      let cola = barajar(reto.items), hechos = 0; const total = cola.length;
+      const pintar = () => {
+        if (!cola.length) return fin();
+        const it = cola[0];
+        const zona = h("div", {});
+        const botones = reto.botes.map((b, i) => h("button", { type: "button", class: "opt", onclick: ev => {
+          botones.forEach(x => x.disabled = true);
+          const ok = i === it.ok;
+          ev.currentTarget.classList.add(ok ? "bien" : "mal");
+          botones[it.ok].classList.add("bien");
+          cola.shift();
+          if (ok) hechos++; else cola.push(it);
+          zona.append(retro(ok, it.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: pintar }, cola.length ? "Siguiente" : "Terminar")));
+        } }, b));
+        caja.replaceChildren(...cab(), h("div", { class: "ronda" }, `${hechos} de ${total} bien`), h("div", { class: "carta" }, it.t), h("div", { class: "botes" }, botones), zona);
+      };
+      pintar();
+    },
+    elige(){
+      let r = 0;
+      const pintar = () => {
+        if (r >= reto.rondas.length) return fin();
+        const ro = reto.rondas[r]; const zona = h("div", {});
+        const orden = barajar(ro.ops.map((t, i) => ({ t, i })));
+        const botones = orden.map(o => h("button", { type: "button", class: "opt", onclick: ev => {
+          const ok = o.i === ro.ok;
+          ev.currentTarget.classList.add(ok ? "bien" : "mal");
+          if (ok) {
+            botones.forEach(x => x.disabled = true);
+            zona.replaceChildren(retro(true, ro.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: () => { r++; pintar(); } }, r + 1 < reto.rondas.length ? "Siguiente" : "Terminar")));
+          } else { ev.currentTarget.disabled = true; zona.replaceChildren(retro(false, "Esa no es. Prueba con otra.")); }
+        } }, o.t));
+        caja.replaceChildren(...cab(), h("div", { class: "ronda" }, `Pregunta ${r + 1} de ${reto.rondas.length}`), h("div", { class: "carta" }, ro.t), h("div", { class: "lista-op" }, botones), zona);
+      };
+      pintar();
+    },
+    marca(){
+      let r = 0;
+      const pintar = () => {
+        if (r >= reto.rondas.length) return fin();
+        const ro = reto.rondas[r]; const zona = h("div", {}); const sel = new Set();
+        const botones = ro.ops.map((t, i) => h("button", { type: "button", class: "opt", "aria-pressed": "false", onclick: ev => {
+          sel.has(i) ? sel.delete(i) : sel.add(i);
+          ev.currentTarget.classList.toggle("sel"); ev.currentTarget.setAttribute("aria-pressed", sel.has(i));
+        } }, t));
+        const revisar = h("button", { type: "button", class: "btn prim", onclick: () => {
+          const ok = sel.size === ro.ok.length && ro.ok.every(i => sel.has(i));
+          if (ok) {
+            botones.forEach(x => x.disabled = true); revisar.remove();
+            zona.replaceChildren(retro(true, ro.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: () => { r++; pintar(); } }, r + 1 < reto.rondas.length ? "Siguiente" : "Terminar")));
+          } else zona.replaceChildren(retro(false, "Todavía no coincide con lo que anota el libro. Son " + ro.ok.length + " opciones."));
+        } }, "Revisar");
+        caja.replaceChildren(...cab(), h("div", { class: "ronda" }, `Caso ${r + 1} de ${reto.rondas.length}`), h("div", { class: "carta" }, ro.t), h("div", { class: "lista-op" }, botones), h("div", { class: "acciones" }, revisar), zona);
+      };
+      pintar();
+    },
+    ordena(){
+      let sig = 0;
+      const lista = h("ol", { class: "orden" }); const zona = h("div", {});
+      const botones = barajar(reto.pasos.map((t, i) => ({ t, i }))).map(o => h("button", { type: "button", class: "opt", onclick: ev => {
+        const b = ev.currentTarget;
+        if (o.i === sig) {
+          sig++; lista.append(h("li", {}, o.t)); b.remove(); zona.replaceChildren();
+          if (sig === reto.pasos.length) zona.replaceChildren(retro(true, reto.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: fin }, "Terminar")));
+        } else { b.classList.add("mal"); setTimeout(() => b.classList.remove("mal"), 600); zona.replaceChildren(retro(false, "Ese paso va más adelante.")); }
+      } }, o.t));
+      caja.replaceChildren(...cab(), lista, h("div", { class: "lista-op" }, botones), zona);
+    },
+    parejas(){
+      let elegido = null, listos = 0;
+      const izq = barajar(reto.pares.map((p, i) => ({ t: p[0], i }))), der = barajar(reto.pares.map((p, i) => ({ t: p[1], i })));
+      const zona = h("div", {});
+      const botIzq = izq.map(o => { const b = h("button", { type: "button", class: "opt", onclick: () => { botIzq.forEach(x => x.classList.remove("sel")); b.classList.add("sel"); elegido = { i: o.i, b }; } }, o.t); return b; });
+      const botDer = der.map(o => { const b = h("button", { type: "button", class: "opt", onclick: () => {
+        if (!elegido) { zona.replaceChildren(retro(false, "Primero toca una flaqueza de la columna izquierda.")); return; }
+        if (elegido.i === o.i) {
+          [b, elegido.b].forEach(x => { x.classList.remove("sel"); x.classList.add("bien"); x.disabled = true; });
+          elegido = null; listos++; zona.replaceChildren();
+          if (listos === reto.pares.length) zona.replaceChildren(retro(true, reto.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: fin }, "Terminar")));
+        } else { b.classList.add("mal"); setTimeout(() => b.classList.remove("mal"), 600); }
+      } }, o.t); return b; });
+      caja.replaceChildren(...cab(), h("div", { class: "parejas" }, h("div", { class: "col" }, botIzq), h("div", { class: "col" }, botDer)), zona);
+    },
+    espantajo(){
+      let r = 0;
+      const pintar = () => {
+        if (r >= reto.rondas.length) return fin();
+        const ro = reto.rondas[r]; const zona = h("div", {});
+        const escala = 1 - r / reto.rondas.length * .7;
+        const fig = figuraEspantajo(ro.quien === "Orgullo" ? 0 : 1, 72, escala);
+        const orden = barajar(ro.ops.map((t, i) => ({ t, i })));
+        const botones = orden.map(o => h("button", { type: "button", class: "opt", onclick: ev => {
+          const ok = o.i === ro.ok;
+          ev.currentTarget.classList.add(ok ? "bien" : "mal");
+          if (ok) {
+            botones.forEach(x => x.disabled = true);
+            fig.style.transform = `scale(${Math.max(.2, escala - .12)})`;
+            zona.replaceChildren(retro(true, ro.por), h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: () => { r++; pintar(); } }, r + 1 < reto.rondas.length ? "Siguiente" : "Terminar")));
+          } else { ev.currentTarget.disabled = true; zona.replaceChildren(retro(false, "Esa respuesta le da más fuerza. Prueba otra.")); }
+        } }, o.t));
+        caja.replaceChildren(...cab(), h("div", { class: "jefe" }, fig, h("div", {}, h("span", { class: "quien" }, ro.quien.toUpperCase() + ` · ${r + 1} de ${reto.rondas.length}`), h("div", { class: "dice" }, "«" + ro.dice + "»"))), h("div", { class: "lista-op" }, botones), zona);
+      };
+      pintar();
+    },
+  };
+  const motor = () => motores[reto.tipo]();
+  if (S.retos[reto.id]) {
+    caja.append(h("h3", {}, reto.titulo), h("p", { class: "hecho" }, "✓ Reto completado"), h("button", { type: "button", class: "btn chico", onclick: motor }, "Jugar otra vez"));
+  } else motor();
+  return caja;
+}
+
+/* ===== Dibujos ===== */
+function svgDe(marcado, clase){
+  const t = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  t.innerHTML = marcado;
+  const m = t.firstElementChild; if (clase) m.classList.add(clase);
+  return m;
+}
+const farolH = () => svgDe(`<svg class="farol" width="38" height="56" viewBox="0 0 38 56" aria-hidden="true">
+  <circle class="llama" cx="19" cy="31" r="18" fill="#f6be5a" fill-opacity=".28"/>
+  <path d="M13 3h12M19 3v5M11 8h16l3 7H8z" fill="#8e7656" stroke="#c7ab84" stroke-width="1.4" stroke-linejoin="round"/>
+  <rect x="9" y="15" width="20" height="28" rx="2" fill="#1b150f" stroke="#c7ab84" stroke-width="1.6"/>
+  <path d="M19 19c5 7 6 10 6 13a6 6 0 0 1-12 0c0-3 2-6 6-13z" fill="#f6be5a" class="llama"/>
+  <path d="M7 43h24l2 6H5z" fill="#8e7656" stroke="#c7ab84" stroke-width="1.4" stroke-linejoin="round"/></svg>`);
+function figuraEspantajo(cual, ancho = 88, escala = 1){
+  const sombrero = cual === 0
+    ? `<path d="M34 25l6-17 5 6 5-8 5 8 5-6 6 17z" fill="#d7a650" stroke="#f6d38b"/>`
+    : `<path d="M22 25h56v3H22zM38 25c0-12 6-17 12-17s12 5 12 17z" fill="#5d4b38" stroke="#a48d70"/>`;
+  const f = svgDe(`<svg width="${ancho}" height="${ancho * 1.2}" viewBox="0 0 100 120" aria-hidden="true">
+    <path d="M50 42v76" stroke="#8e7656" stroke-width="5"/><path d="M12 56h76" stroke="#8e7656" stroke-width="4"/>
+    <path d="M26 50h48l6 8-8 34-7-5-7 6-8-6-8 6-7-6-7 5-8-34z" fill="${cual === 0 ? "#8a3b1b" : "#3a4d58"}" stroke="#d0bda0"/>
+    <path d="M12 56l-6-5M12 56l-7 2M12 56l-5 6M88 56l6-5M88 56l7 2M88 56l5 6" stroke="#d7c294" stroke-width="2"/>
+    <circle cx="50" cy="34" r="12" fill="#d7c294" stroke="#8e7656"/>
+    <path d="M45 31l3 2-3 2M57 31l-3 2 3 2M44 40q6 ${cual === 0 ? "-4" : "4"} 12 0" fill="none" stroke="#2c2015" stroke-width="1.8"/>${sombrero}</svg>`);
+  f.style.transform = `scale(${escala})`;
+  return f;
+}
+
+/* ===== Barra, tostadas, capas ===== */
+let vista = { nombre: "mapa" };
+let refEstado = null, refSprint = null;
+function tostada(t){
+  let pila = document.querySelector(".tostadas");
+  if (!pila) { pila = h("div", { class: "tostadas" }); document.body.append(pila); }
+  const e = h("div", { class: "tostada", role: "status" }, t); pila.append(e);
+  setTimeout(() => e.remove(), 3800);
+}
+function ponerSello(id){
+  if (S.sellos[id]) return;
+  S.sellos[id] = hoyISO(); marcarCambio();
+  tostada("Sello: " + SELLOS[id]);
+}
+function pintarEstado(msg){
+  if (!refEstado) return;
+  if (msg) { refEstado.textContent = msg; return; }
+  refEstado.textContent = modo === "candado"
+    ? (ultimoGuardado ? `Con candado · guardado a las ${num2(ultimoGuardado.getHours())}:${num2(ultimoGuardado.getMinutes())}, solo en este equipo` : "Con candado · cifrado, solo en este equipo")
+    : "Sin rastro · al cerrar la pestaña se borra";
+}
+function barraH(){
+  refEstado = h("span", { class: "estado", role: "status" });
+  refSprint = h("span", { class: "sprint", "aria-live": "off" });
+  const b = h("div", { class: "barra" },
+    h("button", { class: "marca", type: "button", onclick: () => ir({ nombre: "mapa" }) }, "La Bodega"),
+    refEstado, refSprint,
+    h("button", { class: "b pausa", type: "button", onclick: abrirPausa }, "Pausa"),
+    h("button", { class: "b", type: "button", title: "Tapa la pantalla al instante. También con Esc dos veces.", onclick: tapar }, "Tapar"),
+    h("button", { class: "b", type: "button", title: "Cambiar entre claro y oscuro", onclick: () => {
+      const oscuro = S.tema ? S.tema === "oscuro" : matchMedia("(prefers-color-scheme: dark)").matches;
+      S.tema = oscuro ? "claro" : "oscuro"; aplicarTema(); marcarCambio();
+    } }, "Luz"),
+    h("button", { class: "b", type: "button", onclick: cerrarBodega }, modo === "candado" ? ["Cerrar", h("span", { class: "largo" }, " con llave")] : "Salir"));
+  pintarEstado();
+  return b;
+}
+function capa(contenido, alCerrar){
+  const previo = document.activeElement;
+  const cerrar = () => { c.remove(); document.removeEventListener("keydown", esc); if (previo && previo.focus) previo.focus(); if (alCerrar) alCerrar(); };
+  const c = h("div", { class: "capa", role: "dialog", "aria-modal": "true", onclick: ev => { if (ev.target === c) cerrar(); } }, contenido(cerrar));
+  const esc = ev => { if (ev.key === "Escape") { ev.stopPropagation(); cerrar(); } };
+  document.addEventListener("keydown", esc);
+  document.body.append(c);
+  const f = c.querySelector("button,input"); if (f) f.focus();
+  return cerrar;
+}
+function abrirPausa(){
+  ponerSello("pausa");
+  const pacto = verObj("pacto");
+  capa(cerrar => h("div", { class: "modal" },
+    h("h2", {}, "Una pausa"),
+    h("div", { class: "respira", "aria-hidden": "true" }),
+    h("p", {}, "Sigue el círculo: inhala cuando crece, suelta cuando se encoge. El inventario te espera y no hay afán."),
+    citaH(cita("Tan pronto como empiece a ser más objetivo, el principiante podrá considerar sin miedo sus propios defectos.", "DD 43")),
+    h("p", {}, h("strong", {}, "Hablar ayuda. "), pacto.padrino ? `Tu persona de confianza: ${pacto.padrino}. ` : "Llama a tu padrino, a un compañero o ve a una reunión. ",
+      valor(pacto.telefono) ? h("a", { class: "btn chico", href: "tel:" + String(pacto.telefono).replace(/[^\d+]/g, "") }, "Llamar a " + pacto.telefono) : null),
+    h("div", { class: "nota cuidado" }, h("strong", {}, "Si estás pensando en hacerte daño, "), "no te quedes con eso a solas. En Bogotá puedes llamar a la Línea 106. Si hay peligro inmediato, llama al 123."),
+    h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: cerrar }, "Volver cuando esté listo"))));
+}
+let cortina = null;
+function tapar(){
+  if (cortina) return;
+  document.title = "Nueva pestaña";
+  cortina = h("button", { class: "cortina", type: "button", "aria-label": "Volver a la bodega", ondblclick: destapar }, "Doble clic para volver");
+  document.body.append(cortina); cortina.focus();
+}
+function destapar(){ if (cortina) { cortina.remove(); cortina = null; document.title = "La Bodega"; } }
+let ultimoEsc = 0;
+document.addEventListener("keydown", ev => {
+  if (ev.key !== "Escape" || !modo || document.querySelector(".capa")) return;
+  const ahora = Date.now(), doble = ahora - ultimoEsc < 500;
+  ultimoEsc = doble ? 0 : ahora;
+  if (doble) cortina ? destapar() : tapar();
+});
+async function cerrarBodega(){
+  if (modo === "rastro") {
+    if (hayDatos() && !confirm("Estás en modo sin rastro. Si sales, se borra lo escrito. ¿Salir?")) return;
+    modo = null; S = nuevoEstado(); location.reload(); return;
+  }
+  await guardarAhora();
+  modo = null; llave = null; S = nuevoEstado(); location.reload();
+}
+/* Inactividad: con candado se cierra sola; sin rastro solo se tapa para no perder lo escrito. */
+let timerInactivo = null;
+function reiniciarInactivo(){
+  clearTimeout(timerInactivo);
+  if (!modo) return;
+  timerInactivo = setTimeout(() => { modo === "candado" ? cerrarBodega() : tapar(); }, 10 * 60 * 1000);
+}
+["keydown", "pointerdown", "scroll"].forEach(t => window.addEventListener(t, reiniciarInactivo, { passive: true }));
+
+/* ===== Navegación ===== */
+function ir(v){ vista = v; pintar(); window.scrollTo(0, 0); }
+function pintar(){
+  if (!modo) return pintarPuerta();
+  aplicarTema();
+  const cuerpo = vista.nombre === "mapa" ? pintarMapa() : vista.nombre === "estante" ? pintarEstante() : pintarMostrador();
+  $app.replaceChildren(barraH(), cuerpo);
+}
+
+/* ===== Puerta ===== */
+async function descargar(blob, nombre){
+  const url = URL.createObjectURL(blob);
+  const a = h("a", { href: url, download: nombre }); document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 8000);
+}
+function probarAislamiento(salida){
+  salida.textContent = "Intentando salir a internet…";
+  fetch("https://example.com/?prueba-la-bodega", { mode: "no-cors", cache: "no-store" })
+    .then(() => { salida.textContent = "Atención: la petición salió. No escribas aquí y revisa desde dónde abriste esta página."; })
+    .catch(() => { salida.textContent = "Listo: el navegador bloqueó la salida. Esta página no tiene permiso de enviar datos."; });
+}
+function formaClave(titulo, texto, boton, conConfirmar, alEnviar){
+  const err = h("p", { class: "error", role: "alert" });
+  const c1 = h("input", { type: "password", id: "cl-" + boton.length, autocomplete: conConfirmar ? "new-password" : "current-password" });
+  const c2 = conConfirmar ? h("input", { type: "password", autocomplete: "new-password", "aria-label": "Repetir la contraseña" }) : null;
+  const btn = h("button", { type: "button", class: "btn prim", onclick: async () => {
+    err.textContent = "";
+    if (conConfirmar && c1.value.length < 8) { err.textContent = "Usa al menos 8 caracteres. Una frase corta sirve."; return; }
+    if (conConfirmar && c1.value !== c2.value) { err.textContent = "Las dos contraseñas no coinciden."; return; }
+    btn.disabled = true; const t = btn.textContent; btn.textContent = "Un momento…";
+    try { await alEnviar(c1.value); }
+    catch (e) { err.textContent = "No se pudo abrir. Revisa la contraseña."; btn.disabled = false; btn.textContent = t; }
+  } }, boton);
+  const enter = ev => { if (ev.key === "Enter") btn.click(); };
+  c1.addEventListener("keydown", enter); if (c2) c2.addEventListener("keydown", enter);
+  return h("div", { class: "opcion" }, h("h3", {}, titulo), h("p", {}, texto),
+    h("label", { for: c1.id }, "Contraseña"), c1,
+    c2 ? [h("label", {}, "Repítela"), c2] : null, btn, err);
+}
+function entrar(m){ modo = m; ponerSello("puerta"); reiniciarInactivo(); vista = { nombre: "mapa" }; pintar(); window.scrollTo(0, 0); }
+function pintarPuerta(){
+  const existente = leerGuardado();
+  const salidaPrueba = h("div", { class: "prueba", role: "status" });
+  const archivo = h("input", { type: "file", accept: ".bodega,application/json", class: "oculto", onchange: async ev => {
+    const f = ev.target.files[0]; if (!f) return;
+    const texto = await f.text();
+    capa(cerrar => h("div", { class: "modal" }, h("h2", {}, "Abrir mi copia"), h("p", {}, f.name),
+      (() => { const cl = h("input", { type: "password", "aria-label": "Contraseña de la copia", style: "margin-bottom:8px" }); const e = h("p", { class: "error", style: "color:var(--mal)", role: "alert" });
+        return [cl, e, h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: async () => {
+          try { const r = await descifrar(texto, cl.value); S = sanear(r.obj); cerrar(); entrar("rastro"); tostada("Copia abierta sin rastro. Para seguir con candado, usa «Guardar aquí» en el mostrador."); }
+          catch (x) { e.textContent = "No se pudo abrir. Revisa la contraseña o el archivo."; }
+        } }, "Abrir"), h("button", { type: "button", class: "btn", onclick: cerrar }, "Cancelar"))]; })()));
+  } });
+  const opciones = [];
+  if (existente) {
+    opciones.push(formaClave("Abrir mi bodega", "Ya hay un inventario con candado en este navegador.", "Abrir", false, async clave => {
+      const r = await descifrar(existente, clave);
+      S = sanear(r.obj); llave = r.k; sal = r.salBytes; entrar("candado");
+    }));
+  } else if (hayCripto()) {
+    opciones.push(formaClave("Con candado", "Se guarda solo aquí, cifrado con tu contraseña. Vuelves cuando quieras. Nadie puede recuperar una contraseña olvidada.", "Crear mi bodega", true, async clave => {
+      sal = crypto.getRandomValues(new Uint8Array(16));
+      llave = await derivar(clave, sal);
+      S = nuevoEstado(); modo = "candado"; await guardarAhora(); entrar("candado");
+    }));
+  }
+  opciones.push(h("div", { class: "opcion" }, h("h3", {}, "Sin dejar rastro"),
+    h("p", {}, "No se guarda nada. Todo vive en la memoria de esta pestaña y desaparece al cerrarla. Antes de salir puedes sacar tu PDF."),
+    h("button", { type: "button", class: "btn", onclick: () => { S = nuevoEstado(); entrar("rastro"); } }, "Entrar sin rastro"),
+    hayCripto() ? h("button", { type: "button", class: "btn", onclick: () => archivo.click() }, "Abrir una copia .bodega") : null, archivo));
+  $app.replaceChildren(h("main", { class: "puerta" }, h("div", { class: "ancho" },
+    h("div", { class: "escena", style: "justify-content:flex-start;gap:0" }, figuraEspantajo(0, 80), figuraEspantajo(1, 80)),
+    h("h1", {}, "La Bodega"),
+    h("p", { class: "sub" }, "Un juego y un cuaderno privado para escribir tu historia y los inventarios del Cuarto Paso."),
+    citaH(CITA_PASO),
+    h("div", { class: "opciones" }, opciones),
+    existente ? h("p", { class: "peq" }, h("button", { type: "button", class: "btn chico peligro", onclick: quemar }, "Olvidé la contraseña: borrar todo y empezar de nuevo")) : null,
+    h("div", { class: "aviso-puerta" },
+      h("p", {}, h("strong", {}, "Lo que escribes no sale de tu equipo. "), "No hay cuenta, base de datos ni estadísticas, y ningún servidor recibe lo que escribes. El navegador tiene prohibido enviar datos desde esta página, y lo puedes comprobar:"),
+      h("button", { type: "button", class: "btn chico", onclick: () => probarAislamiento(salidaPrueba) }, "Probar el aislamiento"), salidaPrueba,
+      location.protocol === "file:"
+        ? h("p", { style: "margin-top:10px" }, "Estás usando la copia guardada en tu equipo. Funciona sin internet.")
+        : h("p", { style: "margin-top:10px" }, h("a", { class: "btn chico", href: "index.html", download: "la_bodega.html" }, "Descargar esta herramienta"), " Ábrela desde tu equipo y funciona sin internet."),
+      h("p", {}, h("strong", {}, "Lo que no depende de esta página: "), "el PDF y las copias son archivos tuyos. Si tu carpeta de Descargas se sincroniza con OneDrive, Google Drive o iCloud, o si los guardas en un repositorio o en una bóveda sincronizada, ahí sí subirán a la nube. Una extensión del navegador podría leer la página, y otra persona con acceso a tu equipo podría ver lo que dejes abierto. Mejor usa un equipo tuyo, sin extensiones o en una ventana privada."),
+      h("p", { class: "peq" }, "Esta herramienta es un trabajo personal: no es literatura de A.A. ni está aprobada por A.A. Las citas son breves y llevan su página. No reemplaza a un padrino, a una madrina ni a la ayuda profesional."),
+      h("p", { class: "peq" }, h("a", { href: "../", style: "color:#f6d38b" }, "← Volver al sitio"))))));
+}
+function quemar(){
+  capa(cerrar => {
+    const ent = h("input", { type: "text", "aria-label": "Escribe QUEMAR para confirmar", autocomplete: "off", style: "margin:8px 0" });
+    return h("div", { class: "modal" }, h("h2", {}, "Quemar todo"),
+      h("p", {}, "Borra de este navegador el inventario con candado. No se puede deshacer. Las copias y los PDF que hayas sacado siguen donde los guardaste."),
+      h("p", {}, "Para confirmar, escribe QUEMAR:"), ent,
+      h("div", { class: "acciones" }, h("button", { type: "button", class: "btn peligro", onclick: () => {
+        if (ent.value.trim().toUpperCase() !== "QUEMAR") { ent.focus(); return; }
+        try { localStorage.removeItem(CLAVE); } catch (e) {}
+        modo = null; llave = null; S = nuevoEstado(); location.reload();
+      } }, "Quemar"), h("button", { type: "button", class: "btn", onclick: cerrar }, "Cancelar")));
+  });
+}
+
+/* ===== Mapa ===== */
+function pintarMapa(){
+  const lit = ESTANTES.filter(e => S.faroles[e.id]).length, total = ESTANTES.length, pct = lit / total;
+  const esc = 1 - pct * .75;
+  const orgullo = figuraEspantajo(0, 88, esc), temor = figuraEspantajo(1, 88, esc);
+  const mapa = h("main", { class: "mapa", style: `--niebla:${(1 - pct) * .95 + .05}` },
+    h("div", { class: "niebla" }),
+    h("div", { class: "ancho" },
+      h("h1", {}, "Tu bodega"),
+      h("p", { class: "intro" }, "Cada estante trae algo que aprender, un reto y una hoja para escribir. Ve en orden o entra por donde te pida la vida. Aquí no se gana por tener más defectos: cada farol se enciende por haber mirado."),
+      h("div", { class: "escena" },
+        h("div", { class: "espantajo-box" }, orgullo, h("div", { class: "quien" }, "Orgullo")),
+        h("div", { class: "bocadillo" }, pct === 1 ? "«…no son sino espantajos.»" : lit === 0 ? "«No hace falta que te molestes en hacerlo.» «No te atrevas a hacerlo.»" : "Con cada farol, los dos espantajos se ven más pequeños."),
+        h("div", { class: "espantajo-box" }, temor, h("div", { class: "quien" }, "Temor"))),
+      h("div", { class: "progreso", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": total, "aria-valuenow": lit, "aria-label": "Faroles encendidos" }, h("i", { style: `width:${pct * 100}%` })),
+      h("p", { class: "peq" }, `${lit} de ${total} faroles encendidos`),
+      h("div", { class: "estantes" }, ESTANTES.map((e, i) => {
+        const retosOk = e.retos.filter(r => S.retos[r.id]).length;
+        return h("button", { type: "button", class: "estante" + (S.faroles[e.id] ? " lit" : ""), onclick: () => ir({ nombre: "estante", id: e.id }) },
+          farolH(),
+          h("span", {}, h("span", { class: "num" }, "ESTANTE " + num2(i + 1)), h("h3", {}, e.titulo), h("p", {}, e.breve),
+            h("span", { class: "marcas", style: "display:block" }, `Retos ${retosOk}/${e.retos.length}${estanteTieneDatos(e) ? " · ya escribiste aquí" : ""}`)));
+      })),
+      h("div", { class: "herramientas-mapa" },
+        h("button", { type: "button", class: "btn prim", onclick: () => ir({ nombre: "mostrador" }) }, "Ir al mostrador: balance y PDF"),
+        h("button", { type: "button", class: "btn", onclick: tirarDado }, "Tirar el dado: una pregunta al azar")),
+      h("div", { class: "sellos", "aria-label": "Sellos" }, Object.entries(SELLOS).map(([k, t]) => h("span", { class: "sello" + (S.sellos[k] ? " si" : "") }, t)))));
+  return mapa;
+}
+function tirarDado(){
+  ponerSello("dado");
+  const pendientes = [];
+  ESTANTES.forEach(e => e.formas.filter(f => f.tipo === "preguntas").forEach(f => f.items.forEach((_, i) => { if (!valor(verObj(f.id)[i])) pendientes.push([e, f, i]); })));
+  if (!pendientes.length) return tostada("Ya respondiste todas las preguntas. Puedes volver a leerlas.");
+  const [e, f, i] = pendientes[Math.floor(Math.random() * pendientes.length)];
+  vista = { nombre: "estante", id: e.id, pestana: "escribe" }; pintar();
+  const caja = document.getElementById(`caja-q-${f.id}-${i}`);
+  caja.classList.add("foco"); caja.scrollIntoView({ block: "center" });
+  caja.querySelector("textarea").focus({ preventScroll: true });
+}
+
+/* ===== Estante ===== */
+let timerSprint = null;
+function empezarSprint(){
+  clearInterval(timerSprint);
+  let queda = 300;
+  const pinta = () => { if (refSprint) refSprint.textContent = `${num2(Math.floor(queda / 60))}:${num2(queda % 60)}`; };
+  pinta();
+  tostada("Cinco minutos. Escribe sin corregir y sin levantar la mano.");
+  timerSprint = setInterval(() => {
+    queda--; pinta();
+    if (queda <= 0) { clearInterval(timerSprint); if (refSprint) refSprint.textContent = ""; ponerSello("sprint"); tostada("Se acabó el tiempo. Lee lo que salió: suele ser lo más honrado."); }
+  }, 1000);
+}
+function pintarEstante(){
+  const e = ESTANTE[vista.id], i = ESTANTES.indexOf(e);
+  const pest = vista.pestana || "aprende";
+  const retosOk = e.retos.every(r => S.retos[r.id]);
+  const tab = (id, t, ok) => h("button", { type: "button", role: "tab", class: "pestana", "aria-selected": pest === id ? "true" : "false", onclick: () => ir({ nombre: "estante", id: e.id, pestana: id }) }, t, ok ? h("span", { class: "ok" }, " ✓") : null);
+  const cuerpo = h("div", {});
+  if (pest === "aprende") {
+    cuerpo.append(h("div", { class: "bloque" }, e.aprende.map(b => b.c
+      ? [b.nota ? h("p", { class: "peq tenue", style: "margin-bottom:.2em" }, b.nota) : null, citaH(b.c)]
+      : h("p", {}, b.p))),
+      h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: () => ir({ nombre: "estante", id: e.id, pestana: "reto" }) }, "Ir al reto")));
+  }
+  if (pest === "reto") {
+    const zona = h("div", {});
+    e.retos.forEach(r => zona.append(retoH(r, () => {
+      if (e.retos.every(x => S.retos[x.id])) {
+        if (!zona.querySelector(".a-escribir")) zona.append(h("div", { class: "acciones a-escribir" }, h("button", { type: "button", class: "btn prim", onclick: () => ir({ nombre: "estante", id: e.id, pestana: "escribe" }) }, "Ahora, a escribir")));
+      }
+    })));
+    if (retosOk) zona.append(h("div", { class: "acciones a-escribir" }, h("button", { type: "button", class: "btn prim", onclick: () => ir({ nombre: "estante", id: e.id, pestana: "escribe" }) }, "Ahora, a escribir")));
+    else zona.prepend(h("p", { class: "peq tenue" }, "Los retos no son obligatorios para escribir. No se pierde nada por equivocarse."));
+    cuerpo.append(zona);
+  }
+  if (pest === "escribe") {
+    cuerpo.append(h("div", { class: "tools" },
+      h("button", { type: "button", class: "btn chico", onclick: empezarSprint }, "Reto: 5 minutos sin parar"),
+      h("button", { type: "button", class: "btn chico", onclick: tirarDado }, "Tirar el dado")));
+    if (e.nota) cuerpo.append(h("div", { class: "nota cuidado" }, e.nota));
+    e.formas.forEach(f => cuerpo.append(formaH(f, e)));
+    const lit = S.faroles[e.id];
+    cuerpo.append(h("div", { class: "encender" },
+      lit ? h("p", {}, h("strong", {}, "Este farol ya está encendido. "), "Puedes volver a escribir aquí cuando quieras: el inventario sigue abierto.")
+          : h("p", {}, "¿Ya pasaste por este estante con honradez, aunque no esté perfecto? Eso lo decides tú, no un puntaje."),
+      h("button", { type: "button", class: "btn prim", onclick: () => {
+        S.faroles[e.id] = !lit; marcarCambio();
+        if (!lit && e.id === "virtudes" && estanteTieneDatos(e)) ponerSello("virtud");
+        if (estanteTieneDatos(e)) ponerSello("papel");
+        if (ESTANTES.every(x => S.faroles[x.id])) ponerSello("faroles");
+        ir(lit ? { nombre: "estante", id: e.id, pestana: "escribe" } : { nombre: "mapa" });
+      } }, lit ? "Apagar el farol" : "Encender el farol")));
+  }
+  const ant = ESTANTES[i - 1], sig = ESTANTES[i + 1];
+  return h("main", { class: "ancho" },
+    h("header", { class: "cab" },
+      h("div", { class: "num" }, `ESTANTE ${num2(i + 1)} DE ${ESTANTES.length}`),
+      h("h1", {}, e.titulo), h("p", { class: "lema" }, e.lema)),
+    h("div", { class: "pestanas", role: "tablist" }, tab("aprende", "Aprende"), tab("reto", "Reto", retosOk), tab("escribe", "Escribe", estanteTieneDatos(e))),
+    cuerpo,
+    h("nav", { class: "navega" },
+      ant ? h("button", { type: "button", class: "btn", onclick: () => ir({ nombre: "estante", id: ant.id }) }, "← " + ant.titulo) : h("button", { type: "button", class: "btn", onclick: () => ir({ nombre: "mapa" }) }, "← Mapa"),
+      sig ? h("button", { type: "button", class: "btn", onclick: () => ir({ nombre: "estante", id: sig.id }) }, sig.titulo + " →") : h("button", { type: "button", class: "btn", onclick: () => ir({ nombre: "mostrador" }) }, "Mostrador →")));
+}
+
+/* ===== Balance ===== */
+const VACIAS = new Set("para pero porque como cuando donde desde hasta sobre entre este esta estos estas esto aquel aquella tengo tenia tenía tiene tienen tener estoy estaba estaban estar sido siempre nunca nada todo toda todos todas algo alguien cada mucho mucha muchos muchas poco muy más menos mismo misma mismos otra otro otros otras solo sola cosas cosa porque aunque entonces ahora luego después despues antes hice hacer hizo hacía hacia hace eran eres somos soy fue fui ser era sin con por del las los una uno unos unas que qué quien quién cual cuál mis tus sus nos les ellos ellas ella él yo mi me se de la el en y a o u e al lo le su si sí no ya hay han has he ha son sea así vez veces años dia dias día días tan tal bien mal".split(" "));
+function balance(){
+  const resent = filasDe("resent");
+  const conteo = (arr, k, ops) => ops.map(o => [o, arr.filter(x => Array.isArray(x[k]) && x[k].includes(o)).length]);
+  const afecta = conteo(resent, "afecta", OP_AFECTA);
+  const parte = conteo(resent, "parte", OP_PARTE);
+  const conTemor = resent.filter(x => Array.isArray(x.temor) && x.temor.length).length;
+  const siete = verObj("siete"), flaq = forma("siete").items.map(it => [it.t, Number((siete[it.k] || {}).nivel) || 0]);
+  const pulso = verObj("pulso"), inst = forma("pulso").items.map(it => [it.t, Number((pulso[it.k] || {}).nivel) || 0]);
+  const roles = conteo(filasDe("vinculos"), "rol", ["Dominar", "Depender", "Destacarme", "Esconderme"]);
+  // Personas que aparecen en más de una lista.
+  const listas = [["resent", "resentimientos"], ["relaciones_sex", "sexo y pareja"], ["vinculos", "relaciones"], ["heridos", "personas heridas"]];
+  const nombres = new Map();
+  for (const [id, nom] of listas) for (const fl of filasDe(id)) {
+    const n = String(fl.quien || "").trim(); if (!n) continue;
+    const k = sinTildes(n).replace(/[^a-z0-9ñ ]/g, "").replace(/^(mi|el|la) /, "");
+    if (!nombres.has(k)) nombres.set(k, { n, en: new Set() });
+    nombres.get(k).en.add(nom);
+  }
+  const nudos = [...nombres.values()].filter(x => x.en.size > 1).map(x => [x.n, [...x.en]]).sort((a, b) => b[1].length - a[1].length);
+  // Palabras repetidas en lo escrito.
+  const frec = {};
+  const recorrer = v => {
+    if (typeof v === "string") (v.toLowerCase().match(/[a-záéíóúñü]{4,}/g) || []).forEach(p => { if (!VACIAS.has(p)) frec[p] = (frec[p] || 0) + 1; });
+    else if (Array.isArray(v)) v.forEach(x => { if (typeof x === "object") recorrer(x); });
+    else if (v && typeof v === "object") Object.values(v).forEach(recorrer);
+  };
+  const excluir = new Set(["pacto"]);
+  Object.entries(S.datos).forEach(([k, v]) => { if (!excluir.has(k)) recorrer(v); });
+  const palabras = Object.entries(frec).filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).slice(0, 14);
+  return { totalR: resent.length, afecta, parte, conTemor, temores: filasDe("miedos").length, flaq, inst, roles, nudos, palabras,
+    virtudes: filasDe("buenas").filter(x => valor(x.virtud)).length, heridos: filasDe("heridos").filter(x => valor(x.quien)).length };
+}
+function barrasH(items, max){
+  const tope = max || Math.max(1, ...items.map(x => x[1]));
+  return h("div", { class: "barras" }, items.map(([n, v]) => h("div", { class: "bar" }, h("span", {}, n), h("span", { class: "pista" }, h("i", { style: `width:${v / tope * 100}%` })), h("span", { class: "v" }, v))));
+}
+function pintarMostrador(){
+  const b = balance();
+  const hay = contarEscrito() > 0;
+  const balanceH = h("section", { class: "bloque" }, h("h2", {}, "Balance general"),
+    h("p", { class: "peq tenue" }, "Se calcula aquí mismo con lo que escribiste. No es un diagnóstico: es material para conversar con tu padrino."),
+    !hay ? h("p", {}, "Cuando escribas en algún estante, aquí empezarán a verse tus patrones.") : h("div", { class: "rejilla2" },
+      b.totalR ? h("div", {}, h("h3", {}, "Qué me lastiman"), barrasH(b.afecta), h("p", { class: "peq", style: "margin-top:.6em" }, `Temor debajo en ${b.conTemor} de ${b.totalR} resentimientos.`)) : null,
+      b.totalR ? h("div", {}, h("h3", {}, "Mi parte"), barrasH(b.parte)) : null,
+      b.flaq.some(x => x[1]) ? h("div", {}, h("h3", {}, "Siete flaquezas"), barrasH(b.flaq, 5)) : null,
+      b.inst.some(x => x[1]) ? h("div", {}, h("h3", {}, "Tres instintos"), barrasH(b.inst, 5)) : null,
+      b.roles.some(x => x[1]) ? h("div", {}, h("h3", {}, "En mis relaciones"), barrasH(b.roles)) : null,
+      b.nudos.length ? h("div", {}, h("h3", {}, "Nudos"), h("p", { class: "peq tenue" }, "Quienes aparecen en más de una lista."), h("ul", { class: "lista-suave" }, b.nudos.slice(0, 8).map(([n, en]) => h("li", {}, h("strong", {}, n), ": ", en.join(", "))))) : null,
+      b.palabras.length ? h("div", {}, h("h3", {}, "Palabras que más repites"), h("div", { class: "etiquetas" }, b.palabras.map(([p, n]) => h("span", { class: "etiqueta" }, p, h("b", {}, n))))) : null,
+      puntosVida().length ? h("div", { style: "grid-column:1/-1" }, h("h3", {}, "Línea de vida"), graficaVida()) : null));
+  const marcas = {};
+  const sel = h("div", { class: "selector" }, ESTANTES.map(e => {
+    const c = h("input", { type: "checkbox", checked: true }); marcas[e.id] = c;
+    return h("label", {}, c, e.titulo);
+  }));
+  const chkBal = h("input", { type: "checkbox", checked: true });
+  const chkCitas = h("input", { type: "checkbox", checked: true });
+  const preset = ids => () => ESTANTES.forEach(e => { marcas[e.id].checked = !ids || ids.includes(e.id); });
+  const elegidos = () => ESTANTES.filter(e => marcas[e.id].checked);
+  const pdf = h("section", { class: "bloque" }, h("h2", {}, "Sacar en papel"),
+    h("p", {}, "El PDF se arma en este navegador, sin enviarlo a ningún lado, y queda como un archivo tuyo. Escoge qué incluir: el estante de sexo y pareja, por ejemplo, puedes dejarlo por fuera."),
+    h("div", { class: "tools" },
+      h("button", { type: "button", class: "btn chico", onclick: preset(null) }, "Todo"),
+      h("button", { type: "button", class: "btn chico", onclick: preset(["resentimientos", "temores", "sexo", "virtudes", "danos"]) }, "Lo de Libro Grande"),
+      h("button", { type: "button", class: "btn chico", onclick: preset(["resentimientos"]) }, "Solo resentimientos")),
+    sel,
+    h("div", { class: "selector", style: "border-top:1px solid var(--rule);margin-top:8px;padding-top:6px" },
+      h("label", {}, chkBal, "Incluir el balance general"), h("label", {}, chkCitas, "Incluir citas de los libros")),
+    h("div", { class: "nota", style: "margin-top:10px" }, h("strong", {}, "Antes de guardar: "), "elige una carpeta que no se sincronice con OneDrive, Google Drive o iCloud, y que no sea un repositorio de git ni una bóveda de notas sincronizada. El documento no tiene contraseña: guárdalo como guardarías algo íntimo."),
+    h("div", { class: "acciones" },
+      h("button", { type: "button", class: "btn prim", onclick: () => { generarPDF(elegidos(), { balance: chkBal.checked, citas: chkCitas.checked }); ponerSello("papel"); } }, "Generar mi PDF"),
+      h("button", { type: "button", class: "btn", onclick: () => { generarPDF(elegidos(), { blanco: true, citas: chkCitas.checked }); } }, "PDF en blanco para escribir a mano")));
+  const copia = h("section", { class: "bloque" }, h("h2", {}, "Tu copia y el fuego"),
+    h("p", {}, "La copia .bodega queda cifrada con contraseña: es la forma de mudarte a otro equipo o de guardar en una memoria USB sin que nadie pueda leerla."),
+    h("div", { class: "acciones" },
+      hayCripto() ? h("button", { type: "button", class: "btn", onclick: sacarCopia }, "Sacar copia cifrada") : null,
+      modo === "rastro" && hayCripto() ? h("button", { type: "button", class: "btn", onclick: pasarACandado }, "Guardar aquí con candado") : null,
+      modo === "candado" ? h("button", { type: "button", class: "btn peligro", onclick: quemar }, "Quemar todo") : null));
+  const retoF = retoH(RETO_FINAL);
+  const despues = h("section", { class: "bloque" }, h("h2", {}, "Y después de la bodega"),
+    citaH(cita("Será la primera muestra palpable de que estamos completamente dispuestos a seguir adelante.", "DD 51")),
+    h("p", {}, "El inventario se lleva al Quinto Paso: se admite ante Dios, ante uno mismo y ante otro ser humano. Elige con tu padrino con quién y cuándo. No hay que esperar a que esté perfecto."),
+    citaH(cita("Puesto que el Cuarto Paso no es sino el mero comienzo de una práctica que nos habrá de durar toda la vida", "DD 47")));
+  return h("main", { class: "ancho" },
+    h("header", { class: "cab" }, h("div", { class: "num" }, "EL MOSTRADOR"), h("h1", {}, "Balance y papel"), h("p", { class: "lema" }, "Lo que se contó en la bodega, puesto sobre la mesa.")),
+    balanceH, pdf, retoF, despues, copia,
+    h("nav", { class: "navega" }, h("button", { type: "button", class: "btn", onclick: () => ir({ nombre: "mapa" }) }, "← Volver a la bodega")));
+}
+function pedirClaveNueva(titulo, texto, alOk){
+  capa(cerrar => {
+    const c1 = h("input", { type: "password", "aria-label": "Contraseña", autocomplete: "new-password", style: "margin-bottom:8px" });
+    const c2 = h("input", { type: "password", "aria-label": "Repetir contraseña", autocomplete: "new-password" });
+    const e = h("p", { class: "error", style: "color:var(--mal)", role: "alert" });
+    return h("div", { class: "modal" }, h("h2", {}, titulo), h("p", {}, texto), c1, c2, e,
+      h("div", { class: "acciones" }, h("button", { type: "button", class: "btn prim", onclick: async ev => {
+        if (c1.value.length < 8) { e.textContent = "Usa al menos 8 caracteres."; return; }
+        if (c1.value !== c2.value) { e.textContent = "Las dos contraseñas no coinciden."; return; }
+        ev.target.disabled = true; await alOk(c1.value); cerrar();
+      } }, "Continuar"), h("button", { type: "button", class: "btn", onclick: cerrar }, "Cancelar")));
+  });
+}
+function sacarCopia(){
+  const bajar = texto => descargar(new Blob([texto], { type: "application/json" }), `mi_bodega_${hoyISO()}.bodega`);
+  if (modo === "candado" && llave) return cifrar(S, llave, sal).then(t => { bajar(t); tostada("Copia lista. Se abre con tu misma contraseña."); });
+  pedirClaveNueva("Contraseña de la copia", "Sin ella nadie podrá abrir el archivo, ni siquiera tú.", async clave => {
+    const s = crypto.getRandomValues(new Uint8Array(16)), k = await derivar(clave, s);
+    bajar(await cifrar(S, k, s)); tostada("Copia lista.");
+  });
+}
+function pasarACandado(){
+  if (leerGuardado() && !confirm("Ya hay otra bodega con candado en este navegador y quedaría reemplazada. ¿Continuar?")) return;
+  pedirClaveNueva("Guardar aquí con candado", "Lo escrito quedará cifrado en este navegador. Nadie puede recuperar una contraseña olvidada.", async clave => {
+    sal = crypto.getRandomValues(new Uint8Array(16)); llave = await derivar(clave, sal); modo = "candado"; await guardarAhora(); pintar(); tostada("Listo: con candado.");
+  });
+}
+
+/* ===== PDF del cuaderno ===== */
+function textoCampo(def, v){
+  if (Array.isArray(v)) return v.join(", ");
+  if (v == null || v === "") return "";
+  if (def.tipo === "rango") return `${v}`;
+  return String(v);
+}
+function formaEnPDF(p, f, blanco){
+  p.titulo(f.titulo, 2);
+  if (f.tipo === "filas" && f.id === "resent") {
+    const cols = [
+      { et: "RESENTIDO CON", w: 19, v: r => r.quien || "" },
+      { et: "LA CAUSA", w: 28, v: r => r.causa || "" },
+      { et: "AFECTA MI(S)", w: 19, v: r => [...(r.afecta || []), ...(r.temor || [])].join("\n") },
+      { et: "MI PARTE", w: 34, v: r => [(r.parte || []).join(", "), r.culpa || "", r.enfermo ? "Amigo enfermo: " + r.enfermo : "", r.dispuesto ? "Dispuesto a enmendar: " + r.dispuesto : ""].filter(Boolean).join("\n") },
+    ];
+    if (blanco) return p.tabla(cols, [], 12);
+    const filas = filasDe(f.id).filter(r => Object.values(r).some(valor));
+    return filas.length ? p.tabla(cols, filas) : p.parrafo("(Sin renglones.)", { color: GRIS });
+  }
+  const campoP = (c, v) => {
+    if (blanco) {
+      if (c.tipo === "chips" || c.tipo === "opcion") return p.parrafo(c.et + ":  " + c.ops.map(o => "[  ] " + o).join("    "), { z: 9.5, tras: 6 });
+      if (c.tipo === "rango") { const r = []; for (let n = c.min; n <= c.max; n++) r.push(n); return p.parrafo(c.et + ":  " + r.join("   "), { z: 9.5, tras: 6 }); }
+      p.parrafo(c.et, { f: F_NEG, z: 9.5, tras: 0 });
+      return p.renglones(c.tipo === "area" ? Math.min(c.filas || 3, 5) : 1);
+    }
+    const t = textoCampo(c, v);
+    if (!t) return;
+    p.parrafo(c.et, { f: F_NEG, z: 8.8, color: GRIS, tras: 0 });
+    p.parrafo(t, { f: F_SERIF, z: 11, lead: 14.5, tras: 6 });
+  };
+  if (f.tipo === "filas") {
+    const filas = blanco ? [{}, {}, {}] : filasDe(f.id).filter(r => Object.values(r).some(valor));
+    if (!filas.length) return p.parrafo("(Sin renglones.)", { color: GRIS });
+    if (f.grafica && !blanco && puntosVida().length) p.lineaVida(puntosVida());
+    filas.forEach((r, i) => {
+      p.espacio(40);
+      p.parrafo(blanco ? `Renglón ${i + 1}` : (r[f.resumen] || `Renglón ${i + 1}`), { f: F_NEG, z: 10.5, color: OCRE, tras: 3 });
+      f.campos.forEach(c => { if (blanco || c.k !== f.resumen) campoP(c, r[c.k]); });
+      p.y -= 3;
+      p.linea(p.M, p.y, p.W - p.M, p.y); p.y -= 4;
+    });
+    return;
+  }
+  if (f.tipo === "preguntas") {
+    const o = verObj(f.id); let alguna = false;
+    f.items.forEach((it, i) => {
+      const r = typeof o[i] === "string" ? o[i].trim() : "";
+      if (!r && !blanco) return;
+      alguna = true;
+      p.espacio(38);
+      p.parrafo(it.q, { f: F_NEG, z: 9.6, tras: 1 });
+      if (blanco) p.renglones(3); else p.parrafo(r, { f: F_SERIF, z: 11, lead: 14.5, tras: 8 });
+    });
+    if (!alguna) p.parrafo("(Sin respuestas.)", { color: GRIS });
+    return;
+  }
+  if (f.tipo === "cada") {
+    const o = verObj(f.id);
+    f.items.forEach(it => {
+      const dat = o[it.k] || {};
+      if (!blanco && !Object.values(dat).some(v => valor(v) || Number(v) > 0)) return;
+      p.titulo(it.t + (!blanco && dat.nivel != null ? `  (${dat.nivel} de 5)` : ""), 3);
+      f.campos.filter(c => c.tipo !== "rango" || blanco).forEach(c => campoP(c, dat[c.k]));
+    });
+    return;
+  }
+  const o = verObj(f.id);
+  f.campos.forEach(c => campoP(c, o[c.k]));
+}
+function generarPDF(estantes, op){
+  if (!estantes.length) return tostada("Marca al menos un estante.");
+  const p = new HojaPDF();
+  const pacto = verObj("pacto");
+  p.y -= 110;
+  p.parrafo("Personal y confidencial", { f: F_NEG, z: 10, color: OCRE, tras: 12 });
+  p.titulo(op.blanco ? "Hojas para el Cuarto Paso" : "Mi inventario", 0);
+  p.parrafo(op.blanco ? "Plantillas para escribir a mano" : "Historia e inventarios del Cuarto Paso", { f: F_ITA, z: 14, tras: 14 });
+  if (!op.blanco && valor(pacto.iniciales)) p.parrafo(pacto.iniciales, { f: F_SERIF, z: 13, tras: 2 });
+  p.parrafo(new Date().toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric" }), { f: F_SERIF, z: 12, color: GRIS, tras: 24 });
+  p.citaP(CITA_PASO);
+  p.y -= 16;
+  p.parrafo("Si este documento llega a sus manos por error, por favor no lo lea y devuélvalo a su dueño. Es un ejercicio íntimo de recuperación.", { z: 9.5, color: GRIS });
+  p.parrafo("Hecho con La Bodega, una herramienta personal. No es literatura de A.A. ni está aprobada por A.A. Las citas llevan la página de las ediciones en español usadas.", { z: 8.5, color: GRIS });
+  if (op.balance && contarEscrito() > 0) {
+    p.nueva();
+    p.titulo("Balance general", 1);
+    p.parrafo("Material para conversar con el padrino. No es un diagnóstico.", { f: F_ITA, z: 10.5, color: GRIS, tras: 8 });
+    const b = balance();
+    if (b.totalR) {
+      p.titulo("Qué me lastiman", 3); p.barras(b.afecta, Math.max(1, ...b.afecta.map(x => x[1])));
+      p.parrafo(`Temor debajo en ${b.conTemor} de ${b.totalR} resentimientos.`, { z: 9.5, tras: 8 });
+      p.titulo("Mi parte", 3); p.barras(b.parte, Math.max(1, ...b.parte.map(x => x[1])));
+    }
+    if (b.flaq.some(x => x[1])) { p.titulo("Siete flaquezas (0 a 5)", 3); p.barras(b.flaq, 5); }
+    if (b.inst.some(x => x[1])) { p.titulo("Tres instintos (0 a 5)", 3); p.barras(b.inst, 5); }
+    if (b.roles.some(x => x[1])) { p.titulo("En mis relaciones", 3); p.barras(b.roles, Math.max(1, ...b.roles.map(x => x[1]))); }
+    if (b.nudos.length) { p.titulo("Nudos: quienes aparecen en más de una lista", 3); b.nudos.forEach(([n, en]) => p.parrafo(`${n}: ${en.join(", ")}`, { z: 9.8, tras: 1 })); p.y -= 6; }
+    if (b.palabras.length) { p.titulo("Palabras que más repito", 3); p.parrafo(b.palabras.map(([w, n]) => `${w} (${n})`).join("  ·  "), { z: 9.8 }); }
+  }
+  estantes.forEach((e, i) => {
+    const conDatos = op.blanco || estanteTieneDatos(e);
+    if (!conDatos) return;
+    p.nueva();
+    p.titulo(e.titulo, 1);
+    if (op.citas) e.aprende.filter(b => b.c).slice(0, 2).forEach(b => p.citaP(b.c));
+    if (e.nota && op.blanco) p.parrafo(e.nota, { z: 9, color: GRIS, tras: 6 });
+    e.formas.forEach(f => {
+      // El teléfono y las iniciales del punto de partida no van en el cuerpo del PDF.
+      const g = f.id === "pacto" ? { ...f, campos: f.campos.filter(c => !["iniciales", "padrino", "telefono"].includes(c.k)) } : f;
+      const hay = f.tipo === "libre" ? g.campos.some(c => valor(verObj(f.id)[c.k])) : formaTieneDatos(f);
+      if (op.blanco || hay) formaEnPDF(p, g, op.blanco);
+    });
+  });
+  const blob = p.terminar(op.blanco ? "Hojas para el Cuarto Paso" : "Personal y confidencial");
+  descargar(blob, op.blanco ? "hojas_en_blanco.pdf" : `cuaderno_${hoyISO()}.pdf`);
+  tostada("PDF generado. Guárdalo fuera de carpetas sincronizadas.");
+}
+
+/* ===== Inicio ===== */
+aplicarTema();
+pintar();
+</script>
+</body>
+</html>
