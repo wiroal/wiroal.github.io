@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Notas y herramientas · wiroal</title>
-<meta name="description" content="Sitio personal. Administrador público, radioaficionado, Bogotá, Colombia. Publicaciones, notas y documentos." />
+<title>William R. Alvarez · HJ3RAW</title>
+<meta name="description" content="Sitio personal de William R. Alvarez (HJ3RAW). Administrador público, radioaficionado, Bogotá, Colombia. Publicaciones, notas y documentos." />
 
-<meta property="og:title" content="Notas y herramientas · wiroal" />
+<meta name="author" content="William R. Alvarez" />
+
+<meta property="og:title" content="William R. Alvarez · HJ3RAW" />
 <meta property="og:description" content="Sitio personal. Notas, documentos y publicaciones desde Bogotá." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wiroal.github.io/" />
@@ -174,8 +176,13 @@ body::before {
 .hero-bio p + p { margin-top: 1rem; }
 .hero-body {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: clamp(1.75rem, 4vw, 3rem); align-items: start;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "intro offer" "bio offer";
+  column-gap: clamp(1.75rem, 4vw, 3rem); align-items: start;
 }
+.hero-intro { grid-area: intro; }
+.hero-bio { grid-area: bio; }
+.offer { grid-area: offer; }
 .offer {
   background: var(--bg-elevated); border: 1px solid var(--rule); border-top: 4px solid var(--accent);
   padding: 1.25rem 1.35rem 1.35rem; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft);
@@ -196,7 +203,12 @@ body::before {
   font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--accent-deep); margin-bottom: 0.35rem;
 }
 .offer-ia h3 .ico { font-size: 1.2rem; color: var(--accent); }
-@media (max-width: 860px) { .hero-body { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 860px) {
+  .hero-body {
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: none;
+    grid-template-areas: "intro" "offer" "bio"; row-gap: 2rem;
+  }
+}
 
 .divider {
   display: flex; align-items: center; gap: 0.8rem;
@@ -429,6 +441,7 @@ body::before {
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
   <symbol id="i-bodega" viewBox="0 0 24 24"><path d="M2 21V8l10-5 10 5v13"/><path d="M6 21v-9h12v9"/><path d="M6 16h12"/><path d="M2 21h20"/></symbol>
   <symbol id="i-spark" viewBox="0 0 24 24"><path d="M11 4l1.9 5.1L18 11l-5.1 1.9L11 18l-1.9-5.1L4 11l5.1-1.9z"/><path d="M19 3v4"/><path d="M21 5h-4"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01"/><path d="M6 17h.01"/></symbol>
   <symbol id="i-id" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M5 16a3 3 0 0 1 6 0"/><path d="M14 10h4"/><path d="M14 14h4"/></symbol>
 </defs></svg>
 
@@ -459,18 +472,21 @@ body::before {
 </nav>
 
 <header class="hero container">
+  <div class="hero-body">
+  <div class="hero-intro">
   <div class="hero-label">Sitio personal &nbsp;·&nbsp; MMXXVI</div>
 
   <h1>
-    Notas y<br>
-    <span class="italic">herramientas</span>
+    William<br>
+    R. <span class="italic">Alvarez</span>
   </h1>
 
   <p class="hero-tagline">
     Administrador público, radioaficionado y lector porfiado, desde la sabana de Bogotá.
   </p>
 
-  <div class="hero-body">
+  </div>
+
   <div class="hero-bio">
     <p>
       Tengo maestría en Ciencias Penales y Forenses. Desde 1995
@@ -490,13 +506,14 @@ body::before {
     <h2 id="offer-title">Qué puedo hacer con usted</h2>
     <ul>
       <li><svg class="ico" aria-hidden="true"><use href="#i-scope"/></svg><div><strong>Poner orden en mucha información.</strong> Convertir expedientes y PDF escaneados en datos que se pueden buscar, cruzar y analizar.</div></li>
-      <li><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg><div><strong>Automatizar lo repetitivo.</strong> Scripts en Python y PowerShell, y trabajo en Linux, para tareas reales con archivos y Excel.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg><div><strong>Automatizar lo repetitivo.</strong> Scripts en Python y PowerShell para tareas reales con archivos y Excel.</div></li>
+      <li><svg class="ico" aria-hidden="true"><use href="#i-server"/></svg><div><strong>Administrar servidores.</strong> Conocimientos avanzados en Ubuntu Server: desde 2022 administro un servidor de trabajo real, con usuarios y permisos, copias de seguridad, monitoreo, discos, actualizaciones, auditorías de seguridad y entornos compartidos de Python, R y Julia.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg><div><strong>Investigar y documentar.</strong> Informes con cada dato atado a su fuente, en temas de derechos humanos, justicia y gestión pública.</div></li>
       <li><svg class="ico" aria-hidden="true"><use href="#i-board"/></svg><div><strong>Explicar lo difícil.</strong> Páginas web, calculadoras y juegos para que el tema le llegue a quien no es experto.</div></li>
     </ul>
     <div class="offer-ia">
       <h3><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg>Cuánto sé de inteligencia artificial</h3>
-      <p>Soy usuario avanzado, no ingeniero de modelos. Trabajo con asistentes como Claude y Copilot para programar, leer documentos largos, redactar y publicar; parte de este sitio se hizo así. Sé darles instrucciones precisas, armar plantillas reutilizables y, sobre todo, revisar lo que producen contra la fuente. No entreno modelos. Puedo ayudarle a usarla bien en su trabajo, sin creerle todo.</p>
+      <p>Soy usuario avanzado, no ingeniero de modelos. Trabajo con asistentes como Claude y Copilot para programar, leer documentos largos, redactar y publicar; parte de este sitio se hizo así. También instalo en servidor modelos de procesamiento de texto para análisis de documentos. Sé darles instrucciones precisas, armar plantillas reutilizables y, sobre todo, revisar lo que producen contra la fuente. No entreno modelos. Puedo ayudarle a usarla bien en su trabajo, sin creerle todo.</p>
     </div>
   </aside>
   </div>
