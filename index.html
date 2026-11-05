@@ -36,6 +36,31 @@
 
   --container: 1100px;
   --pad-x: clamp(1.5rem, 4vw, 4rem);
+
+  --c: var(--accent);
+  --c-soft: #f7e4da;
+}
+
+/* Un color por tema: se repite en el menú, el índice, los títulos y las tarjetas */
+.t-idx      { --c: #3a3630; --c-soft: #e8e3d6; }
+.t-aa       { --c: #1d5a94; --c-soft: #e3edf7; }
+.t-juegos   { --c: #6d3fa6; --c-soft: #eee6f7; }
+.t-congreso { --c: #8f5a00; --c-soft: #f7ecd4; }
+.t-radio    { --c: #0f6f68; --c-soft: #dcf0ed; }
+.t-analisis { --c: #a8431a; --c-soft: #f7e4da; }
+.t-notas    { --c: #4c7022; --c-soft: #e8f0da; }
+.t-stats    { --c: #a82a68; --c-soft: #f8e1ec; }
+.t-otros    { --c: #4a5568; --c-soft: #e6e8ec; }
+
+.ico {
+  width: 1em; height: 1em; flex: none; display: block;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.tile {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; border-radius: 10px; font-size: 1.35rem;
+  background: var(--c-soft); color: var(--c);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -98,7 +123,29 @@ body::before {
   50% { opacity: 1; transform: scale(1.1); }
 }
 
-.hero { padding: clamp(4rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem); }
+/* Menú fijo de secciones */
+.jump {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg-elevated); border-bottom: 1px solid var(--rule-strong);
+}
+.jump-inner {
+  display: flex; gap: 0.45rem; padding-top: 0.55rem; padding-bottom: 0.55rem;
+  overflow-x: auto; scrollbar-width: none;
+}
+.jump-inner::-webkit-scrollbar { display: none; }
+.jump a {
+  flex: none; display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.75rem; border-radius: 999px;
+  font-size: 0.9rem; font-weight: 600; line-height: 1.3; text-decoration: none;
+  background: var(--c-soft); color: var(--c);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.jump a:hover, .jump a[aria-current="true"] { background: var(--c); color: #fff; }
+.jump a:focus-visible, .quick a:focus-visible, .card-link:focus-visible, .external-list a:focus-visible {
+  outline: 2px solid var(--c); outline-offset: 2px;
+}
+
+.hero { padding: clamp(2.5rem, 6vw, 4.5rem) var(--pad-x) clamp(2rem, 4vw, 3.5rem); }
 .hero-label {
   font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em;
   text-transform: uppercase; color: var(--ink-muted);
@@ -128,18 +175,21 @@ body::before {
 .hero-bio p + p { margin-top: 1rem; }
 
 .divider {
-  display: flex; align-items: center; gap: 1.5rem;
-  margin: clamp(3rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3.5rem);
+  display: flex; align-items: center; gap: 0.8rem;
+  margin: clamp(3rem, 7vw, 5.5rem) 0 clamp(1.25rem, 2.5vw, 2rem);
+  scroll-margin-top: 4.5rem;
 }
+.divider .tile { width: 2.6rem; height: 2.6rem; font-size: 1.4rem; background: var(--c); color: #fff; }
 .divider-num {
   font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em;
-  color: var(--accent); font-weight: 600; white-space: nowrap;
+  color: var(--c); font-weight: 600; white-space: nowrap;
 }
 .divider-title {
-  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--ink-soft); white-space: nowrap;
+  font-family: var(--font-display); font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 500;
+  line-height: 1.15; color: var(--c);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
 }
-.divider-line { flex: 1; height: 1px; background: var(--rule-strong); }
+.divider-line { flex: 1; min-width: 1rem; height: 2px; background: var(--c); opacity: 0.35; }
 
 .section-intro {
   font-family: var(--font-display); font-weight: 300;
@@ -151,19 +201,20 @@ body::before {
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1px; background: var(--rule);
-  border: 1px solid var(--rule); margin-bottom: 2rem;
+  gap: 0.9rem; margin-bottom: 2rem;
 }
 .card {
-  background: var(--bg-elevated); padding: 2rem 1.75rem;
+  background: var(--bg-elevated); padding: 1.6rem 1.75rem 1.75rem;
+  border: 1px solid var(--rule); border-top: 4px solid var(--c);
   transition: background 0.3s ease;
   display: flex; flex-direction: column; min-height: 200px;
 }
-.card:hover { background: #fffaee; }
+.card-link:hover { background: var(--c-soft); }
 .card-num {
   font-family: var(--font-mono); font-size: 0.7rem;
-  color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 0.8rem;
+  color: var(--c); font-weight: 600; letter-spacing: 0.1em;
 }
+.card-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
 .card h3 {
   font-family: var(--font-display); font-weight: 400;
   font-size: 1.5rem; line-height: 1.2; color: var(--ink);
@@ -174,15 +225,20 @@ body::before {
 .card p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; flex: 1; }
 .card-status {
   font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--ink-muted);
+  text-transform: uppercase; color: var(--ink-soft);
+  display: flex; align-items: center; gap: 0.45rem;
   margin-top: 1.5rem; padding-top: 1rem;
   border-top: 1px dashed var(--rule);
   transition: letter-spacing 0.25s ease, color 0.25s ease;
 }
-.card-status.active { color: var(--accent); }
+.card-status.active { color: var(--c); font-weight: 600; }
+.card-status .ico { font-size: 0.95rem; }
+.card-pending { background: var(--bg); }
+.card-pending h3 { color: var(--ink-soft); }
+.card-pending .tile { background: transparent; border: 1px dashed var(--c); }
 
 .card-link { text-decoration: none; color: inherit; cursor: pointer; }
-.card-link:hover h3 { color: var(--accent-deep); }
+.card-link:hover h3 { color: var(--c); }
 .card-link:hover .card-status.active { letter-spacing: 0.22em; }
 
 .external-list {
@@ -200,15 +256,15 @@ body::before {
   .external-list li { border-right: none; }
 }
 .external-list a {
-  display: block; padding: 1.5rem 1.25rem;
+  display: flex; align-items: center; gap: 0.9rem; padding: 1.25rem 2.5rem 1.25rem 1.25rem;
   color: var(--ink); text-decoration: none;
   transition: background 0.25s ease; position: relative;
 }
-.external-list a:hover { background: var(--bg-elevated); }
+.external-list a:hover { background: var(--c-soft); }
 .external-list .ext-label {
   font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
-  text-transform: uppercase; color: var(--ink-muted);
-  margin-bottom: 0.4rem; display: block;
+  text-transform: uppercase; color: var(--c); font-weight: 600;
+  display: block;
 }
 .external-list .ext-target {
   font-family: var(--font-display); font-weight: 400;
@@ -220,7 +276,7 @@ body::before {
   font-family: var(--font-mono); color: var(--ink-muted);
   transition: color 0.2s ease, transform 0.2s ease;
 }
-.external-list a:hover::after { color: var(--accent); transform: translate(2px, -2px); }
+.external-list a:hover::after { color: var(--c); transform: translate(2px, -2px); }
 
 .colophon {
   margin-top: clamp(4rem, 8vw, 7rem); padding: 2.5rem 0;
@@ -257,24 +313,31 @@ body::before {
 /* Acceso rápido: índice compacto de todo el sitio */
 .quick {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
-  gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+  gap: 0.9rem;
 }
-.quick-group { background: var(--bg-elevated); padding: 1.25rem 1.25rem 1.1rem; }
+.quick-group {
+  background: var(--bg-elevated); border: 1px solid var(--rule); border-top: 4px solid var(--c);
+  padding: 1rem 1rem 0.85rem;
+}
 .quick-group h4 {
-  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
-  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  font-family: var(--font-body); font-size: 1.05rem; font-weight: 700;
+  line-height: 1.2; color: var(--c); margin-bottom: 0.6rem;
 }
+.quick-group h4 .tile { width: 2rem; height: 2rem; font-size: 1.1rem; background: var(--c); color: #fff; }
 .quick-group h4 a { color: inherit; text-decoration: none; }
+.quick-group h4 a:hover { text-decoration: underline; }
 .quick-group ul { list-style: none; }
-.quick-group li + li { margin-top: 0.3rem; }
 .quick-group li a {
-  color: var(--ink); text-decoration: none; font-size: 0.95rem; line-height: 1.4;
-  border-bottom: 1px solid transparent; transition: border-color 0.2s ease, color 0.2s ease;
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  padding: 0.3rem 0.45rem; margin: 0 -0.45rem; border-radius: 6px;
+  color: var(--ink); text-decoration: none; font-size: 0.95rem; line-height: 1.35;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.quick-group li a:hover { color: var(--accent-deep); border-bottom-color: var(--rule-strong); }
-.quick-group .muted { color: var(--ink-muted); font-size: 0.8rem; }
+.quick-group li a .ico { color: var(--c); font-size: 1.05rem; margin-top: 0.1rem; }
+.quick-group li a:hover { background: var(--c-soft); color: var(--c); }
+.quick-group .muted { color: var(--ink-soft); font-size: 0.8rem; font-weight: 400; }
 .card-extra { margin-top: 0.6rem; font-size: 0.85rem; }
 .card-extra a { color: var(--accent-deep); }
 
@@ -310,6 +373,43 @@ body::before {
 
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2l8 5H4z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></symbol>
+  <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M6 12h4"/><path d="M8 10v4"/><path d="M15 13h.01"/><path d="M18 11h.01"/><rect x="2" y="6" width="20" height="12" rx="2"/></symbol>
+  <symbol id="i-faro" viewBox="0 0 24 24"><path d="M9.5 10h5l2 11h-9z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/><path d="M2 3l4 2"/><path d="M22 3l-4 2"/><path d="M2 9h3"/><path d="M22 9h-3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-notebook" viewBox="0 0 24 24"><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M16 2v20"/></symbol>
+  <symbol id="i-nodes" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M10.7 7.7 6.3 16.3"/><path d="m13.3 7.7 4.4 8.6"/><path d="M8 19h8"/></symbol>
+  <symbol id="i-tower" viewBox="0 0 24 24"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9"/><path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5"/><circle cx="12" cy="9" r="2"/><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47"/><path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1"/><path d="M9.5 18h5"/><path d="m8 22 4-11 4 11"/></symbol>
+  <symbol id="i-dipole" viewBox="0 0 24 24"><path d="M2 6h8.5"/><path d="M13.5 6H22"/><path d="M12 6v16"/><circle cx="12" cy="6" r="1.5"/><path d="M2 3v6"/><path d="M22 3v6"/></symbol>
+  <symbol id="i-handheld" viewBox="0 0 24 24"><rect x="7" y="8" width="10" height="14" rx="2"/><path d="M9 8V2"/><path d="M10 12h4"/><path d="M10 15h4"/><path d="M10 18h4"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></symbol>
+  <symbol id="i-scope" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-vote" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M2 18 4 7l5 5 3-7 3 7 5-5 2 11z"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M7 21h10"/><path d="M4 7h16"/><path d="m4 7-2.5 7a3 3 0 0 0 5 0z"/><path d="m20 7-2.5 7a3 3 0 0 0 5 0z"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-bodega" viewBox="0 0 24 24"><path d="M2 21V8l10-5 10 5v13"/><path d="M6 21v-9h12v9"/><path d="M6 16h12"/><path d="M2 21h20"/></symbol>
+  <symbol id="i-id" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M5 16a3 3 0 0 1 6 0"/><path d="M14 10h4"/><path d="M14 14h4"/></symbol>
+</defs></svg>
+
 <div class="top-bar">
   <div class="container top-bar-inner">
     <div>
@@ -323,6 +423,18 @@ body::before {
     </div>
   </div>
 </div>
+
+<nav class="jump" aria-label="Secciones del sitio">
+  <div class="container jump-inner">
+    <a class="t-idx" href="#acceso"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg>Índice</a>
+    <a class="t-aa" href="#servicio"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg>Servicio</a>
+    <a class="t-juegos" href="#juegos"><svg class="ico" aria-hidden="true"><use href="#i-gamepad"/></svg>Juegos</a>
+    <a class="t-radio" href="#radio"><svg class="ico" aria-hidden="true"><use href="#i-tower"/></svg>Radio</a>
+    <a class="t-analisis" href="#analisis"><svg class="ico" aria-hidden="true"><use href="#i-scope"/></svg>Análisis</a>
+    <a class="t-notas" href="#notas"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg>Notas</a>
+    <a class="t-otros" href="#otros"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg>Otros lugares</a>
+  </div>
+</nav>
 
 <header class="hero container">
   <div class="hero-label">Sitio personal &nbsp;·&nbsp; MMXXVI</div>
@@ -357,61 +469,67 @@ body::before {
   <!-- ============================================================
        ACCESO RÁPIDO  (índice de todo lo publicado en el sitio)
        ============================================================ -->
-  <div class="divider">
+  <div class="divider t-idx" id="acceso">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg></span>
     <span class="divider-num">§ 0</span>
     <span class="divider-title">Acceso rápido</span>
     <span class="divider-line"></span>
   </div>
 
   <nav class="quick" aria-label="Acceso rápido">
-    <div class="quick-group">
-      <h4><a href="#servicio">Servicio AA</a></h4>
+    <div class="quick-group t-aa">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></span><a href="#servicio">Servicio AA</a></h4>
       <ul>
-        <li><a href="biblioteca_aa_interactiva.html">Biblioteca AA interactiva</a></li>
-        <li><a href="unicidad_de_proposito.html">La unicidad de propósito</a></li>
-        <li><a href="doce_conceptos.html">Taller: los Doce Conceptos</a></li>
-        <li><a href="alcoholismo_bogota.html">Alcoholismo en Bogotá</a></li>
-        <li><a href="top12_sitios_aa.html">Los 12 mejores sitios de AA</a></li>
-        <li><a href="https://wiroal.github.io/racsg/">63.ª Conferencia · Proyectos y fuentes</a></li>
-        <li><a href="https://wiroal.github.io/racsg/csg62.html">Documentos del Panel 62</a></li>
-        <li><a href="proyecto_accion_recomendable/">Proyecto de Acción Recomendable</a></li>
+        <li><a href="biblioteca_aa_interactiva.html"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Biblioteca AA interactiva</span></a></li>
+        <li><a href="unicidad_de_proposito.html"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg><span>La unicidad de propósito</span></a></li>
+        <li><a href="doce_conceptos.html"><svg class="ico" aria-hidden="true"><use href="#i-board"/></svg><span>Taller: los Doce Conceptos</span></a></li>
+        <li><a href="alcoholismo_bogota.html"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><span>Alcoholismo en Bogotá</span></a></li>
+        <li><a href="top12_sitios_aa.html"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Los 12 mejores sitios de AA</span></a></li>
+        <li><a href="https://wiroal.github.io/racsg/"><svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg><span>63.ª Conferencia · Proyectos y fuentes</span></a></li>
+        <li><a href="https://wiroal.github.io/racsg/csg62.html"><svg class="ico" aria-hidden="true"><use href="#i-folder"/></svg><span>Documentos del Panel 62</span></a></li>
+        <li><a href="proyecto_accion_recomendable/"><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg><span>Proyecto de Acción Recomendable</span></a></li>
       </ul>
     </div>
-    <div class="quick-group">
-      <h4><a href="#juegos">Juegos de estudio</a></h4>
+    <div class="quick-group t-juegos">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-gamepad"/></svg></span><a href="#juegos">Juegos de estudio</a></h4>
       <ul>
-        <li><a href="conceptos_dummis/">Doce Conceptos en Juego</a></li>
-        <li><a href="unicidad_proposito/">El Faro · Unicidad de propósito</a></li>
-        <li><a href="juego_conceptos/">Juego de los Conceptos (en grupo)</a></li>
-        <li><a href="conceptos_bisagra/conceptos_bisagra.html">Los Doce Conceptos como bisagra</a></li>
-        <li><a href="conceptos_dummis/cuaderno.html">Cuaderno de 8 semanas</a></li>
-        <li><a href="juego_inventarios/">La Bodega · Cuarto Paso</a></li>
+        <li><a href="conceptos_dummis/"><svg class="ico" aria-hidden="true"><use href="#i-gamepad"/></svg><span>Doce Conceptos en Juego</span></a></li>
+        <li><a href="unicidad_proposito/"><svg class="ico" aria-hidden="true"><use href="#i-faro"/></svg><span>El Faro · Unicidad de propósito</span></a></li>
+        <li><a href="juego_conceptos/"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Juego de los Conceptos (en grupo)</span></a></li>
+        <li><a href="conceptos_bisagra/conceptos_bisagra.html"><svg class="ico" aria-hidden="true"><use href="#i-nodes"/></svg><span>Los Doce Conceptos como bisagra</span></a></li>
+        <li><a href="conceptos_dummis/cuaderno.html"><svg class="ico" aria-hidden="true"><use href="#i-notebook"/></svg><span>Cuaderno de 8 semanas</span></a></li>
+        <li><a href="juego_inventarios/"><svg class="ico" aria-hidden="true"><use href="#i-bodega"/></svg><span>La Bodega · Cuarto Paso</span></a></li>
       </ul>
     </div>
-    <div class="quick-group">
-      <h4><a href="#servicio">Congresos y grupos</a></h4>
+    <div class="quick-group t-congreso">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></span><a href="#servicio">Congresos y grupos</a></h4>
       <ul>
-        <li><a href="https://www.aabogota.com/p/reset-local-y-tipografia.html">36.º Congreso · Bogotá 2027</a></li>
-        <li><a href="congreso-region-c-claro.html">35.º Congreso · Ubaté 2026</a></li>
-        <li><a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html">Directorio de grupos · Bogotá</a></li>
-        <li><a href="https://aabogota.com">AA Bogotá</a></li>
+        <li><a href="https://www.aabogota.com/p/reset-local-y-tipografia.html"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>36.º Congreso · Bogotá 2027</span></a></li>
+        <li><a href="congreso-region-c-claro.html"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>35.º Congreso · Ubaté 2026</span></a></li>
+        <li><a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><span>Directorio de grupos · Bogotá</span></a></li>
+        <li><a href="https://aabogota.com"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg><span>AA Bogotá</span></a></li>
       </ul>
     </div>
-    <div class="quick-group">
-      <h4><a href="#radio">Radio</a> · <a href="#analisis">Análisis</a></h4>
+    <div class="quick-group t-radio">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-tower"/></svg></span><a href="#radio">Radio</a></h4>
       <ul>
-        <li><a href="politica/dipolos-hf.html">Dipolos para HF</a></li>
-        <li><a href="politica/01_injerencia_electoral_latam.html">Injerencia electoral</a></li>
-        <li><a href="politica/03_duenos-poder.html">Los dueños del poder</a></li>
-        <li><a href="politica/04_normalidad-psicologica-nuremberg.html">Núremberg</a></li>
-        <li><a href="politica/ley-rescate-canasta.html">La Ley de Rescate en su mercado</a></li>
+        <li><a href="politica/dipolos-hf.html"><svg class="ico" aria-hidden="true"><use href="#i-dipole"/></svg><span>Dipolos para HF</span></a></li>
       </ul>
     </div>
-    <div class="quick-group">
-      <h4>Estadísticas <span class="muted">· con clave</span></h4>
+    <div class="quick-group t-analisis">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-scope"/></svg></span><a href="#analisis">Análisis</a></h4>
       <ul>
-        <li><a href="conceptos_dummis/estadisticas.html">Doce Conceptos en Juego</a></li>
-        <li><a href="unicidad_proposito/estadisticas.html">El Faro</a></li>
+        <li><a href="politica/01_injerencia_electoral_latam.html"><svg class="ico" aria-hidden="true"><use href="#i-vote"/></svg><span>Injerencia electoral</span></a></li>
+        <li><a href="politica/03_duenos-poder.html"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Los dueños del poder</span></a></li>
+        <li><a href="politica/04_normalidad-psicologica-nuremberg.html"><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg><span>Núremberg</span></a></li>
+        <li><a href="politica/ley-rescate-canasta.html"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg><span>La Ley de Rescate en su mercado</span></a></li>
+      </ul>
+    </div>
+    <div class="quick-group t-stats">
+      <h4><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></span>Estadísticas <span class="muted">· con clave</span></h4>
+      <ul>
+        <li><a href="conceptos_dummis/estadisticas.html"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><span>Doce Conceptos en Juego</span></a></li>
+        <li><a href="unicidad_proposito/estadisticas.html"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><span>El Faro</span></a></li>
       </ul>
     </div>
   </nav>
@@ -419,7 +537,8 @@ body::before {
   <!-- ============================================================
        § I  SERVICIO  (enlaces externos: aabogota / racsg)
        ============================================================ -->
-  <div class="divider" id="servicio">
+  <div class="divider t-aa" id="servicio">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></span>
     <span class="divider-num">§ I</span>
     <span class="divider-title">Servicio</span>
     <span class="divider-line"></span>
@@ -430,78 +549,78 @@ body::before {
     Área 3 — Bogotá, Colombia.
   </p>
 
-  <div class="cards">
+  <div class="cards t-aa">
     <a href="https://wiroal.github.io/racsg/" class="card card-link">
-      <span class="card-num">001 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg></span><span class="card-num">001 / AA</span></div>
       <h3>63.ª Conferencia de Servicios Generales</h3>
       <p>Espacio de trabajo del ciclo 2027: proyectos y acciones recomendables, buscador de fuentes, biblioteca y archivo de la 62.ª RAC.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="https://www.aabogota.com/p/reuniones-virtuales-grupos-aa-bogota.html" class="card card-link">
-      <span class="card-num">002 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="card-num">002 / AA</span></div>
       <h3>Directorio de grupos · Bogotá</h3>
       <p>Listado actualizado de grupos del Área 3 con direcciones, horarios y datos de contacto público.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
-    <a href="https://www.aabogota.com/p/reset-local-y-tipografia.html" class="card card-link">
-      <span class="card-num">003 / AA</span>
+    <a href="https://www.aabogota.com/p/reset-local-y-tipografia.html" class="card card-link t-congreso">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></span><span class="card-num">003 / AA</span></div>
       <h3>36.º Congreso Región C</h3>
-      <p>Información del encuentro de Bogota D.C., agosto de 2027: programa, ubicación y materiales.</p>
+      <p>Información del encuentro de Bogotá D.C., agosto de 2027: programa, ubicación y materiales.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
     <a href="https://wiroal.github.io/alcoholismo_bogota.html" class="card card-link">
-      <span class="card-num">004 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span><span class="card-num">004 / AA</span></div>
       <h3>Alcoholismo en Bogotá (2023)</h3>
       <p>Resumen del ESTUDIO DE CONSUMO DE SUSTANCIAS PSICOACTIVAS EN BOGOTÁ D.C. 2022</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="unicidad_de_proposito.html" class="card card-link">
-      <span class="card-num">005 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg></span><span class="card-num">005 / AA</span></div>
       <h3>La unicidad de propósito</h3>
       <p>Análisis documental del único objetivo de AA a partir de la recuperación del enfermo alcohólico, con citas verificadas y número de página.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="top12_sitios_aa.html" class="card card-link">
-      <span class="card-num">006 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></span><span class="card-num">006 / AA</span></div>
       <h3>Los 12 mejores sitios de AA en el mundo</h3>
       <p>Selección razonada de los sitios oficiales mejor construidos, con criterios explícitos, puntajes y ficha de cada uno.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="biblioteca_aa_interactiva.html" class="card card-link">
-      <span class="card-num">007 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span><span class="card-num">007 / AA</span></div>
       <h3>Biblioteca AA interactiva</h3>
       <p>Literatura de AA, documentos históricos y materiales de servicio: busca por título, tema o categoría y guarda tus favoritos.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="doce_conceptos.html" class="card card-link">
-      <span class="card-num">008 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-board"/></svg></span><span class="card-num">008 / AA</span></div>
       <h3>Taller: los Doce Conceptos</h3>
       <p>“Usted ya vive los Doce Conceptos; solo que nadie le había dicho cómo se llaman.” Taller de servicio para quien apenas empieza.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
-    <div class="card">
-      <span class="card-num">009 / AA</span>
+    <div class="card t-congreso">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></span><span class="card-num">009 / AA</span></div>
       <h3><a href="congreso-region-c-claro.html" style="color:inherit;text-decoration:none">35.º Congreso Región C · Ubaté 2026</a></h3>
       <p>Página del encuentro del 15 al 17 de agosto de 2026 en Ubaté, Cundinamarca: programa, hoteles, restaurantes y turismo.</p>
       <p class="card-extra"><a href="congreso-region-c-claro.html">Versión clara</a> · <a href="congreso-region-c.html">Versión oscura</a></p>
-      <div class="card-status">Evento realizado</div>
+      <div class="card-status"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Evento realizado</div>
     </div>
     <a href="proyecto_accion_recomendable/" class="card card-link">
-      <span class="card-num">010 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg></span><span class="card-num">010 / AA</span></div>
       <h3>Proyecto de Acción Recomendable</h3>
       <p>Cómo se prepara una propuesta para la Conferencia, buscador de recomendaciones desde 1969, el trámite paso a paso y creación del PDF.</p>
       <div class="card-status active">Abrir →</div>
     </a>
 
     <a href="https://wiroal.github.io/racsg/csg62.html" class="card card-link">
-      <span class="card-num">011 / AA</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-folder"/></svg></span><span class="card-num">011 / AA</span></div>
       <h3>Documentos del Panel 62</h3>
       <p>Informes, guías y presentaciones del período como delegado a la 62.ª Conferencia de Servicios Generales.</p>
       <div class="card-status active">Ver aquí →</div>
@@ -511,7 +630,8 @@ body::before {
   <!-- ============================================================
        § II  JUEGOS DE ESTUDIO AA  (conceptos_dummis, unicidad_proposito, juego_conceptos, conceptos_bisagra)
        ============================================================ -->
-  <div class="divider" id="juegos">
+  <div class="divider t-juegos" id="juegos">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-gamepad"/></svg></span>
     <span class="divider-num">§ II</span>
     <span class="divider-title">Juegos de estudio</span>
     <span class="divider-line"></span>
@@ -522,44 +642,44 @@ body::before {
     fichas cortas, retos y niveles para aprender a su propio ritmo o en grupo.
   </p>
 
-  <div class="cards">
+  <div class="cards t-juegos">
     <a href="conceptos_dummis/" class="card card-link">
-      <span class="card-num">001 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-gamepad"/></svg></span><span class="card-num">001 / JG</span></div>
       <h3>Doce Conceptos en Juego</h3>
       <p>Recorrido interactivo por los Doce Conceptos: qué decide cada instancia, cómo se reparte el servicio y cómo se relacionan con los Pasos, las Tradiciones y la vida del grupo.</p>
       <div class="card-status active">Jugar →</div>
     </a>
 
     <a href="unicidad_proposito/" class="card card-link">
-      <span class="card-num">002 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-faro"/></svg></span><span class="card-num">002 / JG</span></div>
       <h3>El Faro · Unicidad de propósito</h3>
       <p>Una sola misión: llevar el mensaje al alcohólico que aún sufre. Completa los 6 retos y enciende cada rayo del faro.</p>
       <div class="card-status active">Jugar →</div>
     </a>
 
     <a href="juego_conceptos/" class="card card-link">
-      <span class="card-num">003 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span><span class="card-num">003 / JG</span></div>
       <h3>Juego de los Conceptos · en grupo</h3>
       <p>Test de entrada y de salida para una charla: la pantalla se proyecta en la sala y cada participante responde desde su celular.</p>
       <div class="card-status active">Abrir →</div>
     </a>
 
     <a href="conceptos_dummis/cuaderno.html" class="card card-link">
-      <span class="card-num">004 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-notebook"/></svg></span><span class="card-num">004 / JG</span></div>
       <h3>Cuaderno de 8 semanas</h3>
       <p>Plan de estudio de los Doce Conceptos con ruta semanal, bitácora, tarjetas y casos para una RSG que empieza.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="conceptos_bisagra/conceptos_bisagra.html" class="card card-link">
-      <span class="card-num">005 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-nodes"/></svg></span><span class="card-num">005 / JG</span></div>
       <h3>Los Doce Conceptos como bisagra</h3>
       <p>Exposición en un mapa: cada Concepto al centro y sus vínculos con los Pasos y las Tradiciones, explicados uno por uno.</p>
       <div class="card-status active">Abrir →</div>
     </a>
 
     <a href="juego_inventarios/" class="card card-link">
-      <span class="card-num">006 / JG</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-bodega"/></svg></span><span class="card-num">006 / JG</span></div>
       <h3>La Bodega · Cuarto Paso</h3>
       <p>Juego y cuaderno privado para escribir la historia y los inventarios, con retos y PDF. Lo que escribes no sale de tu equipo.</p>
       <div class="card-status active">Entrar →</div>
@@ -569,7 +689,8 @@ body::before {
   <!-- ============================================================
        § III  RADIO  (artículo interno: /politica/dipolos-hf.html)
        ============================================================ -->
-  <div class="divider" id="radio">
+  <div class="divider t-radio" id="radio">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-tower"/></svg></span>
     <span class="divider-num">§ III</span>
     <span class="divider-title">Radio · HJ3RAW</span>
     <span class="divider-line"></span>
@@ -579,33 +700,34 @@ body::before {
     Notas técnicas, configuraciones de equipos y guías de operación en HF y VHF.
   </p>
 
-  <div class="cards">
+  <div class="cards t-radio">
     <a href="politica/dipolos-hf.html" class="card card-link">
-      <span class="card-num">001 / RF</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-dipole"/></svg></span><span class="card-num">001 / RF</span></div>
       <h3>Dipolos para HF</h3>
       <p>Cálculo, construcción y ajuste de antenas dipolo de media onda para las bandas de HF.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
-    <article class="card">
-      <span class="card-num">002 / RF</span>
+    <article class="card card-pending">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-handheld"/></svg></span><span class="card-num">002 / RF</span></div>
       <h3>Configuración Baofeng DM-32UV</h3>
       <p>Codeplug para repetidores de la Liga de Radio de Medellín y memorias locales de Bogotá.</p>
-      <div class="card-status">Pendiente publicar</div>
+      <div class="card-status"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Pendiente publicar</div>
     </article>
 
-    <article class="card">
-      <span class="card-num">003 / RF</span>
+    <article class="card card-pending">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-notebook"/></svg></span><span class="card-num">003 / RF</span></div>
       <h3>Yaesu FT-891 · Bitácora</h3>
       <p>Notas de operación HF, antenas probadas y diario de contactos relevantes.</p>
-      <div class="card-status">Pendiente publicar</div>
+      <div class="card-status"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Pendiente publicar</div>
     </article>
   </div>
 
   <!-- ============================================================
        § IV  ANÁLISIS  (artículos internos: /politica/)
        ============================================================ -->
-  <div class="divider" id="analisis">
+  <div class="divider t-analisis" id="analisis">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-scope"/></svg></span>
     <span class="divider-num">§ IV</span>
     <span class="divider-title">Análisis</span>
     <span class="divider-line"></span>
@@ -615,10 +737,10 @@ body::before {
     Lecturas sobre poder, política y el orden de las cosas en Latinoamérica.
   </p>
 
-  <div class="cards">
+  <div class="cards t-analisis">
     <a href="politica/ley-rescate-canasta.html" class="card card-link feature">
       <div>
-        <span class="card-num">006 / PL · NUEVO</span>
+        <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-cart"/></svg></span><span class="card-num">006 / PL · NUEVO</span></div>
         <h3>La Ley de Rescate en su mercado</h3>
         <p>El proyecto de ley 477 de 2026 pone IVA del 19% a frutas, verduras, granos, café, azúcar, aceite y pasta desde 2028. Al mismo tiempo baja el impuesto de renta a las empresas. Haga la cuenta con su propio mercado: producto por producto, lo que paga hoy y lo que pagaría con la ley.</p>
         <div class="card-status active">Hacer la cuenta y leer el análisis →</div>
@@ -636,28 +758,28 @@ body::before {
     </a>
 
     <a href="politica/01_injerencia_electoral_latam.html" class="card card-link">
-      <span class="card-num">001 / PL</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-vote"/></svg></span><span class="card-num">001 / PL</span></div>
       <h3>Injerencia electoral en Latinoamérica</h3>
       <p>Recuento de episodios de intervención externa en procesos electorales de la región.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="https://www.javiergiraldo.org/" class="card card-link">
-      <span class="card-num">002 / PL</span>
-      <h3>Desde los margenes</h3>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg></span><span class="card-num">002 / PL</span></div>
+      <h3>Desde los márgenes</h3>
       <p> Legado del sacerdote Javier Giraldo Moreno S.J.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="politica/03_duenos-poder.html" class="card card-link">
-      <span class="card-num">003 / PL</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg></span><span class="card-num">003 / PL</span></div>
       <h3>Los dueños del poder</h3>
       <p>Notas sobre quién decide, quién financia y quién permanece detrás de las decisiones públicas.</p>
       <div class="card-status active">Ver aquí →</div>
     </a>
 
     <a href="politica/04_normalidad-psicologica-nuremberg.html" class="card card-link">
-      <span class="card-num">004 / PL</span>
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg></span><span class="card-num">004 / PL</span></div>
       <h3>Normalidad psicológica y violencia de Estado: lo que enseñan las evaluaciones de Núremberg</h3>
       <p>Por qué el mal masivo del nazismo no se explica por la enfermedad mental, sino por la ideología, las instituciones y las dinámicas de grupo. </p>
       <div class="card-status active">Ver aquí →</div>
@@ -667,7 +789,8 @@ body::before {
   <!-- ============================================================
        § V  NOTAS  (carpetas /linux y /python · pendientes)
        ============================================================ -->
-  <div class="divider">
+  <div class="divider t-notas" id="notas">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg></span>
     <span class="divider-num">§ V</span>
     <span class="divider-title">Notas</span>
     <span class="divider-line"></span>
@@ -677,54 +800,59 @@ body::before {
     Apuntes técnicos, análisis breves y documentos de trabajo que no encajan en el blog.
   </p>
 
-  <div class="cards">
-    <article class="card">
-      <span class="card-num">001 / NX</span>
+  <div class="cards t-notas">
+    <article class="card card-pending">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg></span><span class="card-num">001 / NX</span></div>
       <h3>Linux para no informáticos</h3>
       <p>Notas sueltas sobre administración básica de servidores Ubuntu, aprendidas en la práctica.</p>
-      <div class="card-status">Pendiente publicar</div>
+      <div class="card-status"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Pendiente publicar</div>
     </article>
 
-    <article class="card">
-      <span class="card-num">002 / NX</span>
+    <article class="card card-pending">
+      <div class="card-head"><span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg></span><span class="card-num">002 / NX</span></div>
       <h3>Python · Recetas cortas</h3>
       <p>Scripts pequeños para tareas reales: extracción de PDF, validación DIVIPOLA, Excel programático.</p>
-      <div class="card-status">Pendiente publicar</div>
+      <div class="card-status"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Pendiente publicar</div>
     </article>
   </div>
 
   <!-- ============================================================
        § VI  EN OTROS LUGARES
        ============================================================ -->
-  <div class="divider">
+  <div class="divider t-otros" id="otros">
+    <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></span>
     <span class="divider-num">§ VI</span>
     <span class="divider-title">En otros lugares</span>
     <span class="divider-line"></span>
   </div>
 
   <ul class="external-list">
-    <li>
+    <li class="t-analisis">
       <a href="https://www.wiroal.com" target="_blank" rel="noopener">
-        <span class="ext-label">Blog</span>
-        <span class="ext-target">wiroal.com</span>
+        <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg></span>
+        <span><span class="ext-label">Blog</span>
+        <span class="ext-target">wiroal.com</span></span>
       </a>
     </li>
-    <li>
+    <li class="t-notas">
       <a href="https://orcid.org/0000-0002-6747-8506" target="_blank" rel="noopener">
-        <span class="ext-label">Académico</span>
-        <span class="ext-target">ORCID</span>
+        <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-id"/></svg></span>
+        <span><span class="ext-label">Académico</span>
+        <span class="ext-target">ORCID</span></span>
       </a>
     </li>
-    <li>
+    <li class="t-otros">
       <a href="https://github.com/wiroal" target="_blank" rel="noopener">
-        <span class="ext-label">Código</span>
-        <span class="ext-target">GitHub</span>
+        <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg></span>
+        <span><span class="ext-label">Código</span>
+        <span class="ext-target">GitHub</span></span>
       </a>
     </li>
-    <li>
+    <li class="t-aa">
       <a href="https://aabogota.com" target="_blank" rel="noopener">
-        <span class="ext-label">Servicio</span>
-        <span class="ext-target">AA Bogotá</span>
+        <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></span>
+        <span><span class="ext-label">Servicio</span>
+        <span class="ext-target">AA Bogotá</span></span>
       </a>
     </li>
   </ul>
@@ -744,6 +872,29 @@ body::before {
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Menú fijo: marca la sección que está en pantalla
+  (function () {
+    var bar = document.querySelector('.jump-inner');
+    var links = Array.prototype.slice.call(bar.querySelectorAll('a'));
+    var heads = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+    function update() {
+      var i = -1;
+      heads.forEach(function (h, n) { if (h.getBoundingClientRect().top < window.innerHeight * 0.35) i = n; });
+      // Al final de la página la última sección no alcanza a subir
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) i = links.length - 1;
+      links.forEach(function (a, n) {
+        if (n === i) {
+          if (a.getAttribute('aria-current') !== 'true') {
+            a.setAttribute('aria-current', 'true');
+            bar.scrollTo({ left: a.offsetLeft - 16, behavior: 'smooth' });
+          }
+        } else { a.removeAttribute('aria-current'); }
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
 </script>
 
 </body>
