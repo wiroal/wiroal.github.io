@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe del Delegado · Noviembre 2026</title>
+<meta name="description" content="Informe del Delegado del Área 3, Región C (Bogotá) a la Asamblea de Área del 28 de noviembre de 2026: finanzas de la Corporación, Séptima Tradición, literatura y fechas clave.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#081a3d; --navy2:#0d2657; --azul:#1d4fa3; --cielo:#5c8fe0;
+  --oro:#f5b800; --oro2:#ffd45c; --blanco:#ffffff; --tinta:#dfe7f5;
+  --verde:#3ccf8e; --rojo:#ff7a59;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--navy);color:var(--blanco);font-family:'Work Sans',system-ui,sans-serif;overflow-x:hidden}
+.big{font-family:'Anton',Impact,sans-serif;font-weight:400;line-height:.92;letter-spacing:.005em}
+.oro{color:var(--oro)} .cielo{color:var(--cielo)}
+
+/* barra de progreso y puntos */
+#prog{position:fixed;top:0;left:0;height:6px;width:0;background:linear-gradient(90deg,var(--oro),var(--oro2));z-index:20;transition:width .3s}
+#dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:20}
+#dots a{width:13px;height:13px;border-radius:50%;border:2px solid var(--oro);display:block;transition:all .25s}
+#dots a.on{background:var(--oro);transform:scale(1.35)}
+.home{position:fixed;top:16px;left:16px;z-index:20;color:var(--tinta);text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase;background:rgba(8,26,61,.7);padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+.home:hover{color:var(--oro);border-color:var(--oro)}
+
+/* láminas */
+section{min-height:100vh;min-height:100svh;scroll-snap-align:start;position:relative;display:flex;flex-direction:column;justify-content:center;padding:80px 7vw 70px;overflow:hidden}
+section:nth-child(odd){background:radial-gradient(ellipse at 85% 15%,rgba(29,79,163,.55),transparent 60%),var(--navy)}
+section:nth-child(even){background:radial-gradient(ellipse at 10% 90%,rgba(245,184,0,.13),transparent 55%),var(--navy2)}
+.kick{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:clamp(13px,1.4vw,17px);color:var(--oro);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.kick .n{font-family:'Anton';font-size:1.4em;letter-spacing:.04em;color:var(--blanco);opacity:.5}
+h2{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:clamp(52px,10vw,150px);line-height:.92;text-transform:uppercase}
+.sub{font-size:clamp(20px,2.6vw,34px);font-weight:600;color:var(--tinta);margin-top:14px;max-width:30ch}
+.fuente{position:absolute;bottom:22px;left:7vw;right:7vw;font-size:13px;color:rgba(223,231,245,.6)}
+
+/* animación de entrada */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.in .rv{opacity:1;transform:none}
+.in .rv.d1{transition-delay:.12s}.in .rv.d2{transition-delay:.24s}.in .rv.d3{transition-delay:.36s}.in .rv.d4{transition-delay:.48s}.in .rv.d5{transition-delay:.6s}
+
+/* portada */
+.logo{width:clamp(110px,14vw,180px);margin-bottom:28px;animation:gira 30s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.portada h1{font-family:'Anton';font-weight:400;font-size:clamp(64px,14vw,220px);line-height:.88;text-transform:uppercase}
+.meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.chip{border:2px solid var(--oro);border-radius:999px;padding:10px 18px;font-weight:800;font-size:clamp(14px,1.5vw,18px);letter-spacing:.06em}
+.chip.f{background:var(--oro);color:var(--navy)}
+.baja{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:34px;color:var(--oro);animation:rebota 1.6s infinite;text-decoration:none}
+@keyframes rebota{50%{transform:translate(-50%,10px)}}
+
+/* rejilla de dos columnas */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center;margin-top:36px}
+@media(max-width:820px){.dos{grid-template-columns:1fr;gap:30px}#dots{display:none}}
+
+.cifra{font-family:'Anton';font-size:clamp(80px,15vw,230px);line-height:.9;color:var(--oro)}
+.cifra small{font-size:.45em}
+.leyenda{font-size:clamp(18px,2vw,26px);font-weight:600;color:var(--tinta);margin-top:8px}
+
+/* déficit: barras verticales */
+.deficit{display:flex;align-items:flex-end;gap:5vw;height:min(46vh,380px);border-bottom:3px solid rgba(255,255,255,.35);padding:0 4%}
+.deficit .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.deficit .bar{width:100%;max-width:150px;height:0;border-radius:12px 12px 0 0;transition:height 1.4s cubic-bezier(.2,.8,.2,1)}
+.deficit .col:first-child .bar{background:linear-gradient(180deg,var(--rojo),#b8452c)}
+.deficit .col:last-child .bar{background:linear-gradient(180deg,var(--oro2),var(--oro))}
+.deficit .v{font-family:'Anton';font-size:clamp(28px,4vw,54px);margin-bottom:8px}
+.deficit .m{font-weight:800;letter-spacing:.18em;margin-top:10px;position:absolute;bottom:-34px}
+.deficit .col{position:relative}
+.reserva{margin-top:26px;display:inline-flex;gap:14px;align-items:baseline;background:rgba(255,255,255,.07);border-left:6px solid var(--verde);padding:14px 20px;border-radius:8px}
+.reserva b{font-family:'Anton';font-size:clamp(34px,4.5vw,60px);color:var(--verde);font-weight:400}
+
+/* barras horizontales */
+.hb{display:grid;gap:14px;width:100%}
+.hb .f{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:14px;align-items:center}
+.hb .l{font-weight:700;font-size:clamp(14px,1.5vw,19px);color:var(--tinta)}
+.hb .t{background:rgba(255,255,255,.08);border-radius:8px;height:clamp(34px,4.6vh,48px);position:relative;overflow:hidden}
+.hb .b{height:100%;width:0;background:var(--azul);border-radius:8px;transition:width 1.2s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-family:'Anton';font-size:clamp(16px,2vw,24px);white-space:nowrap}
+.hb .f.yo .b{background:linear-gradient(90deg,var(--oro),var(--oro2));color:var(--navy)}
+.hb .f.yo .l{color:var(--oro)}
+.mini{display:flex;gap:6vw;margin-top:26px;flex-wrap:wrap}
+.mini div b{font-family:'Anton';font-weight:400;font-size:clamp(44px,6vw,86px);color:var(--blanco);display:block;line-height:1}
+.mini div span{color:var(--tinta);font-weight:600;font-size:clamp(15px,1.5vw,19px)}
+
+/* literatura: comparador */
+.vs{display:grid;gap:30px;margin-top:40px;max-width:1100px}
+.vs .row .l{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-weight:800;font-size:clamp(18px,2.2vw,28px);gap:10px;flex-wrap:wrap}
+.vs .row .l b{font-family:'Anton';font-weight:400;font-size:clamp(40px,6vw,90px);line-height:1}
+.vs .t{height:clamp(30px,5vh,52px);background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+.vs .b{height:100%;width:0;border-radius:999px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.vs .c .b{background:linear-gradient(90deg,var(--oro),var(--oro2))} .vs .c .l b{color:var(--oro)}
+.vs .p .b{background:var(--cielo)}
+.sello{display:inline-block;margin-top:34px;background:var(--oro);color:var(--navy);padding:14px 24px;border-radius:10px;font-weight:800;font-size:clamp(17px,2vw,24px);transform:rotate(-1.5deg)}
+
+/* metas */
+.metas{position:relative;margin-top:40px;max-width:1150px}
+.metas .linea{font-weight:800;font-size:13px;letter-spacing:.12em;color:var(--oro);margin-bottom:12px}
+.metas .t::after{content:'';position:absolute;left:55.33%;top:0;bottom:0;border-left:3px dashed #fff;z-index:2}
+.metas .hb .f.ok .b{background:linear-gradient(90deg,#1f9e66,var(--verde))}
+.metas .hb .f.no .b{background:linear-gradient(90deg,#c9532f,var(--rojo))}
+.falta{margin-top:40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.falta .cifra{font-size:clamp(70px,11vw,160px)}
+.falta p{font-size:clamp(18px,2.1vw,28px);font-weight:600;max-width:24ch;color:var(--tinta)}
+
+/* gratitud */
+.cita{font-family:'Anton';font-size:clamp(46px,8vw,124px);line-height:1;text-transform:uppercase}
+.cita em{font-style:normal;color:var(--oro)}
+.pago{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+@media(max-width:820px){.pago{grid-template-columns:1fr}}
+.pago div{background:rgba(255,255,255,.07);border-top:6px solid var(--oro);padding:20px 22px;border-radius:10px}
+.pago span{display:block;font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--oro);margin-bottom:6px}
+.pago b{font-family:'Anton';font-weight:400;font-size:clamp(30px,3.6vw,50px);letter-spacing:.03em}
+.pago p{font-size:18px;font-weight:600}
+.copiar{margin-top:10px;background:var(--oro);color:var(--navy);border:0;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer;font-family:inherit;font-size:14px}
+
+/* fechas */
+.fechas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;position:relative}
+@media(max-width:900px){.fechas{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fechas{grid-template-columns:1fr}}
+.fecha{background:rgba(255,255,255,.06);border-radius:14px;padding:22px;border:2px solid rgba(255,255,255,.12)}
+.fecha .d{font-family:'Anton';font-size:clamp(30px,3.4vw,48px);line-height:1;color:var(--cielo)}
+.fecha h3{font-size:clamp(19px,1.8vw,24px);margin:12px 0 6px}
+.fecha p{color:var(--tinta);font-size:15px}
+.fecha .tag{display:inline-block;margin-top:12px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid currentColor}
+.fecha.pasada{opacity:.6}
+.fecha.hoy{border-color:var(--oro);background:rgba(245,184,0,.12);box-shadow:0 0 0 0 rgba(245,184,0,.6);animation:late 2s infinite}
+.fecha.hoy .d{color:var(--oro)}
+@keyframes late{70%{box-shadow:0 0 0 18px rgba(245,184,0,0)}100%{box-shadow:0 0 0 0 rgba(245,184,0,0)}}
+.cuenta{margin-top:30px;font-size:clamp(18px,2vw,26px);font-weight:600;color:var(--tinta)}
+.cuenta b{font-family:'Anton';font-weight:400;font-size:1.8em;color:var(--oro)}
+
+/* cierre */
+.cierre{text-align:center;align-items:center}
+.cierre h2{font-size:clamp(46px,8vw,120px)}
+.cierre .firma{margin-top:36px;font-size:clamp(17px,1.8vw,22px);color:var(--tinta)}
+.cierre .firma b{color:var(--oro)}
+.volver{margin-top:30px;display:inline-block;color:var(--navy);background:var(--oro);text-decoration:none;font-weight:800;padding:14px 26px;border-radius:999px}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .logo,.baja,.fecha.hoy{animation:none}
+  .bar,.b{transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<a class="home" href="../index.html#servicio">← Inicio</a>
+<nav id="dots" aria-label="Láminas"></nav>
+
+<main>
+<!-- 1 · PORTADA -->
+<section class="portada" id="s1">
+  <svg class="logo rv" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#f5b800" stroke-width="5"/>
+    <polygon points="50,14 84,72 16,72" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+  </svg>
+  <div class="kick rv d1">63.ª Conferencia · Informe del Delegado</div>
+  <h1 class="rv d2">Área 3<br><span class="oro">Región C</span></h1>
+  <p class="sub rv d3">Bogotá · Asamblea de Área · sábado 28 de noviembre de 2026</p>
+  <div class="meta rv d4">
+    <span class="chip f">Periodo: 17 oct – 23 nov 2026</span>
+    <span class="chip">Delegado 2026–2027</span>
+  </div>
+  <a class="baja" href="#s2" aria-label="Siguiente">↓</a>
+</section>
+
+<!-- 2 · DÉFICIT -->
+<section id="s2">
+  <div class="kick rv"><span class="n">02</span> Finanzas de la Corporación Nacional</div>
+  <h2 class="rv d1">El déficit <span class="oro">baja.</span></h2>
+  <p class="sub rv d2">Tres meses seguidos con superávit.</p>
+  <div class="dos">
+    <div class="rv d3">
+      <div class="cifra">−$<span data-n="79">0</span><small> M</small></div>
+      <p class="leyenda">menos de déficit acumulado entre julio y octubre de 2026</p>
+      <div class="reserva"><span>Reserva Prudente</span><b>$<span data-n="231.1" data-d="1">0</span> M</b></div>
+    </div>
+    <div class="rv d4" style="padding-bottom:40px">
+      <p style="font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--tinta);margin-bottom:14px">Déficit total acumulado (2025 + 2026)</p>
+      <div class="deficit">
+        <div class="col"><div class="v">$274,4 M</div><div class="bar" data-h="100"></div><div class="m">JULIO</div></div>
+        <div class="col"><div class="v oro">$195,5 M</div><div class="bar" data-h="71.2"></div><div class="m">OCTUBRE</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="fuente">Fuente: Reporte 7 · 63.ª Conferencia (corte 31 oct 2026). Déficit 2025 ($163,8 M) + déficit acumulado 2026 ($31,7 M) = $195,5 M.</p>
+</section>
+
+<!-- 3 · APORTES -->
+<section id="s3">
+  <div class="kick rv"><span class="n">03</span> Séptima Tradición · Aportes a la OSG</div>
+  <h2 class="rv d1">Bogotá <span class="oro">sostiene.</span></h2>
+  <p class="sub rv d2">Tercera Área del país en aportes.</p>
+  <div class="dos">
+    <div class="rv d3">
+      <div class="cifra">$<span data-n="29.1" data-d="1">0</span><small> M</small></div>
+      <p class="leyenda">aportados por el Área 3 · enero – octubre 2026</p>
+      <div class="mini">
+        <div><b><span data-n="44.9" data-d="1">0</span>%</b><span>de la Región C</span></div>
+        <div><b><span data-n="9.5" data-d="1">0</span>%</b><span>del país</span></div>
+      </div>
+    </div>
+    <div class="hb rv d4">
+      <div class="f"><span class="l">Región E · Área 7</span><div class="t"><div class="b" data-w="100">$50,0 M</div></div></div>
+      <div class="f"><span class="l">Región E · Área 6</span><div class="t"><div class="b" data-w="66.4">$33,2 M</div></div></div>
+      <div class="f yo"><span class="l">Región C · Área 3</span><div class="t"><div class="b" data-w="58.1">$29,1 M</div></div></div>
+      <div class="f"><span class="l">Región D · Área 3</span><div class="t"><div class="b" data-w="43.4">$21,7 M</div></div></div>
+      <div class="f"><span class="l">Región E · Área 3</span><div class="t"><div class="b" data-w="34.9">$17,5 M</div></div></div>
+      <div class="f"><span class="l">Región A · Área 3</span><div class="t"><div class="b" data-w="30.7">$15,4 M</div></div></div>
+    </div>
+  </div>
+  <p class="fuente">Fuente: OSG, Área de Contabilidad · Estadísticas enero a octubre 2026 · Aportes por Áreas.</p>
+</section>
+
+<!-- 4 · LITERATURA -->
+<section id="s4">
+  <div class="kick rv"><span class="n">04</span> Literatura por miembro</div>
+  <h2 class="rv d1"><span class="oro">+31 %</span><br>que el país</h2>
+  <p class="sub rv d2">Cada miembro de la Región C compra más literatura que el promedio nacional.</p>
+  <div class="vs rv d3">
+    <div class="row c"><div class="l"><span>Región C</span><b>$<span data-n="52535" data-sep="1">0</span></b></div><div class="t"><div class="b" data-w="100"></div></div></div>
+    <div class="row p"><div class="l"><span>Promedio del país</span><b>$<span data-n="40140" data-sep="1">0</span></b></div><div class="t"><div class="b" data-w="76.4"></div></div></div>
+  </div>
+  <div class="rv d4"><span class="sello">★ El Área 3 es la n.º 1 del país en literatura: $64,9 M</span></div>
+  <p class="fuente">Cálculo: literatura productos OSG ÷ miembros registrados, enero a octubre 2026. Fuente: OSG, Área de Contabilidad.</p>
+</section>
+
+<!-- 5 · METAS -->
+<section id="s5">
+  <div class="kick rv"><span class="n">05</span> Región C frente a su presupuesto</div>
+  <h2 class="rv d1">Una tarea <span class="oro">pendiente.</span></h2>
+  <p class="sub rv d2">Literatura y eventos cumplen. Los aportes van atrasados.</p>
+  <div class="metas rv d3">
+    <div class="linea">┆ Línea punteada = META A OCTUBRE · 83 %</div>
+    <div class="hb">
+      <div class="f ok"><span class="l">Eventos</span><div class="t"><div class="b" data-w="99.7">149,5 % · $32,1 M</div></div></div>
+      <div class="f ok"><span class="l">Literatura</span><div class="t"><div class="b" data-w="62.8">94,2 % · $134,9 M</div></div></div>
+      <div class="f no"><span class="l">Aportes</span><div class="t"><div class="b" data-w="45.8">68,7 % · $64,7 M</div></div></div>
+    </div>
+  </div>
+  <div class="falta rv d4">
+    <div class="cifra">$<span data-n="13.7" data-d="1">0</span><small> M</small></div>
+    <p>faltan para llegar a la meta de aportes de octubre. Buen momento para cerrar la brecha.</p>
+  </div>
+  <p class="fuente">Fuente: OSG · Presupuesto y ejecución por Regiones a octubre 2026 (% del presupuesto anual). Escala de barras hasta 150 %.</p>
+</section>
+
+<!-- 6 · GRATITUD -->
+<section id="s6">
+  <div class="kick rv"><span class="n">06</span> Semana de la Gratitud · 23 al 29 de noviembre</div>
+  <p class="cita rv d1">“La prudencia financiera ha rendido sus frutos en <em>vidas salvadas.</em>”</p>
+  <p class="sub rv d2">Lema de la Semana de la Gratitud 2026 · Reporte 7</p>
+  <div class="pago">
+    <div class="rv d3"><span>Llave Bancolombia</span><b id="llave">0090041712</b><br><button class="copiar" data-c="0090041712">Copiar llave</button></div>
+    <div class="rv d4"><span>Comprobante por WhatsApp</span><b>314 792 2703</b><br><button class="copiar" data-c="3147922703">Copiar número</button></div>
+    <div class="rv d5"><span>Transferencia electrónica</span><p>Evita tarifas en oficinas y corresponsales.</p></div>
+  </div>
+</section>
+
+<!-- 7 · FECHAS -->
+<section id="s7">
+  <div class="kick rv"><span class="n">07</span> Lo que viene</div>
+  <h2 class="rv d1">Cuatro <span class="oro">fechas.</span></h2>
+  <p class="sub rv d2">Una ya pasó. Una es hoy. Dos nos esperan.</p>
+  <div class="fechas">
+    <div class="fecha pasada rv d2"><div class="d">29 OCT 2026</div><h3>Expediente IVC 037/2025 archivado</h3><p>Sujeto a recurso de reposición.</p><span class="tag">Ya pasó</span></div>
+    <div class="fecha hoy rv d3"><div class="d">23 – 29 NOV 2026</div><h3>Semana de la Gratitud</h3><p>Hoy estamos aquí.</p><span class="tag" style="color:var(--oro)">Ahora</span></div>
+    <div class="fecha rv d4"><div class="d">6 FEB 2027</div><h3>Fecha límite</h3><p>Temas y proyectos para la agenda e informes.</p><span class="tag" data-hasta="2027-02-06">Próxima</span></div>
+    <div class="fecha rv d5"><div class="d">29 ABR – 2 MAY 2027</div><h3>63.ª Conferencia</h3><p>Rionegro, Antioquia · Casa de Encuentros De La Salle.</p><span class="tag" data-hasta="2027-04-29">Próxima</span></div>
+  </div>
+  <p class="cuenta rv d5">Faltan <b id="dias">—</b> días para cerrar temas y proyectos de la agenda.</p>
+  <p class="fuente">Fuente: Reporte 7 · 63.ª Conferencia de Servicios Generales, noviembre 2026.</p>
+</section>
+
+<!-- 8 · CIERRE -->
+<section class="cierre" id="s8">
+  <svg class="logo rv" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#f5b800" stroke-width="5"/>
+    <polygon points="50,14 84,72 16,72" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+  </svg>
+  <h2 class="rv d1">La <span class="oro">Unidad</span>, la <span class="oro">Confianza</span> y la <span class="oro">Comunicación</span></h2>
+  <p class="sub rv d2" style="max-width:none">fortalecen nuestra Estructura.</p>
+  <p class="firma rv d3">Con gratitud y servicio · <b>Delegado C3 Panel 62</b> · Área 3 – Región C</p>
+  <a class="volver rv d4" href="../index.html#servicio">Volver al inicio</a>
+</section>
+</main>
+
+<script>
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('section'));
+  var dots=document.getElementById('dots'), prog=document.getElementById('prog');
+  var quieto=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  secs.forEach(function(s,i){
+    var a=document.createElement('a'); a.href='#'+s.id; a.setAttribute('aria-label','Lámina '+(i+1)); dots.appendChild(a);
+  });
+  var links=[].slice.call(dots.children);
+
+  function fmt(v,d,sep){
+    var t=v.toFixed(d||0);
+    if(sep) t=Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+    return t.replace('.', d? ',' : '.');
+  }
+  function contar(el){
+    var fin=parseFloat(el.dataset.n), d=+el.dataset.d||0, sep=!!el.dataset.sep;
+    if(quieto){el.textContent=fmt(fin,d,sep);return;}
+    var t0=null, dur=1300;
+    function paso(t){ if(!t0)t0=t; var p=Math.min((t-t0)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(fin*e,d,sep); if(p<1) requestAnimationFrame(paso); }
+    requestAnimationFrame(paso);
+  }
+  function activar(s){
+    if(s.classList.contains('in')) return;
+    s.classList.add('in');
+    s.querySelectorAll('[data-n]').forEach(contar);
+    setTimeout(function(){
+      s.querySelectorAll('[data-w]').forEach(function(b){b.style.width=b.dataset.w+'%';});
+      s.querySelectorAll('[data-h]').forEach(function(b){b.style.height=b.dataset.h+'%';});
+    }, quieto?0:350);
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        activar(e.target);
+        var i=secs.indexOf(e.target);
+        links.forEach(function(l,j){l.classList.toggle('on',j===i);});
+        prog.style.width=((i+1)/secs.length*100)+'%';
+      }
+    });
+  },{threshold:.45});
+  secs.forEach(function(s){io.observe(s);});
+
+  // teclado: flechas, espacio, re/av pág
+  document.addEventListener('keydown',function(e){
+    var cur=links.findIndex(function(l){return l.classList.contains('on');}); if(cur<0)cur=0;
+    var k=e.key, n=null;
+    if(k==='ArrowDown'||k==='PageDown'||k===' '||k==='ArrowRight') n=Math.min(cur+1,secs.length-1);
+    if(k==='ArrowUp'||k==='PageUp'||k==='ArrowLeft') n=Math.max(cur-1,0);
+    if(k==='Home') n=0; if(k==='End') n=secs.length-1;
+    if(n!==null){e.preventDefault(); secs[n].scrollIntoView({behavior:quieto?'auto':'smooth'});}
+  });
+
+  // botones de copiar
+  document.querySelectorAll('.copiar').forEach(function(b){
+    b.addEventListener('click',function(){
+      var txt=b.textContent;
+      try{ navigator.clipboard.writeText(b.dataset.c).then(function(){b.textContent='¡Copiado!';setTimeout(function(){b.textContent=txt;},1500);}); }
+      catch(err){}
+    });
+  });
+
+  // días hasta el 6 de febrero de 2027
+  var dias=Math.ceil((new Date(2027,1,6)-new Date())/86400000);
+  document.getElementById('dias').textContent = dias>0 ? dias : 0;
+})();
+</script>
+</body>
+</html>
